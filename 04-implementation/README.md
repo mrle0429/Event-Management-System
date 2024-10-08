@@ -1,10 +1,10 @@
 
-# Team Project: *Group XX*
+# Team Project: *Group 04*
 
 ## Team Members
 | Number | Name | Email(s) | CSGitLab Username |
 |--------|------|----------|-------------------|
-| TM1    | Team Member 1 | tm1@ucdconnect.ie | @22201001 |
+| TM1    | Le Liu | le.liu1@ucdconnect.ie | @Mrle |
 | TM2    | Team Member 2 | tm2@ucdconnect.ie | @22201002 |     
 | TM3    | Team Member 3 | tm3@ucdconnect.ie, personal@qq.com | @22201003 |     
 | TM4    | Team Member 4 | tm4@ucdconnect.ie | @22201004 |     
