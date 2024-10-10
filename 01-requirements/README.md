@@ -34,11 +34,11 @@ This includes the following use cases:
 
 The use cases are shown in this diagram
 
-![use case diagram](images/usecase-diagram.svg)
+![use case diagram](./images/UseCase.png)
 
 ## Domain Model
 
-![domain model](images/domain.svg)
+![domain model](./images/DomainImg.png)
 
 ## System Glossary
 
