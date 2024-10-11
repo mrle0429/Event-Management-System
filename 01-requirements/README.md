@@ -8,7 +8,7 @@ DDL：10.18（周五）
 | Number | Name          | Email(s) | CSGitLab Username       |
 |--------|---------------|----------|-------------------------|
 | TM1    | Le Liu        | le.liu1@ucdconnect.ie | @Mrle |
-| TM2    | Team Member 2 | tm2@ucdconnect.ie | @22201002               |     
+| TM2    | Bohan Zhang | bohan.zhang@ucdconnect.ie | @BohanZhang               |     
 | TM3    | Team Member 3 | tm3@ucdconnect.ie, personal@qq.com |@22201003               |     
 | TM4    | Team Member 4 | tm4@ucdconnect.ie | @22201004               |     
 | TM5    | Team Member 5 | tm5@ucdconnect.ie | @22201005               |     
@@ -24,10 +24,10 @@ This is the requirements analysis or business modelling for the Event applicatio
 
 This includes the following use cases:
 
-1. [Use Case 1](01-name.md)
-2. [Use Case 2](02-name.md)
-3. [Use Case 3](03-name.md)
-4. [Use Case 4](04-name.md)
+1. [ListPurchasedTickets](ListPurchasedTickets.md)
+2. [ListUpcomingTickets](ListUpcomingTickets.md)
+3. [RefundRescheduleTicket](RefundRescheduleTicket.md)
+4. [ViewTicketDetails](ViewTicketDetails.md)
 5. [Use Case 5](05-name.md)
 
 ## Use Case Diagram
