@@ -73,23 +73,23 @@ The use cases are shown in this diagram
 | Domain Model       |ZH |  |  |  |
 | System Golssary    |ZH |  |  |  |
 | UI Prototypes      |SC |ZH  |  |  |
-| Use Case 1: "Create Account" |YX |XY  |  |  |
-| Use Case 2: "Delete Account" |
-| Use Case 3: "Update Account" |YX |XY  |  |  |
+| Use Case 1: "Create Account" |LL |  |  |  |
+| Use Case 2: "Delete Account" |XY|YX|
+| Use Case 3: "Update Account" |XY |YX |  |  |
 | Use Case 4: "View details Account" |XY |YX  |  |  |
-| Use Case 5: "List all Accouts"|
+| Use Case 5: "List all Accouts"|XY|YX|
 | Use Case 6: "Create Venue"|YX| XY|   |   |
-| Use Case 7: "Delete Venue"|
+| Use Case 7: "Delete Venue"|YX|XY|
 | Use Case 8: "Update Venue"|YX|XY|   |   |
 | Use Case 9: "List all Venues" |XY |YX  |  |  |
 | Use Case 10: "View Details Venue" |XY  |YX  |  |  |
 | Use Case 11: "Create Event"|YH|BH|    |   |
-| Use Case 12: "Delete Event|
+| Use Case 12: "Delete Event|YH|
 | Use Case 13: "Update Event"|YH|BH|  |   |
 | Use Case 14: "View Details Event"|YH|BH|  |   |
 | Use Case 15: "List all Events"|YH|BH|  |   |
 | Use Case 16: "Create(Buy) Ticket"|YH|BH|  |   |
-| Use Case 17: "Refund(Delete) Ticket|
+| Use Case 17: "Refund(Delete) Ticket|BH|
 | Use Cace 18: "Reschedule(Update) Ticket|
 | Use Case 19: "View Ticket Details|BH|YH|  |   |
 | USe Case 20: "List Tickets"|BH|YH|   |   |
