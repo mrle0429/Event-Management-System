@@ -8,12 +8,12 @@ DDL：10.18（周五）
 | Number | Name          | Email(s) | CSGitLab Username       |
 |--------|---------------|----------|-------------------------|
 | TM1    | Le Liu        | le.liu1@ucdconnect.ie | @Mrle |
-| TM2    | Team Member 2 | tm2@ucdconnect.ie | @22201002               |     
-| TM3    | Team Member 3 | tm3@ucdconnect.ie, personal@qq.com |@22201003               |     
-| TM4    | Team Member 4 | tm4@ucdconnect.ie | @22201004               |     
-| TM5    | Team Member 5 | tm5@ucdconnect.ie | @22201005               |     
-| TM6    | Team Member 6 | tm6@ucdconnect.ie | @22201006               |     
-| TM7    | Team Member 7 | tm7@ucdconnect.ie | @22201007               |     
+| TM2    | Ziheng Wang | |@zihengWang| 
+| TM3    | Sicheng Yi | tm3@ucdconnect.ie, personal@qq.com |@Prestine             |     
+| TM4    | Xinya Shi | tm4@ucdconnect.ie | @Shirley               |     
+| TM5    | Yuxuan Zhang | tm5@ucdconnect.ie | @WhiteCamellia              |     
+| TM6    | Yunhan Gao | tm6@ucdconnect.ie | @YunhanGao              |     
+| TM7    | Bohan Zhang | tm7@ucdconnect.ie | @BohanZhang               |     
 
 
 # Requirements Analysis
@@ -24,7 +24,7 @@ This is the requirements analysis or business modelling for the Event applicatio
 
 This includes the following use cases:
 
-1. [Use Case 1](01-name.md)
+1. [Create Account](01-requirements/Account/createAccount.md)
 2. [Use Case 2](02-name.md)
 3. [Use Case 3](03-name.md)
 4. [Use Case 4](04-name.md)
@@ -44,7 +44,15 @@ The use cases are shown in this diagram
 
 | Term        | Description                                                  |
 | ----------- | ------------------------------------------------------------ |
-| Term 1      | Description of term 1                                        |
+| Event       | A scheduled concert or performance.                          |
+| Organiser| The individual or entity responsible for planning and managing the event.|
+| administrator| A person responsible for managing the system, including user accounts, events, and overall system settings.|
+|  User | A person who uses the system to purchase tickets.｜ 
+| Venue | The location where the event takes place|
+| Ticket| A document or digital pass that grants entry to an event.|
+| Schedule| The timetable of events, including dates and times.|
+
+
 
 ## UI Prototypes/Sketches
 | Page Name   | Image                                                  |
@@ -66,21 +74,26 @@ The use cases are shown in this diagram
 | System Golssary    |ZH |  |  |  |
 | UI Prototypes      |SC |ZH  |  |  |
 | Use Case 1: "Create Account" |YX |XY  |  |  |
-| Use Case 2: "Modift Account" |YX |XY  |  |  |
-| Use Case 3: "View Account" |XY |YX  |  |  |
-| Use Case 4: "List Venues" |XY |YX  |  |  |
-| Use Case 5: "View Venue Details" |XY  |YX  |  |  |
-| Use Case 6: "Add New Venue"|YX| XY|   |   |
-| Use Case 7: "Edit Venue"|YX|XY|   |   |
-| Use Case 8: "List Events"|YH|BH|  |   |
-| Use Case 9: "View Events Details"|YH|BH|  |   |
-| Use Case 10: "Create Event"|YH|BH|    |   |
-| Use Case 11: "Edit Event"|YH|BH|  |   |
-| Use Case 12: "Buy Ticket"|YH|BH|  |   |
-| USe Case 13: "List Upcoming Tickets"|BH|YH|   |   |
-| Use Case 14: "List Puchased Tickets"|BH|YH|   |   |
-| Use Case 15: "View Ticket Details|BH|YH|  |   |
-| Use Case 16: "Refund/Reschedule Ticket"|BH|YH|    |   |
+| Use Case 2: "Delete Account" |
+| Use Case 3: "Update Account" |YX |XY  |  |  |
+| Use Case 4: "View details Account" |XY |YX  |  |  |
+| Use Case 5: "List all Accouts"|
+| Use Case 6: "Create Venue"|YX| XY|   |   |
+| Use Case 7: "Delete Venue"|
+| Use Case 8: "Update Venue"|YX|XY|   |   |
+| Use Case 9: "List all Venues" |XY |YX  |  |  |
+| Use Case 10: "View Details Venue" |XY  |YX  |  |  |
+| Use Case 11: "Create Event"|YH|BH|    |   |
+| Use Case 12: "Delete Event|
+| Use Case 13: "Update Event"|YH|BH|  |   |
+| Use Case 14: "View Details Event"|YH|BH|  |   |
+| Use Case 15: "List all Events"|YH|BH|  |   |
+| Use Case 16: "Create(Buy) Ticket"|YH|BH|  |   |
+| Use Case 17: "Refund(Delete) Ticket|
+| Use Cace 18: "Reschedule(Update) Ticket|
+| Use Case 19: "View Ticket Details|BH|YH|  |   |
+| USe Case 20: "List Tickets"|BH|YH|   |   |
+
 
 
 
