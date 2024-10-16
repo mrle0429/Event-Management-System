@@ -5,15 +5,15 @@ DDL：10.18（周五）
 中期点：本周四晚22：00至少完成1-2个用例图；本周四晚至少完成2个UI设计图。用于周五Lab Feedback
 注：Push Commit使用简短的English。禁止无意义commit提交
 ## Team Members
-| Number | Name          | Email(s) | CSGitLab Username       |
-|--------|---------------|----------|-------------------------|
-| TM1    | Le Liu        | le.liu1@ucdconnect.ie | @Mrle |
-| TM2    | Ziheng Wang |ziheng.wang1@ucdconnect.ie |@zihengWang| 
-| TM3    | Sicheng Yi | sicheng.yi@ucdconnect.ie, personal@qq.com |@Prestine             |     
-| TM4    | Xinya Shi | xinya.shi@ucdconnect.ie | @Shirley               |     
-| TM5    | Yuxuan Zhang | yuxuan.zhang@ucdconnect.ie | @WhiteCamellia              |     
-| TM6    | Yunhan Gao | yunhan.gao@ucdconnect.ie | @YunhanGao              |     
-| TM7    | Bohan Zhang | bohan.zhang@ucdconnect.ie | @BohanZhang               |     
+| Number | Name          | Email(s)                           | CSGitLab Username |
+|--------|---------------|------------------------------------|-----------------|
+| TM1    | Le Liu        | le.liu1@ucdconnect.ie              | @Mrle |
+| TM2    | Ziheng Wang   | ziheng.wang1@ucdconnect.ie         | @zihengWang                |     
+| TM3    | Team Member 3 | tm3@ucdconnect.ie, personal@qq.com |@22201003        |     
+| TM4    | Team Member 4 | tm4@ucdconnect.ie                  | @22201004       |     
+| TM5    | Team Member 5 | tm5@ucdconnect.ie                  | @22201005       |     
+| TM6    | Team Member 6 | tm6@ucdconnect.ie                  | @22201006       |     
+| TM7    | Team Member 7 | tm7@ucdconnect.ie                  | @22201007       |     
 
 
 # Requirements Analysis
@@ -57,11 +57,11 @@ This includes the following use cases:
 
 The use cases are shown in this diagram
 
-![use case diagram](images/usecase-diagram.svg)
+![use case diagram](./images/UseCase.png)
 
 ## Domain Model
 
-![domain model](images/domain.svg)
+![domain model](./images/Domain.png)
 
 ## System Glossary
 
