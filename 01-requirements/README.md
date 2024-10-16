@@ -121,7 +121,7 @@ The use cases are shown in this diagram
 | Use Case 13: "Update Event"|YH|BH|  |   |
 | Use Case 14: "View Details Event"|YH|BH|  |   |
 | Use Case 15: "List all Events"|YH|BH|  |   |
-| Use Case 16: "Create(Buy) Ticket"|YH|BH|  |   |
+| Use Case 16: "Create(Buy) Ticket"|BH|YH|  |   |
 | Use Case 17: "View Details Ticket|BH|YH|  |   |
 | USe Case 18: "My Tickets"|BH|YH|   |   |
 
