@@ -18,17 +18,40 @@ DDL：10.18（周五）
 
 # Requirements Analysis
 
-This is the requirements analysis or business modelling for the Event application.
+This is the requirements analysis for the Event application, this application is good for administrator, User, Organiser.
+
 
 ## Use Case Descriptions
 
 This includes the following use cases:
+### Login
+1. [Log in]()
+### Account Management
+1. [Create Account](01-requirements/Account/createAccount.md)
+2. [Delete Account](02-name.md)
+3. [Updata Account](03-name.md)
+4. [View Details Account](04-name.md)
+5. [List Accounts](05-name.md)
 
-1. [Use Case 1](01-name.md)
-2. [Use Case 2](02-name.md)
-3. [Use Case 3](03-name.md)
-4. [Use Case 4](04-name.md)
-5. [Use Case 5](05-name.md)
+### Event Management
+1. [Create Event]()
+2. [Delete Event]()
+3. [Update Event]()
+4. [View Details Account]()
+5. [List Events]()
+
+### Venue Management
+1. [Create Venue]()
+2. [Delete Venue]()
+3. [Update Venue]()
+4. [View Details Venue]()
+5. [List Venue]()
+
+### Ticket Management
+1. [Buy Ticket]()
+2. [View Details Ticket]()
+3. [List Tickets]()
+4. [List Upcoming Tickets]()
 
 ## Use Case Diagram
 
@@ -44,12 +67,30 @@ The use cases are shown in this diagram
 
 | Term        | Description                                                  |
 | ----------- | ------------------------------------------------------------ |
-| Term 1      | Description of term 1                                        |
+| Event       | A scheduled concert or performance.                          |
+| Organiser   | The individual or entity responsible for planning and managing the event.|
+| administrator| A person responsible for managing the system, including user accounts, events, and overall system settings.|
+|  User       | A person who uses the system to purchase tickets.|
+| Venue       | The location where the event takes place|
+| Ticket      | A document or digital pass that grants entry to an event.|
+| Schedule    | The timetable of events, including dates and times.|
+| Ticket Type | The category of a ticket, such as VIP, General Admission, or Early Bird.|
+| Price       | The cost of a ticket for an event.|
+| Availability| The number of tickets available for sale.|
+| Sold        | The number of tickets that have been sold.|
+| Event Details| Information about an event, including name, description, date, time, venue, and organiser.|
+| Purchase    | The action of buying a ticket for an event.|
+| Login       | The process of authenticating a user to access the system.|
+| Registration| The process of creating a new user account.|
+| Dashboard   | The main interface where users can access different functionalities of the system.|
+
+
+
 
 ## UI Prototypes/Sketches
-| Page Name   | Image                                                  |
-| ----------- | ------------------------------------------------------------ |
-| Name/description of page      | ![UI Sketch](uisketches/somepage.pn)                                        |
+### Login Page
+
+![UI Sketch](ui/Login_Page.png)                                        
 
 ## Milestone 1 Requirements Analysis
 
@@ -61,26 +102,29 @@ The use cases are shown in this diagram
 #### Task Allocation
 | Item               | Primary Author | Contributor | Contributor | Reviewer |
 |--------------------|-|--|--|--|
-| Use Case Diagram   |LL |  |  |  |
-| Domain Model       |ZH |  |  |  |
+| Use Case Diagram   |LL | ZH |  |  |
+| Domain Model       |ZH |  |  | LL |
 | System Golssary    |ZH |  |  |  |
 | UI Prototypes      |SC |ZH  |  |  |
-| Use Case 1: "Create Account" |YX |XY  |  |  |
-| Use Case 2: "Modift Account" |YX |XY  |  |  |
-| Use Case 3: "View Account" |XY |YX  |  |  |
-| Use Case 4: "List Venues" |XY |YX  |  |  |
-| Use Case 5: "View Venue Details" |XY  |YX  |  |  |
-| Use Case 6: "Add New Venue"|YX| XY|   |   |
-| Use Case 7: "Edit Venue"|YX|XY|   |   |
-| Use Case 8: "List Events"|YH|BH|  |   |
-| Use Case 9: "View Events Details"|YH|BH|  |   |
-| Use Case 10: "Create Event"|YH|BH|    |   |
-| Use Case 11: "Edit Event"|YH|BH|  |   |
-| Use Case 12: "Buy Ticket"|YH|BH|  |   |
-| USe Case 13: "List Upcoming Tickets"|BH|YH|   |   |
-| Use Case 14: "List Puchased Tickets"|BH|YH|   |   |
-| Use Case 15: "View Ticket Details|BH|YH|  |   |
-| Use Case 16: "Refund/Reschedule Ticket"|BH|YH|    |   |
+| Use Case 1: "Create Account" |LL |  |  |  |
+| Use Case 2: "Delete Account" |XY|YX|
+| Use Case 3: "Update Account" |XY |YX |  |  |
+| Use Case 4: "View details Account" |XY |YX  |  |  |
+| Use Case 5: "List all Accouts"|XY|YX|
+| Use Case 6: "Create Venue"|YX| XY|   |   |
+| Use Case 7: "Delete Venue"|YX|XY|
+| Use Case 8: "Update Venue"|YX|XY|   |   |
+| Use Case 9: "List all Venues" |XY |YX  |  |  |
+| Use Case 10: "View Details Venue" |XY  |YX  |  |  |
+| Use Case 11: "Create Event"|YH|BH|    |   |
+| Use Case 12: "Delete Event|YH|
+| Use Case 13: "Update Event"|YH|BH|  |   |
+| Use Case 14: "View Details Event"|YH|BH|  |   |
+| Use Case 15: "List all Events"|YH|BH|  |   |
+| Use Case 16: "Create(Buy) Ticket"|YH|BH|  |   |
+| Use Case 17: "View Details Ticket|BH|YH|  |   |
+| USe Case 18: "My Tickets"|BH|YH|   |   |
+
 
 
 
