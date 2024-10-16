@@ -38,7 +38,7 @@ The use cases are shown in this diagram
 
 ## Domain Model
 
-![domain model](./images/DomainImg.png)
+![domain model](./images/Domain.png)
 
 ## System Glossary
 
