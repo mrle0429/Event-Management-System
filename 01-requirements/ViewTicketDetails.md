@@ -29,7 +29,7 @@
 3. The system displays the ticket details, including event name, date, time, venue, ticket type, seat number (if applicable), and price.
 
 #### Related UI Prototypes
-![My Tickets Page](ui/MyTicket.png)
+![My Tickets Page](ui/Myticket.png)
 ![My Tickets Page](ui/TicketsDetail.png)
 
 ### 02 - Alternate course of events - No Details Available

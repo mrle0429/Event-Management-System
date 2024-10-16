@@ -29,7 +29,7 @@
 3. User can view tickets, venue, date, or ticket status (e.g., past or upcoming).
 
 #### Related UI Prototypes
-![My Tickets Page](ui/MyTicket.png)
+![My Tickets Page](ui/Myticket.png)
 
 ### 02 - Alternate course of events - No Purchased Tickets
 #### Course of Events
