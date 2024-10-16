@@ -25,25 +25,16 @@
 ### 01 - Basic course of events
 #### Course of Events
 1. User navigates to the "My Tickets" section of the application.
-2. The system retrieves all tickets (both past and upcoming) associated with the user's account.
-3. The system displays a list of purchased tickets, including the event name, date, time, venue, and ticket type.
-4. User can apply filters to view specific tickets based on event type, venue, date, or ticket status (e.g., past or upcoming).
+2. The system displays a list of purchased tickets, including the event name, date, time, venue, and ticket type.
+3. User can view tickets, venue, date, or ticket status (e.g., past or upcoming).
 
 #### Related UI Prototypes
-| My Tickets Page |
-| --- |
-| ![My Tickets Page](ui/mytickets.png) |
+![My Tickets Page](ui/MyTicket.png)
 
 ### 02 - Alternate course of events - No Purchased Tickets
 #### Course of Events
 1. User navigates to the "My Tickets" section of the application.
-2. The system checks if there are any tickets associated with the user's account.
 3. If no tickets are found, the system displays a message indicating that there are no purchased tickets.
-
-#### Related UI Prototypes
-| My Tickets Page - No Tickets |
-| --- |
-| ![My Tickets Page - No Tickets](ui/notickets.png) |
 
 **Special Requirements:**
 - The system should display the tickets in chronological order based on the event date.
