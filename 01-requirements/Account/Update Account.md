@@ -35,11 +35,11 @@ This use case is triggered when a user or administrator wants to change account 
 #### Related UI Prototypes
 |       01 - Account Settings Page        |
 |:---------------------------------------:|
-|  ![Account Settings](ui/User info.png)  |
-| :-------------------------------------: |
-|  ![Account Settings](ui/Org info.png)   |
-| :-------------------------------------: |
-| ![Account Settings](ui/Admin info.png)  |
+| ![Account Settings](../ui/User_info.png)  |
+|  :-------------------------------------:  |
+|  ![Account Settings](../ui/Org_info.png)  |
+|  :-------------------------------------:  |
+| ![Account Settings](../ui/Admin_info.png) |
 
 ### 02 - Administrator Updates Another User's Account
 
@@ -51,6 +51,6 @@ This use case is triggered when a user or administrator wants to change account 
 5. The system updates the account information and notifies the administrator of the successful update.
 
 #### Related UI Prototypes
-| 01 - Account Management Page | 02 - Update Confirmation |
-|:--:|:--:|
-| ![Account Management](ui/account_management.png) | ![Update Confirmation](ui/update_confirmation.png) |
+|             01 - Account Management Page              |
+|:-----------------------------------------------------:|
+| ![Account Management](../ui/Admin_Manage_Account.png) |
