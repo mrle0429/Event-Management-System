@@ -2,24 +2,26 @@
 
 ## Description
 
-This use case allows users and administrators to update the details of an existing account. Users can update their own information, while administrators can update any user's account information.
+This use case allows users, organizer, and administrators to update the details of an existing account. User/Organizer can update their own information, while administrators can update any account information.
 
 ## Actors
 
 - Administrator
 - User
+- Organizer
 
 ## Triggers
 
-This use case is triggered when a user or administrator wants to change account details.
+This use case is triggered when a user, organizer or administrator wants to change account details.
 
 ## Preconditions
-
+- User/Organizer/Admin is log in.
 - The account to be updated must exist in the system.
 
 ## Postconditions
 
 - The updated account details are saved in the system.
+
 
 ## Courses of Events
 

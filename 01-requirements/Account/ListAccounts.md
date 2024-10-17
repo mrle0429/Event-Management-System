@@ -25,13 +25,17 @@ This use case is triggered when an administrator wants to view all user accounts
 ### 01 - Basic Course of Events
 
 #### Course of Events
-1. The administrator navigates to the account management page **(01 - Account Management Page)**.
+1. The administrator navigates to the account management page .**(01- Admin Dash Page)**
 2. The administrator selects the option to view the list of accounts.
-3. The system retrieves and displays a list of all user accounts.
+3. The system retrieves and displays a list of all user accounts.**(02 - Account Management Page)**
 
 #### Related UI Prototypes
-|             01 - Account Management Page              |
-|:-----------------------------------------------------:|
+| 01 - Admin Dash Page|
+| ---|
+| ![Admin Dash Page](../ui/Admin_Dashboard.png)
+
+| 01 - Account Management Page              |
+|-----------------------------------------------------|
 | ![Account Management](../ui/Admin_Manage_Account.png) |
 
 ---

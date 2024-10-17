@@ -10,7 +10,7 @@ This use case allows users and administrators to delete an existing account from
 
 ## Triggers
 
-This use case is triggered when a user or administrator decides to delete an account.
+This use case is triggered when administrator decides to delete an account.
 
 ## Preconditions
 
@@ -28,7 +28,7 @@ This use case is triggered when a user or administrator decides to delete an acc
 #### Course of Events
 1. The administrator navigates to the account management page **(01 - Account Management Page)**.
 2. The administrator selects the user account to delete.
-3. The system prompts for confirmation of the deletion.
+3. The system prompts for confirmation of the deletion. **(02- Deletion Confirmation)**
 4. The administrator confirms the deletion.
 5. The system deletes the account and notifies the administrator of the successful deletion.
 
