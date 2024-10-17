@@ -32,7 +32,7 @@
 6. After payment is completed, a confirmation is displayed, and the purchased ticket is added to the "My Tickets" section.
 
 #### Related UI Prototypes
-![Main Page](ui/BuyTickets.png)
+![Main Page](../ui/BuyTickets.png)
 
 ### 02 - Alternate course of events - No Tickets Available
 #### Course of Events
@@ -41,7 +41,7 @@
 3. If no tickets are available, a message is displayed indicating that the event is sold out.
 
 #### Related UI Prototypes
-![Main Page](ui/BuyTickets.png)
+![Main Page](../ui/BuyTickets.png)
 
 **Special Requirements:**
 - The system should display all available ticket types and quantities clearly.
