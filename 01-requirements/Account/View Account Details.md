@@ -31,13 +31,13 @@ This use case is triggered when a user or administrator wants to view account in
 3. The system retrieves and displays the account details.
 
 #### Related UI Prototypes
-| 01 - Account Details Page |
-| :-------------------------------------: |
-|  ![Account Settings](ui/User info.png)  |
-| :-------------------------------------: |
-|  ![Account Settings](ui/Org info.png)   |
-| :-------------------------------------: |
-| ![Account Settings](ui/Admin info.png)  |
+|         01 - Account Details Page         |
+|:-----------------------------------------:|
+| ![Account Settings](../ui/User_info.png)  |
+|  :-------------------------------------:  |
+|  ![Account Settings](../ui/Org_info.png)  |
+|  :-------------------------------------:  |
+| ![Account Settings](../ui/Admin_info.png) |
 
 
 ### 02 - Administrator Views Another User's Account
@@ -48,6 +48,9 @@ This use case is triggered when a user or administrator wants to view account in
 3. The system retrieves and displays the user's account details.
 
 #### Related UI Prototypes
-| 01 - Account Management Page | 02 - User Account Details |
-|:--:|:--:|
-| ![Account Management](ui/account_management.png) | ![User Account Details](ui/user_account_details.png) |
+|             01 - Account Management Page              | 02 - User Account Details |
+|:-----------------------------------------------------:|:--:|
+| ![Account Management](../ui/Admin_Manage_Account.png) | ![Account Settings](../ui/User_info.png)  |
+|                                                       |  ![Account Settings](../ui/Org_info.png)  |
+|                                                       |       ![Account Settings](../ui/Admin_info.png)       |
+                                                        

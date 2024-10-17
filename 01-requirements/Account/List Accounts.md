@@ -14,7 +14,7 @@ This use case is triggered when an administrator wants to view all user accounts
 
 ## Preconditions
 
-- None
+- The Administrator has login its account.
 
 ## Postconditions
 
@@ -30,9 +30,9 @@ This use case is triggered when an administrator wants to view all user accounts
 3. The system retrieves and displays a list of all user accounts.
 
 #### Related UI Prototypes
-|           01 - Account Management Page           |
-|:------------------------------------------------:|
-| ![Account Management](ui/Account management.png) |
+|             01 - Account Management Page              |
+|:-----------------------------------------------------:|
+| ![Account Management](../ui/Admin_Manage_Account.png) |
 
 ---
 
