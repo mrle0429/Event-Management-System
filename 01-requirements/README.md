@@ -30,8 +30,7 @@ The use cases are shown in this diagram
 ## Use Case Descriptions
 
 This includes the following use cases:
-### Login
-1. [Log in]()
+
 ### Account Management
 1. [Create Account](Account/createAccount.md)
 2. [Delete Account](Account/DeleteAccount.md)
@@ -142,7 +141,7 @@ This includes the following use cases:
 #### Overall Distribution of Work
 | Team Member | TM1 (Leliu) | TM2 (ZihengWang) | TM3 (YunhanGao) | TM4 (BohanZhang) | TM5 (SichengYi) | TM6 (XinyaShi) | TM7 (YuxuanZhang) |
 |-------------|-------------|------------------|-----------------|------------------|-----------------|----------------|-------------------|
-| Percentage  | 12%         | 12%              | 12%             | 12%              | 12%             | 12%            | 12%               |
+| Percentage  | 15%         | 15%              | 14%             | 14%              | 14%             | 14%            | 14%               |
 #### Task Allocation
 | Item               | Primary Author | Contributor | Contributor | Reviewer |
 |--------------------|----------------|-------------|--|--|
