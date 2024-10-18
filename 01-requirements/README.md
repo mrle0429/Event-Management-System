@@ -38,10 +38,10 @@ This includes the following use cases:
 1. [Log in]()
 ### Account Management
 1. [Create Account](01-requirements/Account/createAccount.md)
-2. [Delete Account](02-name.md)
-3. [Updata Account](03-name.md)
-4. [View Details Account](04-name.md)
-5. [List Accounts](05-name.md)
+2. [Delete Account](01-requirements/Account/DeleteAccount.md)
+3. [Updata Account](01-requirements/Account/UpdateAccount.md)
+4. [View Details Account](01-requirements/Account/ViewAccountDetails.md)
+5. [List Accounts](01-requirements/Account/ListAccounts.md)
 
 ### Event Management
 1. [Create Event]()
