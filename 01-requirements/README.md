@@ -1,15 +1,15 @@
 # Team Project: *Group 04*
 
 ## Team Members
-| Number | Name          | Email(s)                           | CSGitLab Username |
-|--------|---------------|------------------------------------|-----------------|
-| TM1    | Le Liu        | le.liu1@ucdconnect.ie              | @Mrle |
-| TM2    | Ziheng Wang   | ziheng.wang1@ucdconnect.ie         | @zihengWang                |     
-| TM3    | Team Member 3 | tm3@ucdconnect.ie, personal@qq.com |@22201003        |     
-| TM4    | Team Member 4 | tm4@ucdconnect.ie                  | @22201004       |     
-| TM5    | Team Member 5 | tm5@ucdconnect.ie                  | @22201005       |     
-| TM6    | Team Member 6 | tm6@ucdconnect.ie                  | @22201006       |     
-| TM7    | Team Member 7 | tm7@ucdconnect.ie                  | @22201007       |     
+| Number | Name         | Email(s)                   | CSGitLab Username |
+|--------|--------------|----------------------------|-------------------|
+| TM1    | Le Liu       | le.liu1@ucdconnect.ie      | @Mrle             |
+| TM2    | Ziheng Wang  | ziheng.wang1@ucdconnect.ie | @zihengWang       |     
+| TM3    | Yunhan Gao   | yunhan.gao@ucdconnect.ie   | @YunhanGao        |     
+| TM4    | Bohan Zhang  | bohan.zhang@ucdconnect.ie  | @BohanZhang       |     
+| TM5    | Sicheng Yi   | sicheng.yi@ucdconnect.ie   | @Prestine         |     
+| TM6    | Xinya Shi    | xinya.shi@ucdconnect.ie    | @Shirley          |     
+| TM7    | Yuxuan Zhang | yuxuan.zhang@ucdconnect.ie | @WhiteCamellia    |     
 
 
 # Requirements Analysis
@@ -140,34 +140,34 @@ This includes the following use cases:
 
 ### Distribution of work on this milestone
 #### Overall Distribution of Work
-| Team Member | TM1 | TM2 | TM3 | TM4 | TM5 | TM6 | TM7 |
-|-------------|-----|-----|-----|-----|-----|-----|-----|
-| Percentage  | 12% | 12% | 12% | 12% | 12% | 12% | 12% |
+| Team Member | TM1 (Leliu) | TM2 (ZihengWang) | TM3 (YunhanGao) | TM4 (BohanZhang) | TM5 (SichengYi) | TM6 (XinyaShi) | TM7 (YuxuanZhang) |
+|-------------|-------------|------------------|-----------------|------------------|-----------------|----------------|-------------------|
+| Percentage  | 12%         | 12%              | 12%             | 12%              | 12%             | 12%            | 12%               |
 #### Task Allocation
 | Item               | Primary Author | Contributor | Contributor | Reviewer |
-|--------------------|-|--|--|--|
-| Use Case Diagram   |LL | ZH |  |  |
-| Domain Model       |ZH |  |  | LL |
-| System Golssary    |ZH |  |  |  |
-| UI Prototypes      |SC |ZH  |  |  |
-| Use Case 1: "Create Account" |LL |  |  |  |
-| Use Case 2: "Delete Account" |XY|YX|
-| Use Case 3: "Update Account" |XY |YX |  |  |
-| Use Case 4: "View details Account" |XY |YX  |  |  |
-| Use Case 5: "List all Accouts"|XY|YX|
-| Use Case 6: "Create Venue"|YX| XY|   |   |
-| Use Case 7: "Delete Venue"|YX|XY|
-| Use Case 8: "Update Venue"|YX|XY|   |   |
-| Use Case 9: "List all Venues" |XY |YX  |  |  |
-| Use Case 10: "View Details Venue" |XY  |YX  |  |  |
-| Use Case 11: "Create Event"|YH|BH|    |   |
-| Use Case 12: "Delete Event|YH|
-| Use Case 13: "Update Event"|YH|BH|  |   |
-| Use Case 14: "View Details Event"|YH|BH|  |   |
-| Use Case 15: "List all Events"|YH|BH|  |   |
-| Use Case 16: "Create(Buy) Ticket"|BH|YH|  |   |
-| Use Case 17: "View Details Ticket|BH|YH|  |   |
-| USe Case 18: "My Tickets"|BH|YH|   |   |
+|--------------------|----------------|-------------|--|--|
+| Use Case Diagram   | LeLiu          | ZihengWang  |  |  |
+| Domain Model       | ZihengWang     |             |  | LeLiu |
+| System Golssary    | ZihengWang     |             |  |LeLiu|
+| UI Prototypes      | SichengYi      | ZihengWang          |  |LeLiu|
+| Use Case 1: "Create Account" | LeLiu          |             |  |  |
+| Use Case 2: "Delete Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 3: "Update Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 4: "View details Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 5: "List all Accouts"| YunhanGao      | BohanZhang          |   |  LeLiu |
+| Use Case 6: "Create Venue"| XinyaShi       | YuxuanZhang          |   |   |
+| Use Case 7: "Delete Venue"| XinyaShi       | YuxuanZhang          |
+| Use Case 8: "Update Venue"| XinyaShi       | YuxuanZhang          |   |   |
+| Use Case 9: "List all Venues" | XinyaShi       | YuxuanZhang          |  |  |
+| Use Case 10: "View Details Venue" | XinyaShi       | YuxuanZhang          |  |  |
+| Use Case 11: "Create Event"| YuxuanZhang    | XinyaShi          |    |   |
+| Use Case 12: "Delete Event| YuxuanZhang    |XinyaShi|   |    |
+| Use Case 13: "Update Event"| YuxuanZhang    | XinyaShi          |  |   |
+| Use Case 14: "View Details Event"| YuxuanZhang    | XinyaShi          |  |   |
+| Use Case 15: "List all Events"| YuxuanZhang    | XinyaShi          |  |   |
+| Use Case 16: "Create(Buy) Ticket"| BohanZhang     | YunhanGao          |  |   |
+| Use Case 17: "View Details Ticket| BohanZhang             | YunhanGao          |  |   |
+| USe Case 18: "My Tickets"| BohanZhang             | YunhanGao          |   |   |
 
 
 
