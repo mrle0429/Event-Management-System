@@ -8,8 +8,8 @@ This includes entering event name, description, date, time, venue, organiser and
 
 ## Actors
 
-Administrators
-Organisers
+- Administrators
+- Organisers
 
 ## Triggers
 

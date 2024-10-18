@@ -6,8 +6,8 @@ This use case includes viewing the details of a specific events
 
 ## Actors
 
-Administrators
-Organisers
+- Administrators
+- Organisers
 
 ## Triggers
 

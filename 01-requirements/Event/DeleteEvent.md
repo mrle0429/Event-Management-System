@@ -6,7 +6,7 @@ This use case includes the process of removing an existing event from the system
 
 ## Actors
 
-Administrators
+- Administrators
 
 ## Triggers
 

@@ -6,8 +6,8 @@ This use case includes navigating the application to list the current events, wi
 
 ## Actors
 
-Administrators
-Organisers
+- Administrators
+- Organisers
 
 ## Triggers
 
@@ -20,7 +20,7 @@ This use case is triggered by the following situations:
 
 ## Preconditions
 
-None
+- The Administrator/Organiser has login its account.
 
 ## Postconditions
 

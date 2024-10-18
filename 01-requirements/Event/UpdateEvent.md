@@ -6,8 +6,8 @@ This use case includes the process of updating the details for an existing event
 
 ## Actors
 
-Administrators
-Organiser
+- Administrators
+- Organiser
 
 ## Triggers
 
