@@ -24,13 +24,22 @@
 
 ### 01 - Basic course of events
 #### Course of Events
-1. User navigates to the "My Tickets" section of the application.
-2. User selects a specific ticket from the list of purchased tickets.
-3. The system displays the ticket details, including event name, date, time, venue, ticket type, seat number (if applicable), and price.
+1. User navigates to the "My Tickets" section of the application.**(UserDashBoard page)**
+2. User selects a specific ticket from the list of purchased tickets.**(My Tickets Page)**
+3. The system displays the ticket details, including event name, date, time, venue, ticket type, seat number (if applicable), and price.**(Tickets Datail Page)**
 
 #### Related UI Prototypes
-![My Tickets Page](../ui/Myticket.png)
-![My Tickets Page](../ui/TicketsDetail.png)
+| 01 - My Tickets Page |
+| --- |
+| ![My Tickets Page](../ui/Myticket.png)|
+
+| 02 - UserDashboard |
+| --- |
+| ![UserDashboard Page]()|
+
+| 03 - Tickets Details Page|
+| --- |
+| ![Tickets Details Page](../ui/TicketsDetail.png)|
 
 ### 02 - Alternate course of events - No Details Available
 #### Course of Events
@@ -38,9 +47,8 @@
 2. User selects a specific ticket from the list of purchased tickets.
 3. If no details are available (e.g., due to an error), the system displays a message indicating that the ticket details are currently unavailable.
 
-**Special Requirements:**
-- The system should display all relevant ticket details in a clear and organized manner.
-- The system should be responsive, allowing users to comfortably view the ticket details on different devices.
+
+
 
 **Inclusions:**
 - Display Ticket Details

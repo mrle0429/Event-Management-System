@@ -1,6 +1,6 @@
-# List Purchased Tickets
+# My Tickets
 
-**Use Case Name:** List Purchased Tickets
+**Use Case Name:** My Tickets
 
 **Primary Actor:** User
 
@@ -24,22 +24,26 @@
 
 ### 01 - Basic course of events
 #### Course of Events
-1. User navigates to the "My Tickets" section of the application.
-2. The system displays a list of purchased tickets, including the event name, date, time, venue, and ticket type.
+1. User navigates to the "My Tickets" section of the application. **(UserDashBoard page)**
+2. The system displays a list of purchased tickets **(My Tickets Page)**
 3. User can view tickets, venue, date, or ticket status (e.g., past or upcoming).
 
 #### Related UI Prototypes
-![My Tickets Page](../ui/Myticket.png)
+| 01 - My Tickets Page |
+| --- |
+| ![My Tickets Page](../ui/Myticket.png)|
+
+| 02 - UserDashboard |
+| --- |
+| ![UserDashboard Page]()|
+
 
 ### 02 - Alternate course of events - No Purchased Tickets
 #### Course of Events
-1. User navigates to the "My Tickets" section of the application.
+1. User navigates to the "My Tickets" section of the application. **(UserDashBoard page)**
 3. If no tickets are found, the system displays a message indicating that there are no purchased tickets.
 
-**Special Requirements:**
-- The system should display the tickets in chronological order based on the event date.
-- The user interface should allow the user to filter tickets based on event type, venue, or ticket status to easily manage their tickets.
-- The system should be responsive, allowing users to comfortably view and manage their tickets on different devices.
+
 
 **Inclusions:**
 - Display Purchased Tickets

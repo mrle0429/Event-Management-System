@@ -20,6 +20,16 @@ DDL：10.18（周五）
 
 This is the requirements analysis for the Event application, this application is good for administrator, User, Organiser.
 
+## Use Case Diagram
+
+The use cases are shown in this diagram
+
+![use case diagram](./images/UseCase.png)
+
+## Domain Model
+
+![domain model](./images/Domain.png)
+
 
 ## Use Case Descriptions
 
@@ -48,20 +58,11 @@ This includes the following use cases:
 5. [List Venue]()
 
 ### Ticket Management
-1. [Buy Ticket]()
-2. [View Details Ticket]()
-3. [List Tickets]()
-4. [List Upcoming Tickets]()
+1. [Create(Buy) Ticket](01-requirements/Ticket/Create(Buy)Ticket.md)
+2. [View Details Ticket](01-requirements/Ticket/ViewTicketDetails.md)
+3. [My Tickets](01-requirements/Ticket/MyTickets.md)
 
-## Use Case Diagram
 
-The use cases are shown in this diagram
-
-![use case diagram](./images/UseCase.png)
-
-## Domain Model
-
-![domain model](./images/Domain.png)
 
 ## System Glossary
 
@@ -89,9 +90,50 @@ The use cases are shown in this diagram
 
 ## UI Prototypes/Sketches
 ### Login Page
+| Login Page|
+| --- |
+|![UI Sketch](ui/Login_Page.png)|
 
-![UI Sketch](ui/Login_Page.png)                                        
+### User Register
 
+### Admin Main Page
+
+### Organizer Main Page
+
+### User Main Page
+
+### Admin create new Admin
+
+### Admin create new User
+
+### Admin create new Organiser
+
+### Admin manage Account
+
+### Venue List(Admin)
+
+### Venuew List(Organiser)
+
+### Create Venue
+
+### Edit Venue
+
+### Event List(Admin)
+
+### Founded Events(Organiser)
+
+### Event Details
+
+### Create Event
+
+### Edit Event
+
+### Buy Ticket
+![Buy Ticket](ui/BuyTickets.png)
+### My Tickets
+![My Tickets](ui/Myticket.png)
+### Ticket Details
+![Ticket Details](ui/TicketsDetail.png)
 ## Milestone 1 Requirements Analysis
 
 ### Distribution of work on this milestone

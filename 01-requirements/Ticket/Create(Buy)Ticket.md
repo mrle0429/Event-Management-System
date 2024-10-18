@@ -24,7 +24,7 @@
 
 ### 01 - Basic course of events
 #### Course of Events
-1. User navigates to the "Events" section of the application.
+1. User navigates to the "Purchase Ticket" section of the application. **(UserDashBoard page)**
 2. User browses available events and selects an event they wish to attend.
 3. The ticket types and availability for the selected event are displayed to the user.
 4. User selects the desired ticket type and quantity.
@@ -32,11 +32,17 @@
 6. After payment is completed, a confirmation is displayed, and the purchased ticket is added to the "My Tickets" section.
 
 #### Related UI Prototypes
-![Main Page](../ui/BuyTickets.png)
+| 01 - Main Page |
+| --- |
+| ![Main Page](../ui/BuyTickets.png) |
+
+| 02 - UserDashboard |
+| --- |
+| ![UserDashboard Page]()
 
 ### 02 - Alternate course of events - No Tickets Available
 #### Course of Events
-1. User navigates to the "Events" section of the application.
+1. User navigates to the "Purchase Ticket" section of the application. **(UserDashBoard page)**
 2. User browses available events and selects an event they wish to attend.
 3. If no tickets are available, a message is displayed indicating that the event is sold out.
 
@@ -45,8 +51,7 @@
 
 **Special Requirements:**
 - The system should display all available ticket types and quantities clearly.
-- The system should be secure when handling payment information.
-- The system should be responsive, allowing users to comfortably complete their purchase on different devices.
+
 
 **Inclusions:**
 - Select Event
