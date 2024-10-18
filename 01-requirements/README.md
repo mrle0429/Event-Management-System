@@ -1,9 +1,5 @@
 # Team Project: *Group 04*
-#TODO:修改个人信息  依据本文档分工完成任务
 
-DDL：10.18（周五）
-中期点：本周四晚22：00至少完成1-2个用例图；本周四晚至少完成2个UI设计图。用于周五Lab Feedback
-注：Push Commit使用简短的English。禁止无意义commit提交
 ## Team Members
 | Number | Name          | Email(s)                           | CSGitLab Username |
 |--------|---------------|------------------------------------|-----------------|
@@ -37,30 +33,30 @@ This includes the following use cases:
 ### Login
 1. [Log in]()
 ### Account Management
-1. [Create Account](01-requirements/Account/createAccount.md)
-2. [Delete Account](01-requirements/Account/DeleteAccount.md)
-3. [Updata Account](01-requirements/Account/UpdateAccount.md)
-4. [View Details Account](01-requirements/Account/ViewAccountDetails.md)
-5. [List Accounts](01-requirements/Account/ListAccounts.md)
+1. [Create Account](Account/createAccount.md)
+2. [Delete Account](Account/DeleteAccount.md)
+3. [Updata Account](Account/UpdateAccount.md)
+4. [View Details Account](Account/ViewAccountDetails.md)
+5. [List Accounts](Account/ListAccounts.md)
 
 ### Event Management
-1. [Create Event]()
-2. [Delete Event]()
-3. [Update Event]()
-4. [View Details Account]()
-5. [List Events]()
+1. [Create Event](Event/CreateEvent.md)
+2. [Delete Event](Event/DeleteEvent.md)
+3. [Update Event](Event/UpdateEvent.md)
+4. [View Details Event](Event/ViewDetailsEvent.md)
+5. [List Events](Event/ListEvents.md)
 
 ### Venue Management
-1. [Create Venue]()
-2. [Delete Venue]()
-3. [Update Venue]()
-4. [View Details Venue]()
-5. [List Venue]()
+1. [Create Venue](Venue/1.CreateVenue.md)
+2. [Delete Venue](Venue/3.DeleteVenue.md)
+3. [Update Venue](Venue/5.UpdateVenue.md)
+4. [View Details Venue](Venue/4.ViewDetailsVenue.md)
+5. [List Venue](Venue/2.ListVenues.md)
 
 ### Ticket Management
-1. [Create(Buy) Ticket](01-requirements/Ticket/Create(Buy)Ticket.md)
-2. [View Details Ticket](01-requirements/Ticket/ViewTicketDetails.md)
-3. [My Tickets](01-requirements/Ticket/MyTickets.md)
+1. [Create(Buy) Ticket](Ticket/Create(Buy)Ticket.md)
+2. [View Details Ticket](Ticket/ViewTicketDetails.md)
+3. [My Tickets](Ticket/MyTickets.md)
 
 
 
@@ -95,39 +91,45 @@ This includes the following use cases:
 |![UI Sketch](ui/Login_Page.png)|
 
 ### User Register
+![User register](ui/Register_Page.png)
 
 ### Admin Main Page
+![](ui/Admin_Dashboard.png)
 
 ### Organizer Main Page
+![](ui/Organizer_Dashboard.png)
 
 ### User Main Page
+![](ui/User_info.png)
 
-### Admin create new Admin
 
 ### Admin create new User
 
-### Admin create new Organiser
+![](ui/CreateUser.png)
 
 ### Admin manage Account
+![](ui/Admin_Manage_Account.png)
 
 ### Venue List(Admin)
+![](ui/AdminManageVenue.png)
 
 ### Venuew List(Organiser)
+![](ui/OrganiserManageVenue.png)
 
 ### Create Venue
-
+![](ui/CreateVenue.png)
 ### Edit Venue
-
+![](ui/EditVenue.png)
 ### Event List(Admin)
-
+![](ui/ListEvents(Administrator).png)
 ### Founded Events(Organiser)
-
+![](ui/ListEvents(Organiser).png)
 ### Event Details
-
+![](ui/ViewDetailsEvent.png)
 ### Create Event
-
+![](ui/CreateEvent.png)
 ### Edit Event
-
+![](ui/UpdateEvent.png)
 ### Buy Ticket
 ![Buy Ticket](ui/BuyTickets.png)
 ### My Tickets
