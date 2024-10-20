@@ -20,11 +20,11 @@ This phase continues the development process by realising the courses of events 
 
 Each use case contains the separate sequence diagrams for each course of events. The diagrams are stored in the `images` folder and referenced in the markdown files.
 
-1. [Use Case 1](01-name.md)
-2. [Use Case 2](02-name.md)
-3. [Use Case 3](03-name.md)
-4. [Use Case 4](04-name.md)
-5. [Use Case 5](05-name.md)
+1. [Use Case 1](/02-analysis/usecases/docs/01-use-case-name.md)
+2. [Use Case 2](/02-analysis/usecases/docs/02-use-case-name.md)
+3. [Use Case 3](/02-analysis/usecases/docs/03-use-case-name.md)
+4. [Use Case 4](/02-analysis/usecases/docs/04-use-case-name.md)
+5. [Use Case 5](/02-analysis/usecases/docs/05-use-case-name.md)
 
 ## Class Diagram
 
