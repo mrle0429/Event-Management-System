@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+        <style type="text/css">
+            .updated {
+                font-weight: bold;
+                background-color: #00895A;
+            }
+        </style>
+    <body>
+        <main class="container-fluid">
+            <h2>Venues</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                    <table role="grid" class="striped">
+                        <tbody>
+                            <tr>
+                                <th scope="col">Venue Name</th>
+                                <th scope="col">Venuue Address</th>
+                                <th scope="col">Contact Person (Phone Number)</th>
+                                <th scope="col">Actions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            </tr>
+                            <tr>
+                                <td>Grand Convention Hall</td>
+                                <td>123 Main Street, Springfield, IL</td>
+                                <td>John Doe (555-123-4567)</td>
+                                <td><div class="grid"><button>View</button> <button>Edit</button> <button disabled>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>City Innovation Center</td>
+                                <td>456 Innovation Lane, Austin, TX</td>
+                                <td>Jane Smith (555-987-6543)</td>
+                                <td><div class="grid"><button>View</button> <button>Edit</button> <button disabled>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Westside Conference Room</td>
+                                <td>789 West Avenue, Los Angeles, CA</td>
+                                <td>Michael Brown (555-234-5678)</td>
+                                <td><div class="grid"><button>View</button> <button>Edit</button> <button disabled>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>East Tech Auditorium</td>
+                                <td>321 East Drive, New York, NY</td>
+                                <td>Emily Davis (555-876-5432)</td>
+                                <td><div class="grid"><button>View</button> <button>Edit</button> <button disabled>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Digital Learning Hub</td>
+                                <td>654 Digital Road, Seattle, WA</td>
+                                <td>Chris Johnson (555-345-6789)</td>
+                                <td><div class="grid"><button>View</button> <button>Edit</button> <button disabled>Delete</button></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button>Create New Venue</button>
+                
+            </article>
+        </main>
+    </body>

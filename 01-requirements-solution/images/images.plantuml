@@ -1,0 +1,201 @@
+@startuml usecase
+    left to right direction
+    
+    actor Administrator as a
+    actor Organiser as o
+    actor User as u
+    
+    package venue {
+        usecase "List\nVenues" as lv
+        usecase "Add\nVenue" as av
+        usecase "View\nVenue" as vv
+        usecase "Modify\nVenue" as ev
+        usecase "Delete\nVenue" as dv
+    }
+    package account {
+        usecase "Create\nAccount" as ca
+        usecase "List\nAccounts" as la
+        usecase "View\nAccount" as va
+        usecase "Modify\nAccount" as ma
+        usecase "Register\nAccount" as ra
+    }
+    package event {
+        usecase "List\nEvents" as le
+        usecase "Add\nEvent" as ae
+        usecase "View\nEvent" as ve
+        usecase "Modify\nEvent" as ee
+        usecase "Delete\nEvent" as de
+        usecase "List My\nEvents" as lme
+        usecase "List My\nTickets" as lt
+        usecase "View\nTicket" as vt
+        usecase "Buy\nTicket" as bt
+    }
+    
+    
+    a --> ca
+    a --> la
+    a --> ma
+    a --> va
+    va <--- o
+    ma <--- o
+    va <-- u
+    ma <-- u 
+    ra <-- u
+
+    o --> lv
+    o --> vv
+    o --> av
+    o --> ev
+    a --> dv
+    a --> lv
+
+    o --> lme
+    o --> ve
+    o --> ae
+    o --> ee
+    a --> de
+    a --> le
+
+    u --> le
+    u --> ve
+    u --> lt
+    u --> vt
+    u --> bt
+@enduml
+
+@startuml domain-model
+    left to right direction
+
+    class Venue {
+        - name
+        - address
+        - capacity
+    }
+
+    class TicketType {
+        - name
+        - numberAvailable
+        - numberSold
+        - price
+    }
+
+    class Event {
+        - name
+        - description
+        - date
+        - time
+    }
+
+    class Ticket {
+
+    }
+
+    class Organiser {
+        - address
+        - companyName
+        - phoneNumber
+    }
+
+    class Administrator {
+
+    }
+
+    class User {
+
+    }
+
+    class Account {
+        - name
+        - password
+        - email
+        - role
+    }
+
+    Organiser --|> Account
+    Administrator --|> Account
+    User --|> Account
+
+    Event "1" ---> "-ticketTypes *" TicketType
+    Event ---> "-venue *" Venue
+    Event "1" ---> "-organiser 1" Organiser
+    Organiser "1" ---> "-events *" Event
+
+    Ticket "1" ---> "-ticketType 1" TicketType
+    Ticket "1" ---> "-event 1" Event
+    User "1" ---> "-tickets *" Ticket
+@enduml
+
+
+@startuml ui-states
+    state "00-start" as start
+    state "01-main-admin" as mainAdmin
+    state "02-main-organiser" as mainOrganiser
+    state "03-main-user" as mainUser
+    state "04-list-accounts" as listAccounts
+    state "05-create-account" as createAccount
+    state "06-view-account" as viewAccount
+    state "07-modify-account" as modifyAccount
+    state "08-register-account" as registerAccount
+    state "09-list-venues" as listVenues
+    state "10-view-venue" as viewVenue
+    state "11-add-venue" as addVenue
+    state "12-modify-venue" as modifyVenue
+    state "13-delete-venue" as deleteVenue
+    state "14-list-events" as listEvents
+    state "15-list-my-events" as listMyEvents
+    state "16-view-event" as viewEvent
+    state "17-add-event" as addEvent
+    state "18-modify-event" as modifyEvent
+    state "19-delete-event" as deleteEvent
+    state "20-list-my-tickets" as listMyTickets
+    state "21-view-ticket" as viewTicket
+    state "22-buy-ticket" as buyTicket
+    
+    [*] --> start
+    start --> mainAdmin : Login as Admin
+    start --> mainOrganiser : Login as Organiser
+    start --> mainUser : Login as User
+    start --> registerAccount : Register Account (1)
+    registerAccount --> mainUser : Register Account (2)
+
+    mainAdmin --> listAccounts : List Accounts
+    mainAdmin --> createAccount : Create Account (1)
+    mainAdmin --> viewAccount : View Account
+    listAccounts --> viewAccount : View Account
+    listAccounts --> modifyAccount : Modify Account (1)
+    modifyAccount --> viewAccount : Modify Account (2)
+    createAccount --> viewAccount : Create Account (2)
+
+    mainOrganiser --> listVenues : List Venues
+    listVenues --> viewVenue : View Venue
+    mainOrganiser --> addVenue : Add Venue (1)
+    addVenue --> viewVenue : Add Venue (2)
+    mainOrganiser --> modifyVenue : Modify Venue (1)
+    modifyVenue --> viewVenue : Modify Venue (2)
+
+    mainAdmin --> listVenues : List Venues
+    mainAdmin --> deleteVenue : Delete Venue (1)
+    deleteVenue --> listVenues : Delete Venue (2)
+
+    mainOrganiser --> listEvents : List Events
+    mainOrganiser --> listMyEvents : List My Events
+    listEvents --> viewEvent : View Event
+    listMyEvents --> viewEvent : View Event
+    mainOrganiser --> addEvent : Add Event (1)
+    addEvent --> viewEvent : Add Event (2)
+    listEvents --> modifyEvent : Modify Event (1)
+    modifyEvent --> viewEvent : Modify Event (2)
+    listMyEvents --> modifyEvent : Modify Event (1)
+    modifyEvent --> viewEvent : Modify Event (2)
+
+    mainAdmin --> listEvents : List Events
+    listEvents --> deleteEvent : Delete Event (1)
+    deleteEvent --> listEvents : Delete Event (2)
+    
+    mainUser --> listEvents : List Events
+    listEvents --> viewEvent : View Event
+    viewEvent --> buyTicket : Buy Ticket (1)
+    buyTicket --> viewTicket : Buy Ticket (2)
+    mainUser --> listMyTickets : List My Tickets
+    listMyTickets --> viewTicket : View Ticket
+@enduml

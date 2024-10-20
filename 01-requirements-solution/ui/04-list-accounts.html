@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+        <style type="text/css">
+            .updated {
+                font-weight: bold;
+                background-color: #00895A;
+            }
+        </style>
+    <body>
+        <main class="container-fluid">
+            <h2>Account Management</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                <details open>
+                    <summary role="button">Admin Accounts</summary>
+                    <table role="grid" class="striped">
+                        <tbody>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Actions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            </tr>
+                            <tr>
+                                <td>Sean</td>
+                                <td>sean.russell@ucd.ie</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Paul</td>
+                                <td>jpj@ucd.ie</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button>Create Account</button>
+                </details>
+                <details closed>
+                    <summary role="button">Organiser Accounts</summary>
+                    <input name="search" type="search" placeholder="Filter" />
+                    <table role="grid">
+                        <tbody>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>john.doe@example.com</td>
+                                <td>Tech Innovators</td>
+                                <td>(555) 123-4567</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>jane.smith@example.com</td>
+                                <td>Global Solutions</td>
+                                <td>(555) 987-6543</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </details>
+                <details closed>
+                    <summary role="button">User Accounts</summary>
+                    <input name="search" type="search" placeholder="Filter" />
+                    <table role="grid">
+                        <tbody>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>john.doe@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>jane.smith@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Michael Brown</td>
+                                <td>michael.brown@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Emily Davis</td>
+                                <td>emily.davis@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Chris Johnson</td>
+                                <td>chris.johnson@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Amanda Lee</td>
+                                <td>amanda.lee@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>David Wilson</td>
+                                <td>david.wilson@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Rachel Green</td>
+                                <td>rachel.green@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Tom Harris</td>
+                                <td>tom.harris@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                            <tr>
+                                <td>Susan Moore</td>
+                                <td>susan.moore@example.com</td>
+                                <td><div class="grid"><button>View</button><button>Edit</button><button>Delete</button></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </details>
+            </article>
+        </main>
+    </body>
