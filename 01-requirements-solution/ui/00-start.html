@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <title>Sean's Event Management System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Seans Event Management System</h1>
+    <article id="article">
+      <h2>Login</h2>
+      <figure>
+        <form th:action="@{/login}" method="post">
+          <div><label> Email : <input type="text" name="username"/> </label></div>
+          <div><label> Password: <input type="password" name="password"/> </label></div>
+          <div><input type="submit" value="Sign In"/></div>
+        </form>
+      </figure>
+      <h2>Register</h2>
+      <figure>
+        <form th:action="@{/register}" method="post">
+          <div><label> Name : <input type="text" name="name"/> </label></div>
+          <div><label> Email : <input type="text" name="username"/> </label></div>
+          <div><label> Password: <input type="password" name="password"/> </label></div>
+          <div><label> Confirm Password: <input type="password" name="password"/> </label></div>
+          <div><input type="submit" value="Sign Up"/></div>
+        </form>
+      </article>
+  </main>
+</body>
+</html>
