@@ -28,11 +28,9 @@ This use case is triggered when a user, organizer or administrator wants to chan
 ### 01 - Basic Course of Events
 
 #### Course of Events
-1. The user navigates to the account settings page **(01 - Account Settings Page)**.
-2. The user selects the option to update their account information.
-3. The user enters the new details (username, password, email, etc.).
-4. The system validates the entered details.
-5. The system updates the account information and displays a success message.
+1. The user navigates to the account settings page. **(01 - Account Settings Page)**.
+2. The user enters the new details (username, password, email, etc.).
+3. The system updates the account information and displays a success message.
 
 #### Related UI Prototypes
 |       01 - Account Settings Page        |
@@ -46,11 +44,9 @@ This use case is triggered when a user, organizer or administrator wants to chan
 ### 02 - Administrator Updates Another User's Account
 
 #### Course of Events
-1. The administrator navigates to the account management page **(01 - Account Management Page)**.
-2. The administrator selects the user account to update.
-3. The administrator enters the new details.
-4. The system validates the entered details.
-5. The system updates the account information and notifies the administrator of the successful update.
+1. The administrator navigates to the account management page and selects a user to update. **(01 - Account Management Page)**.
+2. The administrator enters the new details.
+3. The system updates the account information and notifies the administrator of the successful update.
 
 #### Related UI Prototypes
 |             01 - Account Management Page              |

@@ -26,8 +26,7 @@ This use case is triggered when an administrator wants to view all user accounts
 
 #### Course of Events
 1. The administrator navigates to the account management page .**(01- Admin Dash Page)**
-2. The administrator selects the option to view the list of accounts.
-3. The system retrieves and displays a list of all user accounts.**(02 - Account Management Page)**
+2. The system retrieves and displays a list of all user accounts.**(02 - Account Management Page)**
 
 #### Related UI Prototypes
 | 01 - Admin Dash Page|

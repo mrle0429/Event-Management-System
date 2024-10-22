@@ -27,9 +27,8 @@ This use case is triggered when a user/administrator/organizer wants to view acc
 ### 01 - Basic Course of Events (User/Organizer/Admin)
 
 #### Course of Events
-1. The user navigates to the account settings page. **(01-Dashboard Page)**
-2. The user selects the option to view their account details.
-3. The system retrieves and displays the account details.**(02 - Account Settings Page)**
+1. The user navigates to the account settings page and selects button. . **(01-Dashboard Page)**
+2. The system displays the account details.**(02 - Account Settings Page)**
 
 #### Related UI Prototypes
 | 01- Dashboard Page|

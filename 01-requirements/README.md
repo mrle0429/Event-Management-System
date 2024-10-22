@@ -39,7 +39,7 @@ This includes the following use cases:
 ### Account Management
 1. [Create Account](Account/createAccount.md)
 2. [Delete Account](Account/DeleteAccount.md)
-3. [Updata Account](Account/UpdateAccount.md)
+3. [Update Account](Account/UpdateAccount.md)
 4. [View Details Account](Account/ViewAccountDetails.md)
 5. [List Accounts](Account/ListAccounts.md)
 

@@ -1,16 +1,16 @@
-# Team Project: *Group XX*
+# Team Project: *Group 04*
 
 ## Team Members
-| Number | Name | Email(s) | CSGitLab Username |
-|--------|------|----------|-------------------|
-| TM1    | Team Member 1 | tm1@ucdconnect.ie | @22201001 |
-| TM2    | Team Member 2 | tm2@ucdconnect.ie | @22201002 |     
-| TM3    | Team Member 3 | tm3@ucdconnect.ie, personal@qq.com | @22201003 |     
-| TM4    | Team Member 4 | tm4@ucdconnect.ie | @22201004 |     
-| TM5    | Team Member 5 | tm5@ucdconnect.ie | @22201005 |     
-| TM6    | Team Member 6 | tm6@ucdconnect.ie | @22201006 |     
-| TM7    | Team Member 7 | tm7@ucdconnect.ie | @22201007 |     
-| TM8    | Team Member 8 | tm8@ucdconnect.ie | @22201008 |
+| Number | Name         | Email(s)                   | CSGitLab Username |
+|--------|--------------|----------------------------|-------------------|
+| TM1    | Le Liu       | le.liu1@ucdconnect.ie      | @Mrle             |
+| TM2    | Ziheng Wang  | ziheng.wang1@ucdconnect.ie | @zihengWang       |     
+| TM3    | Yunhan Gao   | yunhan.gao@ucdconnect.ie   | @YunhanGao        |     
+| TM4    | Bohan Zhang  | bohan.zhang@ucdconnect.ie  | @BohanZhang       |     
+| TM5    | Sicheng Yi   | sicheng.yi@ucdconnect.ie   | @Prestine         |     
+| TM6    | Xinya Shi    | xinya.shi@ucdconnect.ie    | @Shirley          |     
+| TM7    | Yuxuan Zhang | yuxuan.zhang@ucdconnect.ie | @WhiteCamellia    |     
+
 
 # Analysis
 
@@ -20,11 +20,32 @@ This phase continues the development process by realising the courses of events 
 
 Each use case contains the separate sequence diagrams for each course of events. The diagrams are stored in the `images` folder and referenced in the markdown files.
 
-1. [Use Case 1](/02-analysis/usecases/docs/01-use-case-name.md)
-2. [Use Case 2](/02-analysis/usecases/docs/02-use-case-name.md)
-3. [Use Case 3](/02-analysis/usecases/docs/03-use-case-name.md)
-4. [Use Case 4](/02-analysis/usecases/docs/04-use-case-name.md)
-5. [Use Case 5](/02-analysis/usecases/docs/05-use-case-name.md)
+### Account Management
+1. [Create Account](Account/createAccount.md)
+2. [Delete Account](Account/DeleteAccount.md)
+3. [Updata Account](Account/UpdateAccount.md)
+4. [View Details Account](Account/ViewAccountDetails.md)
+5. [List Accounts](Account/ListAccounts.md)
+
+### Event Management
+6. [Create Event](Event/CreateEvent.md)
+7. [Delete Event](Event/DeleteEvent.md)
+8. [Update Event](Event/UpdateEvent.md)
+9. [View Details Event](Event/ViewDetailsEvent.md)
+10. [List Events](Event/ListEvents.md)
+
+### Venue Management
+11. [Create Venue](Venue/1.CreateVenue.md)
+12. [Delete Venue](Venue/3.DeleteVenue.md)
+13. [Update Venue](Venue/5.UpdateVenue.md)
+14. [View Details Venue](Venue/4.ViewDetailsVenue.md)
+15. [List Venue](Venue/2.ListVenues.md)
+
+### Ticket Management
+16. [Create(Buy) Ticket](Ticket/Create(Buy)Ticket.md)
+17. [View Details Ticket](Ticket/ViewTicketDetails.md)
+18. [My Tickets](Ticket/MyTickets.md)
+
 
 ## Class Diagram
 
@@ -41,19 +62,34 @@ The `ClassName` class is a basic entity class. It represents ...
 
 ### Distribution of work on this milestone
 #### Overall Distribution of Work
+
 | Team Member | TM1 | TM2 | TM3 | TM4 | TM5 | TM6 | TM7 | TM8 |
 |-------------|-----|-----|-----|-----|-----|-----|-----|-----|
 | Percentage  | 12% | 12% | 12% | 12% | 12% | 12% | 12% | 12% |
+
 #### Task Allocation
 | Item               | Primary Author | Contributor | Contributor | Reviewer |
 |--------------------|-----|-----|-----|-----|
-| Description of Responsibilities   | TM3 |     |     | TM1 |
-| Class Diagram      | TM4 | TM2 | TM1 | TM3 |
-| Use Case 1: "Name" | TM4 |     |     | TM3 |
-| Use Case 2: "Name" | TM1 |     |     | TM4 |
-| Use Case 3: "Name" | TM2 |     |     | TM1 |
-| Use Case 4: "Name" | TM3 |     |     | TM2 |
-| Use Case N: "Name" | TM4 |     |     | TM3 |
+| Description of Responsibilities   | ZH |     |     | TM1 |
+| Class Diagram      | ZH |  |  |  |
+| Use Case 1: "Create Account" | LL          |             |  |  |
+| Use Case 2: "Delete Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 3: "Update Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 4: "View details Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 5: "List all Accouts"| SC      | BohanZhang          |   |  LeLiu |
+| Use Case 6: "Create Venue"| XinyaShi       | YuxuanZhang          |   |   |
+| Use Case 7: "Delete Venue"| XinyaShi       | YuxuanZhang          |
+| Use Case 8: "Update Venue"| XinyaShi       | YuxuanZhang          |   |   |
+| Use Case 9: "List all Venues" | SC       | YuxuanZhang          |  |  |
+| Use Case 10: "View Details Venue" | BH       | YuxuanZhang          |  |  |
+| Use Case 11: "Create Event"| YuxuanZhang    | XinyaShi          |    |   |
+| Use Case 12: "Delete Event| YuxuanZhang    |XinyaShi|   |    |
+| Use Case 13: "Update Event"| YuxuanZhang    | XinyaShi          |  |   |
+| Use Case 14: "View Details Event"| YH    | XinyaShi          |  |   |
+| Use Case 15: "List all Events"| SC    | XinyaShi          |  |   |
+| Use Case 16: "Create(Buy) Ticket"| BohanZhang     | YunhanGao          |  |   |
+| Use Case 17: "View Details Ticket| BohanZhang             | YunhanGao          |  |   |
+| USe Case 18: "My Tickets"| BohanZhang             | YunhanGao          |   |   |
 
 
 #### Reflection Statements
