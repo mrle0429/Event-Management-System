@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    </head> 
+
+    <body>
+        <dialog open>
+            <article>
+              <header>
+                <button aria-label="Close" rel="prev"></button>
+                <p>
+                  <strong>Invalid Password Entered</strong>
+                </p>
+              </header>
+              <p>
+                The password must contain the following:
+              </p>
+              <ul>
+                <li>At least 8 characters</li>
+                <li>At least 1 uppercase letter</li>
+                <li>At least 1 lowercase letter</li>
+                <li>At least 1 number</li>
+              </ul>
+            </article>
+          </dialog>
+        <main class="container">
+            <h2>Sean's Event Management System</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                <h3>Modify Account</h3>
+                <form>
+                    <label for="trimester">Account Type</label>
+                    <select id="trimester" disabled>
+                        <option value="Autumn" >Administrator</option>
+                        <option value="Spring" selected>Organiser</option>
+                        <option value="Summer">User</option>
+                    </select>
+                    <label for="code">Name</label>
+                    <input type="text" id="code" name="code" value="John Doe" required>
+                    <label for="title">Email address</label>
+                    <input type="text" id="title" name="title" value="john.doe@email.com" disabled>
+                    <label for="description">Password</label>
+                    <input type="password" id="description" name="description" value="password" required>
+                    <label for="cname">Company Name</label>
+                    <input type="text" id="cname" name="cname" value="Great Events Inc." required>
+                    <label for="caddress">Company Address</label>
+                    <input type="text" id="caddress" name="caddress" value="123 Fake Street, Ireland" required>
+                    <label for="cphone">Phone Number</label>
+                    <input type="text" id="cphone" name="cphone" value="04679876546" required>
+                    <button type="submit">Save Changes</button>
+                  </form>
+            </article>
+        </main>
+    </body>

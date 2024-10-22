@@ -1,0 +1,106 @@
+# Team Project: *Group 04*
+
+## Team Members
+| Number | Name         | Email(s)                   | CSGitLab Username |
+|--------|--------------|----------------------------|-------------------|
+| TM1    | Le Liu       | le.liu1@ucdconnect.ie      | @Mrle             |
+| TM2    | Ziheng Wang  | ziheng.wang1@ucdconnect.ie | @zihengWang       |     
+| TM3    | Yunhan Gao   | yunhan.gao@ucdconnect.ie   | @YunhanGao        |     
+| TM4    | Bohan Zhang  | bohan.zhang@ucdconnect.ie  | @BohanZhang       |     
+| TM5    | Sicheng Yi   | sicheng.yi@ucdconnect.ie   | @Prestine         |     
+| TM6    | Xinya Shi    | xinya.shi@ucdconnect.ie    | @Shirley          |     
+| TM7    | Yuxuan Zhang | yuxuan.zhang@ucdconnect.ie | @WhiteCamellia    |     
+
+
+# Analysis
+
+This phase continues the development process by realising the courses of events that we described in the requirements analysis phase. This requires the creation of sequence diagrams for each course of events. Decisions made while constructing these diagrams are also documented in the class diagram.
+
+## Use Case Realisations (Sequence Diagrams)
+
+Each use case contains the separate sequence diagrams for each course of events. The diagrams are stored in the `images` folder and referenced in the markdown files.
+
+### Account Management
+1. [Create Account](Account/createAccount.md)
+2. [Delete Account](Account/DeleteAccount.md)
+3. [Updata Account](Account/UpdateAccount.md)
+4. [View Details Account](Account/ViewAccountDetails.md)
+5. [List Accounts](Account/ListAccounts.md)
+
+### Event Management
+6. [Create Event](Event/CreateEvent.md)
+7. [Delete Event](Event/DeleteEvent.md)
+8. [Update Event](Event/UpdateEvent.md)
+9. [View Details Event](Event/ViewDetailsEvent.md)
+10. [List Events](Event/ListEvents.md)
+
+### Venue Management
+11. [Create Venue](Venue/1.CreateVenue.md)
+12. [Delete Venue](Venue/3.DeleteVenue.md)
+13. [Update Venue](Venue/5.UpdateVenue.md)
+14. [View Details Venue](Venue/4.ViewDetailsVenue.md)
+15. [List Venue](Venue/2.ListVenues.md)
+
+### Ticket Management
+16. [Create(Buy) Ticket](Ticket/Create(Buy)Ticket.md)
+17. [View Details Ticket](Ticket/ViewTicketDetails.md)
+18. [My Tickets](Ticket/MyTickets.md)
+
+
+## Class Diagram
+
+The class diagram represents the information gained about the system by completing the use case realisations. 
+
+![class diagram](images/class-diagram.png)
+
+## Description of Responsibilities
+
+### Class Name 1
+The `ClassName` class is a basic entity class. It represents ...
+
+## Milestone 2 Analysis
+
+### Distribution of work on this milestone
+#### Overall Distribution of Work
+
+| Team Member | TM1 | TM2 | TM3 | TM4 | TM5 | TM6 | TM7 | TM8 |
+|-------------|-----|-----|-----|-----|-----|-----|-----|-----|
+| Percentage  | 12% | 12% | 12% | 12% | 12% | 12% | 12% | 12% |
+
+#### Task Allocation
+| Item               | Primary Author | Contributor | Contributor | Reviewer |
+|--------------------|-----|-----|-----|-----|
+| Description of Responsibilities   | ZH |     |     | TM1 |
+| Class Diagram      | ZH |  |  |  |
+| Use Case 1: "Create Account" | LL          |             |  |  |
+| Use Case 2: "Delete Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 3: "Update Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 4: "View details Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 5: "List all Accouts"| SC      | BohanZhang          |   |  LeLiu |
+| Use Case 6: "Create Venue"| XinyaShi       | YuxuanZhang          |   |   |
+| Use Case 7: "Delete Venue"| XinyaShi       | YuxuanZhang          |
+| Use Case 8: "Update Venue"| XinyaShi       | YuxuanZhang          |   |   |
+| Use Case 9: "List all Venues" | SC       | YuxuanZhang          |  |  |
+| Use Case 10: "View Details Venue" | BH       | YuxuanZhang          |  |  |
+| Use Case 11: "Create Event"| YuxuanZhang    | XinyaShi          |    |   |
+| Use Case 12: "Delete Event| YuxuanZhang    |XinyaShi|   |    |
+| Use Case 13: "Update Event"| YuxuanZhang    | XinyaShi          |  |   |
+| Use Case 14: "View Details Event"| YH    | XinyaShi          |  |   |
+| Use Case 15: "List all Events"| SC    | XinyaShi          |  |   |
+| Use Case 16: "Create(Buy) Ticket"| BohanZhang     | YunhanGao          |  |   |
+| Use Case 17: "View Details Ticket| BohanZhang             | YunhanGao          |  |   |
+| USe Case 18: "My Tickets"| BohanZhang             | YunhanGao          |   |   |
+
+
+#### Reflection Statements
+| Team Member | Contribution Reflection Statement |
+|-------------|-------------------|
+|TM1| <*Required*: The percentage data is unlikely to tell the whole story about your contribution. Write a brief statement explaining and reflecting on your contribution to this phase of the project.> |
+|TM2| <*Required*: The percentage data is unlikely to tell the whole story about your contribution. Write a brief statement explaining and reflecting on your contribution to this phase of the project.> |
+|TM3| <*Required*: The percentage data is unlikely to tell the whole story about your contribution. Write a brief statement explaining and reflecting on your contribution to this phase of the project.> |
+|TM4| <*Required*: The percentage data is unlikely to tell the whole story about your contribution. Write a brief statement explaining and reflecting on your contribution to this phase of the project.> |
+|TM5| <*Required*: The percentage data is unlikely to tell the whole story about your contribution. Write a brief statement explaining and reflecting on your contribution to this phase of the project.> |
+|TM6| <*Required*: The percentage data is unlikely to tell the whole story about your contribution. Write a brief statement explaining and reflecting on your contribution to this phase of the project.> |
+|TM7| <*Required*: The percentage data is unlikely to tell the whole story about your contribution. Write a brief statement explaining and reflecting on your contribution to this phase of the project.> |
+|TM8| <*Required*: The percentage data is unlikely to tell the whole story about your contribution. Write a brief statement explaining and reflecting on your contribution to this phase of the project.> |
+
