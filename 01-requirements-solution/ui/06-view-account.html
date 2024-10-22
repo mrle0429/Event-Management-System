@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    </head> 
+    <body>
+        <main class="container">
+            <h2>Sean's Event Management System</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                <h3>Account Details</h3>
+                <table role="grid">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Organiser Type</th>
+                            <td>Number</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Name</th>
+                            <td>John Doe</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email address</th>
+                            <td>40</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Company Name</th>
+                            <td>Great Events Inc.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Address</th>
+                            <td>123 Fake Street, Ireland</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Phone Number</th>
+                            <td>04679876546</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <button>
+                    Edit Account
+                </button>
+            </article>
+        </main>
+    </body>

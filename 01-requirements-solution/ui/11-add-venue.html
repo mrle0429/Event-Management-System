@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+        <style type="text/css">
+            .updated {
+                font-weight: bold;
+                background-color: #00895A;
+            }
+        </style>
+    <body>
+        <main class="container">
+            <h2>Venues</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                <h3>Add New Venue</h3>
+                <form>
+                    <label for="code">Venue Name</label>
+                    <input type="text" id="code" name="code" value="Grand Convention Hall" required>
+                    <label for="title">Venue Address</label>
+                    <input type="text" id="caddress" name="caddress" value="123 Fake Street, Ireland" required>
+                    <label for="description">Contact Person</label>
+                    <input type="text" id="code" name="code" value="John Doe" required>
+                    <label for="cname">Phone Number</label>
+                    <input type="text" id="cname" name="cname" value="555-123-4567" required>
+                    <label for="caddress">Email Address</label>
+                    <input type="text" id="title" name="title" value="john.doe@email.com" required>
+                    
+                    <label for="cphone">Capacity</label>
+                    <input type="text" id="cphone" name="cphone" value="1000" required>
+                    <fieldset>
+                        <legend>Ticket Types</legend>
+                        <div class="grid">
+                            <div class="col">
+                                <label for="ticket-type">Ticket Type</label>
+                                <input type="text" id="ticket-type" name="ticket-type" value="General Admission" required>
+                            </div>
+                            <div class="col">
+                                <label for="ticket-quantity">Number Available</label>
+                                <input type="text" id="ticket-quantity" name="ticket-quantity" value="500" required>
+                            </div> 
+                        </div>
+                        <div class="grid">
+                            <div class="col">
+                                <label for="ticket-type">Ticket Type</label>
+                                <input type="text" id="ticket-type" name="ticket-type" value="Seated" required>
+                            </div>
+                            <div class="col">
+                                <label for="ticket-quantity">Number Available</label>
+                                <input type="text" id="ticket-quantity" name="ticket-quantity" value="100" required>
+                            </div> 
+                        </div>
+                        <div class="grid">
+                            <div class="col">
+                                <label for="ticket-type">Ticket Type</label>
+                                <input type="text" id="ticket-type" name="ticket-type" value="Premium" required>
+                            </div>
+                            <div class="col">
+                                <label for="ticket-quantity">Number Available</label>
+                                <input type="text" id="ticket-quantity" name="ticket-quantity" value="100" required>
+                            </div> 
+                        </div>
+                    </fieldset>
+
+                    <button type="submit">Submit</button>
+                </form>  
+            </article>
+        </main>
+    </body>
