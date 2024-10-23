@@ -1,28 +1,30 @@
-actor "Administrator" as a
-participantspacing 5
-control "<link:_>: SomeController" as c
-participant "<link:_>: SomeClass" as r
-entity "<link:_>: SomeObject" as o
+@startuml
+title Creat Accout - User
 
-==1. The user selects the create account functionality\n2. The system displays an input form to get the required details (details required are based on the type of account being created) - 05-create-account\n3. The user enters and submits the details of the account==
+actor "User" as us
+control ": AccountSystem" as accountSys
+participant ": AccountService" as accountSer
+entity "user: UserAccount" as userAcc
 
-a->c:aMethod()
-activate c
+== Step 1: User Provides Details ==
+us -> accountSys: signUp(username, password, email)
+activate accountSys
 
-c->r:requestData(details)
-activate r
+accountSys -> accountSer: getAccount(email)
+activate accountSer
+accountSer --> accountSys: return null
+deactivate accountSer
 
-r->r:findSomething(name)
+== Step 2: Account Creation ==
+accountSys -> userAcc: new UserAccount(username, password, email)
+activate userAcc
 
-r->o:v:=getValue()
+== Step 3: Store Account Information ==
+accountSys -> userAcc: storeAccountDetails()
+userAcc --> accountSys: confirmAccountCreation()
+deactivate userAcc
 
-r-->c:return data
-deactivate r
-
-c->c:updateDisplay()
-
-c-->a:use case finished!
-deactivate c
-
-
-==4. The system displays the view account page with the details of the created account shown - 06-view-account==
+== Step 4: Redirect User ==
+accountSys -> us: showDashPage()
+deactivate accountSys
+@enduml

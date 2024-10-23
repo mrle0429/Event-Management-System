@@ -37,8 +37,8 @@ This use case includes the creation of a new account by. Administrator could cre
 1. The user clicks the "Sign Up" button on the login page. **(01 - Login Page)**
 2. The system navigates to the account creation page. **(02 - Sign Up Page)**
 3. The user enters the required account details (username, password, email, etc.) 
-2. The system displays an error message indicating that the account already exists
-3. 
+4. The system displays an error message indicating that the account already exists
+
 #### Related UI Prototypes
 
 
