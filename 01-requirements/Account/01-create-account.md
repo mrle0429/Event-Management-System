@@ -52,23 +52,21 @@ This use case includes the creation of a new account by. Administrator could cre
 
 #### Basic Course of Events
 
-1. The administrator select manage account button. **(05 - Admin Dash Page)**
-2. The system navigates to the account creation page  **(01 - Account Management Page)**
-3. The administrator enters the required account details for the new user/Organizer. **(02- CreateAdmin Page/ 03-CreateUser Page/ 04-CreateOrganizer Page)**
-4. The system notifies the administrator that the account has been successfully created
+1. The administrator select create account button(3 types). **(01 - Account Management Page)**
+2. The system navigates to the account creation page.  **(02- CreateAdmin Page/ 03-CreateUser Page/ 04-CreateOrganizer Page)**
+3. The administrator enters the required account details for the new user/Organizer/admin. 
+4. The system renturn to account manage page.
 
 #### Alternative Courses of Events - Account Already Exists
-1. The administrator select manage account button. **(05 - Admin Dash Page)**
-2. The system navigates to the account creation page  **(01 - Account Management Page)**
-3. The administrator enters the required account details for the new user/Organizer. **(02- CreateAdmin Page/ 03-CreateUser Page/ 04-CreateOrganizer Page)**
-4. The system displays an error message indicating that the account already exists
+1. The administrator select create account button(3 types). **(06 - Account Management Page)**
+2. The system navigates to the account creation page. **(02- CreateAdmin Page/ 03-CreateUser Page/ 04-CreateOrganizer Page)**
+3. The administrator enters the required account details for the new user/Organizer/admin. 
+4. The system displays an error message indicating that the account already exists. **(05- Create User exists)**
 5. The administrator clicks OK
-6. The system returns to the create account page. **(02- CreateAdmin Page/ 03-CreateUser Page/ 04-CreateOrganizer Page)**
+6. The system returns to the create account page. 
 
 #### Related UI Prototypes
-| 05 - Admin Dash Page|
-| --- |
-|![](../ui/Admin_Dashboard.png)|
+
 
 | 01 - Account Creation Page    |    
 |---| 
@@ -86,7 +84,9 @@ This use case includes the creation of a new account by. Administrator could cre
 |---|
 | ![CreateOrganizer Page](../ui/CreateOrganiser.png)|
 
-
+| 05 - create User exists Page|
+| --- |
+|![](/01-requirements/ui/create-user-exists.png)|
 
 ## Inclusions
 None
