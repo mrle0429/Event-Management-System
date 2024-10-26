@@ -1,6 +1,6 @@
 # Use Case 01 - Create Account
 
-## 01 - Basic Course of Events - user
+## 01 - Basic Course of Events - user Register
 1. The user clicks the "Sign Up" button on the login page. (01- Login Page)
 2. The system navigates to the account creation page. (02 - register page)
 3. The user enters the required account details (username, password, email, etc.) 
@@ -19,7 +19,7 @@
 
 ![Use Case Name - Basic Course of Events](/02-analysis/usecases/images/01-alternate-account-exist.png)
 
-## 03 - Basic Course of Events - Admin
+## 03 - Basic Course of Events - Admin create
 1. The administrator select create account button(3 types). **(06-manage account)**
 2. The system navigates to the account creation page.  **(07-create admin/ 08-create user / 09-create organiser )**
 3. The administrator enters the required account details for the new user/Organizer/admin. 

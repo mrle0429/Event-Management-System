@@ -2,9 +2,9 @@
 title register - User
 
 actor "User" as us
-control ": AccountSystem" as accountSys
-participant ": AccountService" as accountSer
-entity "user: UserAccount" as userAcc
+control ": __AccountSystem__" as accountSys
+participant ": __AccountService__" as accountSer
+entity "__user: UserAccount__" as userAcc
 
 == 1. The user clicks the "Sign Up" button on the login page.\n 2. The system navigates to the account creation page. \n 3. The user enters the required account details (username, password, email, etc.) ==
 us -> accountSys: signUp(username, password, email)
@@ -13,10 +13,10 @@ activate accountSys
 accountSys -> accountSer: getAccount(email)
 activate accountSer
 accountSer --> accountSys: return null
-
+deactivate accountSer
 
 accountSys -> accountSer: createAccount(username, password, email)
-
+activate accountSer
 create userAcc
 accountSer -> userAcc: new UserAccount(username, password, email)
 

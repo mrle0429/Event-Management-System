@@ -2,10 +2,10 @@
 title register - account exists
 
 actor "User" as us
-control ": AccountSystem" as accountSys
-participant ": AccountService" as accountSer
+control ": __AccountSystem__" as accountSys
+participant ": __AccountService__" as accountSer
 
-== 1. The user clicks the "Sign Up" button on the login page.\n 2. The system navigates to the account creation page. \n 3. The user enters the required account details (username, password, email, etc.) \n 4. The system displays an error message indicating that the account already exists==
+== 1. The user clicks the "Sign Up" button on the login page.\n 2. The system navigates to the account creation page. \n 3. The user enters the required account details (username, password, email, etc) \n 4. The system displays an error message indicating that the account already exists==
 us -> accountSys: signUp(username, password, email)
 activate accountSys
 
@@ -15,10 +15,8 @@ accountSer --> accountSys: return user
 deactivate accountSer
 
 
-
-
 accountSys -> accountSys: showSignUpPage(errCountExist)
-accountSys -> us
+accountSys --> us
 deactivate accountSys
 == 5. The User clicks OK \n 6. The system returns to the account creation page ==
 @enduml
