@@ -1,0 +1,19 @@
+@startuml
+title View Venue Details - Organizer/Administrator
+
+actor Organizer_and_Administrator as OrganizerAdmin
+control ":VenueManagementSystem" as VMS
+participant ":VenueManagementService" as VMSS
+entity "venue:Venue" as DB
+
+== 1. The user selects "Detail" on Manage Venue Page ==
+OrganizerAdmin -> VMS : selectVenueDetail(venueId)
+
+VMS -> VMSS : getVenueDetails(venueId)
+VMSS -> DB : retrieveVenueDetails(venueId)
+DB --> VMSS : return VenueDetails
+VMSS --> VMS : return VenueDetails
+VMS -> VMS : displayVenueDetails()
+VMS --> OrganizerAdmin :
+== 3. System displays the venue details to the user ==
+@enduml

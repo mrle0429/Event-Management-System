@@ -1,0 +1,19 @@
+@startuml
+title My Tickets Unsuccessful- User
+
+actor User
+control ":TicketSystem" as UD
+participant ":TicketService" as TS
+
+== 1. User navigates to "My Tickets" section ==
+User -> UD : viewPurchasedTickets(userId)
+activate UD
+UD -> TS : hasPurchasedTickets()
+activate TS
+TS --> UD : return false
+deactivate TS
+UD -> UD : displayTicketNotfound
+UD --> User :
+deactivate UD
+== 2. System displays a ticket not found page ==
+@enduml
