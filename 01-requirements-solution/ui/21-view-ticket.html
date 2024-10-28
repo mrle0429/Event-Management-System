@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+        <style type="text/css">
+            .updated {
+                font-weight: bold;
+                background-color: #00895A;
+            }
+        </style>
+    <body>
+        <main class="container">
+            <h2>Ticket Details</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                <h3>Ticket Details</h3>
+                <table role="grid">
+                    <tr>
+                        <th scope="col">Ticket Type</th>
+                        <th scope="col">Number Purchased</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                    <tr>
+                        <td>Seated</td>
+                        <td>2</td>
+                        <td>€100</td>
+                    </tr>
+                </table>
+                <h3>Event Name</h3>
+                <div class="grid">
+                    <div><h4>Location:</h4></div>
+                    <div>Grand Convention Hall, Dublin, Ireland</div>
+                </div>
+                <div class="grid">
+                    <div><h4>Description</h4></div>
+                    <div>Something really exciting.... A new years eve party!!!!</div>
+                </div>
+                <div class="grid">
+                    <div><h4>Date and Time</h4></div>
+                    <div><input type="datetime-local" id="birthdaytime" name="birthdaytime" value="2024-12-31T23:59:59" required disabled></div>
+                </div>
+            </article>
+        </main>
+    </body>
