@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    </head>
+    <body>
+        <main class="container-fluid">
+            <h2>Sean's Event Management System</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Tickets</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                Welcome Sean! You have 5 upcoming events.
+                <h5>My Upcoming Events</h5>
+                    <table role="grid">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Event</th>
+                            <th scope="col">Venue</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2024-11-01</td>
+                            <td>10:00 AM</td>
+                            <td>Tech Innovation Conference</td>
+                            <td>Downtown Convention Center</td>
+                            <td>
+                                <button>Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2024-11-05</td>
+                            <td>02:00 PM</td>
+                            <td>AI and Machine Learning Expo</td>
+                            <td>Westside Exhibition Hall</td>
+                            <td>
+                                <button>Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2024-11-10</td>
+                            <td>09:00 AM</td>
+                            <td>Startup Founders Meetup</td>
+                            <td>East End Startup Hub</td>
+                            <td>
+                                <button>Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2024-11-15</td>
+                            <td>01:30 PM</td>
+                            <td>Cloud Computing Summit</td>
+                            <td>Grand Tech Auditorium</td>
+                            <td>
+                                <button>Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2024-11-20</td>
+                            <td>11:00 AM</td>
+                            <td>Cybersecurity Workshop</td>
+                            <td>Tech World Center</td>
+                            <td>
+                                <button>Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="grid">
+                    <button>
+                        View Event History
+                    </button>
+                    <button>
+                        Search For Events
+                    </button>
+                </div>
+            </article>
+        </main>
+    </body>
