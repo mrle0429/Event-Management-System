@@ -1,0 +1,49 @@
+@startuml delete_user_account
+
+actor "Administrator" as a
+
+control "__: UserSystem__" as c
+participant "__: UserService__" as s
+entity "__: UserAccount__" as u
+
+==1. The administrator selects the user account to delete==
+
+a->c: selectUserToDelete(userId)
+activate c
+
+c->s: getUserDetails(userId)
+activate s
+s-->c: return userDetails
+deactivate s
+
+c->c: displayUserDetails()
+
+==2. The system prompts for confirmation of the deletion - 02-Deletion Confirmation==
+
+c->c: showDeletionConfirmation()
+c-->a: display confirmation prompt
+
+==3. The administrator confirms the deletion==
+
+a->c: confirmDeletion()
+activate c
+
+==4. The system deletes the account and notifies the administrator of the successful deletion==
+
+c->s: deleteUser(userId)
+activate s
+
+s->u: delete()
+activate u
+u-->s: deletion complete
+deactivate u
+
+s-->c: deletionStatus
+deactivate s
+
+c->c: notifyAdministrator()
+
+c-->a: display success message
+deactivate c
+
+@enduml

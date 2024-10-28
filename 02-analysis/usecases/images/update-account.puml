@@ -1,0 +1,40 @@
+@startuml update_account_info
+
+actor "User" as u
+control "__: UserSystem__" as c
+participant "__: UserService__" as s
+entity "__: UserAccount__" as a
+
+==1. User navigates to account settings page==
+
+u->c: navigateToAccountSettings()
+activate c
+c-->u: display account settings page
+deactivate c
+
+==2. User enters new account details==
+
+u->c: submitUpdatedInfo(username, password, email)
+activate c
+
+c->c: validateInput()
+
+==3. System updates account information==
+
+c->s: updateUserAccount(userId, updatedInfo)
+activate s
+
+s->a: update()
+activate a
+a-->s: update successful
+deactivate a
+
+s-->c: updateStatus
+deactivate s
+
+c->c: showSuccessMessage()
+c-->u: display success notification
+
+deactivate c
+
+@enduml

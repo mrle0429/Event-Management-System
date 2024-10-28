@@ -1,0 +1,31 @@
+@startuml view_account_details
+
+actor "User" as u
+control "__: UserSystem__" as c
+participant "__: UserService__" as s
+entity "__: UserAccount__" as a
+
+==1. User navigates to account settings==
+
+u->c: clickAccountSettings()
+activate c
+
+c->s: getUserAccount(userId)
+activate s
+
+s->a: getDetails()
+activate a
+a-->s: return accountDetails
+deactivate a
+
+s-->c: return userAccount
+deactivate s
+
+==2. System displays account details==
+
+c->c: displayAccountDetails()
+c-->u: show account settings page
+
+deactivate c
+
+@enduml

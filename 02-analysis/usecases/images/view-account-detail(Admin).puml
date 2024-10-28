@@ -1,0 +1,31 @@
+@startuml view_user_account_details
+
+actor "Administrator" as a
+control "__: UserSystem__" as c
+participant "__: UserService__" as s
+entity "__: UserAccount__" as u
+
+==1. Administrator selects user account==
+
+a->c: selectUserAccount(userId)
+activate c
+
+c->s: getUserDetails(userId)
+activate s
+
+s->u: getAccountInfo()
+activate u
+u-->s: return accountInfo
+deactivate u
+
+s-->c: return userDetails
+deactivate s
+
+==2. System displays user account details==
+
+c->c: displayUserDetails()
+c-->a: show user account details page
+
+deactivate c
+
+@enduml
