@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    </head>
+    <body>
+        <main class="container-fluid">
+            <h2>Sean's Event Management System</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                <h3>My Events</h3>
+                <h5>Accounts</h5>
+                <figure>
+                    <table role="grid">
+                    <thead>
+                        <tr>
+                            <th scope="col">Event Name</th>
+                            <th scope="col">Venue</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Annual Tech Expo</td>
+                            <td>Grand Convention Hall</td>
+                            <td>2024-11-15</td>
+                            <td>09:00 AM</td>
+                            <td><button>View</button></td>
+                        </tr>
+                        <tr>
+                            <td>Startup Pitch Night</td>
+                            <td>City Innovation Center</td>
+                            <td>2024-11-20</td>
+                            <td>06:30 PM</td>
+                            <td><button>View</button></td>
+                        </tr>
+                        <tr>
+                            <td>AI & Data Summit</td>
+                            <td>Westside Conference Room</td>
+                            <td>2024-12-01</td>
+                            <td>10:00 AM</td>
+                            <td><button>View</button></td>
+                        </tr>
+                        <tr>
+                            <td>Cybersecurity Workshop</td>
+                            <td>East Tech Auditorium</td>
+                            <td>2024-12-05</td>
+                            <td>02:00 PM</td>
+                            <td><button>View</button></td>
+                        </tr>
+                        <tr>
+                            <td>Software Development Bootcamp</td>
+                            <td>Digital Learning Hub</td>
+                            <td>2024-12-10</td>
+                            <td>08:30 AM</td>
+                            <td><button>View</button></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <div class="grid">
+                        <div><button>
+                            List All Events
+                        </button></div>
+                        <div><button>
+                            List My Events
+                        </button></div>
+                        <div><button>
+                            Create New Event
+                        </button></div>
+                        <div><button>
+                            List Venues
+                        </button></div>
+                        <div><button>
+                            Create New Venues
+                        </button></div>
+                      </div>
+                </figure>
+            </article>
+        </main>
+    </body>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+        <style type="text/css">
+            .updated {
+                font-weight: bold;
+                background-color: #00895A;
+            }
+        </style>
+    <body>
+        <main class="container">
+            <h2>Venues</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                <table role="grid" class="striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Venue Name</th>
+                            <td>Grand Convention Hall</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Venuue Address</th>
+                            <td>123 Main Street, Springfield, IL</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Contact Person</th>
+                            <td>John Doe</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Phone Number</th>
+                            <td>555-123-4567</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email Address</th>
+                            <td>john.doe@fake.com</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Capacity</th>
+                            <td>550</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Ticket Type</th>
+                            <th scope="col">Number Available</th>
+                        </tr>
+                        <tr>
+                            <td>Standing</td>
+                            <td>400</td>
+                        </tr>
+                        <tr>
+                            <td>Seated</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>Premium</td>
+                            <td>50</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button>Edit Venue</button>
+            </article>
+        </main>
+    </body>
