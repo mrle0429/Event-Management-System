@@ -1,0 +1,28 @@
+@startuml
+title Manage Account Navigation and Return
+
+actor "Administrator" as admin
+control ": AdminDashboard" as dashboard
+boundary ": AccountManagementPage" as accountPage
+
+== 1. Administrator clicks "Manage Account".\n2. The system navigates to the Account Management Page==
+admin -> dashboard: Click "Manage Account"
+activate dashboard
+
+dashboard -> accountPage: Navigate to Account Management Page
+activate accountPage
+
+accountPage --> admin: Display Account Management Page
+deactivate dashboard
+
+== 3. Administrator clicks "Back".\n4. The system navigates to the Admin Dash Page ==
+admin -> accountPage: Click "Back"
+activate accountPage
+
+accountPage -> dashboard: Navigate back to Admin Dashboard
+activate dashboard
+
+dashboard --> admin: Display Admin Dashboard
+deactivate accountPage
+deactivate dashboard
+@enduml
