@@ -2,8 +2,8 @@
 title View Venue Details - Organizer/Administrator
 
 actor Organizer_and_Administrator as OrganizerAdmin
-control ":VenueManagementSystem" as VMS
-participant ":VenueManagementService" as VMSS
+control ":VenueSystem" as VMS
+participant ":VenueService" as VMSS
 entity "venue:Venue" as DB
 
 == 1. The user selects "Detail" on Manage Venue Page ==

@@ -2,9 +2,9 @@
 title Buy Ticket Successful - User
 
 actor User
-control ":EventSystem" as ES
+control ":TicketSystem" as ES
 participant ":TicketService" as TS
-entity "ticket: TicketRecord" as ticket
+entity "__ticket: Ticket__" as ticket
 
 == 1. The User selects the "Buy Ticket" option on the event page==
 User -> ES : buyTicket(eventId)
@@ -12,7 +12,9 @@ activate ES
 ES -> TS : isTicketAvailable()
 activate TS
 TS --> ES : return True
+deactivate TS
 ES -> TS : createTicket(eventId, customerInfo)
+activate TS
 create ticket
 TS -> ticket : new Ticket(eventId, customerInfo)
 activate ticket

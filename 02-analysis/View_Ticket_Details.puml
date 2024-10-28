@@ -4,7 +4,7 @@ title View Ticket Details - User
 actor User
 control ":TicketSystem" as UD
 participant ":TicketService" as TS
-entity "ticket:TicketRecord" as ticket
+entity "ticket:Ticket" as ticket
 
 == 1.User selects a specific ticket from the list in MyTickets page.==
 User -> UD : viewMyTickets(ticketId)

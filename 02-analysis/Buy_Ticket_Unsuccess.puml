@@ -2,7 +2,7 @@
 title Buy Ticket Unsuccessful - User
 
 actor User
-control ":EventSystem" as ES
+control ":TicketSystem" as ES
 participant ":TicketService" as TS
 
 == 1. The User selects the "Buy Now" option on the event page==

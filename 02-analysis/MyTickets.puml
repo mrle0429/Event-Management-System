@@ -15,11 +15,11 @@ TS --> UD : return true
 UD -> TS : getPurchasedTickets(userId)
 TS -> ticket : retrievePurchasedTickets(userId)
 activate ticket
-ticket --> TS : return PurchasedTickets
+ticket --> TS : return PurchasedTicketsList
 deactivate ticket
-TS --> UD : return list of PurchasedTickets
+TS --> UD : return PurchasedTicketsList
 deactivate TS
-UD -> UD : displayTicketsList
+UD -> UD : displayTicketsList()
 UD --> User :
 deactivate UD
 == 2. System displays a list of purchased tickets ==
