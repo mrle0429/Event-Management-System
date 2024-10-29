@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+        <style type="text/css">
+            .updated {
+                font-weight: bold;
+                background-color: #00895A;
+            }
+        </style>
+    <body>
+        <main class="container-fluid">
+            <h2>Ticket History</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                <h4>List of all purchased tickets</h4>
+                <table role="grid">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Event</th>
+                            <th scope="col">Venue</th>
+                            <th scope="col">Ticket Type</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Actions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2024-12-01</td>
+                            <td>11:17</td>
+                            <td>Theatre Play</td>
+                            <td>Club E</td>
+                            <td>General Admission</td>
+                            <td>51</td>
+                            <td><button>View</button></td>
+                          </tr>
+                          <tr>
+                            <td>2024-10-26</td>
+                            <td>16:30</td>
+                            <td>Music Concert</td>
+                            <td>Arena D</td>
+                            <td>Seated</td>
+                            <td>90</td>
+                            <td><button>View</button></td>
+                          </tr>
+                          <tr>
+                            <td>2024-11-02</td>
+                            <td>03:55</td>
+                            <td>Comedy Show</td>
+                            <td>Arena D</td>
+                            <td>Seated</td>
+                            <td>264</td>
+                            <td><button>View</button></td>
+                          </tr>
+                          <tr>
+                            <td>2024-11-14</td>
+                            <td>23:11</td>
+                            <td>Sports Game</td>
+                            <td>Arena D</td>
+                            <td>Premium</td>
+                            <td>74</td>
+                            <td><button>View</button></td>
+                          </tr>
+                          <tr>
+                            <td>2024-11-04</td>
+                            <td>23:28</td>
+                            <td>Sports Game</td>
+                            <td>Concert Hall C</td>
+                            <td>Premium</td>
+                            <td>208</td>
+                            <td><button>View</button></td>
+                          </tr>
+                    </tbody>
+                </table>
+                
+            </article>
+        </main>
+    </body>
