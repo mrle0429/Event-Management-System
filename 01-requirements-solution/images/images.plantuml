@@ -1,66 +1,75 @@
 @startuml usecase
     left to right direction
-    
+    actor User as u
     actor Administrator as a
     actor Organiser as o
-    actor User as u
+    actor Customer as c
+    actor Manager as m
     
-    package venue {
-        usecase "List\nVenues" as lv
+    
+    package all {
+        usecase "List\nEvents" as le
+        usecase "View\nAccount" as va
+        usecase "Modify\nAccount" as ma
+        usecase "View\nEvent" as ve
+    }
+    ma <-- u
+    va <-- u
+    le <-- u
+    ve <-- u
+
+    u <|-- a
+    u <|-- o
+    u <|-- c
+    a ---|> m
+    o ---|> m
+
+    package admin-only {
+        usecase "Delete\nEvent" as de
+        usecase "Create\nAccount" as ca
+        usecase "Delete\nVenue" as dv
+        usecase "List\nAccounts" as la
+    }
+
+    a --> de
+    a --> ca
+    a --> dv
+    a --> la
+
+    package admin-organiser {
+        usecase "Modify\nEvent" as ee
         usecase "Add\nVenue" as av
         usecase "View\nVenue" as vv
         usecase "Modify\nVenue" as ev
-        usecase "Delete\nVenue" as dv
+        usecase "List\nVenues" as lv
     }
-    package account {
-        usecase "Create\nAccount" as ca
-        usecase "List\nAccounts" as la
-        usecase "View\nAccount" as va
-        usecase "Modify\nAccount" as ma
+    
+    m --> av
+    m --> ee
+    m --> lv
+    m --> vv
+    m --> ev
+
+    package customer-only {
         usecase "Register\nAccount" as ra
-    }
-    package event {
-        usecase "List\nEvents" as le
-        usecase "Add\nEvent" as ae
-        usecase "View\nEvent" as ve
-        usecase "Modify\nEvent" as ee
-        usecase "Delete\nEvent" as de
-        usecase "List My\nEvents" as lme
         usecase "List My\nTickets" as lt
         usecase "View\nTicket" as vt
         usecase "Buy\nTicket" as bt
     }
-    
-    
-    a --> ca
-    a --> la
-    a --> ma
-    a --> va
-    va <--- o
-    ma <--- o
-    va <-- u
-    ma <-- u 
-    ra <-- u
 
-    o --> lv
-    o --> vv
-    o --> av
-    o --> ev
-    a --> dv
-    a --> lv
 
+
+    c --> ra
+    c --> lt
+    c --> vt
+    c --> bt
+    package organiser-only {
+        usecase "Add\nEvent" as ae
+        usecase "List My\nEvents" as lme
+    }
     o --> lme
-    o --> ve
     o --> ae
-    o --> ee
-    a --> de
-    a --> le
 
-    u --> le
-    u --> ve
-    u --> lt
-    u --> vt
-    u --> bt
 @enduml
 
 @startuml domain-model
