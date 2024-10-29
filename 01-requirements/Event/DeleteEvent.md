@@ -6,7 +6,7 @@ This use case includes the process of removing an existing event from the system
 
 ## Actors
 
-- Administrators
+Administrators
 
 ## Triggers
 
@@ -26,29 +26,27 @@ After the use case is completed, the event will be removed from the system
 ### 01 - Basic Course of Events
 
 #### Course of Events
-1. The Administrator performs the list events use case **(02 - List Events Page - Administrator)**
-2. The Administrator selects the remove events functionality of the event to be deleted
-3. The system asks the Administrator to confirm **(04 - Delete Events - Confirmation Dialog)**
-4. The Administrator selects **Yes**
-5. The system updates the display to show the current events, with the selected event removed **(02 - List Events Page - Administrator)**
+1. The Administrator selects the remove events functionality of the event to be deleted **(02 - List Events Page - Administrator)**
+2. The system asks the Administrator to confirm **(04 - Delete Events - Confirmation Dialog)**
+3. The Administrator selects **Yes**
+4. The system updates the display to show the current events, with the selected event removed **(02 - List Events Page - Administrator)**
 
 #### Related UI Prototypes
 | 02 - List Events Page - Administrator | 04 - Delete Events - Confirmation Dialog                      |
-| --- |---------------------------------------------------------------|
+| --------------------------------------|---------------------------------------------------------------|
 | ![List Events Page - Administrator](../ui/ListEvents(Administrator).png) | ![Delete Events - Confirmation Dialog](../ui/DeleteEvent.png) |
 
 ### 02 - Alternate course of events - Do Not Delete
 
 #### Course of Events
-1. The Administrator performs the list events use case **(02 - List Events Page - Administrator)**
-2. The Administrator selects the remove events functionality of the event to be deleted
-3. The system asks the Administrator to confirm **(04 - Remove Events - Confirmation Dialog)**
-4. The Administrator selects **No**
-5. The system returns to the List Own Events page of the application **(02 - List Events Page - Administrator)**
+1. The Administrator selects the remove events functionality of the event to be deleted **(02 - List Events Page - Administrator)**
+2. The system asks the Administrator to confirm **(04 - Remove Events - Confirmation Dialog)**
+3. The Administrator selects **No**
+4. The system returns to the List Events page of the application **(02 - List Events Page - Administrator)**
 
 #### Related UI Prototypes
 | 02 - List Events Page - Administrator | 04 - Delete Events - Confirmation Dialog                      |
-| --- |---------------------------------------------------------------|
+| ------------------------------------- |---------------------------------------------------------------|
 | ![List Events Page - Administrator](../ui/ListEvents(Administrator).png) | ![Delete Events - Confirmation Dialog](../ui/DeleteEvent.png) |
 
 ## Inclusions

@@ -6,8 +6,8 @@ This use case includes navigating the application to list the current events, wi
 
 ## Actors
 
-- Administrators
-- Organisers
+Administrators
+Organisers
 
 ## Triggers
 
@@ -20,7 +20,7 @@ This use case is triggered by the following situations:
 
 ## Preconditions
 
-- The Administrator/Organiser has login its account.
+The Administrator/Organiser has login its account
 
 ## Postconditions
 
@@ -32,14 +32,15 @@ This use case is triggered by the following situations:
 ### 01 - Basic Course of Events
 
 #### Course of Events
-1. The system displays a filter option at the top of the screen, allowing the user to filter events by category, date, or location **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator)**
-2. The organiser/administrator selects the desired filter options (category, date, or location) from the dropdown list or inputs the relevant criteria
-3. The system displays the filtered list of events based on the selected criteria, including the event name, time, and venue 
+1. The organiser/administrator clicks the “My Events"/"Manage Events” button on the main page **(09 - Organiser Dashboard Page)**  **(10 - Admin Dashboard Page)**
+2. The system displays a filter option at the top of the screen, allowing the user to filter events by category, date, or location **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator)**
+3. The organiser/administrator selects the desired filter options (category, date, or location) from the dropdown list or inputs the relevant criteria
+4. The system displays the filtered list of events based on the selected criteria, including the event name, time, and venue
 
 #### Related UI Prototypes
-| 01 - List Events Page - Organiser                             | 02 - List Events Page - Administrator                                      |
-|---------------------------------------------------------------|----------------------------------------------------------------------------|
-| ![List Events Page - Organiser](../ui/ListEvents(Organiser).png) | ![02 - List Events Page - Administrator](../ui/ListEvents(Administrator).png) |
+| 09 - Organiser Dashboard Page                                  | 10 - Admin Dashboard Page                                                    | 01 - List Events Page - Organiser | 02 - List Events Page - Administrator                                     |
+|----------------------------------------------------------------|------------------------------------------------------------------------------|-----------------------------------|---------------------------------------------------------------------------|
+| ![Organiser Dashboard Page](../ui/OrganiserDashboard.png) | ![Admin Dashboard Pag](../ui/AdminDashboard.png) |![List Events Page - Organiser](../ui/ListEvents(Organiser).png) | ![List Events Page - Administrator](../ui/ListEvents(Administrator).png) |
 
 
 ## Inclusions

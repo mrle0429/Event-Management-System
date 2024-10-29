@@ -1,0 +1,22 @@
+@startuml
+title Create Event - 03 Alternate Course of Events (Cancel)
+
+actor "Organiser/Administrator" as OA
+control EventSystem as System
+
+== 1. The organiser/administrator selects the create event functionality **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator) ==
+
+note right of OA: This part happens in Javascript
+== 2. The system displays a dialog to enter the event details **(05 - Create Event Dialog)**\n3. The organiser/administrator enters the event details (or not) and clicks "Cancel" ==
+
+OA -> System: cancelCreateEvent()
+activate System
+
+System -> System: closeCreateEventDialog()
+note over System: The dialog is closed\nand no new event is created
+
+System --> OA
+deactivate System
+
+== 4. The system returns to the List Events page of the application **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator) ==
+@enduml

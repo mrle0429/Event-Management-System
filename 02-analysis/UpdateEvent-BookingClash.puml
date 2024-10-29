@@ -1,0 +1,39 @@
+@startuml
+title Update Event - 02 Alternate Course of Events (Booking Clash)
+
+actor "Organiser/Administrator" as OA
+control EventSystem as System
+participant ":EventService" as Service
+entity Event
+
+== 1. The organiser/administrator selects the relevant event from the display to be updated **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator) ==
+note right of OA: This part happens in Javascript
+
+== 2. The system displays a dialog to enter the event details **(07 - Update Event Page)**\n3. The organiser/administrator updates the details of the event and clicks "Save" ==
+
+OA -> System: updateEvent(details)
+activate System
+
+System -> Service: checkForConflict(details)
+activate Service
+
+Service -> Service: events := listAllEvents()
+
+loop for each event returned
+  Service->Event:dt := getDate()
+  Service->Event:tm := getTime()
+  Service->Event:tab := getVenue()
+end
+
+
+Service --> System: return true
+deactivate Service
+
+System -> OA: showConflictWarning()
+
+== 4. The organiser/administrator modifies the details to resolve the conflict and retries **(08 - Update Event Dialog - Time and Venue Clash)** ==
+
+System --> OA
+deactivate System
+
+@enduml
