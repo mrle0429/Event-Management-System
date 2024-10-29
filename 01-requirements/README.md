@@ -37,7 +37,7 @@ The use cases are shown in this diagram
 This includes the following use cases:
 
 ### Account Management
-1. [Create Account](Account/createAccount.md)
+1. [Create Account](/01-requirements/Account/01-create-account.md)
 2. [Delete Account](Account/DeleteAccount.md)
 3. [Update Account](Account/UpdateAccount.md)
 4. [View Details Account](Account/ViewAccountDetails.md)
