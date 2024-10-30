@@ -1,0 +1,14 @@
+build-job:
+  stage: build
+  script:
+      - pwd
+      - ls
+      - cp 02-analysis/README.md temp.md
+      - find 02-analysis/usecases/docs/*.md -exec echo $'\n\n'\# Filename - {} $'\n\n' \; -exec cat {} \;  >> temp.md
+      - sed -i 's|(/02|(./02|g' temp.md
+      - sed -i 's|(/01|(./01|g' temp.md
+      - pandoc -f markdown-implicit_figures -V geometry:margin=1cm -V geometry:landscape -o $CI_PROJECT_NAME-analysis.pdf temp.md
+  tags: [pandocs]
+  artifacts:
+    paths:
+      - "$CI_PROJECT_NAME-analysis.pdf"
