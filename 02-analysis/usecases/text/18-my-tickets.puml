@@ -4,7 +4,7 @@ title My Tickets - User
 actor User
 control ":TicketSystem" as UD
 participant ":TicketService" as TS
-entity "ticket:TicketRecord" as ticket
+entity "ticket:Ticket" as ticket
 
 == 1. User navigates to "My Tickets" section ==
 User -> UD : viewPurchasedTickets(userId)
@@ -17,7 +17,7 @@ UD -> TS : getPurchasedTickets(userId)
 activate TS
 TS --> UD : return PurchasedTicketsList
 deactivate TS
-UD -> UD : displayTicketsList()
+UD -> UD : displayTicketsList(PurchasedTicketsList)
 UD --> User :
 deactivate UD
 == 2. System displays a list of purchased tickets ==

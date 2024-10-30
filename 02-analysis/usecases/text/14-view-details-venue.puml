@@ -10,11 +10,11 @@ entity "venue:Venue" as DB
 OrganizerAdmin -> VMS : selectVenueDetail(venueId)
 activate VMS
 
-VMS -> VMSS : getVenueDetails(venueId)
+VMS -> VMSS : getVenue(venueId)
 activate VMSS
-VMSS --> VMS : return VenueDetails
+VMSS --> VMS : return Venue
 deactivate VMSS
-VMS -> VMS : displayVenueDetails()
+VMS -> VMS : displayVenueDetails(Venue)
 VMS --> OrganizerAdmin :
 deactivate VMS
 == 3. System displays the venue details to the user ==

@@ -12,7 +12,7 @@ UD -> TS : hasPurchasedTickets()
 activate TS
 TS --> UD : return false
 deactivate TS
-UD -> UD : displayTicketNotfound()
+UD -> UD : displayTicketNotfoundPage()
 UD --> User :
 deactivate UD
 == 2. System displays a ticket not found page ==

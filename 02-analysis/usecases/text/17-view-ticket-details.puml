@@ -9,11 +9,11 @@ entity "ticket:Ticket" as ticket
 == 1.User selects a specific ticket from the list in MyTickets page.==
 User -> UD : viewMyTickets(ticketId)
 activate UD
-UD -> TS : getTicketDetails(ticketId)
+UD -> TS : getTicket(ticketId)
 activate TS
-TS --> UD : return TicketDetails
+TS --> UD : return Ticket
 deactivate TS
-UD -> UD : displayTicketDetails()
+UD -> UD : displayTicketDetails(Ticket)
 UD --> User :
 deactivate UD
 ==2.The system displays the ticket details, including event name, date, time, venue, ticket type, seat number and price.==
