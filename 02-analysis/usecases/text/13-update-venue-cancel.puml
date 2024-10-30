@@ -1,0 +1,22 @@
+@startuml
+title Update Venue - 03 Alternate Course of Events (Cancel)
+
+actor "Organiser/Administrator" as OA
+control VenueSystem as System
+
+== 1. The organiser/administrator selects the relevant venue from the display to be updated **(01 - List Venues Page - Organiser)** **(02 - List Venues Page - Administrator) ==
+note right of OA: This part happens in Javascript
+
+== 2. The system displays a dialog to enter the venue details **(07 - Update Venue Page)**\n3. The organiser/administrator updates the details of the venue and clicks "Cancel" ==
+
+OA -> System: cancelUpdateVenue()
+activate System
+
+System -> System: closeUpdateVenueDialog()
+note over System: The dialog is closed\nand no changes are saved
+
+System --> OA
+deactivate System
+
+== 4. The system returns to the List Venues page of the application **(01 - List Venues Page - Organiser)** **(02 - List Venues Page - Administrator) ==
+@enduml

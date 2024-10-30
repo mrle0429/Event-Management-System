@@ -1,0 +1,22 @@
+@startuml
+title Create Venue - Alternate Course of Events (Cancel)
+
+actor "Organiser/Administrator" as OA
+control VenueSystem as System
+
+== 1. The organiser/administrator selects the create venue functionality  ==
+
+note right of OA: This part happens in Javascript
+== 2. The system displays a dialog to enter the event details **(02 -Create Venue Page)**\n3. The organiser/administrator enters the event details (or not) and clicks "Cancel" ==
+
+OA -> System: cancelCreateVenue()
+activate System
+
+System -> System: closeCreateEventDialog()
+note over System: The dialog is closed\nand no new event is created
+
+System --> OA
+deactivate System
+
+== 4. The system returns to the List Venues page **(01- Manage Venue Page)** ==
+@enduml
