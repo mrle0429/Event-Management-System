@@ -1,9 +1,9 @@
-@startuml view_account_details
-
+@startuml
+title: view-account-detail(User)
 actor "User" as u
-control "__: UserSystem__" as c
-participant "__: UserService__" as s
-entity "__: UserAccount__" as a
+control "__: AccountSystem__" as c
+participant "__: AccountService__" as s
+entity "__User: Account__" as a
 
 ==1. User navigates to account settings==
 

@@ -1,9 +1,9 @@
-@startuml view_user_account_details
-
+@startuml
+title: view-account-detail(Admin)
 actor "Administrator" as a
-control "__: UserSystem__" as c
-participant "__: UserService__" as s
-entity "__: UserAccount__" as u
+control "__: AccountSystem__" as c
+participant "__: AccountService__" as s
+entity "__User: Account__" as u
 
 ==1. Administrator selects user account==
 

@@ -1,0 +1,38 @@
+@startuml update_account
+title: update-account(Admin)
+actor "Administrator" as admin
+control "__: AccountSystem__" as sys
+participant "__: AccountService__" as service
+entity "__User: Account__" as account
+
+==1. Administrator selects modify account functionality on the list accounts page==
+
+admin -> sys : selectModifyAccountOption()
+activate sys
+sys --> admin : display modify account page with editable fields
+deactivate sys
+
+
+admin -> sys : submitUpdatedInfo(username, password, email)
+activate sys
+sys -> sys : validateInput()
+
+==2. Administrator enters updated account details\n3. System updates account information==
+
+sys -> service : updateUserAccount(userId, updatedInfo)
+activate service
+service -> account : saveUpdatedDetails()
+activate account
+account --> service : return true
+deactivate account
+
+service --> sys : return true
+deactivate service
+
+sys -> sys : refreshViewAccountPage()
+sys --> admin
+
+deactivate sys
+==4. System displays the view account page with updated details==
+
+@enduml

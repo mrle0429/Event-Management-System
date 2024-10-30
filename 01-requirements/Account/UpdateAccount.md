@@ -28,7 +28,7 @@ This use case is triggered when a user, organizer or administrator wants to chan
 ### 01 - Basic Course of Events
 
 #### Course of Events
-1. The user navigates to the account settings page. **(01 - Account Settings Page)**.
+1. The user selects the option to update their account information. **(01 - Account Settings Page)**.
 2. The user enters the new details (username, password, email, etc.).
 3. The system updates the account information and displays a success message.
 
