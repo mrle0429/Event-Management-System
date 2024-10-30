@@ -8,12 +8,14 @@ entity "venue:Venue" as DB
 
 == 1. The user selects "Detail" on Manage Venue Page ==
 OrganizerAdmin -> VMS : selectVenueDetail(venueId)
+activate VMS
 
 VMS -> VMSS : getVenueDetails(venueId)
-VMSS -> DB : retrieveVenueDetails(venueId)
-DB --> VMSS : return VenueDetails
+activate VMSS
 VMSS --> VMS : return VenueDetails
+deactivate VMSS
 VMS -> VMS : displayVenueDetails()
 VMS --> OrganizerAdmin :
+deactivate VMS
 == 3. System displays the venue details to the user ==
 @enduml

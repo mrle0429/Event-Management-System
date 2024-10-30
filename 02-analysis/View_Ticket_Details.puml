@@ -11,10 +11,6 @@ User -> UD : viewMyTickets(ticketId)
 activate UD
 UD -> TS : getTicketDetails(ticketId)
 activate TS
-TS -> ticket : retrieveDetails(ticketId)
-activate ticket
-ticket --> TS : return TicketDetails
-deactivate ticket
 TS --> UD : return TicketDetails
 deactivate TS
 UD -> UD : displayTicketDetails()

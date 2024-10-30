@@ -12,11 +12,9 @@ activate UD
 UD -> TS : hasPurchasedTickets()
 activate TS
 TS --> UD : return true
+deactivate TS
 UD -> TS : getPurchasedTickets(userId)
-TS -> ticket : retrievePurchasedTickets(userId)
-activate ticket
-ticket --> TS : return PurchasedTicketsList
-deactivate ticket
+activate TS
 TS --> UD : return PurchasedTicketsList
 deactivate TS
 UD -> UD : displayTicketsList()
