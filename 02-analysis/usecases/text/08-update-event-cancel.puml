@@ -1,0 +1,22 @@
+@startuml
+title Update Event - 03 Alternate Course of Events (Cancel)
+
+actor "Organiser/Administrator" as OA
+control EventSystem as System
+
+== 1. The organiser/administrator selects the relevant event from the display to be updated **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator) ==
+note right of OA: This part happens in Javascript
+
+== 2. The system displays a dialog to enter the event details **(07 - Update Event Page)**\n3. The organiser/administrator updates the details of the event and clicks "Cancel" ==
+
+OA -> System: cancelUpdateEvent()
+activate System
+
+System -> System: closeUpdateEventDialog()
+note over System: The dialog is closed\nand no changes are saved
+
+System --> OA
+deactivate System
+
+== 4. The system returns to the List Events page of the application **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator) ==
+@enduml
