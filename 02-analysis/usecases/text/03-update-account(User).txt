@@ -1,40 +1,44 @@
 @startuml
-title: update_account(User)
-actor "User" as u
+title: 03-update-account(User)
+actor "Admin" as u
 control "__: AccountSystem__" as c
 participant "__: AccountService__" as s
 entity "__User: Account__" as a
 
 ==1. User selects the modify account functionality on the view account page==
 
-u -> c : selectModifyAccountOption()
+u -> c : showEditAccount(userId)
 activate c
-c --> u : display modify account page with editable fields
+c -> s : getAccount(userId)
+activate s
+
+s --> c : return selectedAccount
+deactivate s
+c -> c  : displayEditAccountPage(selectedAccount)
+c --> u
 deactivate c
-
-
-
-u -> c : submitUpdatedInfo(username, password, email)
-activate c
-c -> c : validateInput()
 
 ==2. User enters updated account details\n3. System updates account information==
 
-c -> s : updateUserAccount(userId, updatedInfo)
+u -> c : editAccount(userId, newUsername, newPassword, newEmail)
+activate c
+c -> s : getAccount(userId)
 activate s
-s -> a : saveUpdatedDetails()
-activate a
-a --> s : return true
-deactivate a
 
-s --> c : return true
+s --> c : return selectedAccount
 deactivate s
 
+c -> a : setUsername(newUsername)
+c -> a : setPassword(newPassword)
+c -> a : setEmail(newEmail)
 
-
-c -> c : refreshViewAccountPage()
-c --> u :
-
+c -> s : getAccounts()
+activate s
+s --> c : return accounts
+deactivate s
+c -> c  : displayAccountPage(accounts)
+c --> u
 deactivate c
-==4. System displays the view account page with updated details (06-view-account)==
+
+==4. System displays the view account page with updated details==
 @enduml

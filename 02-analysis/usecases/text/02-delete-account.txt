@@ -1,5 +1,5 @@
 @startuml
-title: delete-account
+title: 02-delete-account
 actor "Administrator" as a
 
 control "__: AccountSystem__" as c

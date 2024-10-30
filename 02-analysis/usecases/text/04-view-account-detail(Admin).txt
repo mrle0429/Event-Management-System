@@ -1,5 +1,5 @@
 @startuml
-title: view-account-detail(Admin)
+title: 04-view-account-detail(Admin)
 actor "Administrator" as a
 control "__: AccountSystem__" as c
 participant "__: AccountService__" as s
