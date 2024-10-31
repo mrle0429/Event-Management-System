@@ -26,7 +26,6 @@
 #### Course of Events
 1. User navigates to the "My Tickets" section of the application. **(UserDashBoard page)**
 2. The system displays a list of purchased tickets **(My Tickets Page)**
-3. User can view tickets, venue, date, or ticket status (e.g., past or upcoming).
 
 #### Related UI Prototypes
 | 01 - My Tickets Page |
@@ -41,7 +40,7 @@
 ### 02 - Alternate course of events - No Purchased Tickets
 #### Course of Events
 1. User navigates to the "My Tickets" section of the application. **(UserDashBoard page)**
-3. If no tickets are found, the system displays a message indicating that there are no purchased tickets.
+2. The system displays a message indicating that there are no purchased tickets.
 
 
 

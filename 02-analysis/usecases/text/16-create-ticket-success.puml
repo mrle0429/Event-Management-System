@@ -6,7 +6,7 @@ control ":TicketSystem" as ES
 participant ":TicketService" as TS
 entity "__ticket: Ticket__" as ticket
 
-== 1. The User selects the "Buy Ticket" option on the event page==
+== 1. The User selects the "Buy Now" option on the event page==
 User -> ES : buyTicket(eventId)
 activate ES
 ES -> TS : isTicketAvailable()
