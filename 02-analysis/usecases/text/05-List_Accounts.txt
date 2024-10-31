@@ -1,0 +1,17 @@
+@startuml
+title List Accouts
+
+actor "Administrator" as admin
+control ": AccountSystem" as accountSys
+participant ": AccountService" as accounySer
+
+== 1. The administrator navigates to the account management page .\n2. The system retrieves and displays a list of all user accounts.==
+admin -> accountSys: listAllAccout()
+
+accountSys -> accounySer: getAllAccounts()
+accounySer --> accountSys: return accounts
+
+accountSys -> accountSys: showAccountsList()
+
+accountSys --> admin: showAccountManagementPage()
+@enduml
