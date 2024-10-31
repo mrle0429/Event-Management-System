@@ -1,0 +1,18 @@
+@startuml
+title List all Event
+
+actor "Organizer and Administrator" as admin
+control ": AccountSystem" as accountSys
+participant ": EventService" as eventServ
+
+== 1. The administrator or Organizer clicks "Manage Events" on the dashboard\n2. The system retrieves all events and displays the event list to the \n    administrator and Organizer ==
+admin -> accountSys: listAllEvents()
+
+accountSys -> eventServ: getAllEvents()
+eventServ --> accountSys: return events
+
+accountSys -> accountSys: showEventList()
+
+
+accountSys -> admin: showEventManagementPage()
+@enduml
