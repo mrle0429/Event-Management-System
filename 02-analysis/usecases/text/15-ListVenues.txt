@@ -1,0 +1,18 @@
+@startuml
+title List all Venues
+
+actor "Organizer and Administrator" as admin
+control ": AccountSystem" as accountSys
+participant ": VenueService" as venueServ
+
+== 1. The Administrator or Organizer clicks "Manage Venues" on the dashboard\n2. The system retrieves all venues and displays the venue list to the\n    administrator and Organizer ==
+admin -> accountSys: listAllVenue()
+
+accountSys -> venueServ: getAllVenues()
+venueServ --> accountSys: return venues
+
+accountSys -> accountSys: showVenueList()
+
+
+accountSys -> admin: showVenueManagementPage()
+@enduml
