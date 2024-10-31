@@ -8,7 +8,7 @@ participant ":TicketService" as TS
 == 1. User navigates to "My Tickets" section ==
 User -> UD : viewPurchasedTickets(userId)
 activate UD
-UD -> TS : hasPurchasedTickets()
+UD -> TS : hasTickets()
 activate TS
 TS --> UD : return false
 deactivate TS

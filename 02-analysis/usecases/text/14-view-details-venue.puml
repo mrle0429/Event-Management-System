@@ -12,9 +12,13 @@ activate VMS
 
 VMS -> VMSS : getVenue(venueId)
 activate VMSS
-VMSS --> VMS : return Venue
+VMSS --> VMS : return venue
 deactivate VMSS
-VMS -> VMS : displayVenueDetails(Venue)
+VMS -> DB : getDetials(venue)
+activate DB
+DB --> VMS : return venueDetails
+deactivate DB
+VMS -> VMS : displayVenueDetails(venueDetails)
 VMS --> OrganizerAdmin :
 deactivate VMS
 == 3. System displays the venue details to the user ==

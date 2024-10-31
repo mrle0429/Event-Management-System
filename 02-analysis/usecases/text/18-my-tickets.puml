@@ -7,17 +7,17 @@ participant ":TicketService" as TS
 entity "ticket:Ticket" as ticket
 
 == 1. User navigates to "My Tickets" section ==
-User -> UD : viewPurchasedTickets(userId)
+User -> UD : viewTickets(userId)
 activate UD
-UD -> TS : hasPurchasedTickets()
+UD -> TS : hasTickets()
 activate TS
 TS --> UD : return true
 deactivate TS
-UD -> TS : getPurchasedTickets(userId)
+UD -> TS : getTickets(userId)
 activate TS
-TS --> UD : return PurchasedTicketsList
+TS --> UD : return tickets
 deactivate TS
-UD -> UD : displayTicketsList(PurchasedTicketsList)
+UD -> UD : displayTicketsList(tickets)
 UD --> User :
 deactivate UD
 == 2. System displays a list of purchased tickets ==
