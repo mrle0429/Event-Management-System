@@ -32,8 +32,8 @@ deactivate Service
 Service --> System:
 deactivate Service
 
-System -> Service: venues := listAllVenues()
-System -> System: updateDisplay()
+System -> Service: getVenues()
+System -> System: displayVenues(venues)
 
 System --> OA
 deactivate System

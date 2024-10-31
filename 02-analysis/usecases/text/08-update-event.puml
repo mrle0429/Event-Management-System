@@ -32,13 +32,18 @@ deactivate Service
 System -> Event: setDetails(details)
 
 
-
+System -> Service: saveEvent(Event)
+activate Service
+Service --> System: 
+deactivate Service
 
 System -> Service: getEventList()
 activate Service
-Service --> System: return eventList
+Service --> System: return events
 deactivate Service
-System -> System: displayEventsList()
+System -> System: displayEventsList(events)
+
+
 
 System --> OA
 deactivate System

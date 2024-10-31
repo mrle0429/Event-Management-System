@@ -14,12 +14,16 @@ note right of OA: This part happens in Javascript
 OA -> System: updateVenue(details)
 activate System
 
-System -> Service: getEvent(eventId)
+System -> Service: getVenue(venueId)
 activate Service
-Service -> System: return event
+Service -> System: return selectedVenue
 deactivate Service
 
 System -> Venue: setDetails(details)
+System -> Service: saveVenue(Venue)
+activate Service
+Service --> System: 
+deactivate Service
 
 System -> Service: getVenues()
 activate Service
