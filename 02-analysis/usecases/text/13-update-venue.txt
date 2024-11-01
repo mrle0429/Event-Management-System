@@ -6,7 +6,7 @@ control VenueSystem as System
 participant ":VenueService" as Service
 entity "selected : Venue" as Venue
 
-== 1. The organiser/administrator selects the relevant venue from the display to be updated **(01 - List Venues Page - Organiser)** **(02 - List Venues Page - Administrator) ==
+== 1. The organiser/administrator selects the relevant venue from the display to be updated ==
 note right of OA: This part happens in Javascript
 
 == 2. The system displays a dialog to enter the venue details **(07 - Update Venue Page)**\n3. The organiser/administrator updates the details of the venue and clicks "Save" ==
@@ -34,5 +34,5 @@ System -> System: displayVenueList(venues)
 System --> OA
 deactivate System
 
-== 4. The system updates the view to show the current venues for the specified organiser/administrator, including the newly changed venue **(01 - List Venues Page - Organiser)** **(02 - List Venues Page - Administrator) ==
+== 4. The system updates the view to show the current venues for the specified organiser/administrator, including the newly changed venue ==
 @enduml

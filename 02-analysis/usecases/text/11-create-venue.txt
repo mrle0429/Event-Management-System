@@ -6,9 +6,9 @@ control “： VenueSystem” as System
 participant ":VenueService" as Service
 
 
-== 1. The organiser/administrator selects the "create" venue functionality **(01- Manage Venue Page)** ==
+== 1. The organiser/administrator selects the "create" venue functionality ==
 note right of OA: This part happens in Javascript
-== 2. The system displays a dialog to enter the venue details **(02 -Create Venue Page)** \n3. The organiser/administrator enters the venue details and clicks "Create" ==
+== 2. The system displays a dialog to enter the venue details \n3. The organiser/administrator enters the venue details and clicks "Create" ==
 
 OA -> System: createVenue(details)
 activate System
@@ -38,5 +38,5 @@ System -> System: displayVenues(venues)
 System --> OA
 deactivate System
 
-== 4. The system updates the view to show the current venues for the specified organiser/administrator, including the newly made venue **(01- Manage Venue Page)** ==
+== 4. The system updates the view to show the current venues for the specified organiser/administrator, including the newly made venue ==
 @enduml
