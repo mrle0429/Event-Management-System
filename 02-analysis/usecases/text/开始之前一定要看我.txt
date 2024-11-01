@@ -1,9 +1,0 @@
-提交的时候一定要删除
-
-1. 对于cancel类事件，不需要一个时序图，在文档中时序图的位置添加下列话术
-In this case, all interactions are completed within the javascript of the view majors page. No request is made to the server and no response is received.
-2. 我已经将cancel的图全部删除
-3. 已经对场馆和演唱会做了修改，但不一定很对，有任何疑义可以探讨。
-4. 针对更新方法，在sean的两次例子中做法不一致，我们选择了2023版本的做法，即由system直接set变量
-5. 你的文档命名需要完全与图片的命名一致
-6. 你不需要生成.png文件，只需要保留.puml文件，以应对临时的修改

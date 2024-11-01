@@ -2,28 +2,33 @@
 
 ## Courses of Events
 
-### 01 - Basic Course of Events
+### Basic Course of Events - Any User Modifying Their Account
 
-#### Course of Events
-1. The user selects the option to update their account information. **(03 - user-dash-page)**.
-2. The user enters the new details (username, password, email, etc.).
-3. The system updates the account information and displays a success message.
-   ![](/02-analysis/usecases/images/03-update-account(User).png)
+1. The user clicks "edit" to update their account information on the account info page. (10-Admin-information) (22-organizer-information)  (26-user-info)
+2. The system displays the account update form. 
+3. The user enters the new details (username, password, email, etc.)
+4. System displays the view account page with updated details
+
+
+![](/02-analysis/usecases/images/03-update-account(User).png)
+
 #### Related UI Prototypes
-|                     01 - Account Settings Page                      |
+|                     01 - Account info Page                      |
 |:-------------------------------------------------------------------:|
-|   ![Account Settings](/01-requirements/ui/03-user-dash-page.png)    |
-|               :-------------------------------------:               |
-|   ![Account Settings](/01-requirements/ui/04-admin-dash-page.png)   |
-|               :-------------------------------------:               |
-| ![Account Settings](/01-requirements/ui/05-organiser-dash-page.png) |
+| ![](/01-requirements/ui/10-Admin-infomation.png)         |
+| ![](/01-requirements/ui/22-organizer-infomation.png)     |
+| ![](/01-requirements/ui/26-user-info.png)                |
 
-### 02 - Administrator Updates Another User's Account
+
+
+### Basic Course of Events - Administrator Updates Another User's Account
 
 #### Course of Events
-1. The administrator navigates to the account management page and selects a user to update. **(06 - manage-account)**.
-2. The administrator enters the new details.
-3. The system updates the account information and notifies the administrator of the successful update.
+1. The administrator clicks 'edit" to selects a user to update. **(06 - manage-account)**.
+2. The System displays the account update page
+3. The administrator enters the new details.
+4. The system dispkay account info page.(26-user-info)
+
    ![](/02-analysis/usecases/images/03-update-account(Admin).png)
 #### Related UI Prototypes
 |             01 - Account Management Page              |

@@ -26,7 +26,7 @@ deactivate userAcc
 
 accountSer --> accountSys: return user
 deactivate accountSer
-accountSys -> accountSys: showDashPage()
+accountSys -> accountSys: showDashPage(user)
 accountSys --> us
 deactivate accountSys
 

@@ -5,7 +5,7 @@ control "__: AccountSystem__" as c
 participant "__: AccountService__" as s
 entity "__User: Account__" as a
 
-==1. Administrator selects modify account functionality on the list accounts page==
+==1. The administrator clicks 'edit" to selects a user to update. (06 - manage-account)==
 
 admin -> c : showEditAccount(userId)
 activate c
@@ -18,7 +18,7 @@ c -> c : displayEditAccountPage(selectedAccount)
 c --> admin
 deactivate c
 
-==2. Administrator enters updated account details\n3. System updates account information==
+==2. The system displays the account update form. \nThe Admin enters the new details (username, password, email, etc.)==
 
 admin -> c : editAccount(userId, newUsername, newPassword, newEmail)
 activate c

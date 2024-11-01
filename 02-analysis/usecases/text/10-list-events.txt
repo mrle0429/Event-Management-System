@@ -9,10 +9,11 @@ participant ": EventService" as eventServ
 admin -> accountSys: listAllEvents()
 
 accountSys -> eventServ: getAllEvents()
+activate eventServ
 eventServ --> accountSys: return events
-
+deactivate eventServ
 accountSys -> accountSys: showEventList()
 
 
-accountSys -> admin: showEventManagementPage()
+accountSys --> admin: 
 @enduml

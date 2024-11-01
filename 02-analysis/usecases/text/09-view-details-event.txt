@@ -1,0 +1,25 @@
+@startuml
+title View Event Details - Organizer/Administrator
+
+actor Organizer_Administrator as OrganizerAdmin
+control "__:EventSystem__" as ES
+participant "__:EventService__" as ESS
+entity "__selectedevent:Event__" as DB
+
+== 1. The user clicks "Details" on List Events Page ==
+OrganizerAdmin -> ES : selectEventDetail(eventId)
+activate ES
+
+ES -> ESS : getEvent(eventId)
+activate ESS
+ESS --> ES : return event
+deactivate ESS
+ES -> DB : getDetails(event)
+activate DB
+DB --> ES : return eventDetails
+deactivate DB
+ES -> ES : displayEventDetails(eventDetails)
+ES --> OrganizerAdmin :
+deactivate ES
+== 2. System displays the event details to the user ==
+@enduml

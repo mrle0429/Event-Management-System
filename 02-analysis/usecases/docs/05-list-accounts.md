@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 1. The administrator clicks the "Manage Account" button on the login page. (04 - Admin Dash Page)
-2. The system navigates to the Manage Account Page. The system retrieves and displays a list of all user accounts.(06 - Manage Account Page)
+2. The system displays a list of all user accounts.(06 - Manage Account Page)
 
 ![Use Case Name - Basic Course of Events](/02-analysis/usecases/images/05-list-accounts.png)
 

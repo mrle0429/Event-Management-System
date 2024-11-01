@@ -12,8 +12,9 @@ activate ES
 ES -> TS : isTicketAvailable()
 activate TS
 TS --> ES : return False
-ES -> ES : showPurchaseUnsuccessfulPage()
 deactivate TS
+ES -> ES : showPurchaseUnsuccessfulPage()
+
 ES --> User :
 deactivate ES
 ==2.The system redirect the user to purchase unsuccessful page==

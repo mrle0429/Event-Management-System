@@ -5,9 +5,11 @@
 ### 01 - Basic Course of Events (User/Organizer/Admin)
 
 #### Course of Events
-1. The user navigates to the account settings page and selects button. . **(03 - user-dash-page)**
-2. The system displays the account details.**(02 - Account Settings Page)**
-   ![](/02-analysis/usecases/images/04-view-account-details(User).png)
+1. The user clicks on their avatar to view account details **(03 - user-dash-page)** **(04-admin-dash-page)** **(05-organizer-dash-page)**
+2. The system displays the account details.
+
+![](/02-analysis/usecases/images/04-view-account-details(User).png)
+   
 #### Related UI Prototypes
 | 01- Dashboard Page|
 |:-----------------------------------------:|
@@ -26,7 +28,8 @@
 #### Course of Events
 1. The administrator selects a user account to view.**(06 - manage-account)**.
 2. The system displays the user's account details.**(26 - user-info )**
-   ![](/02-analysis/usecases/images/04-view-account-details(Admin).png)
+
+![](/02-analysis/usecases/images/04-view-account-details(Admin).png)
 #### Related UI Prototypes
 |                   01 - Account Management Page                   |                      02 - User Account Details                       |
 |:----------------------------------------------------------------:|:--------------------------------------------------------------------:|

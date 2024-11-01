@@ -15,4 +15,4 @@
 ## Related UI Prototypes
 | Tile                  | Page                                                    |
 |-----------------------|---------------------------------------------------------|
-| 01 - Buy Tickets Page | ![Buy Tickets Page](/01-requirements/ui/BuyTickets.png) |
+| 01 - Buy Tickets Page | ![Buy Tickets Page](/01-requirements/ui/12-buy-tickets.png) |

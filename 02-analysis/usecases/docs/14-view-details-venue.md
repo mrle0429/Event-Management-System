@@ -9,6 +9,6 @@
 ## Related UI Prototypes
 | Tile                             | Page                                                                         |
 |----------------------------------|------------------------------------------------------------------------------|
-| 01 - Organiser Manage Venue Page | ![Organiser Manage Venue Page](/01-requirements/ui/OrganiserManageVenue.png) |
-| 02 - Admin Manage Venue Page     | ![Admin Manage Venue Page](/01-requirements/ui/AdminManageVenue.png)         |
-| 03 - Venue Detail Page           | ![Venue Detail Page](/01-requirements/ui/EditVenue.png)                      |
+| 01 - Organiser Manage Venue Page | ![Organiser Manage Venue Page](/01-requirements/ui/23-organizer-manage-venue.png) |
+| 02 - Admin Manage Venue Page     | ![Admin Manage Venue Page](/01-requirements/ui/11-admin-manage-venue.png)         |
+| 03 - Venue Detail Page           | ![Venue Detail Page](/01-requirements/ui/18-edit-venue.png)                      |

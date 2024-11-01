@@ -9,10 +9,11 @@ participant ": VenueService" as venueServ
 admin -> accountSys: listAllVenue()
 
 accountSys -> venueServ: getAllVenues()
+activate venueServ
 venueServ --> accountSys: return venues
-
+deactivate venueServ
 accountSys -> accountSys: showVenueList()
 
 
-accountSys -> admin: showVenueManagementPage()
+accountSys -> admin: 
 @enduml

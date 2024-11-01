@@ -5,7 +5,7 @@ control "__: AccountSystem__" as c
 participant "__: AccountService__" as s
 entity "__User: Account__" as a
 
-==1. User selects the modify account functionality on the view account page==
+==The user clicks "edit" to update their account information on the account info page. (10-Admin-information) (22-organizer-information)  (26-user-info)==
 
 u -> c : showEditAccount(userId)
 activate c
@@ -18,7 +18,7 @@ c -> c  : displayEditAccountPage(selectedAccount)
 c --> u
 deactivate c
 
-==2. User enters updated account details\n3. System updates account information==
+==2. The system displays the account update form. \n3. The user enters the new details (username, password, email, etc.)==
 
 u -> c : editAccount(userId, newUsername, newPassword, newEmail)
 activate c
@@ -28,12 +28,18 @@ activate s
 s --> c : return selectedAccount
 deactivate s
 
-c -> a : setUsername(newUsername)
+c -> a : setName(newUsername)
 c -> a : setPassword(newPassword)
 c -> a : setEmail(newEmail)
 
-c -> s : getAccounts()
+c -> s: save(selectedAccount)
 activate s
+s --> c: return
+deactivate s
+
+c -> s : listAllAccounts()
+activate s
+
 s --> c : return accounts
 deactivate s
 c -> c  : displayAccountPage(accounts)

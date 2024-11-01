@@ -10,10 +10,11 @@ entity "__User: Account__" as u
 a->c: selectUserAccount(userId)
 activate c
 
-c->s: getUserDetails(userId)
+c->s: getUser(email)
 activate s
+s --> c: 
 
-s->u: getAccountInfo()
+s->u: getName()
 activate u
 u-->s: return accountInfo
 deactivate u
@@ -23,7 +24,7 @@ deactivate s
 
 ==2. System displays user account details==
 
-c->c: displayUserDetails()
+c->c: displayAccountDetails(user)
 c-->a: show user account details page
 
 deactivate c
