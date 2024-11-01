@@ -111,33 +111,33 @@ The`TicketService` class is responsible for the business logic of ticket managem
 ### Distribution of work on this milestone
 #### Overall Distribution of Work
 
-| Team Member | TM1 | TM2 | TM3 | TM4 | TM5 | TM6 | TM7 | TM8 |
-|-------------|-----|-----|-----|-----|-----|-----|-----|-----|
-| Percentage  | 12% | 12% | 12% | 12% | 12% | 12% | 12% | 12% |
+| Team Member | TM1 | TM2 | TM3 | TM4 | TM5 | TM6 | TM7 |
+|-------------|-----|-----|-----|-----|-----|-----|-----|
+| Percentage  | 15% | 15% | 14% | 14% | 14% | 14% | 14% |
 
 #### Task Allocation
 | Item               | Primary Author | Contributor | Contributor | Reviewer |
 |--------------------|-----|-----|-----|-----|
-| Description of Responsibilities   | ZH |     |     | TM1 |
-| Class Diagram      | ZH |  |  |  |
-| Use Case 1: "Create Account" | LL          |             |  |  |
+| Description of Responsibilities   |  |     |     |  |
+| Class Diagram      | ZH  |     |     |  LeLiu   |
+| Use Case 1: "Create Account" | LeLiu |             |  | ZihengWang |
 | Use Case 2: "Delete Account" | YunhanGao      | BohanZhang          |  |LeLiu|
 | Use Case 3: "Update Account" | YunhanGao      | BohanZhang          |  |LeLiu|
 | Use Case 4: "View details Account" | YunhanGao      | BohanZhang          |  |LeLiu|
-| Use Case 5: "List all Accouts"| SC      | BohanZhang          |   |  LeLiu |
-| Use Case 6: "Create Venue"| XinyaShi       | YuxuanZhang          |   |   |
-| Use Case 7: "Delete Venue"| XinyaShi       | YuxuanZhang          |
-| Use Case 8: "Update Venue"| XinyaShi       | YuxuanZhang          |   |   |
-| Use Case 9: "List all Venues" | SC       | YuxuanZhang          |  |  |
-| Use Case 10: "View Details Venue" | BH       | YuxuanZhang          |  |  |
-| Use Case 11: "Create Event"| YuxuanZhang    | XinyaShi          |    |   |
-| Use Case 12: "Delete Event| YuxuanZhang    |XinyaShi|   |    |
-| Use Case 13: "Update Event"| YuxuanZhang    | XinyaShi          |  |   |
-| Use Case 14: "View Details Event"| YH    | XinyaShi          |  |   |
-| Use Case 15: "List all Events"| SC    | XinyaShi          |  |   |
-| Use Case 16: "Create(Buy) Ticket"| BohanZhang     | YunhanGao          |  |   |
-| Use Case 17: "View Details Ticket| BohanZhang             | YunhanGao          |  |   |
-| USe Case 18: "My Tickets"| BohanZhang             | YunhanGao          |   |   |
+| Use Case 5: "List all Accouts"| SichengYi      |           |   |  LeLiu |
+| Use Case 6: "Create Venue"| XinyaShi       | YuxuanZhang          |   | LeLiu  |
+| Use Case 7: "Delete Venue"| XinyaShi       | YuxuanZhang          |    |  ZihengWang |
+| Use Case 8: "Update Venue"| XinyaShi       | YuxuanZhang          |   |  ZihengWang |
+| Use Case 9: "List all Venues" | SichengYi       |           |  | ZihengWang |
+| Use Case 10: "View Details Venue" | BohanZhang       | YuxuanZhang          |  | ZihengWang |
+| Use Case 11: "Create Event"| YuxuanZhang    | XinyaShi          |    | ZihengWang  |
+| Use Case 12: "Delete Event| YuxuanZhang    |XinyaShi|   |  ZihengWang  |
+| Use Case 13: "Update Event"| YuxuanZhang    | XinyaShi          |  | ZihengWang  |
+| Use Case 14: "View Details Event"| YuxuanZhang    | XinyaShi          |  | LeLiu  |
+| Use Case 15: "List all Events"| SichengYi    | XinyaShi          |  | LeLiu  |
+| Use Case 16: "Create(Buy) Ticket"| BohanZhang     | YunhanGao       |  |  LeLiu |
+| Use Case 17: "View Details Ticket| BohanZhang             | YunhanGao          |  |  LeLiu |
+| USe Case 18: "My Tickets"| BohanZhang             | YunhanGao          |   |  LeLiu |
 
 
 #### Reflection Statements
