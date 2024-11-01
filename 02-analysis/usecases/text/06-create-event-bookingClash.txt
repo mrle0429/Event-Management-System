@@ -7,10 +7,10 @@ participant ": VenueService" as VenueSer
 participant ":EventService" as Service
 
 
-== 1. The organiser/administrator selects the create event functionality **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator) ==
+== 1. The organiser/administrator selects the create event functionality ==
 note right of OA: This part happens in Javascript
 
-== 2. The system displays a dialog to enter the event details **(05 - Create Event Dialog)**\n3. The organiser/administrator enters the event details and clicks "Create" ==
+== 2. The system displays a dialog to enter the event details \n3. The organiser/administrator enters the event details and clicks "Create" ==
 
 OA -> System: createEvent(details)
 activate System
