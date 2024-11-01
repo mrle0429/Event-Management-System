@@ -1,0 +1,34 @@
+@startuml
+title Update Venue - 01 Basic Course of Events
+
+actor "Organiser/Administrator" as OA
+control VenueSystem as System
+participant ":VenueService" as Service
+entity "selected : Venue" as Venue
+
+== 1. The organiser/administrator selects the relevant venue from the display to be updated **(01 - List Venues Page - Organiser)** **(02 - List Venues Page - Administrator) ==
+note right of OA: This part happens in Javascript
+
+== 2. The system displays a dialog to enter the venue details **(07 - Update Venue Page)**\n3. The organiser/administrator updates the details of the venue and clicks "Save" ==
+
+OA -> System: updateVenue(details)
+activate System
+
+System -> Service: getEvent(eventId)
+activate Service
+Service -> System: return event
+deactivate Service
+
+System -> Venue: setDetails(details)
+
+System -> Service: getVenues()
+activate Service
+Service -> System: return venues
+deactivate Service
+System -> System: displayVenueList(venues)
+
+System --> OA
+deactivate System
+
+== 4. The system updates the view to show the current venues for the specified organiser/administrator, including the newly changed venue **(01 - List Venues Page - Organiser)** **(02 - List Venues Page - Administrator) ==
+@enduml

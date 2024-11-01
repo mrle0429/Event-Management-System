@@ -1,0 +1,40 @@
+@startuml
+title Delete Venue - 01 Basic Course of Events
+
+actor Administrator as Admin
+control VenueSystem as System
+participant ": VenueService" as Service
+entity "selected : Venue" as Venue
+
+== 1. The Administrator selects the remove Venues functionality of the Venue to be deleted **(01- Manage Venue Page)** ==
+
+Admin -> System: deleteVenue(Venue)
+activate System
+
+System -> System: askForConfirmation()
+System -> Admin: confirm()
+activate Admin
+== 2. The system asks the Administrator to confirm **(02 - Delete Venues - Confirmation Dialog)** \n3. The Administrator selects **Yes** ==
+Admin --> System: return true
+deactivate Admin
+
+System -> Service: deleteVenue(Venue)
+activate Service
+note over Service: The deleteVenue method is a standing for\nthe future operation of deleting the selected\nvenue object from the database
+Service -> Venue: <<destroy>>
+destroy Venue
+deactivate Venue
+Service --> System:
+deactivate Service
+
+System -> Service: getVenues()
+activate Service
+Service -> System: return venues
+deactivate Service
+System -> System: displayVenuesList(venues)
+
+System --> Admin
+deactivate System
+
+== 4. The system updates the display to show the current venues, with the selected venue removed **(01- Manage Venue Page)** ==
+@enduml
