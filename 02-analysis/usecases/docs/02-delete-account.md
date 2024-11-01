@@ -12,3 +12,4 @@
 | --- |---------------------------------------------------------------------------|
 | 01 - Account Management Page | ![Account Management Page](/01-requirements/ui/06-manage-account.png)     |
 | 02 - Deletion Confirmation | ![Deletion Confirmation](/01-requirements/ui/15-admin-delete-account.png) |
+
