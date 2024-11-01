@@ -2,7 +2,7 @@
 
 ## Basic Course of Events
 1. The organiser/administrator clicks the "Details" button for the event they want to view on list events page **(19 - List All Events - Admin)** **(20 - List Owner Events - Organizer)**
-2. The system displays the event details。 **(03 - View Details Event Page)**
+2. The system displays the event details **(03 - View Details Event Page)**
 
 ![view details event](/02-analysis/usecases/images/09-view-details-event.png)
 
