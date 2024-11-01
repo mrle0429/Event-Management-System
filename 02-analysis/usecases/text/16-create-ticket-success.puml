@@ -1,0 +1,30 @@
+@startuml
+title Buy Ticket Successful - User
+
+actor User
+control ":TicketSystem" as ES
+participant ":TicketService" as TS
+entity "__ticket: Ticket__" as ticket
+
+== 1. The User selects the "Buy Now" option on the event page==
+User -> ES : buyTicket(eventId)
+activate ES
+ES -> TS : isTicketAvailable()
+activate TS
+TS --> ES : return True
+deactivate TS
+ES -> TS : createTicket(eventId, customerInfo)
+activate TS
+create ticket
+TS -> ticket : new Ticket(eventId, customerInfo)
+activate ticket
+ticket --> TS : return ticket
+deactivate ticket
+TS --> ES : return ticket
+deactivate TS
+ES -> ES : showPurchaseSuccessPage()
+ES --> User :
+deactivate ES
+==2.The system redirect the user to purchase successful page==
+@enduml
+

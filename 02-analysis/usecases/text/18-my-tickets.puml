@@ -1,0 +1,24 @@
+@startuml
+title My Tickets - User
+
+actor User
+control ":TicketSystem" as UD
+participant ":TicketService" as TS
+entity "ticket:Ticket" as ticket
+
+== 1. User navigates to "My Tickets" section ==
+User -> UD : viewTickets(userId)
+activate UD
+UD -> TS : hasTickets()
+activate TS
+TS --> UD : return true
+deactivate TS
+UD -> TS : getTickets(userId)
+activate TS
+TS --> UD : return tickets
+deactivate TS
+UD -> UD : displayTicketsList(tickets)
+UD --> User :
+deactivate UD
+== 2. System displays a list of purchased tickets ==
+@enduml

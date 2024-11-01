@@ -24,9 +24,8 @@
 
 ### 01 - Basic course of events
 #### Course of Events
-1. User navigates to the "My Tickets" section of the application.**(UserDashBoard page)**
-2. User selects a specific ticket from the list of purchased tickets.**(My Tickets Page)**
-3. The system displays the ticket details, including event name, date, time, venue, ticket type, seat number (if applicable), and price.**(Tickets Datail Page)**
+1. User selects a specific ticket from the list of purchased tickets.**(My Tickets Page)**
+2. The system displays the ticket details, including event name, date, time, venue, ticket type, seat number (if applicable), and price.**(Tickets Datail Page)**
 
 #### Related UI Prototypes
 | 01 - My Tickets Page |

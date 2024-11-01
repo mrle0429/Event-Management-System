@@ -1,0 +1,24 @@
+@startuml
+title View Ticket Details - User
+
+actor User
+control ":TicketSystem" as UD
+participant ":TicketService" as TS
+entity "selected:Ticket" as ticket
+
+== 1.User selects a specific ticket from the list in MyTickets page.==
+User -> UD : viewMyTickets(ticketId)
+activate UD
+UD -> TS : getTicket(ticketId)
+activate TS
+TS --> UD : return selecedTicket
+deactivate TS
+UD -> ticket: getDetails(selectedTicket)
+activate ticket
+ticket --> UD: return ticketDetails
+deactivate ticket
+UD -> UD : displayTicketDetails(ticketDetails)
+UD --> User :
+deactivate UD
+==2.The system displays the ticket details, including event name, date, time, venue, ticket type, seat number and price.==
+@enduml

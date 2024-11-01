@@ -1,0 +1,20 @@
+@startuml
+title Buy Ticket Unsuccessful - User
+
+actor User
+control ":TicketSystem" as ES
+participant ":TicketService" as TS
+
+== 1. The User selects the "Buy Now" option on the event page==
+User -> ES : buyTicket(eventId)
+activate ES
+
+ES -> TS : isTicketAvailable()
+activate TS
+TS --> ES : return False
+ES -> ES : showPurchaseUnsuccessfulPage()
+deactivate TS
+ES --> User :
+deactivate ES
+==2.The system redirect the user to purchase unsuccessful page==
+@enduml
