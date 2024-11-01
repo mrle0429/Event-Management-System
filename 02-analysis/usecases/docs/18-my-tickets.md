@@ -15,4 +15,5 @@
 ## Related UI Prototypes
 | Tile                      | Page                                                              |
 |---------------------------|-------------------------------------------------------------------|
-| 01 - My Tickets Page      | ![Organiser Manage Venue Page](/01-requirements/ui/Myticket.png)  |
+| 01- User DashBoard Page   | ![User Dash](/01-requirements/ui/)
+| 01 - My Tickets Page      | ![](/01-requirements/ui/Myticket.png)  |
