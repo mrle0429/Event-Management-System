@@ -51,12 +51,60 @@ Each use case contains the separate sequence diagrams for each course of events.
 
 The class diagram represents the information gained about the system by completing the use case realisations. 
 
-![class diagram](images/class-diagram.png)
+![class diagram](./images/class.png)
 
 ## Description of Responsibilities
 
-### Class Name 1
-The `ClassName` class is a basic entity class. It represents ...
+### Role
+The `Role` enumeration defines the role types of different users in the system, including Administrator, Organizer, and User.
+
+### TicketType
+The `TicketType` enumeration defines the available ticket types in the system, including Standing, Seat, and VIP, which are used to distinguish the characteristics of different ticket types.
+
+### Account
+The `Account` class is a basic entity class. It serves as the basis for all account types and has account attributes such as name, email, password, and role for subclasses to inherit
+
+### User
+The `User` class represents ordinary users in the system and is inherited from the `Account` class. It manages the ticket information purchased by the user, contains the list of tickets held by the user, and provides related get and set methods.
+
+### Organizer
+The `Organizer` class represents the event organizer and is inherited from the `Account` class. It manages the organizer's details such as address, company name, phone number, and the list of events created and managed by the organizer.
+
+### Administrator
+The `Administrator` class represents the system administrator and is inherited from the `Account` class. It is responsible for the overall management and maintenance of the system, has the highest authority, and can perform all operations and configurations.
+
+### AccountSystem
+The `AccountSystem` class, as the control layer of account management, handles the interaction between the user interface and `AccountService`. It is responsible for the creation, update, deletion, and display of interfaces related to account management.
+
+### AccountService
+The `AccountService` class is responsible for the business logic of account management. It handles the creation, update, deletion, and query operations of accounts, and provides the functions of obtaining accounts through email, listing all accounts, and notifying administrators.
+
+### Venue
+The `Venue` class manages the basic information of the event venue, including name, address, contact information, etc.
+
+### VenueSystem
+The `VenueSystem` class, as the control layer of venue management, handles the interaction between the user interface and `VenueService`. It is responsible for the creation, update, deletion, and display of interfaces and detailed information related to venue management.
+
+### VenueService
+The `VenueService` class is responsible for the business logic of venue management. It handles the creation, update, deletion, and query operations of venues, and provides the functions of saving venue information, obtaining venues by name or ID, and listing all venues.
+
+### Event
+The `Event` class manages the basic information of an event, including name, description, date, time, associated venue, and organizer.
+
+### EventSystem
+The `EventSystem` class, as the control layer of event management, handles the interaction between the user interface and the `EventService`. It is responsible for the creation, update, deletion, and display of event management related interfaces and detailed information.
+
+### EventService
+The `EventService` class is responsible for the business logic of event management. It handles the creation, update, deletion, and query operations of events, and provides the functions of checking venue availability, obtaining event information, and listing events by organizer.
+
+### Ticket
+The `Ticket` class manages the basic information of a single ticket, including the associated event (`Event`), ticket type (`TicketType`), purchasing user (`User`), and price.
+
+### TicketSystem
+The`TicketSystem` class is the control layer of ticket management, handling the interaction between the user interface and `TicketService`. It is responsible for purchasing tickets, viewing user tickets, and displaying interfaces and detailed information related to ticket management.
+
+### TicketService
+The`TicketService` class is responsible for the business logic of ticket management. It handles ticket purchase, query and management operations, and provides users with the functions of purchasing tickets, listing all user tickets, obtaining ticket details and creating new tickets.
 
 ## Milestone 2 Analysis
 

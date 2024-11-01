@@ -14,7 +14,7 @@ This use case is triggered when the administrator needs to delete a venue from t
 
 ## Preconditions
 
-- The is on the administrator is on the list venues page (09-list-venues) or the view venue page (10-view-venue)
+- The administrator is on the list venues page (09-list-venues) or the view venue page (10-view-venue)
 
 ## Postconditions
 
@@ -43,13 +43,12 @@ None
 
 None
 
+## Data Outcomes
+- **READ** - The details of the all venues will be retreived and displayed
+- **DELETE** - The object representing the specific venue will be removed from the system
+
 ## Relevant UI Sketches
 | Page Name | Image |
 |----|------|
 | List Venues Page | ![List Venues Page](/01-requirements-solution/uisketches/09-list-venues.png) |
 | Delete Venue Warning | ![Delete Venue Warning](/01-requirements-solution/uisketches/13-delete-venue-warning.png) |
-
-## Data Outcomes
-**READ** - The details of the all accounts will be read and displayed
-
-**DELETE** - The details of the venue will be removed from the system

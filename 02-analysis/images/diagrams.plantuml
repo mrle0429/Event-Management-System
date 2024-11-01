@@ -1,3 +1,242 @@
-startuml class-diagram
-    
+@startuml
+' Enumerations
+enum Role {
+  Administrator
+  Organizer
+  User
+}
+
+enum TicketType {
+  Standing
+  Seat
+  VIP
+}
+
+' Account Management Package
+package "Account Management" {
+  class Account {
+    +name: String
+    +email: String
+    +password: String
+    +role: Role
+    +getName(): String
+    +setName(name: String)
+    +getEmail(): String
+    +setEmail(email: String)
+    +getPassword(): String
+    +setPassword(password: String)
+    +getRole(): Role
+    +setRole(role: Role)
+  }
+
+  class User {
+    +tickets: List<Ticket>
+    +getTickets(): List<Ticket>
+    +setTickets(tickets: List<Ticket>)
+  }
+
+  class Organizer {
+    +address: String
+    +companyName: String
+    +phone: String
+    +events: List<Event>
+    +getAddress(): String
+    +setAddress(address: String)
+    +getCompanyName(): String
+    +setCompanyName(companyName: String)
+    +getPhone(): String
+    +setPhone(phone: String)
+    +getEvents(): List<Event>
+    +setEvents(events: List<Event>)
+  }
+
+  class Administrator {
+    ' No additional attributes; inherits from Account
+  }
+
+  class AccountSystem {
+    +accountService: AccountService
+    +createUser(account: Account)
+    +createOrganizer(account: Account)
+    +createAdministrator(account: Account)
+    +updateAccount(account: Account)
+    +deleteAccount(account: Account)
+    +showAccountManagementPage()
+    +showDeletionConfirmation(user: Account)
+    +displayEditAccountPage(user: Account)
+    +displayAccountPage(accounts: List<Account>)
+    +displayUserDetails(user: Account)
+    +clickAccountSettings()
+    +displayAccountDetails(accountDetails: Account)
+  }
+
+  class AccountService {
+    +createAccount(account: Account)
+    +updateAccount(account: Account)
+    +deleteAccount(account: Account)
+    +getAccountByEmail(email: String): Account
+    +listAllAccounts(): List<Account>
+    +notifyAdministrator(message: String)
+  }
+
+  Account <|-- User
+  Account <|-- Organizer
+  Account <|-- Administrator
+  AccountSystem --> AccountService : uses
+  AccountService --> Account : manages
+}
+
+' Venue Management Package
+package "Venue Management" {
+  class Venue {
+    +name: String
+    +address: String
+    +contactName: String
+    +contactPhone: String
+    +contactEmail: String
+    +ticketAvailability: Map<TicketType, Integer>
+    +getName(): String
+    +setName(name: String)
+    +getAddress(): String
+    +setAddress(address: String)
+    +getContactName(): String
+    +setContactName(contactName: String)
+    +getContactPhone(): String
+    +setContactPhone(contactPhone: String)
+    +getContactEmail(): String
+    +setContactEmail(contactEmail: String)
+    +getTicketAvailability(): Map<TicketType, Integer>
+    +setTicketAvailability(ticketAvailability: Map<TicketType, Integer>)
+  }
+
+  class VenueSystem {
+    +venueService: VenueService
+    +createVenue(venue: Venue)
+    +updateVenue(venue: Venue)
+    +deleteVenue(venue: Venue)
+    +listAllVenues()
+    +displayVenueDetails(venueDetails: Venue)
+    +showVenueManagementPage()
+  }
+
+  class VenueService {
+    +createVenue(venue: Venue)
+    +updateVenue(venue: Venue)
+    +deleteVenue(venue: Venue)
+    +saveVenue(venue: Venue)
+    +getVenues(): List<Venue>
+    +getVenue(venueId: String): Venue
+    +getVenueByName(name: String): Venue
+    +listAllVenues(): List<Venue>
+  }
+
+  VenueSystem --> VenueService : uses
+  VenueService --> Venue : manages
+}
+
+' Event Management Package
+package "Event Management" {
+  class Event {
+    +name: String
+    +description: String
+    +date: Date
+    +time: Time
+    +venue: Venue
+    +organizer: Organizer
+    +ticketAvailability: Map<TicketType, Integer>
+    +ticketSold: Map<TicketType, Integer>
+    +getName(): String
+    +setName(name: String)
+    +getDescription(): String
+    +setDescription(description: String)
+    +getDate(): Date
+    +setDate(date: Date)
+    +getTime(): Time
+    +setTime(time: Time)
+    +getVenue(): Venue
+    +setVenue(venue: Venue)
+    +getOrganizer(): Organizer
+    +setOrganizer(organizer: Organizer)
+    +getTicketAvailability(): Map<TicketType, Integer>
+    +setTicketAvailability(ticketAvailability: Map<TicketType, Integer>)
+    +getTicketSold(): Map<TicketType, Integer>
+    +setTicketSold(ticketSold: Map<TicketType, Integer>)
+  }
+
+  class EventSystem {
+    +eventService: EventService
+    +createEvent(event: Event)
+    +updateEvent(event: Event)
+    +deleteEvent(event: Event)
+    +listAllEvents()
+    +displayEventList(events: List<Event>)
+    +displayEventDetails(eventDetails: Event)
+    +showEventManagementPage()
+  }
+
+  class EventService {
+    +createEvent(event: Event)
+    +updateEvent(event: Event)
+    +deleteEvent(event: Event)
+    +isAvailable(venue: Venue, time: Time): boolean
+    +isCapacityAvailable(venue: Venue, ticketsNum: int): boolean
+    +getEventByName(name: String): Event
+    +saveEvent(event: Event)
+    +getEvents(): List<Event>
+    +getEvent(eventId: String): Event
+    +listEventsByOrganizer(organizer: Organizer): List<Event>
+    +checkVenueAvailability(venue: Venue, date: Date, time: Time): boolean
+  }
+
+  EventSystem --> EventService : uses
+  EventService --> Event : manages
+  Event "1" --> "1" Venue : held at
+  Organizer "1" --> "*" Event : organizes
+}
+
+' Ticket Management Package
+package "Ticket Management" {
+  class Ticket {
+    +event: Event
+    +ticketType: TicketType
+    +user: User
+    +price: double
+    +getEvent(): Event
+    +setEvent(event: Event)
+    +getTicketType(): TicketType
+    +setTicketType(ticketType: TicketType)
+    +getUser(): User
+    +setUser(user: User)
+    +getPrice(): double
+    +setPrice(price: double)
+  }
+
+  class TicketSystem {
+    +ticketService: TicketService
+    +buyTicket(event: Event, ticketType: TicketType): Ticket
+    +showTicketManagementPage()
+    +viewTickets(userId: String)
+    +viewMyTickets(ticketId: String)
+    +displayTicketsList(tickets: List<Ticket>)
+    +displayTicketDetails(ticketDetails: Ticket)
+  }
+
+  class TicketService {
+    +purchaseTicket(user: User, event: Event, ticketType: TicketType): Ticket
+    +listTicketsByUser(user: User): List<Ticket>
+    +getTicketDetails(ticketId: Long): Ticket
+    +hasTickets(userId: String): boolean
+    +createTicket(eventId: String, customerInfo: User, ticketType: TicketType): Ticket
+    +getTickets(userId: String): List<Ticket>
+    +getTicket(ticketId: String): Ticket
+  }
+
+  TicketSystem --> TicketService : uses
+  TicketService --> Ticket : manages
+  User "1" --> "*" Ticket : purchases
+  Ticket "1" --> "1" Event : for
+}
+
+' Relationships
+
 @enduml
