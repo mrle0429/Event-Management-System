@@ -5,9 +5,9 @@
 ### 01 - Basic Course of Events (User/Organizer/Admin)
 
 #### Course of Events
-1. The user navigates to the account settings page and selects button. . **(01-Dashboard Page)**
+1. The user navigates to the account settings page and selects button. . **(03 - user-dash-page)**
 2. The system displays the account details.**(02 - Account Settings Page)**
-
+   ![](/02-analysis/usecases/images/04-view-account-details(User).png)
 #### Related UI Prototypes
 | 01- Dashboard Page|
 |:-----------------------------------------:|
@@ -15,18 +15,18 @@
 |![Organizer Dash Page](/01-requirements/ui/05-organiser-dash-page.png)|
 |![Admin Dash Page](/01-requirements/ui/04-admin-dash-page.png)|
 
-|         02 - Account Details Page         |
-|:-----------------------------------------:|
-| ![Account Settings](/01-requirements/ui/26-user-info)  |
-|  ![Account Settings](01-requirements/ui/22-organizer-infomation.png)  |
-| ![Account Settings](/01-requirements/ui/10-Admin-infomation.png) |
+|                      02 - Account Details Page                       |
+|:--------------------------------------------------------------------:|
+|      ![Account Settings](/01-requirements/ui/26-user-info.png)       |
+| ![Account Settings](/01-requirements/ui/22-organizer-infomation.png) |
+|   ![Account Settings](/01-requirements/ui/10-Admin-infomation.png)   |
 
 ### 02 - Administrator Views Another User's Account
 
 #### Course of Events
-1. The administrator selects a user account to view.**(01 - Account Management Page)**.
-2. The system displays the user's account details.**(02 - User Account )**
-
+1. The administrator selects a user account to view.**(06 - manage-account)**.
+2. The system displays the user's account details.**(26 - user-info )**
+   ![](/02-analysis/usecases/images/04-view-account-details(Admin).png)
 #### Related UI Prototypes
 |                   01 - Account Management Page                   |                      02 - User Account Details                       |
 |:----------------------------------------------------------------:|:--------------------------------------------------------------------:|
