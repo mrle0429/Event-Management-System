@@ -1,0 +1,44 @@
+@startuml
+title: 03-update-account(Admin)
+actor "Administrator" as admin
+control "__: AccountSystem__" as c
+participant "__: AccountService__" as s
+entity "__User: Account__" as a
+
+==1. Administrator selects modify account functionality on the list accounts page==
+
+admin -> c : showEditAccount(userId)
+activate c
+c -> s : getAccount(userId)
+activate s
+
+s --> c : return selectedAccount
+deactivate s
+c -> c : displayEditAccountPage(selectedAccount)
+c --> admin
+deactivate c
+
+==2. Administrator enters updated account details\n3. System updates account information==
+
+admin -> c : editAccount(userId, newUsername, newPassword, newEmail)
+activate c
+c -> s : getAccount(userId)
+activate s
+
+s --> c : return selectedAccount
+deactivate s
+
+c -> a : setUsername(newUsername)
+c -> a : setPassword(newPassword)
+c -> a : setEmail(newEmail)
+
+c -> s : getAccounts()
+activate s
+s --> c : return accounts
+deactivate s
+c -> c : displayAccountPage(accounts)
+c --> admin
+deactivate c
+
+==4. System displays the view account page with updated details==
+@enduml
