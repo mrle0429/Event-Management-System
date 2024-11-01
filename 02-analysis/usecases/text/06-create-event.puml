@@ -1,0 +1,55 @@
+@startuml
+title Create Event - Basic Course of Events
+
+actor "Organiser/Administrator" as OA
+control EventSystem as System
+participant ": VenueService" as VenueSer
+participant ":EventService" as Service
+entity ": Event" as Event
+
+
+== 1. The organiser/administrator selects the create event functionality **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator) ==
+note right of OA: This part happens in Javascript
+== 2. The system displays a dialog to enter the event details **(05 - Create Event Dialog)**\n3. The organiser/administrator enters the event details and clicks "Create" ==
+
+OA -> System: createEvent(details)
+activate System
+
+System -> VenueSer: isAvailable(Venue, time)
+activate VenueSer
+VenueSer --> System: return ture
+deactivate VenueSer
+System -> VenueSer: isCapacityAvailable(Venue, ticketsNum)
+activate VenueSer
+VenueSer --> System: return true
+deactivate VenueSer
+System -> Service: createEvent(details)
+activate Service
+
+create Event
+Service -> Event: new Event(name, description, date,ticketsNum, ticketType, Venue, organiser, ticketValue)
+activate Event
+note over Event: The Event constructor is a stand-in\nfor the creation of a new event object\nwith specified details
+Event --> Service: return Event
+deactivate Event
+
+Service -> Service: saveEvent(Event)
+activate Service
+note over Service: The saveEvent method represents\nsaving the newly created event to the database
+Service --> Service:
+deactivate Service
+
+Service --> System
+deactivate Service
+
+System -> Service: getEvents()
+activate Service
+Service --> System: return events
+deactivate Service
+System -> System: displayEventList(events)
+
+System --> OA
+deactivate System
+
+== 4. The system updates the view to show the current events for the specified organiser/administrator, including the newly made event **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator) ==
+@enduml

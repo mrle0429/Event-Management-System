@@ -1,0 +1,42 @@
+@startuml
+title Create Venue - Basic Course of Events
+
+actor "Organiser/Administrator" as OA
+control “： VenueSystem” as System
+participant ":VenueService" as Service
+
+
+== 1. The organiser/administrator selects the "create" venue functionality **(01- Manage Venue Page)** ==
+note right of OA: This part happens in Javascript
+== 2. The system displays a dialog to enter the venue details **(02 -Create Venue Page)** \n3. The organiser/administrator enters the venue details and clicks "Create" ==
+
+OA -> System: createVenue(details)
+activate System
+
+System -> Service: createVenue(details)
+activate Service
+
+create entity Venue
+Service -> Venue: new Venue(name, address, totalCapacity)
+activate Venue
+note over Venue: The Venue constructor is a stand-in\n for the creation of a new Venue object\n with specified details
+Venue --> Service: return Venue
+deactivate Venue
+
+Service -> Service: saveVenue(Venue)
+activate Service
+note over Service: The saveVenue method represents\n saving the newly created venue to the database
+Service --> Service:
+deactivate Service
+
+Service --> System:
+deactivate Service
+
+System -> Service: getVenues()
+System -> System: displayVenues(venues)
+
+System --> OA
+deactivate System
+
+== 4. The system updates the view to show the current venues for the specified organiser/administrator, including the newly made venue **(01- Manage Venue Page)** ==
+@enduml

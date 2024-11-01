@@ -35,11 +35,11 @@ None
 
 None
 
+## Data Outcomes
+- **READ** - The details of the all accounts will be retrieved and displayed
+
 ## Relevant UI Sketches
 | Page Name | Image |
 |----|------|
 | Admin Main Page | ![Admin Main Page](/01-requirements-solution/uisketches/01-main-admin.png) |
 | List Accounts Page | ![List Accounts Page](/01-requirements-solution/uisketches/04-list-accounts.png) |
-
-## Data Outcomes
-**READ** - The details of the all accounts will be read and displayed

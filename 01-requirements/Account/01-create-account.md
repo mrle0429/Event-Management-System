@@ -11,14 +11,13 @@ This use case includes the creation of a new account by. Administrator could cre
 
 ## Triggers
 
-This use case is triggered by the following situations:
 
 - The need to create a new account in the system
 
 ## Preconditions
 
-- Admin is log in
-- User wish to sign up
+- This is on the Admin Dashboard Page. **(Admin Dashboard Page)**.
+- This is on the Register Page **(Login Page)**
 
 ## Postconditions
 
@@ -28,14 +27,17 @@ This use case is triggered by the following situations:
 ## Course of Events
 
 ### 01 - User Sign up
+#### Basic Course of Event
 
-#### Course of Events
-1. The user, clicks the "Sign Up" button on the login page. **(01 - Login Page)**
+1. The user clicks the "Sign Up" button on the login page. **(01 - Login Page)**
 2. The system navigates to the account creation page. **(02 - Sign Up Page)**
 3. The user enters the required account details (username, password, email, etc.) 
-4. The system validates the entered details
-5. The system creates the new account and logs the user in
-6. The system redirects the user to their dashboard **(03 - User Dashboard)**
+4. The system redirects the user to their dashboard **(03 - User Dashboard)**
+#### Alternative Courses of Events - Account Already Exists
+1. The user clicks the "Sign Up" button on the login page. **(01 - Login Page)**
+2. The system navigates to the account creation page. **(02 - Sign Up Page)**
+3. The user enters the required account details (username, password, email, etc.) 
+4. The system displays an error message indicating that the account already exists
 
 #### Related UI Prototypes
 
@@ -48,19 +50,23 @@ This use case is triggered by the following situations:
 
 ### 02  - Administrator Creates Account for User/Organizer/Admin
 
-#### Course of Events
+#### Basic Course of Events
 
-1. The administrator select manage account button. **(05 - Admin Dash Page)**
-2. The system navigates to the account creation page  **(01 - Account Management Page)**
-3. The administrator choose the account type which he want to create.
-4. The administrator enters the required account details for the new user/Organizer. **(02- CreateAdmin Page/ 03-CreateUser Page/ 04-CreateOrganizer Page)**
-5. The system creates the new account
-6. The system notifies the administrator that the account has been successfully created
+1. The administrator select create account button(3 types). **(01 - Account Management Page)**
+2. The system navigates to the account creation page.  **(02- CreateAdmin Page/ 03-CreateUser Page/ 04-CreateOrganizer Page)**
+3. The administrator enters the required account details for the new user/Organizer/admin. 
+4. The system renturn to account manage page.
+
+#### Alternative Courses of Events - Account Already Exists
+1. The administrator select create account button(3 types). **(06 - Account Management Page)**
+2. The system navigates to the account creation page. **(02- CreateAdmin Page/ 03-CreateUser Page/ 04-CreateOrganizer Page)**
+3. The administrator enters the required account details for the new user/Organizer/admin. 
+4. The system displays an error message indicating that the account already exists. **(05- Create User exists)**
+5. The administrator clicks OK
+6. The system returns to the create account page. 
 
 #### Related UI Prototypes
-| 05 - Admin Dash Page|
-| --- |
-|![](../ui/Admin_Dashboard.png)|
+
 
 | 01 - Account Creation Page    |    
 |---| 
@@ -78,10 +84,12 @@ This use case is triggered by the following situations:
 |---|
 | ![CreateOrganizer Page](../ui/CreateOrganiser.png)|
 
-
+| 05 - create User exists Page|
+| --- |
+|![](/01-requirements/ui/create-user-exists.png)|
 
 ## Inclusions
-Account Creation
+None
 
 ## Data Outcomes
 **CREATE** - A new object will be added to the system representing the new account
