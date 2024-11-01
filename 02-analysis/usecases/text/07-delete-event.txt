@@ -6,7 +6,7 @@ control "__: EventSystem__" as System
 participant "__: EventService__" as Service
 entity "__selected : Event__" as Event
 
-== 1. The Administrator selects the remove events functionality of the event to be deleted **(02 - List Events Page - Administrator)** ==
+== 1. The Administrator selects the remove events functionality of the event to be deleted ==
 
 Admin -> System: deleteEvent(Event)
 activate System
@@ -14,7 +14,7 @@ activate System
 System -> System: askForConfirmation()
 System -> Admin: confirm()
 activate Admin
-== 2. The system asks the Administrator to confirm **(04 - Delete Events - Confirmation Dialog)** \n3. The Administrator selects **Yes** ==
+== 2. The system asks the Administrator to confirm  \n3. The Administrator selects **Yes** ==
 Admin --> System: return true
 deactivate Admin
 
@@ -34,5 +34,5 @@ System -> System: displayEventList(events)
 System --> Admin
 deactivate System
 
-== 4. The system updates the display to show the current events, with the selected event removed **(02 - List Events Page - Administrator)** ==
+== 4. The system updates the display to show the current events, with the selected event removed ==
 @enduml

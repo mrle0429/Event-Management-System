@@ -7,10 +7,10 @@ participant ": VenueService" as VenueSer
 participant ":EventService" as Service
 entity Event
 
-== 1. The organiser/administrator selects the relevant event from the display to be updated **(01 - List Events Page - Organiser)** **(02 - List Events Page - Administrator) ==
+== 1. The organiser/administrator selects the relevant event from the display to be updated ==
 note right of OA: This part happens in Javascript
 
-== 2. The system displays a dialog to enter the event details **(07 - Update Event Page)**\n3. The organiser/administrator updates the details of the event and clicks "Save" ==
+== 2. The system displays a dialog to enter the event details\n3. The organiser/administrator updates the details of the event and clicks "Save" ==
 
 OA -> System: updateEvent(details)
 activate System
@@ -26,7 +26,7 @@ deactivate VenueSer
 
 System -> System: showConflictWarning()
 
-== 4. The organiser/administrator modifies the details to resolve the conflict and retries **(08 - Update Event Dialog - Time and Venue Clash)** ==
+== 4. The organiser/administrator modifies the details to resolve the conflict and retries ==
 
 System --> OA
 deactivate System
