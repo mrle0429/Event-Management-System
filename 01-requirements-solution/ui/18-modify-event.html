@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sean's Event Management System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+        <style type="text/css">
+            .updated {
+                font-weight: bold;
+                background-color: #00895A;
+            }
+        </style>
+    <body>
+        <main class="container">
+            <h2>Event Modification</h2>
+            <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+                    <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
+                    <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
+                    <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+                    <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+                </ul>
+            </nav>
+            <article id="article">
+                <h3>Modify Event</h3>
+                <form>
+                    <label for="trimester">Venue</label>
+                    <select id="trimester" required>
+                        <option value="Autumn" >Grand Convention Hall</option>
+                        <option value="Spring" selected>City Innovation Center</option>
+                        <option value="Summer">Westside Conference Room</option>
+                    </select>
+                    <label for="title">Event Name</label>
+                    <input type="text" id="caddress" name="caddress" value="Tech Innovation Conference" required>
+                    <label for="description">Description</label>
+                    <input type="text" id="code" name="code" value="Something really exciting...." required>
+                    <label for="birthdaytime">Date and Time</label>
+                    <input type="datetime-local" id="birthdaytime" name="birthdaytime" value="2024-12-31T23:59:59">
+                    <div class="grid">
+                        <div class="col">
+                            <label for="ticket-type">Ticket Type</label>
+                            <input type="text" id="ticket-type" name="ticket-type" value="General Admission" required disabled>
+                            <input type="text" id="ticket-type" name="ticket-type" value="Seated" required disabled>
+                            <input type="text" id="ticket-type" name="ticket-type" value="Premium" required disabled>
+                        </div>
+                        <div class="col">
+                            <label for="ticket-quantity">Price</label>
+                            <input type="text" id="ticket-quantity" name="ticket-quantity" value="45" required>
+                            <input type="text" id="ticket-quantity" name="ticket-quantity" value="60" required>
+                            <input type="text" id="ticket-quantity" name="ticket-quantity" value="100" required>
+                        </div> 
+                    </div>
+
+                    <button type="submit">Update</button>
+                </form>  
+            </article>
+        </main>
+    </body>

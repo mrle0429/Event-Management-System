@@ -6,7 +6,7 @@ Allows the users to change the details of an account in the system. Note that th
 
 ## Actors
 
-Administrator, User, Organiser
+User
 
 ## Triggers
 
@@ -54,18 +54,17 @@ None
 
 None
 
+## Data Outcomes
+- **READ** - The details of the selected account will be retrieved and displayed
+- **UPDATE** - The details of the selected account will be changed
+
+
 ## Relevant UI Sketches
 | Page Name | Image |
 |----|------|
 | List Accounts Page | ![List Accounts Page](/01-requirements-solution/uisketches/04-list-accounts.png) |
 | View Account Page | ![View Account Page](/01-requirements-solution/uisketches/06-view-account.png) |
 | Modify Account Page | ![Modify Account Page](/01-requirements-solution/uisketches/07-modify-account.png) |
-| Modify Account Page - Error | ![Modify Account Page - Error](/01-requirements-solution/uisketches/07-modify-account-modal.png) |
-
-
-## Data Outcomes
-**READ** - The details of the selected account will be read and displayed
-
-**UPDATE** - The details of the selected account will be changed
+| Modify Account Page - Error | ![Modify Account Page - Error](/01-requirements-solution/uisketches/07-modify-account-password.png) |
 
 
