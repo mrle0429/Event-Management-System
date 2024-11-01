@@ -1,5 +1,4 @@
 @startuml
-' Enumerations
 enum Role {
   Administrator
   Organizer
@@ -12,7 +11,6 @@ enum TicketType {
   VIP
 }
 
-' Account Management Package
 package "Account Management" {
   class Account {
     +name: String
@@ -51,7 +49,6 @@ package "Account Management" {
   }
 
   class Administrator {
-    ' No additional attributes; inherits from Account
   }
 
   class AccountSystem {
@@ -67,6 +64,7 @@ package "Account Management" {
     +displayAccountPage(accounts: List<Account>)
     +displayUserDetails(user: Account)
     +clickAccountSettings()
+    +showConlictWarning()
     +displayAccountDetails(accountDetails: Account)
   }
 
@@ -74,7 +72,7 @@ package "Account Management" {
     +createAccount(account: Account)
     +updateAccount(account: Account)
     +deleteAccount(account: Account)
-    +getAccountByEmail(email: String): Account
+    +getAccount(userId: int): Account
     +listAllAccounts(): List<Account>
     +notifyAdministrator(message: String)
   }
@@ -86,7 +84,6 @@ package "Account Management" {
   AccountService --> Account : manages
 }
 
-' Venue Management Package
 package "Venue Management" {
   class Venue {
     +name: String
@@ -116,6 +113,8 @@ package "Venue Management" {
     +deleteVenue(venue: Venue)
     +listAllVenues()
     +displayVenueDetails(venueDetails: Venue)
+    +showConlictWarning()
+    +getVenue(venueId: int): Venue
     +showVenueManagementPage()
   }
 
@@ -125,8 +124,6 @@ package "Venue Management" {
     +deleteVenue(venue: Venue)
     +saveVenue(venue: Venue)
     +getVenues(): List<Venue>
-    +getVenue(venueId: String): Venue
-    +getVenueByName(name: String): Venue
     +listAllVenues(): List<Venue>
   }
 
@@ -134,7 +131,6 @@ package "Venue Management" {
   VenueService --> Venue : manages
 }
 
-' Event Management Package
 package "Event Management" {
   class Event {
     +name: String
@@ -169,6 +165,8 @@ package "Event Management" {
     +updateEvent(event: Event)
     +deleteEvent(event: Event)
     +listAllEvents()
+    +showConlictWarning()
+    +getEvent(eventId: int): Event
     +displayEventList(events: List<Event>)
     +displayEventDetails(eventDetails: Event)
     +showEventManagementPage()
@@ -180,10 +178,8 @@ package "Event Management" {
     +deleteEvent(event: Event)
     +isAvailable(venue: Venue, time: Time): boolean
     +isCapacityAvailable(venue: Venue, ticketsNum: int): boolean
-    +getEventByName(name: String): Event
     +saveEvent(event: Event)
     +getEvents(): List<Event>
-    +getEvent(eventId: String): Event
     +listEventsByOrganizer(organizer: Organizer): List<Event>
     +checkVenueAvailability(venue: Venue, date: Date, time: Time): boolean
   }
@@ -194,7 +190,6 @@ package "Event Management" {
   Organizer "1" --> "*" Event : organizes
 }
 
-' Ticket Management Package
 package "Ticket Management" {
   class Ticket {
     +event: Event
@@ -215,7 +210,9 @@ package "Ticket Management" {
     +ticketService: TicketService
     +buyTicket(event: Event, ticketType: TicketType): Ticket
     +showTicketManagementPage()
-    +viewTickets(userId: String)
+    +viewTickets(userId: int)
+    +showConlictWarning()
+    +getTickets(userId: int): List<Ticket>
     +viewMyTickets(ticketId: String)
     +displayTicketsList(tickets: List<Ticket>)
     +displayTicketDetails(ticketDetails: Ticket)
@@ -224,11 +221,10 @@ package "Ticket Management" {
   class TicketService {
     +purchaseTicket(user: User, event: Event, ticketType: TicketType): Ticket
     +listTicketsByUser(user: User): List<Ticket>
-    +getTicketDetails(ticketId: Long): Ticket
-    +hasTickets(userId: String): boolean
-    +createTicket(eventId: String, customerInfo: User, ticketType: TicketType): Ticket
-    +getTickets(userId: String): List<Ticket>
-    +getTicket(ticketId: String): Ticket
+    +getTicketDetails(ticketId: int): Ticket
+    +hasTickets(userId: int): boolean
+    +createTicket(eventId: int, customerInfo: User, ticketType: TicketType): Ticket
+    +getTickets(userId: int): List<Ticket>
   }
 
   TicketSystem --> TicketService : uses
@@ -236,7 +232,5 @@ package "Ticket Management" {
   User "1" --> "*" Ticket : purchases
   Ticket "1" --> "1" Event : for
 }
-
-' Relationships
 
 @enduml
