@@ -47,9 +47,8 @@ This use case is triggered when a user/administrator/organizer wants to view acc
 ### 02 - Administrator Views Another User's Account
 
 #### Course of Events
-1. The administrator navigates to the account management page 
-2. The administrator selects a user account to view.**(01 - Account Management Page)**.
-3. The system retrieves and displays the user's account details.**(02 - User Account )**
+1. The administrator selects a user account to view.**(01 - Account Management Page)**.
+2. The system displays the user's account details.**(02 - User Account )**
 
 #### Related UI Prototypes
 |             01 - Account Management Page              | 02 - User Account Details |

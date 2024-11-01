@@ -1,0 +1,24 @@
+@startuml
+title Create Account - account exists
+
+actor "User" as us
+control ": AccountSystem" as accountSys
+participant ": AccountService" as accountSer
+
+== 1. The user clicks the "create" button.\n 2. The system navigates to the account creation page. \n 3. The user enters the required account details for the new user/Organizer/admin. \n 4. The system displays an error message indicating that the account already exists==
+us -> accountSys: create(type,username, password, email)
+activate accountSys
+
+accountSys -> accountSer: getAccount(email)
+activate accountSer
+accountSer --> accountSys: return user
+deactivate accountSer
+
+
+
+
+accountSys -> accountSys: showAccountManagePage(errCountExist)
+accountSys -> us
+deactivate accountSys
+== 5. The User clicks OK \n 6. The system returns to the account manage page ==
+@enduml
