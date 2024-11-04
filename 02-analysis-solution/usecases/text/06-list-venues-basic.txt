@@ -1,0 +1,29 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>acc : Customer" as acc
+participant "<link:_>: EventService" as es
+
+
+
+
+
+==1. The manager selects the list venues functionality==
+
+
+a->ec: listVenues()
+activate ec
+
+ec->es: getVenues()
+activate es
+
+es-->ec: return venues
+deactivate es
+
+ec->ec: displayListVenuesPage(venues)
+
+ec-->a:
+deactivate ec
+
+
+==2. The system displays the list venues page (09-list-venues) which shows the details of all venues in the system==

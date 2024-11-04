@@ -1,0 +1,185 @@
+@startuml class-diagram
+    left to right direction
+
+    class Venue {
+        - name
+        - address
+        - capacity
+        - contactName
+        - contactNumber
+        - contactEmail
+		{static} Venue(name, address, contactName, contachPhone, \ncontactEmail, ticketAvailabilities : TicketAvailability[*])
+		getTicketAvailabilities()
+		setAddress(newName)
+		setContactEmail(newName)
+		setContactName(newName)
+		setContactPhone(newName)
+		setName(newName)
+		setTicketAvailabilities(availabilities)
+    }
+
+    class TicketAvailability {
+        - type
+        - numberAvailable
+       	{static} TicketAvailability(type, capacity)
+		getName()
+		getNumberAvailable()
+    }
+
+    class TicketQuantity {
+        - numberSold
+        - price
+		{static} TicketQuantity(typeName, numAvailable, price)
+    }
+
+    TicketQuantity --|> TicketAvailability
+
+    class Event {
+        - name
+        - description
+        - date
+        - time
+        {static} Event(eventName, eventDescription, eventDate, \neventTime, venue, ticketQuantities : TicketQuantity[*])
+		getVenue()
+		setDescription(newEventDescription)
+		setTicketQuantities(newTicketQuantities)
+		setTime(newEventTime)
+    }
+
+    class Ticket {
+        - type
+        - price
+        - quantity
+    }
+
+    class Organiser {
+        - address
+        - companyName
+        - phoneNumber
+        {static}+Organiser(name, address, companyName, \nphoneNumber, email, password)
+        +setAddress(address)
+        +setCompanyName(companyName)
+        +setPhoneNumber(phoneNumber)
+    }
+
+    class Administrator {
+        {static}+Administrator(name, email, password)
+    }
+
+    class Customer {
+        {static} Customer(name, email, password)
+		getTickets()
+    }
+
+    abstract class Account {
+        - name
+        - password
+        - email
+        - role
+        +setName(name)
+        +setEmail(email)
+        +setPassword(password)
+    }
+
+    class AccountSystem {
+        createAccount(details)
+		displayAccountPage(newAccount)
+		displayDuplicateEmailWarning()
+		displayListAccountsPage()
+		displayMainCustomerPage(account)
+		displayModifyAccountPage(account)
+		displayModifyAccountPage(account, error)
+		displayRegisterPage()
+		displayViewAccountPage(account)
+		listAccounts()
+		modifyAccount(email, details)
+		registerAccount(details)
+		showModifyAccountPage(email)
+		viewAccount(email)
+    }
+
+    class AccountService {
+		createAdminAccount(name, email, password)
+		createCustomerAccount(name, email, password)
+		createOrganiserAccount(name, address, companyName, phoneNumber, email, password)
+		getAccount(email)
+		getAccounts()
+		getCustomer(customerEmail)
+		getOrganiser(organiserEmail)
+		getOrganiserAccount(organiserEmail)
+		modifyAccount(email, name, newEmail, password, address, companyName, phoneNumber)
+		registerAccount(email, name, password)
+		saveAccount(acc)
+    }
+
+	class EventSystem {
+		addEvent(details)
+		addVenue(details)
+		deleteEvent(eventName, eventDate)
+		deleteVenue(venueName)
+		displayAddVenuePage()
+		displayListEventsPage(events)
+		displayListTicketsPage(tickets)
+		displayListVenuesPage(venues)
+		displayModifyEventPage(event)
+		displayModifyVenuePage(venueName)
+		displayVenuePage(venue)
+		displayViewEventPage(event)
+		displayViewVenuePage(venueName)
+		listEvents()
+		listMyEvents(organiserEmail)
+		listMyTickets(customerEmail)
+		listVenues()
+		modifyEvent(details)
+		modifyVenue(details)
+		showAddEventPage()
+		showModifyEventPage(eventName, eventDate)
+		viewEvent(eventName, eventDate)
+	}
+
+    class EventService {
+ 		addEvent(eventName, eventDescription, eventDate, enventTime, \norganiserEmail, venueName, ticketTypes : String[*], ticketPrices : double[*])
+		addVenue(name, address, contactName, contactPhone, \ncontactEmail, ticketTypes : String[*], ticketCapacities : int[*])
+		deleteEvent(event)
+		deleteEvent(eventName, eventDate)
+		deleteVenue(venueName)
+		getEvent(eventName, eventDate)
+		getEvents()
+		getVenue(venueName)
+		getVenues()
+		modifyEvent(eventName, eventDate, newEventDescription, \nnewEventTime, newTicketTypes : String[*], newTicketPrices : double[*])
+		modifyVenue(name, newName, newAddress, newContactName, \nnewContactPhone, newContactEmail, newTicketTypes, newTicketCapacaties)
+		saveEvent(event)
+		saveVenue(v)
+    }
+    
+    enum Role{
+        +ADMINISTRATOR
+        +ORGANISER
+        +CUSTOMER
+    }
+
+    enum Error {
+        +DUPLICATE_EMAIL
+        +NONE
+    }
+    AccountSystem "1" --> "-accountService 1" AccountService
+    AccountService "1" --> "-accounts *" Account 
+    EventSystem "1" ---> "-eventService 1" EventService
+    EventService "1" ---> "-events *" Event 
+    EventService "1" ---> "-venues *" Venue 
+
+    Organiser --|> Account
+    Administrator --|> Account
+    Customer --|> Account
+    
+    Venue "1" --> "-ticketAvailabilities *" TicketAvailability
+    Event "1" ---> "-ticketQuantities *" TicketQuantity
+    Event ---> "-venue 1" Venue
+    Event "1" ---> "-organiser 1" Organiser
+    Organiser "1" ---> "-events *" Event
+
+    Ticket "1" -> "-event 1" Event
+    Ticket "-tickets *" <-- "1" Customer
+@enduml
+

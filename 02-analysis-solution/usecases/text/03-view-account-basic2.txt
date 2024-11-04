@@ -1,0 +1,29 @@
+actor "User" as a
+
+control "<link:_>: AccountSystem" as ac
+participant "<link:_>: AccountService" as as
+
+
+
+
+
+==1. The user selects the my account functionality on the main page for their account type==
+
+a -> ac: viewAccount(email)
+
+activate ac
+
+ac -> as : getAccount(email)
+activate as
+
+as --> ac: return account
+
+deactivate as
+
+ac->ac:displayViewAccountPage(account)
+
+ac --> a:
+deactivate ac
+
+
+==2. The system displays the view account page (06-view-account) which shows the details of the users account==

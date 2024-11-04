@@ -1,0 +1,32 @@
+actor "Administrator" as a
+
+control "<link:_>: AccountSystem" as ac
+entity "<link:_>oa : Organiser" as oa
+entity "<link:_>aa : Administrator" as aa
+entity "<link:_>ca : Customer" as ca
+participant "<link:_>: AccountService" as as
+
+
+
+
+
+==1. The user selects the list accounts functionality==
+
+a -> ac: listAccounts()
+
+activate ac
+
+ac -> as : getAccounts()
+activate as
+
+as --> ac: return accounts
+
+deactivate as
+
+ac->ac:displayListAccountsPage()
+
+ac --> a:
+deactivate ac
+
+
+==2. The system displays the list accounts page (04-list-accounts) which shows the details of all accounts in the system==

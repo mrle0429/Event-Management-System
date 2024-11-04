@@ -1,0 +1,59 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>v : Venue" as v
+entity "<link:_>ta : TicketAvailability" as ta
+participant "<link:_>: EventService" as es
+
+
+
+
+
+==1. The manager selects the edit venue functionality adjacent to the venue they want to view on the list venues page or at the bottom of the view venue page==
+
+
+a->ec: displayModifyVenuePage(venueName)
+activate ec
+ec->es:venue := getVenue(name)
+activate es
+
+es-->ec: return venue
+deactivate es
+ec->ec: displayModifyVenuePage(venue)
+
+ec-->a:
+deactivate ec
+
+==2. The system displays the modify venue page (13-modify-venue) page\n3. The manager modifies the details of the venue==
+
+a->ec: modifyVenue(details)
+activate ec
+ec->es:modifyVenue(name, newName, newAddress, newContactName, \nnewContactPhone, newContactEmail, newTicketTypes, newTicketCapacaties )
+activate es
+
+
+es->es:venue := getVenue(name)
+
+es->v:setName(newName)
+es->v:setAddress(newName)
+es->v:setContactName(newName)
+es->v:setContactPhone(newName)
+es->v:setContactEmail(newName)
+
+loop for each of the different ticket types
+  es->*ta: TicketAvailability(type, capacity)
+end
+
+es->v:setTicketAvailabilities(availabilities)
+
+es-->ec: return Error.NONE
+deactivate es
+
+ec->es: venue := getVenue(newName)
+
+ec->ec: displayVenuePage(venue)
+
+ec-->a:
+deactivate ec
+
+==4. The system shows the updated details of the venue on the view venue page (10-view-venue)==

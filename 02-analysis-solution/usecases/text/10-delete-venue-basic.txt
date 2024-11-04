@@ -1,0 +1,34 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>v : Venue" as v
+entity "<link:_>ta : TicketAvailability" as ta
+participant "<link:_>: EventService" as es
+
+
+
+
+
+==1. The administrator selects the delete venue functionality adjacent to the venue they want to remove on the list venues page\n2. The system asks the administrator to confirm the deletion of the venue (13-delete-venue-warning)==
+note over a, es: This part is competed in javascript
+==3. The administrator clicks OK==
+
+
+a->ec: deleteVenue(venueName)
+activate ec
+ec->es:deleteVenue(venueName)
+activate es
+es->es:venue := getVenue(venueName)
+
+es->es:deleteVenue(venue)
+destroy v
+es-->ec: return Error.NONE
+deactivate es
+
+ec->es: venues := getVenues()
+ec->ec: displayListVenuesPage(venues)
+
+ec-->a:
+deactivate ec
+
+==4. The system returns to the list venues page (09-list-venues) and the venue is no longer displayed==

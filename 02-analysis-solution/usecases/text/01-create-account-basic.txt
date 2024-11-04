@@ -1,0 +1,89 @@
+actor "Administrator" as a
+
+control "<link:_>: AccountSystem" as ac
+entity "<link:_>oa : Organiser" as oa
+entity "<link:_>aa : Administrator" as aa
+entity "<link:_>ca : Customer" as ca
+participant "<link:_>: AccountService" as as
+
+
+
+
+
+==1. The administrator selects the create account functionality\n2. The system displays an input form to get the required details (details required are based on the type of account being created) - 05-create-account \n3. The administrator enters the details of the account==
+
+a -> ac : createAccount(details)
+activate ac
+
+alt The account type is an administrator account
+ac -> as : createAdminAccount(name, email, password)
+activate as
+
+as -> as : getAccount(email)
+activate as
+
+as --> as : return null
+deactivate as
+
+as -> *aa: Administrator(name, email, password)
+activate aa
+
+aa --> as: return aa
+deactivate aa
+
+as -> as: saveAccount(aa)
+
+as-->ac : return Error.NONE
+deactivate as
+end
+
+alt The account type is an organiser account
+ac -> as : createOrganiserAccount(name, address, companyName, phoneNumber, email, password)
+activate as
+
+as -> as : getAccount(email)
+activate as
+
+as --> as : return null
+deactivate as
+
+as -> *oa: Organiser(name, address, companyName, phoneNumber, email, password)
+activate oa
+
+oa --> as: return oa
+deactivate oa
+
+as -> as: saveAccount(oa)
+
+as-->ac : return Error.NONE
+deactivate as
+end
+
+alt The account type is a customer account
+ac -> as : createCustomerAccount(name, email, password)
+activate as
+
+as -> as : getAccount(email)
+activate as
+
+as --> as : return null
+deactivate as
+
+as -> *ca: Customer(name, email, password)
+activate ca
+
+ca --> as: return oca
+deactivate ca
+
+as -> as: saveAccount(ca)
+
+as --> ac : return Error.NONE
+deactivate as
+end
+ac -> as : newAccount := getAccount(email)
+ac -> ac : displayAccountPage(newAccount)
+
+ac --> a:
+deactivate ac
+
+==4. The system displays the view account page with the details of the created account shown - 06-view-account==

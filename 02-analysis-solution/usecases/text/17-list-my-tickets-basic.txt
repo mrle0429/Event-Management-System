@@ -1,0 +1,25 @@
+actor "Customer" as a
+
+control "<link:_>: EventSystem" as ec
+participant "<link:_>: AccountService" as as
+entity "<link:_>: Customer" as c
+
+
+
+
+
+==1. The customer selects the my tickets functionality==
+
+a->ec:listMyTickets(customerEmail)
+activate ec
+
+ec->as:customer := getCustomer(customerEmail)
+
+ec->c:tickets := getTickets()
+
+ec->ec:displayListTicketsPage(tickets)
+
+ec-->a:
+deactivate ec
+
+==2. The system displays the list tickets page (20-list-tickets) which shows the details of only the tickets purchased by the customer==

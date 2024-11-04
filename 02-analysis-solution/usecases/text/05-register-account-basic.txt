@@ -1,0 +1,39 @@
+actor "Customer" as a
+
+control "<link:_>: AccountSystem" as ac
+entity "<link:_>acc : Customer" as acc
+participant "<link:_>: AccountService" as as
+
+
+
+
+
+==1. The customer enters the required details to create an account==
+
+
+a -> ac: registerAccount(details)
+activate ac
+
+ac->as:registerAccount(email, name, password)
+activate as
+as -> as : null := getAccount(email)
+
+as -> *acc: Customer(name, email, password)
+activate acc
+
+acc--> as:return acc
+deactivate acc
+
+as->as:saveAccount(acc)
+
+as-->ac:return Error.NONE
+deactivate as
+
+ac -> as: account := getAccount(email)
+ac->ac:displayMainCustomerPage(account)
+
+ac-->a : 
+deactivate ac
+
+
+==2. The system displays the main page of the system (01-main-customer)==

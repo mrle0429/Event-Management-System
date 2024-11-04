@@ -1,0 +1,17 @@
+actor "Administrator" as a
+
+control "<link:_>: AccountSystem" as ac
+entity "<link:_>oa : Organiser" as oa
+entity "<link:_>aa : Administrator" as aa
+entity "<link:_>ca : Customer" as ca
+participant "<link:_>: AccountService" as as
+
+
+
+
+
+==1. The administrator selects the create account functionality\n2. The system displays an input form to get the required details (details required are based on the type of account being created) - 05-create-account \n3. The administrator enters the details of the account==
+
+note over a, as: This activity takes place only in javascript
+
+==4. The system displays an error message indicating that some details are missing\n5. The administrator clicks OK\n6. The system returns to the create account page - 05-create-account==

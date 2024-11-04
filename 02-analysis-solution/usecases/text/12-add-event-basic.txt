@@ -1,0 +1,58 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>event : Event" as e
+participant "<link:_>: EventService" as es
+
+entity "<link:_>venue : Venue" as v
+participant "<link:_>: AccountService" as as
+entity "<link:_>ta : TicketAvailability" as ta
+entity "<link:_>tq : TicketQuantity" as tq
+
+
+
+
+==1. The organiser selects the add event functionality==
+
+a->ec: showAddEventPage()
+activate ec
+ec->es: venues:= getVenues()
+ec-->a:
+deactivate ec
+
+==2. The system displays the add event page (17-add-event) page\n3. The organiser enters the details of the event==
+
+a->ec: addEvent(details)
+activate ec
+
+ec->es:addEvent(eventName,eventDescription, eventDate, enventTime, \norganiserEmail, venueName, ticketTypes : String[*], ticketPrices : double[*])
+activate es
+
+es->es:venue := getVenue(venueName)
+es->as:organiser := getOrganiserAccount(organiserEmail)
+
+es->v:ta := getTicketAvailabilities()
+loop for all ticket types
+  es->ta:getName()
+  es->ta:getNumberAvailable()
+  es->*tq:TicketQuantity(typeName, numAvailable, price)
+end
+
+es->*e:Event(eventName, eventDescription, eventDate, \neventTime, venue, ticketQuantities : TicketQuantity[*])
+activate e
+e-->es:
+deactivate e
+
+es->es:saveEvent(event)
+
+es-->ec: return Error.NONE
+deactivate es
+
+ec->es:event := getEvent(eventName, eventDate)
+
+ec->ec:displayViewEventPage(event)
+
+ec-->a:
+deactivate ec
+
+==4. The system shows the created details of the event on the view event page (16-view-event)==

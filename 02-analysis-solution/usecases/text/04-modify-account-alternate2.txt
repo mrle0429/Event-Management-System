@@ -1,0 +1,49 @@
+actor "User" as a
+
+control "<link:_>: AccountSystem" as ac
+entity "<link:_>acc : Account" as acc
+participant "<link:_>: AccountService" as as
+
+
+
+
+
+==1. The user selects the modify account functionality on the view account page (06-view-account)==
+
+
+a -> ac: showModifyAccountPage(email)
+activate ac
+
+ac -> as : account := getAccount(email)
+ac->ac:displayModifyAccountPage(account)
+
+ac-->a : 
+deactivate ac
+
+==2. The system displays the modify account page (07-modify-account) which shows the details of the selected account as editable fields\n3. The user enters the updated details of the account==
+a -> ac: modifyAccount(email, details)
+
+activate ac
+
+ac -> as : modifyAccount(email, name, newEmail, password, address, companyName, phoneNumber)
+activate as
+
+as -> as : acc := getAccount(email)
+as -> as : getAccount(newEmail)
+activate as
+as --> as: return account
+deactivate as
+
+as --> ac: return Error.DUPLICATE_EMAIL
+
+deactivate as
+
+
+ac -> as : account := getAccount(email)
+ac->ac:displayModifyAccountPage(account, error)
+
+ac --> a:
+deactivate ac
+
+
+==4. The system displays a warning message indicating that the new email address is already associated with an account\n5. The user selects OK and returns to step 2 in the basic course of events==

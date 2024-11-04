@@ -1,0 +1,60 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>event : Event" as e
+participant "<link:_>: EventService" as es
+
+entity "<link:_>venue : Venue" as v
+participant "<link:_>: AccountService" as as
+entity "<link:_>ta : TicketAvailability" as ta
+entity "<link:_>tq : TicketQuantity" as tq
+
+
+
+
+==1. The manager selects the modify event functionality (either adjacent to the event on the list events page or on the view event page)==
+
+a->ec: showModifyEventPage(eventName, eventDate)
+activate ec
+
+ec->es:event := getEvent(eventName, eventDate)
+
+ec->ec:displayModifyEventPage(event)
+
+ec-->a:
+deactivate ec
+
+==2. The system displays the add event page (18-modify-event) page\n3. The manager updates the details of the event==
+
+a->ec:modifyEvent(details)
+activate ec
+
+ec->es:modifyEvent(eventName, eventDate, newEventDescription, \nnewEventTime, newTicketTypes : String[*], newTicketPrices : double[*])
+activate es
+es->es: event := getEvent(eventName, eventDate)
+es->e:venue := getVenue()
+
+es->v:ta := getTicketAvailabilities()
+loop for all ticket types
+  es->ta:getName()
+  es->ta:getNumberAvailable()
+  es->*tq:TicketQuantity(newTypeName, numAvailable, newPrice)
+end
+
+es->e:setDescription(newEventDescription)
+es->e:setTime(newEventTime)
+es->e:setTicketQuantities(newTicketQuantities)
+
+es->es:saveEvent(event)
+
+es-->ec: return Error.NONE
+deactivate es
+
+ec->es:event := getEvent(eventName, eventDate)
+
+ec->ec:displayViewEventPage(event)
+
+ec-->a:
+deactivate ec
+
+==4. The system shows the details of the modified event on the view event page (16-view-event)==

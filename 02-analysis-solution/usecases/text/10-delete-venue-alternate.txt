@@ -1,0 +1,17 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>v : Venue" as v
+participant "<link:_>: EventService" as es
+
+
+
+
+
+==1. The administrator selects the delete venue functionality adjacent to the venue they want to remove on the list venues page\n2. The system asks the administrator to confirm the deletion of the venue (13-delete-venue-warning)==
+note over a, es: This part is competed in javascript
+==3. The administrator clicks Cancel==
+
+note over a, es: This part is competed in javascript
+
+==4. The system returns to the list venues page (09-list-venues) and the venue is no longer displayed==

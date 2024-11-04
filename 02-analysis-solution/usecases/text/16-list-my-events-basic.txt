@@ -1,0 +1,25 @@
+actor "Organiser" as a
+
+control "<link:_>: EventSystem" as ec
+participant "<link:_>: AccountService" as as
+entity "<link:_>: Organiser" as o
+
+
+
+
+
+==1. The Organiser selects the my events functionality==
+
+a->ec:listMyEvents(organiserEmail)
+activate ec
+
+ec->as:organiser := getOrganiser(organiserEmail)
+
+ec->o:events := getEvents()
+
+ec->ec:displayListEventsPage(events)
+
+ec-->a:
+deactivate ec
+
+==2. The system displays the list events page (14-list-events) which shows the details of only the events organised by the organiser==

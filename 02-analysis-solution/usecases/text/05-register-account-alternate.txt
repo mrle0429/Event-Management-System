@@ -1,0 +1,31 @@
+actor "Customer" as a
+
+control "<link:_>: AccountSystem" as ac
+entity "<link:_>acc : Customer" as acc
+participant "<link:_>: AccountService" as as
+
+
+
+
+
+==1. The customer enters the required details to create an account==
+
+
+a -> ac: registerAccount(details)
+activate ac
+
+ac->as:registerAccount(email, name, password)
+activate as
+as -> as : acc := getAccount(email)
+
+
+as-->ac:return Error.DUPLICATE_EMAIL
+deactivate as
+
+ac->ac:displayRegisterPage()
+
+ac-->a : 
+deactivate ac
+
+
+==2. The system displays an error message indicating that the account already exists and returns to the register account page==

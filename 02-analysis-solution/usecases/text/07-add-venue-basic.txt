@@ -1,0 +1,56 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>v : Venue" as v
+entity "<link:_>ta : TicketAvailability" as ta
+participant "<link:_>: EventService" as es
+
+
+
+
+
+==1. The manager selects the add venue functionality==
+
+
+a->ec: displayAddVenuePage()
+activate ec
+
+ec-->a:
+deactivate ec
+
+
+==2. The system displays the add venue page (11-add-venue) page\n3. The manager enters the details of the venue==
+
+a->ec:addVenue(details)
+activate ec
+
+ec -> es: addVenue(name, address, contactName, contactPhone, \ncontactEmail, ticketTypes : String[*], ticketCapacities : int[*])
+
+activate es
+
+loop for each of the different ticket types
+  es->*ta: TicketAvailability(type, capacity)
+end
+
+es->*v:Venue(name, address, contactName, contachPhone, \ncontactEmail, ticketAvailabilities : TicketAvailability[*])
+
+activate v
+
+v-->s:
+
+deactivate v
+
+es->es:saveVenue(v)
+
+es-->ec: return Error.NONE
+
+deactivate es
+
+ec->es:venue := getVenue(name)
+ec->ec: displayVenuePage(venue)
+
+ec-->a:
+deactivate ec
+
+==4. The system shows the created details of the venue on the view venue page (10-view-venue)==
+

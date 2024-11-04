@@ -1,0 +1,27 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>v : Venue" as v
+participant "<link:_>: EventService" as es
+
+
+
+
+
+==1. The manager selects the view venue functionality adjacent to the venue they want to view==
+
+
+a->ec: displayViewVenuePage(venueName)
+activate ec
+ec->es:venue := getVenue(name)
+activate es
+
+es-->ec: return venue
+deactivate es
+ec->ec: displayVenuePage(venue)
+
+ec-->a:
+deactivate ec
+
+==4. The system displays the view venue page (10-view-venue) with the details of the venue==
+

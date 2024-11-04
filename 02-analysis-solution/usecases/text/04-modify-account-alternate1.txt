@@ -1,0 +1,27 @@
+actor "User" as a
+
+control "<link:_>: AccountSystem" as ac
+entity "<link:_>acc : Account" as acc
+participant "<link:_>: AccountService" as as
+
+
+
+
+
+==1. The user selects the modify account functionality==
+
+
+a -> ac: showModifyAccountPage(email)
+activate ac
+
+ac -> as : account := getAccount(email)
+ac->ac:displayModifyAccountPage(account)
+
+ac-->a : 
+deactivate ac
+
+==2. The system displays the modify account page (07-modify-account) which shows the details of the selected account as editable fields\n 3.The user enters the updated details of the account==
+
+note over a, as: The verification of details is something that happens in javascript, the error message is displayed\nand the user is returned to the same page when they click ok
+
+==4. The system displays a warning message indicating that the password is invalid\n5. The user selects OK and returns to step 2 in the basic course of events==

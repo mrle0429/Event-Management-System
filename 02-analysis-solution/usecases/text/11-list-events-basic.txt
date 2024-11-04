@@ -1,0 +1,26 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+participant "<link:_>: EventService" as es
+
+
+
+
+
+==1. The user selects the list events functionality==
+
+a->ec: listEvents()
+activate ec
+
+ec->es:getEvents()
+activate es
+
+es-->ec: return events
+deactivate es
+
+ec->ec:displayListEventsPage(events)
+
+ec-->a:
+deactivate ec
+
+==2. The system displays the list events page (14-list-events) which shows the details of all events in the system==

@@ -56,7 +56,7 @@ Each use case contains the separate sequence diagrams for each course of events.
 
 The class diagram represents the information gained about the system by completing the use case realisations. 
 
-![class diagram](./images/class.png)
+![class diagram](./02-analysis/images/class.png)
 
 ## Description of Responsibilities
 

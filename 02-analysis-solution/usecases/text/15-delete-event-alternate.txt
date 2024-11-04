@@ -1,0 +1,19 @@
+actor "Manager" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>event : Event" as e
+participant "<link:_>: EventService" as es
+
+
+
+
+
+==1. The administrator selects the delete event functionality adjacent to the event they want to remove on the list events page==
+
+note over a,es: This is done using javascript
+
+==2. The system asks the administrator to confirm the deletion of the event (19-delete-event-warning)\n3. The administrator clicks Cancel==
+
+note over a, es: This part is competed in javascript
+
+==4. The system returns to the list venues page (14-list-events) with no changes==

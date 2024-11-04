@@ -1,0 +1,17 @@
+actor "Customer" as a
+
+control "<link:_>: AccountSystem" as ac
+entity "<link:_>acc : Customer" as acc
+participant "<link:_>: AccountService" as as
+
+
+
+
+
+==1. The customer enters the required details to create an account==
+
+
+note over a, as: A javascript prompted warning is shown indicating the password requirements are not met\nThe user is returned to the signup page
+
+
+==2. The system displays an error message password requirements are not met==

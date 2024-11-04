@@ -1,0 +1,27 @@
+actor "User" as a
+
+control "<link:_>: EventSystem" as ec
+entity "<link:_>event : Event" as e
+participant "<link:_>: EventService" as es
+
+entity "<link:_>venue : Venue" as v
+participant "<link:_>: AccountService" as as
+entity "<link:_>ta : TicketAvailability" as ta
+entity "<link:_>tq : TicketQuantity" as tq
+
+
+
+
+==1. The user selects the view event functionality adjacent to the event they want to view==
+
+a->ec: viewEvent(eventName, eventDate)
+activate ec
+
+ec->es:event := getEvent(eventName, eventDate)
+
+ec->ec:displayViewEventPage(event)
+
+ec-->a:
+deactivate ec
+
+==2. The system displays the view event page (16-view-event) with the details of the event==
