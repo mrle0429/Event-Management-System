@@ -1,16 +1,15 @@
 # Team Project: *Group XX*
 
 ## Team Members
-| Number | Name | Email(s) | CSGitLab Username |
-|--------|------|----------|-------------------|
-| TM1    | Team Member 1 | tm1@ucdconnect.ie | @22201001 |
-| TM2    | Team Member 2 | tm2@ucdconnect.ie | @22201002 |     
-| TM3    | Team Member 3 | tm3@ucdconnect.ie, personal@qq.com | @22201003 |     
-| TM4    | Team Member 4 | tm4@ucdconnect.ie | @22201004 |     
-| TM5    | Team Member 5 | tm5@ucdconnect.ie | @22201005 |     
-| TM6    | Team Member 6 | tm6@ucdconnect.ie | @22201006 |     
-| TM7    | Team Member 7 | tm7@ucdconnect.ie | @22201007 |     
-| TM8    | Team Member 8 | tm8@ucdconnect.ie | @22201008 |
+| Number | Name         | Email(s)                   | CSGitLab Username |
+|--------|--------------|----------------------------|-------------------|
+| TM1    | Le Liu       | le.liu1@ucdconnect.ie      | @Mrle             |
+| TM2    | Ziheng Wang  | ziheng.wang1@ucdconnect.ie | @zihengWang       |     
+| TM3    | Yunhan Gao   | yunhan.gao@ucdconnect.ie   | @YunhanGao        |     
+| TM4    | Bohan Zhang  | bohan.zhang@ucdconnect.ie  | @BohanZhang       |     
+| TM5    | Sicheng Yi   | sicheng.yi@ucdconnect.ie   | @Prestine         |     
+| TM6    | Xinya Shi    | xinya.shi@ucdconnect.ie    | @Shirley          |     
+| TM7    | Yuxuan Zhang | yuxuan.zhang@ucdconnect.ie | @WhiteCamellia    |
 
 # Design
 
@@ -22,17 +21,37 @@ Decisions made while constructing these diagrams are also documented in the clas
 
 Each use case contains the separate sequence diagrams for each course of events. The diagrams are stored in the `images` folder and referenced in the markdown files.
 
-1. [Use Case 1](01-name.md)
-2. [Use Case 2](02-name.md)
-3. [Use Case 3](03-name.md)
-4. [Use Case 4](04-name.md)
-5. [Use Case 5](05-name.md)
+### Account Management
+1. [Create Account](/03-design/usecases/docs/01-create-account)
+2. [Delete Account]()
+3. [Updata Account]()
+4. [View Details Account]()
+5. [List Accounts]()
+
+### Event Management
+6. [Create Event]()
+7. [Delete Event]()
+8. [Update Event]()
+9. [View Details Event]()
+10. [List Events]()
+
+### Venue Management
+11. [Create Venue]()
+12. [Delete Venue]()
+13. [Update Venue]()
+14. [View Details Venue]()
+15. [List Venue]()
+
+### Ticket Management
+16. [Create(Buy) Ticket]()
+17. [View Details Ticket]()
+18. [My Tickets]()
 
 ## Class Diagram
 
 The class diagram represents the information gained about the system by completing the use case realisations. 
 
-![class diagram](images/class-diagram.png)
+![class diagram]()
 
 ## Data Persistence
 Within the restaurant the following classes should be maintained between executions.
@@ -51,19 +70,34 @@ Within the restaurant the following classes should be maintained between executi
 
 ### Distribution of work on this milestone
 #### Overall Distribution of Work
-| Team Member | TM1 | TM2 | TM3 | TM4 | TM5 | TM6 | TM7 | TM8 |
-|-------------|-----|-----|-----|-----|-----|-----|-----|-----|
-| Percentage  | 12% | 12% | 12% | 12% | 12% | 12% | 12% | 12% |
+
+| Team Member | TM1 | TM2 | TM3 | TM4 | TM5 | TM6 | TM7 |
+|-------------|-----|-----|-----|-----|-----|-----|-----|
+| Percentage  | 15% | 15% | 14% | 14% | 14% | 14% | 14% |
+
 #### Task Allocation
 | Item               | Primary Author | Contributor | Contributor | Reviewer |
 |--------------------|-----|-----|-----|-----|
-| Description of Responsibilities   | TM3 |     |     | TM1 |
-| Class Diagram      | TM4 | TM2 | TM1 | TM3 |
-| Use Case 1: "Name" | TM4 |     |     | TM3 |
-| Use Case 2: "Name" | TM1 |     |     | TM4 |
-| Use Case 3: "Name" | TM2 |     |     | TM1 |
-| Use Case 4: "Name" | TM3 |     |     | TM2 |
-| Use Case N: "Name" | TM4 |     |     | TM3 |
+| Description of Responsibilities   |ZihengWang |     |     |  |
+| Class Diagram      | ZihengWang  |     |     |  LeLiu   |
+| Use Case 1: "Create Account" | LeLiu |             |  | ZihengWang |
+| Use Case 2: "Delete Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 3: "Update Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 4: "View details Account" | YunhanGao      | BohanZhang          |  |LeLiu|
+| Use Case 5: "List all Accouts"| SichengYi      |           |   |  LeLiu |
+| Use Case 6: "Create Venue"| XinyaShi       | YuxuanZhang          |   | LeLiu  |
+| Use Case 7: "Delete Venue"| XinyaShi       | YuxuanZhang          |    |  ZihengWang |
+| Use Case 8: "Update Venue"| XinyaShi       | YuxuanZhang          |   |  ZihengWang |
+| Use Case 9: "List all Venues" | SichengYi       |           |  | ZihengWang |
+| Use Case 10: "View Details Venue" | BohanZhang       | YuxuanZhang          |  | ZihengWang |
+| Use Case 11: "Create Event"| YuxuanZhang    | XinyaShi          |    | ZihengWang  |
+| Use Case 12: "Delete Event| YuxuanZhang    |XinyaShi|   |  ZihengWang  |
+| Use Case 13: "Update Event"| YuxuanZhang    | XinyaShi          |  | ZihengWang  |
+| Use Case 14: "View Details Event"| YuxuanZhang    | XinyaShi          |  | LeLiu  |
+| Use Case 15: "List all Events"| SichengYi    | XinyaShi          |  | LeLiu  |
+| Use Case 16: "Create(Buy) Ticket"| BohanZhang     | YunhanGao       |  |  LeLiu |
+| Use Case 17: "View Details Ticket| BohanZhang             | YunhanGao          |  |  LeLiu |
+| USe Case 18: "My Tickets"| BohanZhang             | YunhanGao          |   |  LeLiu |
 
 
 #### Reflection Statements
