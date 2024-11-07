@@ -1,0 +1,55 @@
+@startuml
+title: Update Account (User)
+
+actor "Admin" as u
+participant "Web Browser" as w
+entity "__model: Model__" as m
+boundary "__: DispatchServlet__" as ds
+boundary "__alterATO: AlterDTO__" as dto
+control "__: AccountSystem__" as c
+participant "__: AccountRepository__" as ar
+participant "__: AccountService__" as s
+entity "__User: Account__" as a
+
+
+
+==1. The user clicks "edit" to update their account information on the account info page.==
+u -> c : showEditAccount(userId)
+activate c
+c -> s : getAccount(userId)
+activate s
+
+s --> c : return selectedAccount
+deactivate s
+c -> c  : displayEditAccountPage(selectedAccount)
+c --> u
+deactivate c
+
+==2. The system displays the account update form. \n3. The user enters the new details (username, password, email, etc.)==
+u -> w : interact
+activate w
+w -> ds : POST(url: String, payload: json)
+activate ds
+ds -> c : updateAccount(alterDTO: AlterDTO, model: Model)
+activate c
+
+c -> dto : uid: =getUserId()
+c -> s : a := getAccountById(uid: Int)
+
+c -> s : editAccount(userId, newUsername, newPassword, newEmail)
+activate s
+
+s -> a : setName(newUsername)
+s -> a : setPassword(newPassword)
+s -> a : setEmail(newEmail)
+
+s -> ar : save(selectedAccount)
+s --> c :
+deactivate s
+c -> c  : displayAccountPage(accounts)
+
+c --> u
+deactivate c
+
+==4. System displays the view account page with updated details==
+@enduml

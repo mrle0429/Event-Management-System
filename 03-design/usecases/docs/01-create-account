@@ -1,0 +1,62 @@
+@startuml
+title Create Accout - Basic Course of Events
+
+actor "User" as us
+boundary "Web Browser" as w
+boundary "newview:View" as view
+boundary "DispatchServlet" as d
+control ": __AccountSystem__" as accountSys
+entity "__user: UserAccount__" as userAcc
+participant "AccountRepository" as accountRepo
+participant ": __AccountService__" as accountSer
+
+
+
+
+== 1. The user clicks the "create" button .\n 2. The system navigates to the account creation page. \n 3. The user enters the required account details for the new user/Organizer/admin.  ==
+us -> w: Click "Create Accout"
+w -> d: POST /createAccount (type: AccountType, username: String, password: String, email: String)
+activate d
+
+note over d: The DispatchServlet is responsible for receiving requests \nand parsing the data to generate AccountDTO objects
+d -> accountSys: createAccount(accountDTO: AccountDTO)
+activate accountSys
+
+accountSys -> accountSer: getAccount(email: String)
+activate accountSer
+accountSer -> accountRepo: findByEmail(email: String)
+activate accountRepo
+accountRepo --> accountSer: return null
+deactivate accountRepo
+accountSer --> accountSys: return null
+deactivate accountSer
+
+accountSys -> accountSer: createAccount(type: AccountType, username: String, password: String, email: String)
+activate accountSer
+create userAcc
+accountSer -> userAcc: new UserAccount(username: String, password: String, email: String)
+
+activate userAcc
+userAcc --> accountSer: return user
+deactivate userAcc
+
+accountSer -> accountRepo: save(user)
+accountSer --> accountSys: return user
+deactivate accountSer
+
+
+
+accountSys --> d: return "account page"
+create view
+
+d -> view: View(accountList)
+
+view --> d:
+deactivate view
+
+d --> w: return newView
+accountSys --> us
+deactivate accountSys
+
+== 4. The system renturn to account manage page.==
+@enduml
