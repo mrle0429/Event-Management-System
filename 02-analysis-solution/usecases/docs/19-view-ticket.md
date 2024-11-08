@@ -1,8 +1,8 @@
-# Use Case 18 - Buy Ticket
+# Use Case 19 - View Ticket
 
 ## 01 - Basic Course of Events
 
-![Buy Ticket - Basic Course of Events](/02-analysis-solution/usecases/images/18-buy-ticket-basic.png)
+![Buy Ticket - Basic Course of Events](/02-analysis-solution/usecases/images/19-view-ticket-basic.png)
 
 ## Relevant UI Sketches
 | Page Name | Image |

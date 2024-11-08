@@ -1,0 +1,66 @@
+actor "Customer" as a
+
+control "<link:_>: EventSystem" as ec
+participant "<link:_>: AccountService" as as
+participant "<link:_>: EventService" as es
+entity "<link:_>event : Event" as e
+entity "<link:_>customer : Customer" as c
+entity "<link:_>t : Ticket" as t
+entity "<link:_>tq : TicketQuantity" as tq
+
+
+
+
+
+==1. The customer selects the buy ticket functionality \n2. The system displays the buy ticket page (22-buy-ticket) with a form to fill in the purchas details\n3. The customer fills in the form and submits it==
+
+a->ec:buyTickets(customerEmail, eventName, date, types: String[*], quantities: int[*], prices : double[*])
+activate ec
+
+ec->es:event := getEvent(name, date)
+
+ec->es: isAvailabile(event, types, quantities)
+activate es
+
+es->e:getTicketQuantities()
+
+activate e
+
+e-->es: return quants
+deactivate e
+
+es-->ec: return true
+deactivate es
+
+ec->es: buyTickets(event, types, quantities, prices)
+activate es
+
+loop for each type of ticket being purchased
+es->*t: Ticket(type, price, quantity)
+activate t
+t-->es:
+deactivate t
+es->es:saveTicket(ticket)
+
+es->e:reduceQuantity(type, quantity)
+activate e
+e->tq:reduceQuantity(quantity)
+e-->es:
+deactivate e
+es->es:saveEvent(event)
+
+end
+es-->ec:return tickets
+
+ec->as:customer := getCustomer(customerEmail)
+ec->c:addTickets(tickets)
+ec->as:saveAccount(customer)
+
+ec->c:tickets := getTickets()
+
+ec->ec:displayTicketPage(tickets)
+
+ec-->a:
+deactivate ec
+
+==4. The system displays the view ticket page (21-view-ticket) with the details of the ticket and event that was just purchased==

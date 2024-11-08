@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 
-![Modify Event - Basic Course of Events](/02-analysis/usecases/images/14-modify-event-basic.png)
+![Modify Event - Basic Course of Events](/02-analysis-solution/usecases/images/14-modify-event-basic.png)
 
 ## Relevant UI Sketches
 | Page Name | Image |

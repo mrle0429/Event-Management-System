@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 
-![Add Venue - Basic Course of Events](/02-analysis/usecases/images/07-add-venue-basic.png)
+![Add Venue - Basic Course of Events](/02-analysis-solution/usecases/images/07-add-venue-basic.png)
 
 
 ## Relevant UI Sketches

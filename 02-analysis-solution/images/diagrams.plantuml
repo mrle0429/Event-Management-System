@@ -30,6 +30,7 @@
         - numberSold
         - price
 		{static} TicketQuantity(typeName, numAvailable, price)
+        reduceQuantity(quantity)
     }
 
     TicketQuantity --|> TicketAvailability
@@ -44,6 +45,8 @@
 		setDescription(newEventDescription)
 		setTicketQuantities(newTicketQuantities)
 		setTime(newEventTime)
+        getTicketQuantities()
+        reduceQuantity(type, quantity)
     }
 
     class Ticket {
@@ -69,6 +72,7 @@
     class Customer {
         {static} Customer(name, email, password)
 		getTickets()
+        addTickets(tickets)
     }
 
     abstract class Account {
@@ -126,6 +130,7 @@
 		displayVenuePage(venue)
 		displayViewEventPage(event)
 		displayViewVenuePage(venueName)
+        displayTicketPage(tickets)
 		listEvents()
 		listMyEvents(organiserEmail)
 		listMyTickets(customerEmail)
@@ -135,6 +140,8 @@
 		showAddEventPage()
 		showModifyEventPage(eventName, eventDate)
 		viewEvent(eventName, eventDate)
+        buyTickets(customerEmail, eventName, eventDate, ticketTypes: string [*], quantities: int[*], prices: double[*])
+        viewTicket(eventName, date, type)
 	}
 
     class EventService {
@@ -150,7 +157,10 @@
 		modifyEvent(eventName, eventDate, newEventDescription, \nnewEventTime, newTicketTypes : String[*], newTicketPrices : double[*])
 		modifyVenue(name, newName, newAddress, newContactName, \nnewContactPhone, newContactEmail, newTicketTypes, newTicketCapacaties)
 		saveEvent(event)
+        saveTicket(ticket)
 		saveVenue(v)
+        isAvailable(event, types: string[*], quantities: int[*])
+        buyTickets(event, types: string[*], quantities: int[*], prices: double[*])
     }
     
     enum Role{

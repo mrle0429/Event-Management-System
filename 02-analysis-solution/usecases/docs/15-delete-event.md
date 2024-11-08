@@ -2,11 +2,11 @@
 
 ## 01 - Basic Course of Events
 
-![Delete Event - Basic Course of Events](/02-analysis/usecases/images/15-delete-event-basic.png)
+![Delete Event - Basic Course of Events](/02-analysis-solution/usecases/images/15-delete-event-basic.png)
 
 ## 02 - Alternate Course of Events - Not Confirmed
 
-![Delete Event - Alternate Course of Events - Not Confirmed](/02-analysis/usecases/images/15-delete-event-alternate.png)
+![Delete Event - Alternate Course of Events - Not Confirmed](/02-analysis-solution/usecases/images/15-delete-event-alternate.png)
 
 ## Relevant UI Sketches
 | Page Name | Image |

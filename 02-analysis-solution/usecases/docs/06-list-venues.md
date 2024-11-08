@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 
-![List Venues - Basic Course of Events](/02-analysis/usecases/images/06-list-venues-basic.png)
+![List Venues - Basic Course of Events](/02-analysis-solution/usecases/images/06-list-venues-basic.png)
 
 ## Relevant UI Sketches
 | Page Name | Image |

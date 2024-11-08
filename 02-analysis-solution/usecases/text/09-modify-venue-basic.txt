@@ -45,7 +45,7 @@ loop for each of the different ticket types
 end
 
 es->v:setTicketAvailabilities(availabilities)
-
+es->es:saveVenue(v)
 es-->ec: return Error.NONE
 deactivate es
 

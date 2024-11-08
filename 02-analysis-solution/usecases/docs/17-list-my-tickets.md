@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 
-![List My Tickets - Basic Course of Events](/02-analysis/usecases/images/17-list-my-tickets-basic.png)
+![List My Tickets - Basic Course of Events](/02-analysis-solution/usecases/images/17-list-my-tickets-basic.png)
 
 ## Relevant UI Sketches
 | Page Name | Image |

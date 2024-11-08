@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 
-![Delete Venue - Basic Course of Events](/02-analysis/usecases/images/10-delete-venue-basic.png)
+![Delete Venue - Basic Course of Events](/02-analysis-solution/usecases/images/10-delete-venue-basic.png)
 
 ## 02 - Alternate Course of Events - Not Confirmed
 

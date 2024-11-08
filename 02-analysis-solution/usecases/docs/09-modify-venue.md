@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 
-![Modify Venue - Basic Course of Events](/02-analysis/usecases/images/09-modify-venue-basic.png)
+![Modify Venue - Basic Course of Events](/02-analysis-solution/usecases/images/09-modify-venue-basic.png)
 
 ## Relevant UI Sketches
 | Page Name | Image |

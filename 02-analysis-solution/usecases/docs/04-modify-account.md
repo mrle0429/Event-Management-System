@@ -2,19 +2,19 @@
 
 ## 01 - Basic Course of Events - Administrator
 
-![Modify Account - Basic Course of Events](/02-analysis/usecases/images/04-modify-account-basic1.png)
+![Modify Account - Basic Course of Events](/02-analysis-solution/usecases/images/04-modify-account-basic1.png)
 
 ## 02 - Basic Course of Events - User
 
-![Modify Account - Basic Course of Events](/02-analysis/usecases/images/04-modify-account-basic2.png)
+![Modify Account - Basic Course of Events](/02-analysis-solution/usecases/images/04-modify-account-basic2.png)
 
 ## 03 - Alternate Course of Events - Details missing from input
 
-![Modify Account - Alternate Course of Events](/02-analysis/usecases/images/04-modify-account-alternate1.png)
+![Modify Account - Alternate Course of Events](/02-analysis-solution/usecases/images/04-modify-account-alternate1.png)
 
 ## 04 - Alternate Course of Events - New email already in use
 
-![Modify Account - Alternate Course of Events](/02-analysis/usecases/images/04-modify-account-alternate2.png)
+![Modify Account - Alternate Course of Events](/02-analysis-solution/usecases/images/04-modify-account-alternate2.png)
 
 ## Related UI Prototypes
 | Page Name   | Image                                                  |

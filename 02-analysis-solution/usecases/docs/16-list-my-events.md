@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 
-![List My Events - Basic Course of Events](/02-analysis/usecases/images/16-list-my-events-basic.png)
+![List My Events - Basic Course of Events](/02-analysis-solution/usecases/images/16-list-my-events-basic.png)
 
 ## Relevant UI Sketches
 | Page Name | Image |

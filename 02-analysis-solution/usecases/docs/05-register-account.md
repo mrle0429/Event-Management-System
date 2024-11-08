@@ -2,15 +2,15 @@
 
 ## 01 - Basic Course of Events
 
-![Register Account - Basic Course of Events](/02-analysis/usecases/images/05-register-account-basic.png)
+![Register Account - Basic Course of Events](/02-analysis-solution/usecases/images/05-register-account-basic.png)
 
 ## 02 - Alternate Course of Events - Email already in use
 
-![Register Account - Alternate Course of Events](/02-analysis/usecases/images/05-register-account-alternate.png)
+![Register Account - Alternate Course of Events](/02-analysis-solution/usecases/images/05-register-account-alternate.png)
 
 ## 03 - Alternate Course of Events - Password Requirements Not Met
 
-![Register Account - Alternate Course of Events](/02-analysis/usecases/images/05-register-account-alternate2.png)
+![Register Account - Alternate Course of Events](/02-analysis-solution/usecases/images/05-register-account-alternate2.png)
 
 ## Related UI Prototypes
 | Page Name   | Image                                                  |

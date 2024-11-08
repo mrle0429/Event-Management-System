@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 
-![View Venue - Basic Course of Events](/02-analysis/usecases/images/08-view-venue-basic.png)
+![View Venue - Basic Course of Events](/02-analysis-solution/usecases/images/08-view-venue-basic.png)
 
 ## Relevant UI Sketches
 | Page Name | Image |

@@ -2,11 +2,11 @@
 
 ## 01 - Basic Course of Events
 
-![List Accounts - Basic Course of Events](/02-analysis/usecases/images/03-view-account-basic1.png)
+![List Accounts - Basic Course of Events](/02-analysis-solution/usecases/images/03-view-account-basic1.png)
 
 ## 02 - Basic Course of Events
 
-![List Accounts - Basic Course of Events](/02-analysis/usecases/images/03-view-account-basic2.png)
+![List Accounts - Basic Course of Events](/02-analysis-solution/usecases/images/03-view-account-basic2.png)
 
 ## Related UI Prototypes
 | Page Name   | Image                                                  |

@@ -2,15 +2,15 @@
 
 ## 01 - Basic Course of Events
 
-![Create Account - Basic Course of Events](/02-analysis/usecases/images/01-create-account-basic.png)
+![Create Account - Basic Course of Events](/02-analysis-solution/usecases/images/01-create-account-basic.png)
 
 ## 02 - Alternate Course of Events - Duplicate Email Address
 
-![Use Case Name - Alternate Course of Events](/02-analysis/usecases/images/01-create-account-alternate1.png)
+![Use Case Name - Alternate Course of Events](/02-analysis-solution/usecases/images/01-create-account-alternate1.png)
 
 ## 03 - Alternate Course of Events - Details missing from form
 
-![Use Case Name - Alternate Course of Events](/02-analysis/usecases/images/01-create-account-alternate2.png)
+![Use Case Name - Alternate Course of Events](/02-analysis-solution/usecases/images/01-create-account-alternate2.png)
 
 ### Related UI Prototypes
 | Page Name   | Image                                                  |

@@ -2,7 +2,7 @@
 
 ## 01 - Basic Course of Events
 
-![List Accounts - Basic Course of Events](/02-analysis/usecases/images/02-list-accounts-basic.png)
+![List Accounts - Basic Course of Events](/02-analysis-solution/usecases/images/02-list-accounts-basic.png)
 
 ## Related UI Prototypes
 | Page Name   | Image                                                  |
