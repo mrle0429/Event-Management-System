@@ -52,6 +52,10 @@ The class diagram for the analysis part of the project is shown below. Note how 
 
 ### Services
 
-1. AccountService - A class that provides services related to accounts in the system. It is responsible for creating, listing, viewing, modifying, and registering accounts.
-2. EventService - 
+1. AccountService - A class that provides services related to accounts in the system. It is responsible for remembering, retrieving, adding, modifying, deleting, and registering accounts.
+2. EventService - A class that provides services related to events, venues, and tickets in the system. It is responsible for remembering, retrieving, adding, modifying, and deleting events, venues, and tickets.
 
+### Controllers
+
+1. AccountController - A class responsible for managing the use cases related to accounts. 
+2. EventController - A class responsible for managing the use cases related to events, venues, and tickets.
