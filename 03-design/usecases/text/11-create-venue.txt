@@ -1,0 +1,67 @@
+@startuml
+title Create Venue - Basic Course of Events
+
+actor "Organiser/Administrator" as OA
+boundary "Web Browser" as w
+boundary "newvenueList" as view
+boundary "DispatchServlet" as d
+control ": __VenueSystem__" as System
+entity "__model: Model__" as m
+participant ": __VenueService__" as Service
+participant "VenueRepository" as repo
+entity "__venue: Venue__" as Venue
+
+== 1. User navigates to create venue page and enters venue details ==
+OA -> w: Click "Create Venue"
+activate w
+w -> d: POST /createVenue (venueDTO: VenueDTO)
+activate d
+
+note over d: The DispatchServlet handles request and\nparses data to generate VenueDTO
+
+d -> System: createVenue(venueDTO: VenueDTO)
+activate System
+
+System -> Service: createVenue(name, address, totalCapacity)
+activate Service
+
+create Venue
+Service -> Venue: new Venue(name, address, totalCapacity)
+activate Venue
+Venue --> Service: return venue
+deactivate Venue
+
+Service -> repo: save(venue)
+activate repo
+repo --> Service
+deactivate repo
+
+Service --> System: return savedVenue】
+deactivate Service
+
+System -> Service: getAllVenues()
+activate Service
+Service -> repo: findAll()
+activate repo
+repo --> Service: return venues
+deactivate repo
+Service --> System: return venues
+deactivate Service
+
+System -> m: addAttribute("venueList", venues)
+System -> m: addAttribute("successMessage", "Venue created successfully")
+
+System --> d: return "venue_list_page"
+deactivate System
+create view
+d -> view: View(model)
+activate view
+view --> d
+deactivate view
+
+d --> w: return newView
+deactivate d
+
+
+== 2. System displays updated venue list including the new venue ==
+@enduml

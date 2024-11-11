@@ -1,0 +1,108 @@
+@startuml
+title Create Event - Basic Course of Events
+
+actor "Organizer_and_Administrator" as OA
+boundary "Web Browser" as w
+boundary "newlistEvents" as view
+boundary "DispatchServlet" as d
+control ": __EventSystem__" as System
+entity "__model: Model__" as m
+participant ": __EventService__" as Service
+participant "EventRepository" as repo
+participant ": __VenueService__" as VenueSer
+entity "__newEvent: Event__" as Event
+
+== 1. User navigates to create event page and enters event details ==
+OA -> w: Click "Create Event"
+w -> d: POST /createEvent (eventDTO: EventDTO)
+activate d
+
+note over d: The DispatchServlet handles request and\nparses data to generate EventDTO
+
+d -> System: createEvent(eventDTO: EventDTO)
+activate System
+
+System -> VenueSer: getVenueById(eventDTO.getVenueID())
+activate VenueSer
+VenueSer -> VenueRepo: findById(venueId)
+activate VenueRepo
+VenueRepo --> VenueSer: return venue
+deactivate VenueRepo
+VenueSer --> System: return venue
+deactivate VenueSer
+
+System -> AccSer:getAccountById(eventDTO.getCreatorId())
+activate AccSer
+AccSer -> AccRepo: findById(accountId)
+activate AccRepo
+AccRepo --> AccSer: return account
+deactivate AccRepo
+AccSer --> System: return account
+deactivate AccSer
+
+System -> VenueSer: isAvailable(venue, date)
+activate VenueSer
+VenueSer -> VenueRepo: existsByVenueAndDate(venue, date)
+activate VenueRepo
+VenueRepo --> VenueSer: return false
+deactivate VenueRepo
+VenueSer --> System: return true
+deactivate VenueSer
+
+System -> VenueSer: isCapacityAvailable(venue, ticketsNum)
+activate VenueSer
+VenueSer -> VenueRepo: getVenueCapacity(venue)
+activate VenueRepo
+VenueRepo --> VenueSer: return capacity
+deactivate VenueRepo
+
+VenueSer -> VenueSer: checkCapacity(capacity, ticketsNum)
+VenueSer --> System: return true
+deactivate VenueSer
+
+
+System -> Service: createEvent(details)
+activate Service
+
+create Event
+Service -> Event: Event(name, description, date, ticketsNum, ticketType, venue, organiser, ticketValue)
+activate Event
+Event --> Service
+deactivate Event
+
+
+Service -> repo: save(event)
+
+Service --> System: return savedEvent
+deactivate Service
+
+
+System -> Service: getAllEvents()
+activate Service
+Service -> repo: findAll()
+activate repo
+repo --> Service: return events
+deactivate repo
+Service --> System: return events
+deactivate Service
+
+
+System -> m: addAttribute("eventList", events)
+System -> m: addAttribute("successMessage", "Event created successfully")
+
+System --> d: return "event_list_page"
+deactivate System
+create view
+d -> view: View(model)
+activate view
+view --> d
+deactivate view
+
+
+d --> w: return newView
+deactivate d
+
+
+
+== 2. System displays updated event list including the new event ==
+@enduml

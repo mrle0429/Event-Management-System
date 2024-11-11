@@ -5,6 +5,7 @@ actor "User" as us
 boundary "Web Browser" as w
 boundary "newview:View" as view
 boundary "DispatchServlet" as d
+entity "__model: Model__" as m
 control ": __AccountSystem__" as accountSys
 entity "__user: UserAccount__" as userAcc
 participant "AccountRepository" as accountRepo
@@ -44,7 +45,17 @@ accountSer -> accountRepo: save(user)
 accountSer --> accountSys: return user
 deactivate accountSer
 
+accountSys -> accountSer: getAllAccounts()
+activate accountSer
 
+accountSer -> accountRepo: findAll()
+accountRepo --> accountSer: return accounts
+accountSer --> accountSys: return accounts
+deactivate accountSer
+
+
+accountSys -> m :addAttribute("accountList": String, accountList: accounts)
+accountSys -> m: addAttribute("successMessage", "Account create successfully")
 
 accountSys --> d: return "account page"
 create view
