@@ -81,11 +81,11 @@ Within the restaurant the following classes should be maintained between executi
 | Data Persistence   |Sicheng | Ziheng |     |  |
 | Class Diagram      |ZihengWang  |     |     |  LeLiu   |
 | Create "..."       | Le  |
-| Retrieved "..."    | Bohan|
+| Retrieved "..."    | Xinya|
 | Update "..."       | Yunhan |
 | Delete "..."       | Yuxuan|
-| List "..."         | Xinya |
-| Summary Repeated   |
+| List "..."         | Bohan |
+| Summary Repeated   |   ｜
 
 
 
