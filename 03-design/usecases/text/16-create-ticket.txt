@@ -1,0 +1,80 @@
+@startuml
+title Buy Ticket Successful - User
+
+actor User
+boundary "Web Browser" as w
+boundary "newView" as view
+boundary "DispatchServlet" as d
+entity "__model: Model__" as m
+control ":TicketSystem" as ES
+participant ":TicketService" as TS
+entity "__ticket: Ticket__" as ticket
+participant ":EventService" as EventService
+participant "EventRepository" as EventRepo
+participant "TicketRepository" as TicketRepo
+entity "TicketDTO" as ticketDTO
+
+== 1. The User selects the "Buy Now" option on the event page ==
+User -> w: Click "Buy Now"
+w -> d: POST /buyTicket (eventId, customerInfo)
+activate d
+
+note over d: The DispatchServlet handles request and\nparses data to generate TicketDTO
+
+d -> ES: buyTicket(ticketDTO: TicketDTO)
+activate ES
+
+note over ES: Validate event and ticket availability
+
+
+ES -> EventService: getEventById(ticketDTO.getEventId())
+activate EventService
+EventService -> EventRepo: findById(ticketDTO.getEventId())
+activate EventRepo
+EventRepo --> EventService: return event
+deactivate EventRepo
+EventService --> ES: return event
+deactivate EventService
+
+
+ES -> TS : isTicketAvailable(ticketDTO.getEventId())
+activate TS
+TS -> TicketRepo: countByEventId(ticketDTO.getEventId())
+activate TicketRepo
+TicketRepo --> TS: return availableTickets
+deactivate TicketRepo
+TS --> ES : return availableTickets > 0
+deactivate TS
+
+
+ES -> TS : createTicket(ticketDTO)
+activate TS
+create ticket
+TS -> ticket : new Ticket(ticketDTO.getEventId(), ticketDTO.getCustomerInfo())
+activate ticket
+ticket --> TS : return ticket
+deactivate ticket
+
+
+TS -> TicketRepo: save(ticket)
+activate TicketRepo
+TicketRepo --> TS: return savedTicket
+deactivate TicketRepo
+TS --> ES : return savedTicket
+deactivate TS
+
+ES -> m: addAttribute("ticket", savedTicket)
+ES -> m: addAttribute("successfulMessage", Ticket purchase successfully)
+
+
+ES -> d: return "purchaseSuccessPage"
+deactivate ES
+create view
+d -> view: View(model)
+view --> d
+d --> w: return newView
+deactivate d
+
+
+== 2. The system redirects the user to purchase successful page ==
+@enduml
