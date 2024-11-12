@@ -3,6 +3,7 @@ title: Update Account (User)
 
 actor "User" as u
 participant "Web Browser" as w
+boundary "__newView: view__" as v
 entity "__model: Model__" as m
 boundary "__: DispatchServlet__" as ds
 boundary "__alterATO: AlterDTO__" as dto
@@ -51,11 +52,13 @@ c -> c  : displayAccountPage(accounts)
 c --> ds : return "index"
 deactivate c
 
-note right of w
-    create newView: view here
-end note
-create "__newView: view__" as v
+create v
+ds -> v : View(model : Model)
 activate v
-ds -> v
+v --> ds
+deactivate v
+ds --> v : return newView
+deactivate ds
+
 ==4. System displays the view account page with updated details==
 @enduml

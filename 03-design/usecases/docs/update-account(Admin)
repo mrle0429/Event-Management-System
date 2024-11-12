@@ -3,6 +3,7 @@ title: 03-update-account(Admin)
 
 actor "Administrator" as admin
 participant "Web Browser" as w
+boundary "__newView: view__" as v
 boundary "__: DispatchServlet__" as ds
 control "__: AccountSystem__" as c
 boundary "__alterATO: AlterDTO__" as dto
@@ -45,8 +46,16 @@ s --> c :
 deactivate s
 c -> c  : displayAccountPage(accounts)
 
-c --> admin
+c --> ds : return "index"
 deactivate c
+
+create v
+ds -> v : View(model : Model)
+activate v
+v --> ds
+deactivate v
+ds --> v : return newView
+deactivate ds
 
 ==4. System displays the view account page with updated details==
 @enduml
