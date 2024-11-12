@@ -1,20 +1,17 @@
 @startuml
-title: Update Account (User)
+title: 03-update-account(Admin)
 
-actor "User" as u
+actor "Administrator" as admin
 participant "Web Browser" as w
-entity "__model: Model__" as m
 boundary "__: DispatchServlet__" as ds
-boundary "__alterATO: AlterDTO__" as dto
 control "__: AccountSystem__" as c
-participant "__: AccountRepository__" as ar
+boundary "__alterATO: AlterDTO__" as dto
 participant "__: AccountService__" as s
+participant "__: AccountRepository__" as ar
 entity "__User: Account__" as a
 
-
-
-==1. The user clicks "edit" to update their account information on the account info page.==
-u -> c : showEditAccount(userId)
+==1. The administrator clicks "edit" to select a user to update.==
+admin -> c : showEditAccount(userId)
 activate c
 c -> s : getAccount(userId)
 activate s
@@ -22,11 +19,11 @@ activate s
 s --> c : return selectedAccount
 deactivate s
 c -> c  : displayEditAccountPage(selectedAccount)
-c --> u
+c --> admin
 deactivate c
 
-==2. The system displays the account update form. \n3. The user enters the new details (username, password, email, etc.)==
-u -> w : interact
+==2. The system displays the account update form. \n3. The Admin enters the new details (username, password, email, etc.)==
+admin -> w : interact
 activate w
 w -> ds : POST(url: String, payload: json)
 activate ds
@@ -48,14 +45,8 @@ s --> c :
 deactivate s
 c -> c  : displayAccountPage(accounts)
 
-c --> ds : return "index"
+c --> admin
 deactivate c
 
-note right of w
-    create newView: view here
-end note
-create "__newView: view__" as v
-activate v
-ds -> v
 ==4. System displays the view account page with updated details==
 @enduml
