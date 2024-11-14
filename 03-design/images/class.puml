@@ -40,7 +40,6 @@
         - date
         - time
         {static} Event(eventName, eventDescription, eventDate, \neventTime, venue, ticketQuantities : TicketQuantity[*])
-        getVenue()
         setDescription(newEventDescription)
         setTicketQuantities(newTicketQuantities)
         setTime(newEventTime)
@@ -147,7 +146,8 @@
         displayRegisterPage()
         displayViewAccountPage(account)
         listAccounts()
-        modifyAccount(email, details)
+        modifyAccount(modifyDTO, account)
+        getAccount(email)
         registerAccount(details)
         showModifyAccountPage(email)
         viewAccount(email)
@@ -190,9 +190,23 @@
         getUser(userEmail)
         getOrganiser(organiserEmail)
         getOrganiserAccount(organiserEmail)
-        modifyAccount(email, name, newEmail, password, address, companyName, phoneNumber)
+        modifyAccount(modifyDTO, account)
+        getAccount(email)
         registerAccount(email, name, password)
         saveAccount(acc)
+    }
+
+    class ModifyAccountDTO {
+        - name
+        - email
+        - password
+        {static} ModifyAccountDTO(name, email, password)
+        getName()
+        getEmail()
+        getPassword()
+        setName(newName)
+        setEmail(newEmail)
+        setPassword(newPassword)
     }
 
     class EventService {
@@ -261,6 +275,7 @@
     EventService "1" --> "-tickets*" TicketRepository
 
     AccountSystem ..> AccountDTO
+    AccountSystem ..> ModifyAccountDTO
     EventSystem ..> EventDTO
     EventSystem ..> VenueDTO
     EventSystem ..> TicketDTO
