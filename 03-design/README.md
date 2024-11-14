@@ -51,7 +51,7 @@ Each use case contains the separate sequence diagrams for each course of events.
 
 The class diagram represents the information gained about the system by completing the use case realisations. 
 
-![class diagram](usecases/images/class.png)
+![class diagram](images/class.png)
 
 ## Data Persistence
 Within the restaurant the following classes should be maintained between executions.
