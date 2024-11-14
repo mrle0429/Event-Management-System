@@ -1,0 +1,284 @@
+@startuml class-diagram
+
+    class Venue {
+        - name
+        - address
+        - capacity
+        - contactName
+        - contactNumber
+        - contactEmail
+        {static} Venue(name, address, contactName, contactPhone, \ncontactEmail, ticketAvailabilities : TicketAvailability[*])
+        getTicketAvailabilities()
+        setAddress(newName)
+        setContactEmail(newName)
+        setContactName(newName)
+        setContactPhone(newName)
+        setName(newName)
+        setTicketAvailabilities(availabilities)
+    }
+
+    class TicketAvailability {
+        - type
+        - numberAvailable
+        {static} TicketAvailability(type, capacity)
+        getName()
+        getNumberAvailable()
+    }
+
+    class TicketQuantity {
+        - numberSold
+        - price
+        {static} TicketQuantity(typeName, numAvailable, price)
+        reduceQuantity(quantity)
+    }
+
+    TicketQuantity --|> TicketAvailability
+
+    class Event {
+        - name
+        - description
+        - date
+        - time
+        {static} Event(eventName, eventDescription, eventDate, \neventTime, venue, ticketQuantities : TicketQuantity[*])
+        getVenue()
+        setDescription(newEventDescription)
+        setTicketQuantities(newTicketQuantities)
+        setTime(newEventTime)
+        getTicketQuantities()
+        reduceQuantity(type, quantity)
+    }
+
+    class Ticket {
+        - type
+        - price
+        - quantity
+    }
+
+    class Organiser {
+        - address
+        - companyName
+        - phoneNumber
+        {static}+Organiser(name, address, companyName, \nphoneNumber, email, password)
+        +setAddress(address)
+        +setCompanyName(companyName)
+        +setPhoneNumber(phoneNumber)
+    }
+
+    class Administrator {
+        {static}+Administrator(name, email, password)
+    }
+
+    class User {
+        {static} User(name, email, password)
+        getTickets()
+        addTickets(tickets)
+    }
+
+    abstract class Account {
+        - name
+        - password
+        - email
+        - role
+        +setName(name)
+        +setEmail(email)
+        +setPassword(password)
+    }
+
+    class AccountDTO {
+        - name
+        - email
+        - password
+        - role
+        {static} AccountDTO(name, email, password, role)
+        getName()
+        getEmail()
+        getPassword()
+        getRole()
+    }
+
+    class EventDTO {
+        - name
+        - description
+        - date
+        - time
+        - venue
+        {static} EventDTO(eventName, eventDescription, eventDate, eventTime, venue)
+        getName()
+        getDescription()
+        getDate()
+        getTime()
+        getVenue()
+    }
+
+    class VenueDTO {
+        - name
+        - address
+        - capacity
+        - contactName
+        - contactNumber
+        - contactEmail
+        {static} VenueDTO(name, address, contactName, contactPhone, contactEmail)
+        getName()
+        getAddress()
+        getCapacity()
+        getContactName()
+        getContactPhone()
+        getContactEmail()
+    }
+
+    class TicketDTO {
+        - type
+        - price
+        - quantity
+        {static} TicketDTO(type, price, quantity)
+        getType()
+        getPrice()
+        getQuantity()
+    }
+
+    class AccountSystem {
+        createAccount(details)
+        displayAccountPage(newAccount)
+        displayDuplicateEmailWarning()
+        displayListAccountsPage()
+        displayMainUserPage(account)
+        displayModifyAccountPage(account)
+        displayModifyAccountPage(account, error)
+        displayRegisterPage()
+        displayViewAccountPage(account)
+        listAccounts()
+        modifyAccount(email, details)
+        registerAccount(details)
+        showModifyAccountPage(email)
+        viewAccount(email)
+    }
+
+    class EventSystem {
+        addEvent(details)
+        addVenue(details)
+        deleteEvent(eventName, eventDate)
+        deleteVenue(venueName)
+        displayAddVenuePage()
+        displayListEventsPage(events)
+        displayListTicketsPage(tickets)
+        displayListVenuesPage(venues)
+        displayModifyEventPage(event)
+        displayModifyVenuePage(venueName)
+        displayVenuePage(venue)
+        displayViewEventPage(event)
+        displayViewVenuePage(venueName)
+        displayTicketPage(tickets)
+        listEvents()
+        listMyEvents(organiserEmail)
+        listMyTickets(userEmail)
+        listVenues()
+        modifyEvent(details)
+        modifyVenue(details)
+        showAddEventPage()
+        showModifyEventPage(eventName, eventDate)
+        viewEvent(eventName, eventDate)
+        buyTickets(userEmail, eventName, eventDate, ticketTypes: string [*], quantities: int[*], prices: double[*])
+        viewTicket(eventName, date, type)
+    }
+
+    class AccountService {
+        createAdminAccount(name, email, password)
+        createUserAccount(name, email, password)
+        createOrganiserAccount(name, address, companyName, phoneNumber, email, password)
+        getAccount(email)
+        getAccounts()
+        getUser(userEmail)
+        getOrganiser(organiserEmail)
+        getOrganiserAccount(organiserEmail)
+        modifyAccount(email, name, newEmail, password, address, companyName, phoneNumber)
+        registerAccount(email, name, password)
+        saveAccount(acc)
+    }
+
+    class EventService {
+        addEvent(eventName, eventDescription, eventDate, eventTime, organiserEmail, venueName, ticketTypes: String[*], ticketPrices: double[*])
+        addVenue(name, address, contactName, contactPhone, contactEmail, ticketTypes: String[*], ticketCapacities: int[*])
+        deleteEvent(event)
+        deleteEvent(eventName, eventDate)
+        deleteVenue(venueName)
+        getEvent(eventName, eventDate)
+        getEvents()
+        getVenue(venueName)
+        getVenues()
+        modifyEvent(eventName, eventDate, newEventDescription, newEventTime, newTicketTypes: String[*], newTicketPrices: double[*])
+        modifyVenue(name, newName, newAddress, newContactName, newContactPhone, newContactEmail, newTicketTypes, newTicketCapacities)
+        saveEvent(event)
+        saveTicket(ticket)
+        saveVenue(v)
+        isAvailable(event, types: string[*], quantities: int[*])
+        buyTickets(event, types: string[*], quantities: int[*], prices: double[*])
+    }
+
+    class AccountRepository {
+        saveAccount(acc)
+        getAccountByEmail(email)
+        getAllAccounts()
+        modifyAccountDetails(email, newDetails)
+    }
+
+    class EventRepository {
+        saveEvent(event)
+        getEventByNameAndDate(eventName, eventDate)
+        getAllEvents()
+        modifyEventDetails(eventName, eventDate, newDetails)
+    }
+
+    class VenueRepository {
+    saveVenue(venue)
+    getVenueByName(venueName)
+    getAllVenues()
+    modifyVenueDetails(venueName, newDetails)
+    }
+
+
+    class TicketRepository {
+        saveTicket(ticket)
+        getTicketsByUser(userEmail)
+        getTicketsByEvent(eventName, eventDate)
+    }
+
+    enum Role {
+        +ADMINISTRATOR
+        +ORGANISER
+        +USER
+    }
+
+    enum Error {
+        +DUPLICATE_EMAIL
+        +NONE
+    }
+
+    AccountSystem "1" --> "-accountService 1" AccountService
+    AccountService "1" --> "-accounts *" AccountRepository
+    EventSystem "1" --> "-eventService 1" EventService
+    EventService "1" --> "-events *" EventRepository
+    EventService "1" --> "-venues *" VenueRepository
+    EventService "1" --> "-tickets*" TicketRepository
+
+    AccountSystem ..> AccountDTO
+    EventSystem ..> EventDTO
+    EventSystem ..> VenueDTO
+    EventSystem ..> TicketDTO
+
+    AccountRepository "<<import>>" ..>  Account
+    EventRepository "<<import>>" ..>  Event
+    TicketRepository "<<import>>" ..> Ticket
+    VenueRepository "<<import>>" ..> Venue
+
+    Organiser --|> Account
+    Administrator --|> Account
+    User --|> Account
+
+    Venue "1" --> "-ticketAvailabilities *" TicketAvailability
+    Event "1" ---> "-ticketQuantities *" TicketQuantity
+    Event ---> "-venue 1" Venue
+    Event "1" ---> "-organiser 1" Organiser
+    Organiser "1" ---> "-events *" Event
+    Ticket "1" -> "-event 1" Event
+    Ticket "-tickets *" <-- "1" User
+@enduml
