@@ -15,9 +15,15 @@ entity "__User: Account__" as a
 
 
 ==1. The user clicks "edit" to update their account information on the account info page.==
-u -> c : showEditAccount(userId)
+u -> w : interact
+activate w
+w -> ds : POST(url: String, payload: json)
+activate ds
+ds -> c : updateAccount(alterDTO: AlterDTO, model: Model)
 activate c
-c -> s : getAccount(userId)
+
+c -> dto : uid: =getUserId()
+c -> s : a := getAccountById(uid: Int)
 activate s
 
 s --> c : return selectedAccount
@@ -25,10 +31,12 @@ deactivate s
 c -> c  : displayEditAccountPage(selectedAccount)
 c --> u
 deactivate c
+c --> ds :
+deactivate ds
 
 ==2. The system displays the account update form. \n3. The user enters the new details (username, password, email, etc.)==
 u -> w : interact
-activate w
+
 w -> ds : POST(url: String, payload: json)
 activate ds
 ds -> c : updateAccount(alterDTO: AlterDTO, model: Model)

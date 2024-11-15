@@ -1,0 +1,62 @@
+@startuml
+title Update Event - 01 Basic Course of Events
+
+actor "Organiser/Administrator" as OA
+participant "Web Browser" as w
+boundary "__newView: view__" as v
+entity "__model: Model__" as m
+boundary "__: DispatchServlet__" as ds
+boundary "__alterATO: AlterDTO__" as dto
+control ": EventSystem" as System
+participant "__: EventRepository__" as er
+participant ": VenueService" as VenueSer
+participant ":EventService" as Service
+entity "selected : Event" as Event
+
+== 1. The organiser/administrator selects the relevant event from the display to be updated ==
+note right of OA: This part of the functionality is completed in Javascript\nIt does not need to be shown here
+
+== 2. The system displays a dialog to enter the event details\n3. The organiser/administrator updates the details of the event and clicks "Save" ==
+OA -> w : interact
+activate w
+w -> ds : POST(url: String, payload: json)
+activate ds
+
+OA -> System: updateEvent(details)
+activate System
+System -> VenueSer: isAvailable(Venue, time)
+activate VenueSer
+VenueSer --> System: return ture
+deactivate VenueSer
+System -> VenueSer: isCapacityAvailable(Venue, ticketsNum)
+activate VenueSer
+VenueSer --> System: return true
+deactivate VenueSer
+
+System -> Service: getEvent(eventId)
+activate Service
+Service --> System: return selectedEvent
+deactivate Service
+
+
+System -> Event: setDetails(details)
+
+
+System -> Service: saveEvent(Event)
+activate Service
+Service --> System:
+deactivate Service
+
+System -> Service: getEventList()
+activate Service
+Service --> System: return events
+deactivate Service
+System -> System: displayEventsList(events)
+
+
+
+System --> OA
+deactivate System
+
+== 4. The system updates the view to show the current events for the specified organiser/administrator, including the newly changed event ==
+@enduml
