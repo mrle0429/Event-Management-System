@@ -1,0 +1,54 @@
+@startuml
+
+title Display User Tickets - Basic Course of Events (Retrieve)
+actor "User" as u
+participant "Web Browser" as w
+boundary "View" as v
+boundary ":DispatchServlet" as d
+entity "model: Model" as m
+control ":TicketSystem" as ts
+participant ":TicketService" as tss
+database "TicketRepository" as db
+
+== 1. User clicks 'myTicket' to view all tickets ==
+u -> w : click('myTicket')
+activate w
+w -> d : GET(url : String, data : JSON)
+activate d
+d -> ts : displayUserTickets(userId : Long)
+activate ts
+
+
+ts->tss:getTicketsById(userId: Long)
+activate tss
+tss->db: tickets := findAllById(userId: Long)
+note over tss: tickets from repository are combined to a list
+tss-->ts: return tickets
+deactivate tss
+
+ts->m:addAttributes("ticket": String, tickets: Tickets)
+
+ts-->d:return "21-my-tickets.html"
+deactivate ts
+
+create v
+d -> v : View(tickets: Tickets)
+activate v
+
+v --> d :
+deactivate v
+
+d --> w : return newView
+deactivate d
+
+w -> v : render()
+activate v
+
+note over v : When loaded by the browser \njavascript and CSS will be \nexecuted to render the page.\nThis happens in the browser.
+
+v --> w :
+deactivate v
+
+== 2. The system displays all the tickets associated with the user ==
+
+@enduml

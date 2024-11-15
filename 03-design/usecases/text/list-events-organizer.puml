@@ -1,0 +1,54 @@
+@startuml
+
+title List Events for Organizer - Basic Course of Events (Retrieve)
+actor "Organizer" as u
+participant "Web Browser" as w
+boundary "View" as v
+boundary ":DispatchServlet" as d
+entity "model: Model" as m
+control ":EventSystem" as ts
+participant ":EventService" as tss
+database "EventRepository" as db
+
+== The Organizer clicks the "Manage Events" button on the login page. (04 - Admin Dash Page) ==
+u -> w : click('Manage Events')
+activate w
+w -> d : GET(url : String, data : JSON)
+activate d
+d -> ts : displayEventsById(userId: Long)
+activate ts
+
+
+ts->tss:getEventsById(userId: Long)
+activate tss
+tss->db: events := findEventsById(userId: Long)
+note over tss: events from repository are combined to a list
+tss-->ts: return events
+deactivate tss
+
+ts->m:addAttributes("event": String, events: Events)
+
+ts-->d:return "20-list-owner-events.html"
+deactivate ts
+
+create v
+d -> v : View(events: Events)
+activate v
+
+v --> d :
+deactivate v
+
+d --> w : return newView
+deactivate d
+
+w -> v : render()
+activate v
+
+note over v : When loaded by the browser \njavascript and CSS will be \nexecuted to render the page.\nThis happens in the browser.
+
+v --> w :
+deactivate v
+
+== 2. The system retrieves and displays a list of all events.(20 - Founded Events) ==
+
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+
+title List All Accounts - Basic Course of Events (Retrieve)
+actor "Admin" as u
+participant "Web Browser" as w
+boundary "View" as v
+boundary ":DispatchServlet" as d
+entity "model: Model" as m
+control ":AccountSystem" as ts
+participant ":AccountService" as tss
+database "AccountRepository" as db
+
+== The administrator clicks the "Manage Account" button on the login page. (04 - Admin Dash Page) ==
+u -> w : click('Manage Account')
+activate w
+w -> d : GET(url : String, data : JSON)
+activate d
+d -> ts : displayAllAccounts()
+activate ts
+
+ts->tss:getAllAccounts()
+activate tss
+tss->db: accounts := findAllAccounts()
+note over tss: Accounts from repository are combined to a list
+tss-->ts: return accounts
+deactivate tss
+
+ts->m:addAttributes("accounts": String, accounts: Accounts)
+
+ts-->d:return "06-manage-account.html"
+deactivate ts
+
+create v
+d -> v : View(accounts: Accounts)
+activate v
+
+v --> d :
+deactivate v
+
+d --> w : return newView
+deactivate d
+
+w -> v : render()
+activate v
+
+note over v : When loaded by the browser \njavascript and CSS will be \nexecuted to render the page.\nThis happens in the browser.
+
+v --> w :
+deactivate v
+
+== The system displays a list of all user accounts.(06 - Manage Account Page) ==
+
+@enduml
