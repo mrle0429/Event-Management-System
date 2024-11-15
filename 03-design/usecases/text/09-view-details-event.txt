@@ -6,6 +6,7 @@ boundary "Web Browser" as w
 boundary "__ newView : View__" as nv
 boundary "__: DispatchServlet__" as d
 control "__: EventSystem__" as ES
+participant "__: EventRepository__" as er
 participant "__: EventService__" as ESS
 entity "__selectedEvent : Event__" as DB
 
@@ -18,8 +19,9 @@ activate d
 d -> ES: viewEventDetail(eventName: String,eventDate: Date, model : Model)
 activate ES
 
-ES -> ESS: getEvent(eventName: String,eventDate: Date)
+ES -> ESS: event := getEvent(eventName: String,eventDate: Date)
 activate ESS
+ESS->er:a := findByNameAndDate(eventName: String,eventDate: Date)
 
 ESS -> DB: getName()
 activate DB
