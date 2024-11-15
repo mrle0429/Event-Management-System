@@ -1,0 +1,64 @@
+@startuml
+title 04-View Account Detail - Basic Course of Events (Admin)
+actor "Administrator" as a
+boundary "Web Browser" as w
+boundary "__ newView : View__" as nv
+boundary "__: DispatchServlet__" as d
+control "__: AccountSystem__" as c
+participant "__: AccountService__" as s
+entity "__User: Account__" as u
+
+==1. Administrator selects user account==
+
+a ->> w: interact
+activate w
+w -> d: GET(url: String)
+
+activate d
+d -> c: viewAccount(email : String, model : Model)
+activate c
+
+c -> s: getAccount(email : String)
+activate s
+
+s -> u: getName()
+activate u
+s -> u: getEmail()
+s -> u: getPassword()
+s -> u: getRole()
+
+u --> s: return accountInfo
+deactivate u
+
+s --> c: return accountDetails
+deactivate s
+
+c -> c: fillModel(userDetails : Model)
+
+
+c --> d: return "account-details.html" (account details page)
+deactivate c
+
+create nv
+
+d->nv: View(userDetails : Model)
+activate nv
+
+nv-->d:
+deactivate nv
+
+d-->w:return newView
+deactivate d
+
+
+w -> nv: render()
+activate nv
+
+note over nv: When loaded by the browser,\nJavaScript and CSS will be\nexecuted to render the page.\nThis happens in the browser.
+
+nv --> w
+deactivate nv
+
+== 2. System displays user account details ==
+
+@enduml

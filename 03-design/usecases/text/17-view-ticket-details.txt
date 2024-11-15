@@ -1,0 +1,64 @@
+@startuml
+title 17-View Ticket Details - Basic Course of Events (User)
+
+actor "User" as User
+boundary "Web Browser" as w
+boundary "__newView : View__" as nv
+boundary "__: DispatchServlet__" as d
+control "__: TicketSystem__" as UD
+participant "__: TicketService__" as TS
+entity "__selected : Ticket__" as ticket
+
+== 1. User selects a specific ticket from the list in MyTickets page ==
+User ->> w: interact
+activate w
+w -> d: GET(url: String)
+
+activate d
+d -> UD: viewMyTickets(eventName: String,eventDate: Date, type: String, model : Model)
+activate UD
+
+UD -> TS: getTicket(eventName: String,eventDate: Date, type: String)
+activate TS
+
+
+
+TS -> ticket: getEvent()
+activate ticket
+TS -> ticket: getTicketType()
+TS -> ticket: getOrganizer()
+TS -> ticket: getPrice()
+
+ticket --> TS: return ticketInfo
+deactivate ticket
+
+TS --> UD: return ticketDetails
+deactivate TS
+
+UD -> UD: fillModel(ticketDetails : Model)
+
+UD --> d: return "ticket-details.html" (ticket details page)
+deactivate UD
+
+create nv
+
+d -> nv: View(ticketDetails : Model)
+activate nv
+
+nv --> d:
+deactivate nv
+
+d --> w: return newView
+deactivate d
+
+w -> nv: render()
+activate nv
+
+note over nv: When loaded by the browser,\nJavaScript and CSS will be\nexecuted to render the page.\nThis happens in the browser.
+
+nv --> w
+deactivate nv
+
+== 2. The system displays the ticket details, including event name, date, time, venue, ticket type, seat number, and price ==
+
+@enduml

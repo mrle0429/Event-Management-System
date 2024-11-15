@@ -1,0 +1,62 @@
+@startuml
+title 04-View Account Detail - Basic Course of Events (User)
+
+actor "User" as u
+boundary "Web Browser" as w
+boundary "__ newView : View__" as nv
+boundary "__: DispatchServlet__" as d
+control "__: AccountSystem__" as c
+participant "__: AccountService__" as s
+entity "__User: Account__" as a
+
+== 1. User navigates to account settings ==
+u ->> w: interact
+activate w
+w -> d: GET(url: String)
+
+activate d
+d -> c: viewAccount(email : String, model : Model)
+activate c
+
+c -> s: getAccount(email : String)
+activate s
+
+s -> a: getName()
+activate a
+s -> a: getEmail()
+s -> a: getPassword()
+s -> a: getRole()
+
+a --> s: return accountDetails
+deactivate a
+
+s --> c: return userAccount
+deactivate s
+
+c -> c: fillModel(userAccount : Model)
+
+c --> d: return "account-settings.html" (account settings page)
+deactivate c
+
+create nv
+
+d -> nv: View(userAccount : Model)
+activate nv
+
+nv --> d:
+deactivate nv
+
+d --> w: return newView
+deactivate d
+
+w -> nv: render()
+activate nv
+
+note over nv: When loaded by the browser,\nJavaScript and CSS will be\nexecuted to render the page.\nThis happens in the browser.
+
+nv --> w
+deactivate nv
+
+== 2. System displays account details ==
+
+@enduml

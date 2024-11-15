@@ -1,0 +1,66 @@
+@startuml
+title 09-View Event Details - Basic Course of Events (Organizer/Administrator)
+
+actor "Organizer/Administrator" as OrganizerAdmin
+boundary "Web Browser" as w
+boundary "__ newView : View__" as nv
+boundary "__: DispatchServlet__" as d
+control "__: EventSystem__" as ES
+participant "__: EventService__" as ESS
+entity "__selectedEvent : Event__" as DB
+
+== 1. The user clicks "Details" on List Events Page ==
+OrganizerAdmin ->> w: interact
+activate w
+w -> d: GET(url: String)
+
+activate d
+d -> ES: viewEventDetail(eventName: String,eventDate: Date, model : Model)
+activate ES
+
+ES -> ESS: getEvent(eventName: String,eventDate: Date)
+activate ESS
+
+ESS -> DB: getName()
+activate DB
+ESS -> DB: getDescription()
+ESS -> DB: getDate()
+ESS -> DB: getTime()
+ESS -> DB: getVenue()
+ESS -> DB: getOrganizer()
+ESS -> DB: getTicketAvailability()
+ESS -> DB: getTicketSold()
+
+DB --> ESS: return eventInfo
+deactivate DB
+
+ESS --> ES: return eventDetails
+deactivate ESS
+
+ES -> ES: fillModel(eventDetails : Model)
+
+ES --> d: return "event-details.html" (event details page)
+deactivate ES
+
+create nv
+
+d -> nv: View(eventDetails : Model)
+activate nv
+
+nv --> d:
+deactivate nv
+
+d --> w: return newView
+deactivate d
+
+w -> nv: render()
+activate nv
+
+note over nv: When loaded by the browser,\nJavaScript and CSS will be\nexecuted to render the page.\nThis happens in the browser.
+
+nv --> w
+deactivate nv
+
+== 2. System displays the event details to the user ==
+
+@enduml
