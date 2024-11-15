@@ -6,6 +6,7 @@ boundary "Web Browser" as w
 boundary "__newView : View__" as nv
 boundary "__: DispatchServlet__" as d
 control "__: TicketSystem__" as UD
+participant "__: TicketRepository__" as tr
 participant "__: TicketService__" as TS
 entity "__selected : Ticket__" as ticket
 
@@ -15,15 +16,17 @@ activate w
 w -> d: GET(url: String)
 
 activate d
-d -> UD: viewMyTickets(eventName: String,eventDate: Date, type: String, model : Model)
+d -> UD: viewMyTickets(eventName: String, eventDate: Date, model : Model)
 activate UD
 
-UD -> TS: getTicket(eventName: String,eventDate: Date, type: String)
+UD -> TS: ticket := getTicket(eventName: String, eventDate: Date)
 activate TS
+TS -> tr: a := findByNameAndDate(eventName: String, eventDate: Date)
 
 
 
-TS -> ticket: getEvent()
+
+TS -> ticket: getQuantity()
 activate ticket
 TS -> ticket: getTicketType()
 TS -> ticket: getOrganizer()

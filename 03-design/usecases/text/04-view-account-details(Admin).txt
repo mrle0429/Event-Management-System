@@ -5,6 +5,9 @@ boundary "Web Browser" as w
 boundary "__ newView : View__" as nv
 boundary "__: DispatchServlet__" as d
 control "__: AccountSystem__" as c
+participant "__: CustomerRepository__" as cr
+participant "__: AdminRepository__" as ar
+participant "__: OrganiserRepository__" as or
 participant "__: AccountService__" as s
 entity "__User: Account__" as u
 
@@ -18,8 +21,10 @@ activate d
 d -> c: viewAccount(email : String, model : Model)
 activate c
 
-c -> s: getAccount(email : String)
+c -> s: account := getAccount(email : String)
 activate s
+s->ar:a := findByEmail(email : String)
+
 
 s -> u: getName()
 activate u
@@ -33,7 +38,7 @@ deactivate u
 s --> c: return accountDetails
 deactivate s
 
-c -> c: fillModel(userDetails : Model)
+c -> c: fillModel(accountDetails : Model)
 
 
 c --> d: return "account-details.html" (account details page)
@@ -41,7 +46,7 @@ deactivate c
 
 create nv
 
-d->nv: View(userDetails : Model)
+d->nv: View(accountDetails : Model)
 activate nv
 
 nv-->d:

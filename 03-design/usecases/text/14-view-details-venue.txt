@@ -6,6 +6,7 @@ boundary "Web Browser" as w
 boundary "__newView : View__" as nv
 boundary "__: DispatchServlet__" as d
 control "__: VenueSystem__" as VMS
+participant "__: VenueRepository__" as vr
 participant "__: VenueService__" as VMSS
 entity "__venue : Venue__" as DB
 
@@ -18,8 +19,9 @@ activate d
 d -> VMS: viewVenueDetail(venueName : String, model : Model)
 activate VMS
 
-VMS -> VMSS: getVenue(venueName : String)
+VMS -> VMSS: venue := getVenue(venueName : String)
 activate VMSS
+VMSS -> vr: a := findByName(venueName : String)
 
 
 VMSS -> DB: getName()
