@@ -3,53 +3,50 @@ title Create Venue - Basic Course of Events
 
 actor "Organiser/Administrator" as OA
 boundary "Web Browser" as w
-boundary "newvenueList" as view
+boundary "newView: View" as view
 boundary "DispatchServlet" as d
-control ": __VenueSystem__" as System
 entity "__model: Model__" as m
-participant ": __VenueService__" as Service
-participant "VenueRepository" as repo
+control ": __VenueSystem__" as System
 entity "__venue: Venue__" as Venue
+participant "VenueRepository" as repo
+participant ": __VenueService__" as Service
+
+
 
 == 1. User navigates to create venue page and enters venue details ==
 OA -> w: Click "Create Venue"
 activate w
-w -> d: POST /createVenue (venueDTO: VenueDTO)
+w -> d: POST /createVenue (url: String, data: JSON)
 activate d
 
 note over d: The DispatchServlet handles request and\nparses data to generate VenueDTO
 
-d -> System: createVenue(venueDTO: VenueDTO)
+d -> System: createVenue(name: String, address: String, contact: String, totalCapacity: int, standingNum: int, seatingNum: int, preminumNum: int)
 activate System
 
-System -> Service: createVenue(name, address, totalCapacity)
+System -> Service: createVenue(name: String, address: String, contact: String, totalCapacity: int, standingNum: int, seatingNum: int, preminumNum: int)
 activate Service
 
 create Venue
-Service -> Venue: new Venue(name, address, totalCapacity)
+Service -> Venue: Venue(name: String, address: String, contact: String, totalCapacity: int, standingNum: int, seatingNum: int, preminumNum: int)
 activate Venue
-Venue --> Service: return venue
+Venue --> Service
 deactivate Venue
 
 Service -> repo: save(venue)
-activate repo
-repo --> Service
-deactivate repo
 
-Service --> System: return savedVenue】
+
+Service --> System: return Error.NONE
 deactivate Service
 
-System -> Service: getAllVenues()
+System -> Service: getVenues()
 activate Service
 Service -> repo: findAll()
-activate repo
-repo --> Service: return venues
-deactivate repo
+
 Service --> System: return venues
 deactivate Service
 
-System -> m: addAttribute("venueList", venues)
-System -> m: addAttribute("successMessage", "Venue created successfully")
+System -> m: addAttribute("venueList": Srting, allVenues: Venue[*])
 
 System --> d: return "venue_list_page"
 deactivate System

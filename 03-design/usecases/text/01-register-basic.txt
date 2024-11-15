@@ -1,0 +1,61 @@
+@startuml
+title Register Account - Basic Course of Events
+
+actor "User" as us
+boundary "Web Browser" as w
+boundary "newview:View" as view
+boundary "DispatchServlet" as d
+entity "__model: Model__" as m
+control ": __AccountSystem__" as accountSys
+entity "__user: User__" as userAcc
+participant "AccountRepository" as accountRepo
+participant ": __AccountService__" as accountSer
+
+== 1. The user clicks the "register" button ==
+us -> w: Click "Register"
+w -> d: POST /registerAccount (url: String, data:JSON)
+activate d 
+
+note over d: The DispatchServlet is responsible for receiving requests \nand parsing the data to generate AccountDTO objects
+d -> accountSys: registerAccount(email: String, name: String, password: String)
+activate accountSys
+
+accountSys -> accountSer: getAccountByEmail(email: String)
+activate accountSer
+accountSer -> accountRepo: findByEmail(email: String)
+activate accountRepo
+accountRepo --> accountSer: return null
+deactivate accountRepo
+accountSer --> accountSys: return null
+deactivate accountSer
+
+accountSys -> accountSer: createAccount(username: String, password: String, email: String)
+activate accountSer
+create userAcc
+accountSer -> userAcc: User(username: String, password: String, email: String)
+activate userAcc
+userAcc --> accountSer: return user
+deactivate userAcc
+
+accountSer -> accountRepo: save(user)
+
+accountSer --> accountSys: return user
+deactivate accountSer
+
+
+accountSys -> m: addAttribute("username": String, user: Account)
+
+
+accountSys --> d: return "userDashboardPage"
+deactivate accountSys
+create view
+d -> view: View(model：Model)
+activate view
+view --> d
+deactivate view
+d --> w: return newView
+deactivate d
+w --> u
+
+== 4. The system returns to user dashboard page==
+@enduml

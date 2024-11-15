@@ -3,32 +3,35 @@ title Create Event - Basic Course of Events
 
 actor "Organizer_and_Administrator" as OA
 boundary "Web Browser" as w
-boundary "newlistEvents" as view
+boundary "__newView: View__" as view
 boundary "DispatchServlet" as d
-control ": __EventSystem__" as System
 entity "__model: Model__" as m
+control ": __EventSystem__" as System
+entity "__event: Event__" as Event
+
 participant ": __EventService__" as Service
 participant "EventRepository" as repo
 participant ": __VenueService__" as VenueSer
-entity "__newEvent: Event__" as Event
+
 
 == 1. User navigates to create event page and enters event details ==
 OA -> w: Click "Create Event"
-w -> d: POST /createEvent (eventDTO: EventDTO)
+activate w
+w -> d: POST /createEvent (url: String, data: JSON)
 activate d
 
 note over d: The DispatchServlet handles request and\nparses data to generate EventDTO
 
-d -> System: createEvent(eventDTO: EventDTO)
+d -> System: createEvent(name: String, description: String, date: Date, time: Time, venue: Venue, creator: Organizer, tickets: List, m: Model)
 activate System
 
-System -> VenueSer: getVenueById(eventDTO.getVenueID())
+System -> VenueSer: getVenue(venue)
 activate VenueSer
 VenueSer -> VenueRepo: findById(venueId)
 activate VenueRepo
 VenueRepo --> VenueSer: return venue
 deactivate VenueRepo
-VenueSer --> System: return venue
+VenueSer --> System: return Error.None
 deactivate VenueSer
 
 System -> AccSer:getAccountById(eventDTO.getCreatorId())
@@ -61,11 +64,11 @@ VenueSer --> System: return true
 deactivate VenueSer
 
 
-System -> Service: createEvent(details)
+System -> Service: createEvent(name: String, description: String, date: Date, time: Time, venue: Venue, creator: Organizer, tickets: List<Ticket>)
 activate Service
 
 create Event
-Service -> Event: Event(name, description, date, ticketsNum, ticketType, venue, organiser, ticketValue)
+Service -> Event: Event(name: String, description: String, date: Date, time: Time, venue: Venue, creator: Organizer, tickets: List)
 activate Event
 Event --> Service
 deactivate Event
@@ -73,27 +76,25 @@ deactivate Event
 
 Service -> repo: save(event)
 
-Service --> System: return savedEvent
+Service --> System: return Error.NONE
 deactivate Service
 
 
-System -> Service: getAllEvents()
+System -> Service: getEvents()
 activate Service
 Service -> repo: findAll()
-activate repo
-repo --> Service: return events
-deactivate repo
+
 Service --> System: return events
 deactivate Service
 
 
-System -> m: addAttribute("eventList", events)
-System -> m: addAttribute("successMessage", "Event created successfully")
+System -> m: addAttribute("events": String, events: Events[*])
+
 
 System --> d: return "event_list_page"
 deactivate System
 create view
-d -> view: View(model)
+d -> view: View(model: Model)
 activate view
 view --> d
 deactivate view

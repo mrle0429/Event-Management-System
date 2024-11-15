@@ -7,70 +7,70 @@ boundary "newView" as view
 boundary "DispatchServlet" as d
 entity "__model: Model__" as m
 control ":TicketSystem" as ES
-participant ":TicketService" as TS
+participant ":TicketRepository" as TRepo
 entity "__ticket: Ticket__" as ticket
-participant ":EventService" as EventService
-participant "EventRepository" as EventRepo
-participant "TicketRepository" as TicketRepo
-entity "TicketDTO" as ticketDTO
+participant ":TicketService" as TS
 
-== 1. The User selects the "Buy Now" option on the event page ==
-User -> w: Click "Buy Now"
-w -> d: POST /buyTicket (eventId, customerInfo)
+
+participant ":EventService" as EventService
+entity "__:event: Event__" as Event
+participant "EventRepository" as EventRepo
+
+
+== 1. The User selects the "Buy" option on the event page ==
+User -> w: Click "Buy"
+w -> d: POST /buyTicket (url: String, data: JSON)
 activate d
 
-note over d: The DispatchServlet handles request and\nparses data to generate TicketDTO
 
-d -> ES: buyTicket(ticketDTO: TicketDTO)
+d -> ES: buyTicket(event: Event, custormer: User, types: String[*], num: int[*], m: Model)
 activate ES
 
 note over ES: Validate event and ticket availability
+ES -> TS: isTicketAvailable(event, types, num)
+activate TS
+
+TS -> TRepo: findNum(event, types)
+TRepo --> TS: return availableTicketsNum
+
+TS --> ES: return ture
 
 
-ES -> EventService: getEventById(ticketDTO.getEventId())
+ES -> TS: buyTicket(event: Event, custormer: User, types: String[*], num: int[*])
+
+loop for each type and num of ticket be bought
+
+    create ticket
+    TS -> ticket: Ticket(type: Type pirce: double, customer: User, event: Event)
+    activate ticket
+    ticket --> TS: return ticket
+    deactivate ticket
+
+    TS -> TRepo: save(ticket)
+
+
+    
+
+end
+
+TS --> ES: return Error.NONE
+deactivate TS
+
+ES -> EventService: reduceQuantity(type, num)
 activate EventService
-EventService -> EventRepo: findById(ticketDTO.getEventId())
-activate EventRepo
-EventRepo --> EventService: return event
-deactivate EventRepo
-EventService --> ES: return event
+EventService -> Event: setQuantity(availableTickets - numOfbuy: int)
+EventService -> EventRepo: save(event)
+EventService --> ES
 deactivate EventService
 
 
-ES -> TS : isTicketAvailable(ticketDTO.getEventId())
-activate TS
-TS -> TicketRepo: countByEventId(ticketDTO.getEventId())
-activate TicketRepo
-TicketRepo --> TS: return availableTickets
-deactivate TicketRepo
-TS --> ES : return availableTickets > 0
-deactivate TS
-
-
-ES -> TS : createTicket(ticketDTO)
-activate TS
-create ticket
-TS -> ticket : new Ticket(ticketDTO.getEventId(), ticketDTO.getCustomerInfo())
-activate ticket
-ticket --> TS : return ticket
-deactivate ticket
-
-
-TS -> TicketRepo: save(ticket)
-activate TicketRepo
-TicketRepo --> TS: return savedTicket
-deactivate TicketRepo
-TS --> ES : return savedTicket
-deactivate TS
 
 ES -> m: addAttribute("ticket", savedTicket)
-ES -> m: addAttribute("successfulMessage", Ticket purchase successfully)
-
 
 ES -> d: return "purchaseSuccessPage"
 deactivate ES
 create view
-d -> view: View(model)
+d -> view: View(model: Model)
 view --> d
 d --> w: return newView
 deactivate d

@@ -3,11 +3,13 @@ title Create Accout - Basic Course of Events
 
 actor "User" as us
 boundary "Web Browser" as w
-boundary "newview:View" as view
+boundary "newView: View" as view
 boundary "DispatchServlet" as d
 entity "__model: Model__" as m
 control ": __AccountSystem__" as accountSys
 entity "__user: UserAccount__" as userAcc
+entity "__organizer: Organizer__" as organizerAcc
+entity "__admin: Admin__" as AdminAcc
 participant "AccountRepository" as accountRepo
 participant ": __AccountService__" as accountSer
 
@@ -16,11 +18,12 @@ participant ": __AccountService__" as accountSer
 
 == 1. The user clicks the "create" button .\n 2. The system navigates to the account creation page. \n 3. The user enters the required account details for the new user/Organizer/admin.  ==
 us -> w: Click "Create Accout"
-w -> d: POST /createAccount (type: AccountType, username: String, password: String, email: String)
+activate w
+w -> d: POST /createAccount (url: String, data: JSON)
 activate d
 
 note over d: The DispatchServlet is responsible for receiving requests \nand parsing the data to generate AccountDTO objects
-d -> accountSys: createAccount(accountDTO: AccountDTO)
+d -> accountSys: createAccount(type: accountType, name: String, password: String, m: Model)
 activate accountSys
 
 accountSys -> accountSer: getAccount(email: String)
@@ -35,14 +38,29 @@ deactivate accountSer
 accountSys -> accountSer: createAccount(type: AccountType, username: String, password: String, email: String)
 activate accountSer
 create userAcc
-accountSer -> userAcc: new UserAccount(username: String, password: String, email: String)
+alt type == "User"
+    accountSer -> userAcc: new User(username: String, password: String, email: String)
+    activate userAcc
+    userAcc --> accountSer: return user
+    deactivate userAcc
+    accountSer -> accountRepo: save(user)
+else type == "Organizer"
+    create organizerAcc
+    accountser -> organizerAcc: new Organizer(username: String, password: String, email: String)
+    activate organizerAcc
+    organizerAcc --> accountSer: renturn organizer
+    deactivate organizerAcc
+    accountSer -> accountRepo: save(organizer)
+else type == "admin"
+    create AdminAcc
+    accountSer -> AdminAcc: new Admin(username: String, password: String, email: String)
+    activate AdminAcc
+    AdminAcc --> accountSer: return admin
+    deactivate AdminAcc
+    accountSer -> accountRepo: save(admin)
+end
 
-activate userAcc
-userAcc --> accountSer: return user
-deactivate userAcc
-
-accountSer -> accountRepo: save(user)
-accountSer --> accountSys: return user
+accountSer --> accountSys: return Error.NONE
 deactivate accountSer
 
 accountSys -> accountSer: getAllAccounts()
@@ -54,20 +72,20 @@ accountSer --> accountSys: return accounts
 deactivate accountSer
 
 
-accountSys -> m :addAttribute("accountList": String, accountList: accounts)
-accountSys -> m: addAttribute("successMessage", "Account create successfully")
+accountSys -> m :addAttribute("accountList": String, accounts: List)
 
-accountSys --> d: return "account page"
+accountSys --> d: return "account list page"
+deactivate accountSys
 create view
 
-d -> view: View(accountList)
+d -> view: View(model: Model)
 
 view --> d:
 deactivate view
 
 d --> w: return newView
-accountSys --> us
-deactivate accountSys
+
+
 
 == 4. The system renturn to account manage page.==
 @enduml
