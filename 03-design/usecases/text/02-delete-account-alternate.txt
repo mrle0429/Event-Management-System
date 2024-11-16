@@ -1,0 +1,13 @@
+@startuml
+
+title Delete Account - 02 Alternate Course of Events (Cancel)
+
+actor "Admin" as a
+boundary "Web Browser" as w
+
+==1. The admin selects the user account to delete  **(01 - Manage Account Page)** \n2. The system prompts for confirmation of the deletion ==
+note over w,a:This part of the functionality is completed in Javascript\nIt does not need to be shown here
+==3. The admin selects **Cancel**  \n4. The system returns to the list account page with no changes **(01 - Manage Account Page)** ==
+note over w,a:This part of the functionality is completed in Javascript\nIt does not need to be shown here
+
+@enduml
