@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+    <main class="container">
+        <h2>用户注册</h2>
+        <article id="article">
+            <form th:action="@{/account/register}" method="post">
+                <div>
+                    <label for="name">姓名:</label>
+                    <input type="text" id="name" name="name" required/>
+                </div>
+                <div>
+                    <label for="email">邮箱:</label>
+                    <input type="email" id="email" name="email" required/>
+                </div>
+                <div>
+                    <label for="password">密码:</label>
+                    <input type="password" id="password" name="password" required/>
+                </div>
+                <div>
+                    <button type="submit">注册</button>
+                </div>
+                <div th:if="${param.error}" class="alert alert-error">
+                    <p th:text="${param.error == 'email_exists'} ? '该邮箱已被注册' : '注册失败'"></p>  
+                </div>
+            </form>
+        </article>
+    </main>
+</body>
+</html>
