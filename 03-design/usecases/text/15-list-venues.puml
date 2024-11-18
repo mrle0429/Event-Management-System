@@ -3,12 +3,12 @@
 title List Venues - Basic Course of Events (Retrieve)
 actor "Admin" as u
 participant "Web Browser" as w
-boundary "View" as v
-boundary ":DispatchServlet" as d
-entity "model: Model" as m
-control ":VenueSystem" as ts
-participant ":VenueService" as tss
-database "VenueRepository" as db
+boundary "__View__" as v
+boundary "__:DispatchServlet__" as d
+entity "__model: Model__" as m
+control "__:VenueSystem__" as ts
+participant "__:VenueService__" as tss
+database "__VenueRepository__" as db
 
 == 1. The Administrator or Organizer clicks "Manage Venues" on the dashboard ==
 u -> w : click('Manage Venues')
@@ -31,7 +31,7 @@ ts-->d:return "23-organizer-manage-venue.html"
 deactivate ts
 
 create v
-d -> v : View(venues: Venues)
+d -> v : View(model: Model)
 activate v
 
 v --> d :

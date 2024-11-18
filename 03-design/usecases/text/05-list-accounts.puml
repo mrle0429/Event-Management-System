@@ -3,12 +3,12 @@
 title List All Accounts - Basic Course of Events (Retrieve)
 actor "Admin" as u
 participant "Web Browser" as w
-boundary "View" as v
-boundary ":DispatchServlet" as d
-entity "model: Model" as m
-control ":AccountSystem" as ts
-participant ":AccountService" as tss
-database "AccountRepository" as db
+boundary "__View__" as v
+boundary "__:DispatchServlet__" as d
+entity "__model: Model__" as m
+control "__:AccountSystem__" as ts
+participant "__:AccountService__" as tss
+database "__AccountRepository__" as db
 
 == The administrator clicks the "Manage Account" button on the login page. (04 - Admin Dash Page) ==
 u -> w : click('Manage Account')
@@ -31,7 +31,7 @@ ts-->d:return "06-manage-account.html"
 deactivate ts
 
 create v
-d -> v : View(accounts: Accounts)
+d -> v : View(model: Model)
 activate v
 
 v --> d :

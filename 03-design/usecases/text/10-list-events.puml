@@ -3,12 +3,12 @@
 title List Events for Administrator - Basic Course of Events (Retrieve)
 actor "Admin" as u
 participant "Web Browser" as w
-boundary "View" as v
-boundary ":DispatchServlet" as d
-entity "model: Model" as m
-control ":EventSystem" as ts
-participant ":EventService" as tss
-database "EventRepository" as db
+boundary "__View__" as v
+boundary "__:DispatchServlet__" as d
+entity "__model: Model__" as m
+control "__:EventSystem__" as ts
+participant "__:EventService__" as tss
+database "__EventRepository__" as db
 
 == The administrator clicks the "Manage Events" button on the login page. (04 - Admin Dash Page) ==
 u -> w : click('Manage Events')
@@ -32,7 +32,7 @@ ts-->d:return "19-list-all-events.html"
 deactivate ts
 
 create v
-d -> v : View(events: Events)
+d -> v : View(model: Model)
 activate v
 
 v --> d :
