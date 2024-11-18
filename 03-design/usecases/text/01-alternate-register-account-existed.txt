@@ -3,20 +3,22 @@ title Register - Account Exists
 
 actor "User" as us
 boundary "Web Browser" as w
-boundary "newView: View" as view
-boundary "DispatchServlet" as d
-control ": __AccountSystem__" as accountSys
+boundary "__:newView: View__" as view
+boundary "__:DispatchServlet__" as d
+entity "__m: Model__" as m
+control ": __:AccountSystem__" as accountSys
 participant ": __AccountService__" as accountSer
 participant ": __UserRepository__" as userRepo
 participant ": __AdminRepository__" as adminRepo
 participant ": __OrganizerRepository__" as organizerRepo
-entity "__model: Model__" as m
+
 
 == 1. The user clicks the "Sign Up" button on the login page ==
 us -> w: "click Sign Up"
+activate w
 w -> d: POST/SignUp(url: String, data:JSON)
 activate d
-d -> accountSys: signUp(username, password, email, accountType)
+d -> accountSys: signUp(username, password, email, accountType, m:Model)
 activate accountSys
 
 == 2. The system checks if the account already exists ==
@@ -40,7 +42,7 @@ else Account type is Organizer
     deactivate organizerRepo
 end
 
-accountSer --> accountSys: return existingAccount
+accountSer --> accountSys: return Error.emailExisting
 deactivate accountSer
 
 == 3. The system displays an error message indicating that the account already exists ==
@@ -51,8 +53,10 @@ deactivate accountSer
     deactivate accountSys
     create  view
     d -> view: View(model)
+
     view --> d:
     d --> w: return newView
+    deactivate d
 
 
 == 4. The system returns to the account creation page ==

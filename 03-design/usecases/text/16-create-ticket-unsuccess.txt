@@ -1,5 +1,5 @@
 @startuml
-title Buy Ticket Successful - User
+title Buy Ticket unsuccessful 
 
 actor User
 boundary "Web Browser" as w
@@ -49,58 +49,18 @@ Event --> TS: return availableTicketsNum
 deactivate Event
 
 
-TS --> ES: return ture
+TS --> ES: return flase
 deactivate TS
 
-ES -> accSer: user = getAccount(userEmail: String)
-activate accSer
-accSer -> UserRepository: user = findByEmail(email: String)
-accSer --> ES: return user
-deactivate accSer
-
-
-ES -> TS: buyTicket(event: Event, user: User, types: String[*], num: int[*])
-activate TS
-
-loop for each type and num of ticket be bought
-
-    create ticket
-    TS -> ticket: Ticket(type: Type pirce: double, user: User, event: Event)
-    activate ticket
-    ticket --> TS: return ticket
-    deactivate ticket
-
-    TS -> TRepo: save(ticket)
-
-    TS -> Event: reduceQuantity(type, num)
-    activate Event
-    Event -> tq: reduceQuantity(quantity)
-    Event --> TS
-    deactivate Event
-    TS -> EventRepo: save(event)
-
-end
-
-TS --> ES: return Error.NONE
-deactivate TS
-
-
-
-
-
-ES -> m: addAttribute("ticket", savedTicket)
-
-ES -> d: return "purchaseSuccessPage"
+ES -> m: addAttribute("ErrorMessage": String)
+ES --> d: return "purchase unsuccessful page"
 deactivate ES
 create view
-d -> view: View(model: Model)
+d -> view:View(model: Model)
 activate view
 view --> d
 deactivate view
 d --> w: return newView
-
 deactivate d
-
-
-== 2. The system redirects the user to purchase successful page ==
+==2.The system redirect the user to purchase unsuccessful page==
 @enduml

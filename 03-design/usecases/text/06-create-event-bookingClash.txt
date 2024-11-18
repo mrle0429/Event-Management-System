@@ -1,0 +1,31 @@
+@startuml
+title Create Event - Alternate Course of Events (Booking Clash)
+
+actor "Organizer_and_Administrator" as OA
+boundary "Web Browser" as w
+boundary "__newView: View__" as view
+boundary "DispatchServlet" as d
+entity "__model: Model__" as m
+control ": __EventSystem__" as System
+entity "__event: Event__" as Event
+
+participant ": __EventService__" as Service
+participant "EventRepository" as repo
+participant ": __VenueService__" as VenueSer
+
+
+
+
+== 1. The organiser/administrator enters the event details and clicks "Create" ==
+OA -> w: click create
+activate w
+w -> d: POST(url: String, data: JSON)
+activate d
+d -> System: createEvent(name: String, description: String, date: Date, time: Time, venue: Venue, creator: Organizer, tickets: List, m: Model)
+
+
+== 2. The System return create event page with errorMessage ==
+
+
+
+@enduml
