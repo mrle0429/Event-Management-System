@@ -32,7 +32,6 @@
         reduceQuantity(quantity)
     }
 
-    TicketQuantity --|> TicketAvailability
 
     class Event {
         - name
@@ -210,29 +209,48 @@
     }
 
     class EventService {
-        addEvent(eventName, eventDescription, eventDate, eventTime, organiserEmail, venueName, ticketTypes: String[*], ticketPrices: double[*])
-        addVenue(name, address, contactName, contactPhone, contactEmail, ticketTypes: String[*], ticketCapacities: int[*])
-        deleteEvent(event)
-        deleteEvent(eventName, eventDate)
-        deleteVenue(venueName)
-        getEvent(eventName, eventDate)
-        getEvents()
-        getVenue(venueName)
-        getVenues()
-        modifyEvent(eventName, eventDate, newEventDescription, newEventTime, newTicketTypes: String[*], newTicketPrices: double[*])
-        modifyVenue(name, newName, newAddress, newContactName, newContactPhone, newContactEmail, newTicketTypes, newTicketCapacities)
-        saveEvent(event)
-        saveTicket(ticket)
-        saveVenue(v)
-        isAvailable(event, types: string[*], quantities: int[*])
-        buyTickets(event, types: string[*], quantities: int[*], prices: double[*])
+        +addEvent(eventName, eventDescription, eventDate, eventTime, organiserEmail, venueName, ticketTypes: String[], ticketPrices: double[])
+        +deleteEvent(eventName, eventDate)
+        +getEvent(eventName, eventDate)
+        +getEvents()
+        +modifyEvent(eventName, eventDate, newEventDescription, newEventTime, newTicketTypes: String[], newTicketPrices: double[])
+        +saveEvent(event)
     }
 
-    class AccountRepository {
-        saveAccount(acc)
-        getAccountByEmail(email)
-        getAllAccounts()
-        modifyAccountDetails(email, newDetails)
+    class VenueService {
+        +addVenue(name, address, contactName, contactPhone, contactEmail, ticketTypes: String[], ticketCapacities: int[])
+        +deleteVenue(venueName)
+        +getVenue(venueName)
+        +getVenues()
+        +modifyVenue(name, newName, newAddress, newContactName, newContactPhone, newContactEmail, newTicketTypes, newTicketCapacities)
+        +saveVenue(v)
+    }
+
+    class TicketService {
+        +isAvailable(event, types: string[], quantities: int[])
+        +buyTickets(event, types: string[], quantities: int[], prices: double[])
+        +saveTicket(ticket)
+    }
+
+    class AdminAccountRepository {
+        +saveAccount(acc)
+        +getAccountByEmail(email)
+        +getAllAccounts()
+        +modifyAccountDetails(email, newDetails)
+    }
+
+    class OrganizerAccountRepository {
+        +saveAccount(acc)
+        +getAccountByEmail(email)
+        +getAllAccounts()
+        +modifyAccountDetails(email, newDetails)
+    }
+
+    class UserAccountRepository {
+        +saveAccount(acc)
+        +getAccountByEmail(email)
+        +getAllAccounts()
+        +modifyAccountDetails(email, newDetails)
     }
 
     class EventRepository {
@@ -268,19 +286,33 @@
     }
 
     AccountSystem "1" --> "-accountService 1" AccountService
-    AccountService "1" --> "-accounts *" AccountRepository
+
+    AccountService "1" --> "-admin *" AdminAccountRepository
+    AccountService "1" --> "-organiser *" OrganizerAccountRepository
+    AccountService "1" --> "-user *" UserAccountRepository
+
     EventSystem "1" --> "-eventService 1" EventService
+    EventSystem "1" --> "-venueService 1" VenueService
+    EventSystem "1" --> "-ticketService 1" TicketService
+
+    VenueService "1" --> "-venues *" VenueRepository
+
+    TicketService "1" --> "-events *" EventRepository
+    TicketService "1" --> "-tickets *" TicketRepository
+
     EventService "1" --> "-events *" EventRepository
     EventService "1" --> "-venues *" VenueRepository
     EventService "1" --> "-tickets*" TicketRepository
 
-    AccountSystem ..> AccountDTO
-    AccountSystem ..> ModifyAccountDTO
-    EventSystem ..> EventDTO
-    EventSystem ..> VenueDTO
-    EventSystem ..> TicketDTO
+    AccountSystem .UP.> AccountDTO
+    AccountSystem .UP.> ModifyAccountDTO
+    EventSystem .UP.> EventDTO
+    EventSystem .UP.> VenueDTO
+    EventSystem .UP.> TicketDTO
 
-    AccountRepository "<<import>>" ..>  Account
+    AdminAccountRepository "<<import>>" ..>  Account
+    OrganizerAccountRepository "<<import>>" ..>  Account
+    UserAccountRepository "<<import>>" ..>  Account
     EventRepository "<<import>>" ..>  Event
     TicketRepository "<<import>>" ..> Ticket
     VenueRepository "<<import>>" ..> Venue
@@ -288,6 +320,8 @@
     Organiser --|> Account
     Administrator --|> Account
     User --|> Account
+
+    TicketQuantity --|> TicketAvailability
 
     Venue "1" --> "-ticketAvailabilities *" TicketAvailability
     Event "1" ---> "-ticketQuantities *" TicketQuantity
