@@ -6,7 +6,7 @@ participant "Web Browser" as w
 boundary "__View__" as v
 boundary "__:DispatchServlet__" as d
 entity "__model: Model__" as m
-control "__:VenueSystem__" as ts
+control "__:EventSystem__" as ts
 participant "__:VenueService__" as tss
 database "__VenueRepository__" as db
 
