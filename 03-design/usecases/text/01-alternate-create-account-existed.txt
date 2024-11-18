@@ -1,0 +1,47 @@
+@startuml
+title Create Account - account exists
+
+
+
+actor "User" as us
+boundary "Web Browser" as w
+boundary "newView: View" as view
+boundary "DispatchServlet" as d
+entity "__model: Model__" as m
+control ": __AccountSystem__" as accountSys
+participant "AccountRepository" as accountRepo
+participant ": __AccountService__" as accountSer
+
+== 1. The user clicks the "create" button .\n 2. The system navigates to the account creation page. \n 3. The user enters the required account details for the new user/Organizer/admin.  ==
+us -> w: Click "Create Accout"
+activate w
+w -> d: POST /createAccount (url: String, data: JSON)
+activate d
+
+note over d: The DispatchServlet is responsible for receiving requests \nand parsing the data to generate AccountDTO objects
+d -> accountSys: createAccount(type: accountType, name: String, password: String, m: Model)
+activate accountSys
+
+accountSys -> accountSer: getAccount(email: String)
+activate accountSer
+accountSer -> accountRepo: findByEmail(email: String)
+activate accountRepo
+accountRepo --> accountSer: return existingAccount
+deactivate accountRepo
+accountSer --> accountSys: return existingAccount
+deactivate accountSer
+
+accountSys -> m: addAttribute("errorMessage", "Account already exists")
+accountSys --> d: renturn "accountCreationPage"
+deactivate accountSys
+
+create view
+d -> view: View(model)
+view --> d
+d --> w: return newView
+deactivate d
+
+
+
+== 4. The system returns to the account creation page ==
+@enduml

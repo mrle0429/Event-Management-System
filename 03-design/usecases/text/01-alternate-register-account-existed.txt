@@ -1,0 +1,59 @@
+@startuml
+title Register - Account Exists
+
+actor "User" as us
+boundary "Web Browser" as w
+boundary "newView: View" as view
+boundary "DispatchServlet" as d
+control ": __AccountSystem__" as accountSys
+participant ": __AccountService__" as accountSer
+participant ": __UserRepository__" as userRepo
+participant ": __AdminRepository__" as adminRepo
+participant ": __OrganizerRepository__" as organizerRepo
+entity "__model: Model__" as m
+
+== 1. The user clicks the "Sign Up" button on the login page ==
+us -> w: "click Sign Up"
+w -> d: POST/SignUp(url: String, data:JSON)
+activate d
+d -> accountSys: signUp(username, password, email, accountType)
+activate accountSys
+
+== 2. The system checks if the account already exists ==
+accountSys -> accountSer: getAccountByEmail(email, accountType)
+activate accountSer
+
+alt Account type is User
+    accountSer -> userRepo: findByEmail(email)
+    activate userRepo
+    userRepo --> accountSer: return existingUser
+    deactivate userRepo
+else Account type is Admin
+    accountSer -> adminRepo: findByEmail(email)
+    activate adminRepo
+    adminRepo --> accountSer: return existingAdmin
+    deactivate adminRepo
+else Account type is Organizer
+    accountSer -> organizerRepo: findByEmail(email)
+    activate organizerRepo
+    organizerRepo --> accountSer: return existingOrganizer
+    deactivate organizerRepo
+end
+
+accountSer --> accountSys: return existingAccount
+deactivate accountSer
+
+== 3. The system displays an error message indicating that the account already exists ==
+
+    accountSys -> m: addAttribute("errorMessage", "Account already exists")
+    
+    accountSys --> d: renturn account creation page
+    deactivate accountSys
+    create  view
+    d -> view: View(model)
+    view --> d:
+    d --> w: return newView
+
+
+== 4. The system returns to the account creation page ==
+@enduml
