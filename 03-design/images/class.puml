@@ -117,27 +117,9 @@
         getContactEmail() : String
     }
 
-    class TicketDTO {
-        - type : String
-        - price : double
-        - quantity : int
-        {static} TicketDTO(type : String, price : double, quantity : int)
-        getType() : String
-        getPrice() : double
-        getQuantity() : int
-    }
-
     class AccountSystem {
         addAttribute("accDTO" : String, adto : ModifyAccountDTO) : int
         createAccount(type: AccountType, username: String, password: String, email: String) : int
-        displayAccountPage(newAccount : Account)
-        displayDuplicateEmailWarning()
-        displayListAccountsPage()
-        displayMainUserPage(account : Account)
-        displayModifyAccountPage(account : Account)
-        displayModifyAccountPage(account : Account, error : String)
-        displayRegisterPage()
-        displayViewAccountPage(account : Account)
         listAccounts() : Account[]
         modifyAccount(adto : ModifyAccountDTO, a : Account) : int
         registerAccount(email: String, name: String, password: String, model: Model) : int
@@ -145,22 +127,12 @@
     }
 
     class EventSystem {
-        createEvent(name: String, description: String, date: Date, time: Time, venue: Venue, creator: Organizer, tickets: List<Ticket>, m: Model) : Event
+        createEvent(name: String, description: String, date: Date, time: Time, venue: Venue, creator: Organiser, tickets: List<Ticket>, m: Model) : Event
         createVenue(name: String, address: String, contact: String, totalCapacity: int, standingNum: int, seatingNum: int, preminumNum: int, model: Model) : Venue
         addAttribute("events" : String, events : Event[]) : int
         addAttribute("venueList" : String, allVenues : Venue[]) : int
         deleteEvent(eventName : String, eventDate : Date) : int
         deleteVenue(venueName : String) : int
-        displayAddVenuePage()
-        displayListEventsPage(events : Event[])
-        displayListTicketsPage(tickets : Ticket[])
-        displayListVenuesPage(venues : Venue[])
-        displayModifyEventPage(event : Event)
-        displayModifyVenuePage(venueName : String)
-        displayVenuePage(venue : Venue)
-        displayViewEventPage(event : Event)
-        displayViewVenuePage(venueName : String)
-        displayTicketPage(tickets : Ticket[])
         listEvents() : Event[]
         listMyEvents(organiserEmail : String) : Event[]
         listMyTickets(userEmail : String) : Ticket[]
@@ -193,13 +165,13 @@
 
     class EventService {
         +createEvent(name : String, description : String,
-        date : Date, time : Time, venue : Venue, creator : Organizer, tickets : List<Ticket>) : Event
+        date : Date, time : Time, venue : Venue, creator : Organiser, tickets : List<Ticket>) : Event
         +deleteEvent(eventName : String, eventDate : Date) : int
         +getEvent(eventName : String, eventDate : Date) : Event
         +getEvents() : Event[]
+        +isAvailable(event : Event, date Date) : boolean
         +modifyEvent(eventName : String, eventDate : Date, newEventDescription : String,
         newEventTime : Time, newTicketTypes : String[], newTicketPrices : double[]) : int
-        +saveEvent(event : Event) : int
     }
 
     class VenueService {
@@ -208,50 +180,49 @@
         +deleteVenue(venueName : String) : int
         +getVenue(venueName : String) : Venue
         +getVenues() : Venue[]
+        +isAvailable(Venue : Venue, date Date) : boolean
         +modifyVenue(name : String, newName : String, newAddress : String, newContactName : String,
         newContactPhone : String, newContactEmail : String, newTicketTypes : String[], newTicketCapacities : int[]) : int
-        +saveVenue(v : Venue) : int
     }
 
     class TicketService {
         +isAvailable(event : Event, types : String[], quantities : int[]) : boolean
         +buyTickets(event : Event, types : String[], quantities : int[], prices : double[]) : Ticket[]
-        +saveTicket(ticket : Ticket) : int
     }
 
     class AdminAccountRepository {
-        +save(a : Customer) : int
+        +save(a : Customer)
         +getAccountByEmail(email : String) : Customer
         +getAllAccounts() : Customer[]
     }
 
-    class OrganizerAccountRepository {
-        +save(a : Organiser) : int
+    class OrganiserAccountRepository {
+        +save(a : Organiser)
         +getAccountByEmail(email : String) : Organiser
         +getAllAccounts() : Organiser[]
     }
 
     class UserAccountRepository {
-        +save(a : Administrator) : int
+        +save(a : Administrator)
         +getAccountByEmail(email : String) : Administrator
         +getAllAccounts() : Administrator[]
     }
 
     class EventRepository {
-        saveEvent(event : Event) : int
+        saveEvent(event : Event)
         getEventByNameAndDate(eventName : String, eventDate : Date) : Event
         getAllEvents() : Event[]
     }
 
     class VenueRepository {
-        saveVenue(venue : Venue) : int
+        saveVenue(venue : Venue)
         getVenueByName(venueName : String) : Venue
         getVenueById(venueId : int) : Venue
         getAllVenues() : Venue[]
     }
 
     class TicketRepository {
-        saveTicket(ticket : Ticket) : int
+        saveTicket(ticket : Ticket)
         getTicketsByUser(userEmail : String) : Ticket[]
         getTicketsByEvent(eventName : String, eventDate : Date) : Ticket[]
     }
@@ -289,7 +260,6 @@
     AccountSystem .UP.> ModifyAccountDTO
     EventSystem .UP.> EventDTO
     EventSystem .UP.> VenueDTO
-    EventSystem .UP.> TicketDTO
 
     AdminAccountRepository "<<import>>" ..>  Account
     OrganizerAccountRepository "<<import>>" ..>  Account
