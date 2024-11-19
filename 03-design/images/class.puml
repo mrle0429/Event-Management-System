@@ -241,7 +241,7 @@
     AccountSystem "1" --> "-accountService 1" AccountService
 
     AccountService "1" --> "-admin *" AdminAccountRepository
-    AccountService "1" --> "-organiser *" OrganizerAccountRepository
+    AccountService "1" --> "-organiser *" OrganiserAccountRepository
     AccountService "1" --> "-user *" UserAccountRepository
 
     EventSystem "1" --> "-eventService 1" EventService
