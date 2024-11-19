@@ -8,7 +8,7 @@
 1. The user clicks on their avatar to view account details **(03 - user-dash-page)** **(04-admin-dash-page)** **(05-organizer-dash-page)**
 2. The system displays the account details.
 
-![Use Case Name - Basic Course of Events](/03-design/images/04-view-account-details(User).png)
+![Use Case Name - Basic Course of Events](/03-design/usecases/images/04-view-account-details(User).png)
    
 #### Related UI Prototypes
 | 01- Dashboard Page|
@@ -29,7 +29,7 @@
 1. The administrator selects a user account to view.**(06 - manage-account)**.
 2. The system displays the user's account details.**(26 - user-info )**
 
-![Use Case Name - Basic Course of Events](/03-design/images/04-view-account-details(Admin).png)
+![Use Case Name - Basic Course of Events](/03-design/usecases/images/04-view-account-details(Admin).png)
 #### Related UI Prototypes
 |                   01 - Account Management Page                   |                      02 - User Account Details                       |
 |:----------------------------------------------------------------:|:--------------------------------------------------------------------:|
