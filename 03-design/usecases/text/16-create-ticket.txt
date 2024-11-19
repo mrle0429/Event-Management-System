@@ -15,6 +15,7 @@ participant "__:TicketService__" as TS
 
 participant "__:EventService__" as EventService
 entity "__:event: Event__" as Event
+entity "__:user: User__" as user
 
 participant "__:AccountService__" as accSer
 entity "__tq:TicketQuantity__" as tq
@@ -33,19 +34,21 @@ activate d
 d -> ES: buyTicket(eventId: int, userEmail: int, types: String[*], num: int[*], m: Model)
 activate ES
 
-ES -> EventService: event := getEvent(eventId)
+ES -> EventService: e := getEvent(eventId: int)
 activate EventService
 EventService -> EventRepo: e:=findById(eventId: int)
 EventService --> ES: return e
 deactivate EventService
 
 note over ES: Validate event and ticket availability
-ES -> TS: isTicketAvailable(event, types, num)
+ES -> TS: isTicketAvailable(e: Event, types: Type[*], num: int[*])
 
 activate TS
-TS -> Event: getTicketAvailable()
-activate Event
-Event --> TS: return availableTicketsNum
+loop for each type
+    TS -> Event: getTicketAvailable()
+    activate Event
+    Event --> TS: return availableTicketsNum
+end
 deactivate Event
 
 
@@ -70,27 +73,30 @@ loop for each type and num of ticket be bought
     ticket --> TS: return ticket
     deactivate ticket
 
-    TS -> TRepo: save(ticket)
+    TS -> TRepo: save(ticket: Ticket)
 
-    TS -> Event: reduceQuantity(type, num)
+    TS -> Event: reduceQuantity(type: Type, num: int)
     activate Event
-    Event -> tq: reduceQuantity(quantity)
+    Event -> tq: reduceQuantity(quantity: int)
     Event --> TS
     deactivate Event
-    TS -> EventRepo: save(event)
+    TS -> EventRepo: save(event: Event)
 
 end
 
-TS --> ES: return Error.NONE
+TS --> ES: return tickets
 deactivate TS
 
+ES -> user: addTickets(tickets)
+ES -> UserRepository: save(user)
 
 
 
 
-ES -> m: addAttribute("ticket", savedTicket)
 
-ES -> d: return "purchaseSuccessPage"
+ES -> m: addAttribute("ticketList": String, tickets: Ticket[*])
+
+ES -> d: return "Buy ticketList"
 deactivate ES
 create view
 d -> view: View(model: Model)

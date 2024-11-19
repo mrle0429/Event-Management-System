@@ -12,6 +12,11 @@ entity "__event: Event__" as Event
 participant ": __EventService__" as Service
 participant "__:EventRepository__" as repo
 participant ": __VenueService__" as VenueSer
+participant ":__VenueRepository__" as VenueRepo
+entity "__v:Venue__" as venue
+entity "__ta: TicketAvailability__" as ta
+participant ":__AccountService__" as AccSer
+participant "__:OrganizerRepository__" as organizerRepo
 
 
 == 1. User navigates to create event page and enters event details ==
@@ -22,42 +27,39 @@ activate d
 
 note over d: The DispatchServlet handles request and\nparses data to generate EventDTO
 
-d -> System: createEvent(name: String, description: String, date: Date, time: Time, venue: Venue, creator: Organizer, tickets: List, m: Model)
+d -> System: createEvent(name: String, description: String, date: Date, time: Time, venueId: int, creatorEmail: String, tickets: List, m: Model)
 activate System
 
-System -> VenueSer: getVenue(venue)
+System -> VenueSer: venue := getVenue(venueId)
 activate VenueSer
-VenueSer -> VenueRepo: findById(venueId)
-activate VenueRepo
-VenueRepo --> VenueSer: return venue
-deactivate VenueRepo
-VenueSer --> System: return Error.None
+VenueSer -> VenueRepo: v:=findById(venueId: int)
+
+VenueSer --> System: return v
 deactivate VenueSer
 
-System -> AccSer:getAccountById(eventDTO.getCreatorId())
+System -> AccSer:account:=getAccount(creatorEmail)
 activate AccSer
-AccSer -> AccRepo: findById(accountId)
-activate AccRepo
-AccRepo --> AccSer: return account
-deactivate AccRepo
-AccSer --> System: return account
+AccSer -> organizerRepo: a = findByEmail(email: String)
+
+AccSer --> System: return a
 deactivate AccSer
 
 System -> VenueSer: isAvailable(venue, date)
 activate VenueSer
-VenueSer -> VenueRepo: existsByVenueAndDate(venue, date)
-activate VenueRepo
-VenueRepo --> VenueSer: return false
-deactivate VenueRepo
+VenueSer -> VenueRepo: null:=findVenueByDate(venue, date)
+
 VenueSer --> System: return true
 deactivate VenueSer
 
 System -> VenueSer: isCapacityAvailable(venue, ticketsNum)
 activate VenueSer
-VenueSer -> VenueRepo: getVenueCapacity(venue)
-activate VenueRepo
-VenueRepo --> VenueSer: return capacity
-deactivate VenueRepo
+VenueSer -> venue: ta := getTicketAvailabilities()
+
+loop all tickt type
+    VenueSer -> ta: type := getType()
+    VenueSer -> ta: num := getNumberAvailable()
+end
+
 
 VenueSer -> VenueSer: checkCapacity(capacity, ticketsNum)
 VenueSer --> System: return true
