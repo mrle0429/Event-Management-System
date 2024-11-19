@@ -23,7 +23,7 @@ activate c
 
 c -> s: account := getAccount(email : String)
 activate s
-s->cr:a := findByEmail(email : String)
+s->cr:a := getAccountByEmail(email : String)
 
 s -> a: getName()
 activate a
@@ -31,15 +31,12 @@ s -> a: getEmail()
 s -> a: getPassword()
 s -> a: getRole()
 
-a --> s: return accountInfo
 deactivate a
 
-s --> c: return accountDetails
+s --> c: return a
 deactivate s
 
-c -> c: fillModel(accountDetails: Model)
-
-c --> d: return "account-details.html" (account details page)
+c --> d: addAttribute("account": String, a: Account)
 deactivate c
 
 create nv
@@ -52,14 +49,6 @@ deactivate nv
 
 d --> w: return newView
 deactivate d
-
-w -> nv: render()
-activate nv
-
-note over nv: When loaded by the browser,\nJavaScript and CSS will be\nexecuted to render the page.\nThis happens in the browser.
-
-nv --> w
-deactivate nv
 
 == 2. System displays account details ==
 

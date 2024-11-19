@@ -16,12 +16,12 @@ activate w
 w -> d: GET(url: String)
 
 activate d
-d -> ES: viewEventDetail(eventName: String,eventDate: Date, model : Model)
+d -> ES: viewEvent(eventName: String,eventDate: Date, model : Model)
 activate ES
 
 ES -> ESS: event := getEvent(eventName: String,eventDate: Date)
 activate ESS
-ESS->er:a := findByNameAndDate(eventName: String,eventDate: Date)
+ESS->er:a := getEventByNameAndDate(eventName: String,eventDate: Date)
 
 ESS -> DB: getName()
 activate DB
@@ -30,18 +30,14 @@ ESS -> DB: getDate()
 ESS -> DB: getTime()
 ESS -> DB: getVenue()
 ESS -> DB: getOrganizer()
-ESS -> DB: getTicketAvailability()
-ESS -> DB: getTicketSold()
+ESS -> DB: getTicketNumberAvailable()
 
-DB --> ESS: return eventInfo
 deactivate DB
 
-ESS --> ES: return eventDetails
+ESS --> ES: return a
 deactivate ESS
 
-ES -> ES: fillModel(eventDetails : Model)
-
-ES --> d: return "event-details.html" (event details page)
+ES --> d: addAttribute("event": String, a: Event)
 deactivate ES
 
 create nv
@@ -55,13 +51,7 @@ deactivate nv
 d --> w: return newView
 deactivate d
 
-w -> nv: render()
-activate nv
 
-note over nv: When loaded by the browser,\nJavaScript and CSS will be\nexecuted to render the page.\nThis happens in the browser.
-
-nv --> w
-deactivate nv
 
 == 2. System displays the event details to the user ==
 

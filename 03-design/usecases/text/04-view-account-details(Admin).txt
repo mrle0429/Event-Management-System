@@ -2,7 +2,7 @@
 title 04-View Account Detail - Basic Course of Events (Admin)
 actor "Administrator" as a
 boundary "Web Browser" as w
-boundary "__ newView : View__" as nv
+boundary "__newView : View__" as nv
 boundary "__: DispatchServlet__" as d
 control "__: AccountSystem__" as c
 participant "__: CustomerRepository__" as cr
@@ -23,8 +23,7 @@ activate c
 
 c -> s: account := getAccount(email : String)
 activate s
-s->ar:a := findByEmail(email : String)
-
+s -> ar: a := getAccountByEmail(email : String)
 
 s -> u: getName()
 activate u
@@ -32,37 +31,25 @@ s -> u: getEmail()
 s -> u: getPassword()
 s -> u: getRole()
 
-u --> s: return accountInfo
+
 deactivate u
 
-s --> c: return accountDetails
+s --> c: return a
 deactivate s
 
-c -> c: fillModel(accountDetails : Model)
-
-
-c --> d: return "account-details.html" (account details page)
+c --> d: addAttribute("account": String, a: Account)
 deactivate c
 
 create nv
 
-d->nv: View(accountDetails : Model)
+d -> nv: View(accountDetails : Model)
 activate nv
 
-nv-->d:
+nv --> d:
 deactivate nv
 
-d-->w:return newView
+d --> w: return newView
 deactivate d
-
-
-w -> nv: render()
-activate nv
-
-note over nv: When loaded by the browser,\nJavaScript and CSS will be\nexecuted to render the page.\nThis happens in the browser.
-
-nv --> w
-deactivate nv
 
 == 2. System displays user account details ==
 
