@@ -54,17 +54,22 @@ The class diagram represents the information gained about the system by completi
 ![class diagram](images/class.png)
 
 ## Data Persistence
-Within the restaurant the following classes should be maintained between executions.
-1. Customer - id, name, phone number
-2. Table - id, number, places
-3. WalkIn - id, table, date, time, covers, is overfull
-4. Reservation - id, customer, table, date, time, covers, is overfull
+Within the Event Management System the following classes should be maintained between executions.
+1. User - id, name, password, email, role
+2. Administrator - id, name, password, email, role
+3. Organiser - id, name, password, email, role, address, companyName, PhoneNumber
+4. Ticket - id, type, price, quantity
+5. Event - id, name, discription, date, time
+6. Venue - id, name, address, capacity, contactName, contactPhone, contactEmail
+7. TicketQuantity - id, type, price, numberSold, numberAvailable
 
 ### Relationships
-1. Customer - Reservation (1 to many)
-2. Reservation - Customer (1 to 1)
-2. Table - Booking (1 to many)
-3. Booking - Table (1 to 1)
+1. User - Ticket (1 to many)
+2. Event - Venue (many to 1）
+3. Event - Ticket (1 to 1)
+4. Organiser - Event (many to 1)
+5. Event - TicketQuantity (1 to many)
+6. Venue - TicketAvailability (1 to many)
 
 ## Milestone 3 Design
 
