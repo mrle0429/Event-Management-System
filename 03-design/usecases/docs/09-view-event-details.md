@@ -4,7 +4,7 @@
 1. The organiser/administrator clicks the "Details" button for the event they want to view on list events page **(19 - List All Events - Admin)** **(20 - List Owner Events - Organizer)**
 2. The system displays the event details **(03 - View Details Event Page)**
 
-![Use Case Name - Basic Course of Events](/03-design/images/09-view-details-event.png)
+![Use Case Name - Basic Course of Events](/03-design/usecases/images/09-view-event-details.png)
 
 
 ## Related UI Prototypes

@@ -5,9 +5,9 @@ actor "Organizer/Administrator" as OrganizerAdmin
 boundary "Web Browser" as w
 boundary "__newView : View__" as nv
 boundary "__: DispatchServlet__" as d
-control "__: VenueSystem__" as VMS
+control "__: EventSystem__" as VMS
 participant "__: VenueRepository__" as vr
-participant "__: VenueService__" as VMSS
+participant "__: EventService__" as ESS
 entity "__venue : Venue__" as DB
 
 == 1. The user selects "Detail" on Manage Venue Page ==
@@ -19,29 +19,25 @@ activate d
 d -> VMS: viewVenueDetail(venueName : String, model : Model)
 activate VMS
 
-VMS -> VMSS: venue := getVenue(venueName : String)
-activate VMSS
-VMSS -> vr: a := findByName(venueName : String)
+VMS -> ESS: venue := getVenue(venueName : String)
+activate ESS
+ESS -> vr: a := getVenueByName(venueName : String)
 
 
-VMSS -> DB: getName()
+ESS -> DB: getName()
 activate DB
-VMSS -> DB: getAddress()
-VMSS -> DB: getContactName()
-VMSS -> DB: getContactPhone()
-VMSS -> DB: getContactEmail()
-VMSS -> DB: getTicketAvailability()
+ESS -> DB: getAddress()
+ESS -> DB: getContactName()
+ESS -> DB: getContactPhone()
+ESS -> DB: getContactEmail()
+ESS -> DB: getCapacity()
 
-
-DB --> VMSS: return venueInfo
 deactivate DB
 
-VMSS --> VMS: return venueDetails
-deactivate VMSS
+ESS --> VMS: return a
+deactivate ESS
 
-VMS -> VMS: fillModel(venueDetails : Model)
-
-VMS --> d: return "venue-details.html" (venue details page)
+VMS --> d: addAttribute("venue": String, a: Venue)
 deactivate VMS
 
 create nv
@@ -55,13 +51,6 @@ deactivate nv
 d --> w: return newView
 deactivate d
 
-w -> nv: render()
-activate nv
-
-note over nv: When loaded by the browser,\nJavaScript and CSS will be\nexecuted to render the page.\nThis happens in the browser.
-
-nv --> w
-deactivate nv
 
 == 2. System displays the venue details to the user ==
 
