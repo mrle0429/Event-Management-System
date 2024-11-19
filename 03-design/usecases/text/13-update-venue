@@ -1,0 +1,99 @@
+@startuml
+title 13-Update-Venue
+
+actor "Manager" as Manager
+participant "Web Browser" as Browser
+boundary "__view: ModifyVenuePage__" as ModifyView
+boundary "__view: ViewVenuePage__" as ViewView
+boundary "__: DispatchServlet__" as DispatchServlet
+entity "__m : Model__" as Model
+entity "__dto : ModifyVenueDTO__" as VenueDTO
+control ": VenueSystem" as System
+participant ": VenueRepository" as Repository
+entity "selected : Venue" as Venue
+entity "ta : TicketAvailability" as TA
+
+== 1. The manager selects the edit venue functionality on the view venue page ==
+note right of Manager: The manager clicks the "Modify" button
+
+Manager -> Browser : click()
+activate Browser
+
+Browser -> DispatchServlet : GET(url: String, data: JSON)
+activate DispatchServlet
+
+DispatchServlet -> System : showModifyVenue(venueId: long, m: Model)
+activate System
+
+System -> Repository : venue := getVenueById(venueId)
+activate Repository
+Repository --> System : return venue
+deactivate Repository
+
+create VenueDTO
+System -> VenueDTO : ModifyVenueDTO(venue)
+activate VenueDTO
+VenueDTO --> System
+deactivate VenueDTO
+
+System -> Model : addAttribute("venueDTO", venueDTO)
+System --> DispatchServlet : return "modify-venue"
+deactivate System
+
+create ModifyView
+DispatchServlet -> ModifyView : create View(model: Model)
+activate ModifyView
+ModifyView --> DispatchServlet
+deactivate ModifyView
+
+DispatchServlet --> Browser : return ModifyView
+deactivate DispatchServlet
+deactivate Browser
+
+== 2. The system displays the modify venue page which shows the venue details as editable fields ==
+note right of Manager: The manager updates venue details and clicks "Save"
+
+Manager -> Browser : click()
+activate Browser
+
+Browser -> DispatchServlet : POST(url: String, data: JSON)
+activate DispatchServlet
+
+DispatchServlet -> System : modifyVenue(dto: ModifyVenueDTO, m: Model)
+activate System
+
+System -> Repository : venue := getVenueById(dto.venueId)
+activate Repository
+Repository --> System : return venue
+deactivate Repository
+
+System -> Venue : updateDetails(dto.newName, dto.newAddress, dto.newContactName, \ndto.newContactPhone, dto.newContactEmail)
+activate Venue
+
+loop for each ticket type in dto
+  System -> TA : updateTicketAvailability(dto.ticketType, dto.ticketCapacity)
+end
+deactivate Venue
+
+System -> Repository : saveVenue(venue)
+activate Repository
+Repository --> System : success / error
+deactivate Repository
+
+System -> Model : addAttribute("venue", venue)
+System --> DispatchServlet : return "view-venue"
+deactivate System
+
+create ViewView
+DispatchServlet -> ViewView : create View(model: Model)
+activate ViewView
+ViewView --> DispatchServlet
+deactivate ViewView
+
+DispatchServlet --> Browser : return ViewView
+deactivate DispatchServlet
+deactivate Browser
+
+== 4. The system displays the updated venue details on the view venue page ==
+note right of Manager: The updated venue details are now visible
+@enduml

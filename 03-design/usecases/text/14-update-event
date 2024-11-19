@@ -1,5 +1,5 @@
 @startuml
-title Update Event - 01 Basic Course of Events
+title 14-Update-Event
 
 actor "Organiser/Administrator" as OA
 participant "Web Browser" as w
