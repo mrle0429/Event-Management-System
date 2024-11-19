@@ -27,7 +27,7 @@ activate ds
 ds -> System : updateEvent(alterDTO: AlterDTO, model: Model)
 activate System
 
-System -> dto : eid: =getEventId()
+System -> dto : uid: =getEventId()
 
 
 System->Service:modifyEvent(eventName, eventDate, newEventDescription, \nnewEventTime, newTicketTypes : String[*], newTicketPrices : double[*])
