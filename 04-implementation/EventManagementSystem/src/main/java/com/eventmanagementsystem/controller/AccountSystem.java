@@ -70,7 +70,6 @@ public class AccountSystem {
         if (account == null) {
             return "redirect:/account/login";
         }
-            String role = account.getRole();
 
             model.addAttribute("user", account);
             return "redirect:/account/user/dashboard";
