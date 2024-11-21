@@ -62,7 +62,7 @@ accSer --> ES: return user
 deactivate accSer
 
 
-ES -> TS: buyTicket(event: Event, user: User, types: String[*], num: int[*])
+ES -> TS: buyTicket(e: Event, user: User, types: String[*], num: int[*])
 activate TS
 
 loop for each type and num of ticket be bought

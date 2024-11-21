@@ -43,12 +43,12 @@ deactivate accountSer
 
 
 
-accountSys -> m: addAttribute("errorMessage", "Account already exists")
+accountSys -> m: addAttribute("Account already exists": String, emailExisting: errorMessage)
 accountSys --> d: renturn "accountCreationPage"
 deactivate accountSys
 
 create view
-d -> view: View(model)
+d -> view: View(m: Model)
 activate view
 view --> d
 deactivate view

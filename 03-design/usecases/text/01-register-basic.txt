@@ -38,7 +38,7 @@ accountSer --> accountSys: return user
 deactivate accountSer
 
 
-accountSys -> m: addAttribute("username": String, user: Account)
+accountSys -> m: addAttribute("username": String, user: User)
 
 
 accountSys --> d: return "userDashboardPage"

@@ -59,7 +59,7 @@ System -> m: addAttribute("venueList": Srting, allVenues: Venue[*])
 System --> d: return "venue_list_page"
 deactivate System
 create view
-d -> view: View(model)
+d -> view: View(model: Model)
 activate view
 view --> d
 deactivate view

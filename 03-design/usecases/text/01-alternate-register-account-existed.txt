@@ -18,28 +18,21 @@ us -> w: "click Sign Up"
 activate w
 w -> d: POST/SignUp(url: String, data:JSON)
 activate d
-d -> accountSys: signUp(username, password, email, accountType, m:Model)
+d -> accountSys: signUp(username: String, password: String, email: String, type: accountType, m:Model)
 activate accountSys
 
 == 2. The system checks if the account already exists ==
-accountSys -> accountSer: getAccountByEmail(email, accountType)
+accountSys -> accountSer: getAccount(email, accountType)
 activate accountSer
 
 alt Account type is User
-    accountSer -> userRepo: findByEmail(email)
-    activate userRepo
-    userRepo --> accountSer: return existingUser
-    deactivate userRepo
+    accountSer -> userRepo: null:=findByEmail(email)
+
 else Account type is Admin
-    accountSer -> adminRepo: findByEmail(email)
-    activate adminRepo
-    adminRepo --> accountSer: return existingAdmin
-    deactivate adminRepo
+    accountSer -> adminRepo: null:=findByEmail(email)
+
 else Account type is Organizer
-    accountSer -> organizerRepo: findByEmail(email)
-    activate organizerRepo
-    organizerRepo --> accountSer: return existingOrganizer
-    deactivate organizerRepo
+    accountSer -> organizerRepo: null:=findByEmail(email)
 end
 
 accountSer --> accountSys: return Error.emailExisting
@@ -47,12 +40,12 @@ deactivate accountSer
 
 == 3. The system displays an error message indicating that the account already exists ==
 
-    accountSys -> m: addAttribute("errorMessage", "Account already exists")
+    accountSys -> m: addAttribute("errorMessage": String, "Account already exists": errorMessage)
     
     accountSys --> d: renturn account creation page
     deactivate accountSys
     create  view
-    d -> view: View(model)
+    d -> view: View(m: Model)
 
     view --> d:
     d --> w: return newView
