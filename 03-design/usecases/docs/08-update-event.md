@@ -8,7 +8,7 @@
 
 ![Use Case Name - Basic Course of Events](/03-design/usecases/images/08-update-event.png)
 
-## 02  - Alternate Course of Events - Do not update
+## 02 - Alternate Course of Events - Do not update
 1. The organiser/administrator selects the relevant event from the display to be updated 
 2. The system displays a dialog to enter the event details  
 3. The organiser/administrator updates the details of the event and clicks "Cancel"

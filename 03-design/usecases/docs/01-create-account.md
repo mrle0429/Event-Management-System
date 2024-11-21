@@ -15,7 +15,7 @@
 
 
 ![Create Account - Basic](/03-design/usecases/images/01-create-accout-basic.png)
-## 04 - Alternative Courses of Events - Account Already Exists
+## 04 - Alternative Courses of Events - Admin Account Already Exists
 
 
 ![Create Account - Account existed](/03-design/usecases/images/01-alternate-create-account-existed.png)

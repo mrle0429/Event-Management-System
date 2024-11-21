@@ -1,5 +1,6 @@
 # Use Case 07 - Delete Event
-## 01 Basic Course of Events
+
+## 01 - Basic Course of Events
 
 1. The administrator performs the List Event page  **(01 - Manage Event Page)
 2. The administrator selects the relevant event to delete
@@ -15,7 +16,7 @@
 | 01 - Manage Events Page - Administrator | ![List Events Page - Administrator](/01-requirements/ui/20-list-owner-events.png) |
 | 02 - Delete Event Confirm Page          | ![Delete Events - Confirmation Dialog](/01-requirements/ui/16-delete-event.png)             |
 
-## 02 Alternate Course of Events - Cancel
+## 02 - Alternate Course of Events - Cancel
 1. The admin selects the remove events functionality of the event to be deleted  **(01 - Manage Event Page)
 2. The system asks the Administrator to confirm
 3. The admin selects **Cancel** (02 - Delete Event Confirm Page)

@@ -1,5 +1,6 @@
 # Delete Account
-## 01 Basic Course of Events
+
+## 01 - Basic Course of Events
 1. The administrator performs the List Venue page  **(01 - Manage Venue Page)**
 2. The administrator selects the relevant venue to delete
 3. The system asks the user to confirm **(01 - Manage Venue Page)**
@@ -15,7 +16,7 @@
 | 01 - Manage Venues Page - Administrator | ![Admin Manage Venue Page](/01-requirements/ui/11-admin-manage-venue.png) |
 | 02 - Delete Venue Page                  | ![Delete Venue Page](/01-requirements/ui/17-delete-venue-confirm.png)     |
 
-## 02 Alternate Course of Events - Cancel
+## 02 - Alternate Course of Events - Cancel
 1. The administrator selects the delete venue functionality adjacent to the venue they want to remove on the list venues page **(01 - Manage Venue Page)**
 2. The system asks the Administrator to confirm
 3. The Administrator selects **Cancel** **(02 - Delete Venue Confirm Page)**
