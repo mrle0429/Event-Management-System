@@ -5,9 +5,10 @@ actor "User" as User
 boundary "Web Browser" as w
 boundary "__newView : View__" as nv
 boundary "__: DispatchServlet__" as d
+entity "__m: Model__" as m
 control "__: EventSystem__" as UD
 participant "__: TicketRepository__" as tr
-participant "__: EventService__" as ESS
+participant "__: TicketService__" as ESS
 entity "__selected : Ticket__" as ticket
 
 == 1. User selects a specific ticket from the list in MyTickets page ==
@@ -16,13 +17,13 @@ activate w
 w -> d: GET(url: String)
 
 activate d
-d -> UD: viewTickets(eventName: String, eventDate: Date, model : Model)
+d -> UD: viewTickets(eventName: String, eventDate: Date, m : Model)
 activate UD
 
-UD -> ESS: ticket := getTicketsByEvent(eventName: String, eventDate: Date)
+UD -> ESS: ticket := getTicket(eventName: String, eventDate: Date, type: TicketType)
 activate ESS
 
-ESS -> tr: a := getTickets(eventName: String,eventDate: Date)
+ESS -> tr: a := getTicket(eventName: String,eventDate: Date, type: TicketType)
 
 ESS -> ticket: getQuantity()
 activate ticket
@@ -34,12 +35,13 @@ deactivate ticket
 ESS --> UD: return a
 deactivate ESS
 
-UD --> d: addAttribute("ticket": String, a: Ticket)
+UD -> m: addAttribute("ticket": String, a: Ticket)
+UD --> d: return "view Ticket"
 deactivate UD
 
 create nv
 
-d -> nv: View(ticketDetails : Model)
+d -> nv: View(m : Model)
 activate nv
 
 nv --> d:

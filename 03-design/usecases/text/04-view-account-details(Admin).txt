@@ -4,6 +4,7 @@ actor "Administrator" as a
 boundary "Web Browser" as w
 boundary "__newView : View__" as nv
 boundary "__: DispatchServlet__" as d
+entity "__m: Model__" as m
 control "__: AccountSystem__" as c
 participant "__: CustomerRepository__" as cr
 participant "__: AdminRepository__" as ar
@@ -26,23 +27,24 @@ activate s
 s -> ar: a := getAccountByEmail(email : String)
 
 s -> u: getName()
-activate u
+
 s -> u: getEmail()
 s -> u: getPassword()
 s -> u: getRole()
 
 
-deactivate u
+
 
 s --> c: return a
 deactivate s
 
-c --> d: addAttribute("account": String, a: Account)
+c -> m: addAttribute("account": String, a: Account)
+c --> d: return "view account"
 deactivate c
 
 create nv
 
-d -> nv: View(accountDetails : Model)
+d -> nv: View(m : Model)
 activate nv
 
 nv --> d:

@@ -5,6 +5,7 @@ actor "Organizer/Administrator" as OrganizerAdmin
 boundary "Web Browser" as w
 boundary "__ newView : View__" as nv
 boundary "__: DispatchServlet__" as d
+entity "__m: Model__" as m
 control "__: EventSystem__" as ES
 participant "__: EventRepository__" as er
 participant "__: EventService__" as ESS
@@ -16,7 +17,7 @@ activate w
 w -> d: GET(url: String)
 
 activate d
-d -> ES: viewEvent(eventName: String,eventDate: Date, model : Model)
+d -> ES: viewEvent(eventName: String,eventDate: Date, m : Model)
 activate ES
 
 ES -> ESS: event := getEvent(eventName: String,eventDate: Date)
@@ -37,12 +38,13 @@ deactivate DB
 ESS --> ES: return a
 deactivate ESS
 
-ES --> d: addAttribute("event": String, a: Event)
+ES -> m: addAttribute("event": String, a: Event)
+ES --> d: return "view event"
 deactivate ES
 
 create nv
 
-d -> nv: View(eventDetails : Model)
+d -> nv: View(m : Model)
 activate nv
 
 nv --> d:
