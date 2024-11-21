@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  eventmanager:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=eventdb'
+      - 'MYSQL_PASSWORD=eventuserpassword'
+      - 'MYSQL_ROOT_PASSWORD=verysecret'
+      - 'MYSQL_USER=eventuser'
+    expose:
+      - 3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+
+volumes:
+  mysql-data:

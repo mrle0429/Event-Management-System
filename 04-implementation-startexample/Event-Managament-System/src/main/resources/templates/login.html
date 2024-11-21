@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <title>Sean's Event Management System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+<main class="container">
+  <h1>Sean's Event Management System</h1>
+  <article id="article">
+    <h2>Login</h2>
+    <figure>
+      <div th:if="${param.error}">
+        <div class="alert alert-danger">Invalid Email or Password</div>
+      </div>
+      <div th:if="${param.register_success}">
+        <div class="alert alert-danger">Account Successfully registered, please log in</div>
+      </div>
+      <div th:if="${param.logout}">
+        <div class="alert alert-danger">You have successfully logged out</div>
+      </div>
+      <form th:action="@{/login}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <div><label> Email: <input type="text" id="login_email" onChange="empty_verify(this, 'l');" aria-invalid="false" name="username"/> </label></div>
+        <div><label> Password: <input type="password" id="login_password" onChange="empty_verify(this, 'l');" aria-invalid="false" name="password"/> </label></div>
+        <div><input type="submit" id="login_submit" value="Sign In"/></div>
+      </form>
+    </figure>
+    <h2>Register</h2>
+    <figure>
+      <form th:action="@{/register}" method="post" th:object="${registration}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <div><label> Name : <input type="text" id="register_name" name="name" onChange="empty_verify(this, 'r');" th:field="*{name}"/> </label></div>
+        <div><label> Email : <input type="text" id="register_email" name="username" onChange="empty_verify(this, 'r');" th:field="*{email}" /> </label></div>
+        <div><label> Password: <input type="password" onChange="passVerify();" aria-invalid="false" aria-describedby="pass-helper1"  id="register_pass1" th:field="*{password}"/> </label></div>
+        <small id="pass-helper1"></small>
+        <div><label> Confirm Password: <input type="password" onChange="passVerify();" aria-invalid="false" aria-describedby="pass-helper2" id="register_pass2"/> </label></div>
+        <small id="pass-helper2"></small>
+        <div><input type="submit" id="register_submit" value="Sign Up"/></div>
+      </form>
+    </figure>
+  </article>
+</main>
+<script>
+  function empty_verify(element, which) {
+    console.log(element, which);
+    let login_submit = document.getElementById("login_submit");
+    let register_submit = document.getElementById("register_submit");
+    if (which == 'r'){
+        if (element.value == ''){
+            element.ariaInvalid = true;
+            register_submit.disabled = true;
+        } else {
+            var register_name = document.getElementById("register_name");
+            var register_email = document.getElementById("register_email");
+            var register_pass1 = document.getElementById("register_pass1");
+            var register_pass2 = document.getElementById("register_pass2");
+            if (register_name.value != '' && register_email.value != '' && register_pass1.value != '' && register_pass2.value != '') {
+                register_submit.disabled = false;
+            }
+        }
+    } else {
+        if (element.value == ''){
+            element.ariaInvalid = true;
+            login_submit.disabled = true;
+        } else {
+            var login_email = document.getElementById("login_email");
+            var login_password = document.getElementById("login_password");
+            if (login_email.value != '' && login_password.value != '') {
+                login_submit.disabled = false;
+            }
+        }
+    }
+  }
+  function passVerify() {
+    var passcode = document.getElementById("register_pass1");
+    var confirmPasscode = document.getElementById("register_pass2");
+    var helper1 = document.getElementById("pass-helper1");
+    var helper2 = document.getElementById("pass-helper2");
+    let btnSubmit = document.getElementById("register_submit");
+    if (passcode.value == '') {
+      btnSubmit.disabled = true;
+      passcode.ariaInvalid = true;
+      helper1.innerHTML = '<i class="fa fa-fw fa-exclamation-triangle"></i>Password cannot be empty!';
+    } else {
+      btnSubmit.disabled = false;
+      passcode.ariaInvalid = false;
+      helper1.innerHTML = '';
+    }
+    if (confirmPasscode.value == '') {
+      btnSubmit.disabled = true;
+      confirmPasscode.ariaInvalid = true;
+      helper2.innerHTML = '<i class="fa fa-fw fa-exclamation-triangle"></i>Confirm Password cannot be empty!';
+    } else {
+      btnSubmit.disabled = false;
+      confirmPasscode.ariaInvalid = false;
+      helper2.innerHTML = '';
+    }
+
+    if (passcode.value != '' && confirmPasscode.value != '' && passcode.value != confirmPasscode.value) {
+      btnSubmit.disabled = true;
+      passcode.ariaInvalid = true;
+      confirmPasscode.ariaInvalid = true;
+      helper.innerHTML = '<i class="fa fa-fw fa-exclamation-triangle"></i>Passwords do not match!';
+    } else if (passcode.value != '' && confirmPasscode.value != '' && passcode.value == confirmPasscode.value){
+      btnSubmit.disabled = false;
+      passcode.ariaInvalid = false;
+      confirmPasscode.ariaInvalid = false;
+      helper1.innerHTML = '';
+      helper2.innerHTML = '';
+    }
+  }
+</script>
+</body>
+</html>

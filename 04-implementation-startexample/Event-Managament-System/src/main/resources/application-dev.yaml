@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: always
+  h2:
+    console.enabled: true
+management:
+  endpoint:
+    httpexchanges:
+      enabled: true
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans"
+  httpexchanges:
+    recording:
+      enabled: true

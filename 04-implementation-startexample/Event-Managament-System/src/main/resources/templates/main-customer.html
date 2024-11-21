@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Sean's Event Management System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+<main class="container-fluid">
+  <h2>Sean's Event Management System</h2>
+  <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+  <nav class="container-fluid">
+    <ul>
+      <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
+      <li><a th:href="@{/admin/accounts}" class="secondary">Events</a></li>
+      <li><a th:href="@{/admin/majors}" class="secondary">Tickets</a></li>
+      <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+      <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+    </ul>
+  </nav>
+  <article id="article">
+    <h3>Welcome <span th:text="${customer.name}">Customer Name</span>!</h3>
+    <h5>My Upcoming Events</h5>
+    <table role="grid">
+      <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Event</th>
+        <th scope="col">Venue</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>
+          <button>Details</button>
+        </td>
+      </tr>
+      <tr>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>
+          <button>Details</button>
+        </td>
+      </tr>
+      <tr>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>
+          <button>Details</button>
+        </td>
+      </tr>
+      <tr>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>
+          <button>Details</button>
+        </td>
+      </tr>
+      <tr>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>DATA NEEDED</td>
+        <td>
+          <button>Details</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="grid">
+      <button>
+        View Event History
+      </button>
+      <button>
+        Search For Events
+      </button>
+    </div>
+  </article>
+</main>
+</body>

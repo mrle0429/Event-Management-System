@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    
+    url: jdbc:mysql://mysql:3306/eventdb
+    username: eventuser
+    password: eventuserpassword
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        storage_engine: innodb
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: always
+  h2:
+    console.enabled: true
