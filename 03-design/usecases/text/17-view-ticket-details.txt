@@ -5,9 +5,9 @@ actor "User" as User
 boundary "Web Browser" as w
 boundary "__newView : View__" as nv
 boundary "__: DispatchServlet__" as d
-control "__: TicketSystem__" as UD
+control "__: EventSystem__" as UD
 participant "__: TicketRepository__" as tr
-participant "__: TicketService__" as TS
+participant "__: EventService__" as ESS
 entity "__selected : Ticket__" as ticket
 
 == 1. User selects a specific ticket from the list in MyTickets page ==
@@ -16,31 +16,25 @@ activate w
 w -> d: GET(url: String)
 
 activate d
-d -> UD: viewMyTickets(eventName: String, eventDate: Date, model : Model)
+d -> UD: viewTickets(eventName: String, eventDate: Date, model : Model)
 activate UD
 
-UD -> TS: ticket := getTicket(eventName: String, eventDate: Date)
-activate TS
-TS -> tr: a := findByNameAndDate(eventName: String, eventDate: Date)
+UD -> ESS: ticket := getTicketsByEvent(eventName: String, eventDate: Date)
+activate ESS
 
+ESS -> tr: a := getTickets(eventName: String,eventDate: Date)
 
-
-
-TS -> ticket: getQuantity()
+ESS -> ticket: getQuantity()
 activate ticket
-TS -> ticket: getTicketType()
-TS -> ticket: getOrganizer()
-TS -> ticket: getPrice()
+ESS -> ticket: getTicketType()
+ESS -> ticket: getPrice()
 
-ticket --> TS: return ticketInfo
 deactivate ticket
 
-TS --> UD: return ticketDetails
-deactivate TS
+ESS --> UD: return a
+deactivate ESS
 
-UD -> UD: fillModel(ticketDetails : Model)
-
-UD --> d: return "ticket-details.html" (ticket details page)
+UD --> d: addAttribute("ticket": String, a: Ticket)
 deactivate UD
 
 create nv
@@ -53,14 +47,6 @@ deactivate nv
 
 d --> w: return newView
 deactivate d
-
-w -> nv: render()
-activate nv
-
-note over nv: When loaded by the browser,\nJavaScript and CSS will be\nexecuted to render the page.\nThis happens in the browser.
-
-nv --> w
-deactivate nv
 
 == 2. The system displays the ticket details, including event name, date, time, venue, ticket type, seat number, and price ==
 
