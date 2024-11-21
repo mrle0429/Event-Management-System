@@ -129,8 +129,8 @@
     }
 
     class AccountSystem {
-        createAccount(type: AccountType, username: String, password: String, email: String)
-        getAccount(email : String, accountType : accountType) : Account
+        createAccount(type: Role, username: String, password: String, email: String)
+        getAccount(email : String, accountType : Role) : Account
         listAccounts() : Account[]
         modifyAccount(adto : ModifyAccountDTO, a : Account)
         registerAccount(email: String, name: String, password: String, model: Model)
@@ -154,6 +154,7 @@
     }
 
     class AccountService {
+        createAccount(username: String, password: String, email: String,type: Role)
         getAccount(email : String) : Account
         getAccounts() : Account[]
         modifyAccount(modifyDTO : ModifyAccountDTO, account : Account)
