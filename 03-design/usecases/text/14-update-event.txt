@@ -1,0 +1,63 @@
+@startuml
+title 14-Update-Event
+
+actor "Organiser/Administrator" as OA
+participant "Web Browser" as w
+boundary "__view: ViewEventPage__" as ViewView
+boundary "__: DispatchServlet__" as ds
+entity "__m : Model__" as Model
+entity "__dto : ModifyEventDTO__" as EventDTO
+control ": EventSystem" as System
+participant ": EventRepository" as Repository
+entity "selected : Event" as Event
+entity "ta : TicketAvailability" as TA
+entity "tq : TicketQuantity" as TQ
+
+== 1. The organiser/administrator selects the relevant event from the display to be updated ==
+note right of OA: This part of the functionality is completed in Javascript\nIt does not need to be shown here
+
+== 2. The system displays a dialog to enter the event details\n3. The organiser/administrator updates the details of the event and clicks "Save" ==
+OA -> w : interact
+activate w
+w -> ds : POST(url: String, payload: json)
+activate ds
+
+ds -> System : modifyEvent(dto: ModifyEventDTO, m: Model)
+activate System
+
+System -> Repository : event := getEventById(dto.eventId)
+activate Repository
+Repository --> System : return event
+deactivate Repository
+
+System -> Event : updateDetails(dto.newName, dto.newDate, dto.newDescription, \ndto.newTime)
+activate Event
+
+loop for each ticket type in dto
+  System -> TA : updateTicketAvailability(dto.ticketType, dto.ticketCapacity)
+  create TQ
+  System -> TQ : TicketQuantity(dto.ticketType, dto.ticketCapacity, dto.ticketPrice)
+end
+deactivate Event
+
+System -> Repository : saveEvent(event)
+activate Repository
+Repository --> System : success / error
+deactivate Repository
+
+System -> Model : addAttribute("event", event)
+System --> ds : return "view-event"
+deactivate System
+
+create ViewView
+ds -> ViewView : create View(model: Model)
+activate ViewView
+ViewView --> ds
+deactivate ViewView
+
+ds --> w : return ViewView
+deactivate ds
+deactivate w
+
+== 4. The system updates the view to show the current events for the specified organiser/administrator, including the newly changed event ==
+@enduml
