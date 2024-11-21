@@ -24,7 +24,7 @@ Each use case contains the separate sequence diagrams for each course of events.
 ### Account Management
 1. [Create Account](/03-design/usecases/docs/01-create-account)
 2. [Delete Account](/03-design/usecases/docs/02-delete-account.md)
-3. [Updata Account](/03-design/usecases/docs/03-update-account.md)
+3. [Update Account](/03-design/usecases/docs/03-update-account.md)
 4. [View Details Account](/03-design/usecases/docs/04-view-account-details.md)
 5. [List Accounts](/03-design/usecases/docs/05-list-accounts.md)
 

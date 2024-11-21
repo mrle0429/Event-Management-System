@@ -23,7 +23,7 @@
 1. The administrator select create account button(3 types). **(06-manage account)**
 2. The system navigates to the account creation page.  **(07-create admin/ 08-create user / 09-create organiser )**
 3. The administrator enters the required account details for the new user/Organizer/admin. 
-4. The system renturn to account manage page.
+4. The system return to account manage page.
 
 ![Create Account - Basic](/03-design/usecases/images/01-create-accout-basic.png)
 ## 04 - Alternative Courses of Events - Admin Account Already Exists
