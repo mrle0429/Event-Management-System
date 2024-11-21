@@ -15,7 +15,7 @@ u -> w : click('Manage Venues')
 activate w
 w -> d : GET(url : String, data : JSON)
 activate d
-d -> ts : displayAllVenues()
+d -> ts : listVenues(model: Model)
 activate ts
 
 ts->tss:getAllVenues()

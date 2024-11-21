@@ -15,7 +15,7 @@ u -> w : click('Manage Events')
 activate w
 w -> d : GET(url : String, data : JSON)
 activate d
-d -> ts : displayAllEvents()
+d -> ts : listEvents(model: Model)
 activate ts
 
 

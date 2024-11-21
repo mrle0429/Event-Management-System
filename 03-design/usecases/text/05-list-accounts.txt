@@ -15,7 +15,7 @@ u -> w : click('Manage Account')
 activate w
 w -> d : GET(url : String, data : JSON)
 activate d
-d -> ts : displayAllAccounts()
+d -> ts : listAccounts(model: Model)
 activate ts
 
 ts->tss:getAllAccounts()

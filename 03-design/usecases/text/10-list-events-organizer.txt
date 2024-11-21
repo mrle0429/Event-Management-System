@@ -15,13 +15,13 @@ u -> w : click('Manage Events')
 activate w
 w -> d : GET(url : String, data : JSON)
 activate d
-d -> ts : displayEventsById(model: Model)
+d -> ts : listEvents(userId: Long, model: Model)
 activate ts
 
 
 ts->tss:getEventsById(userId: Long)
 activate tss
-tss->db: events := findEventsById(userId: Long)
+tss->db: events := findEvents(userId: Long)
 note over tss: events from repository are combined to a list
 tss-->ts: return events
 deactivate tss
