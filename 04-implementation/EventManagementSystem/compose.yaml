@@ -1,0 +1,15 @@
+services:
+  app:
+    image: springboot-app
+    build:
+      context: .  # 构建上下文是当前目录
+      dockerfile: Dockerfile  # 使用 Dockerfile 来构建镜像
+    ports:
+      - "8081:8080"  # 映射端口
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://39.105.0.202:3306/ood  # 替换为远程数据库的主机地址和数据库名称
+      SPRING_DATASOURCE_USERNAME: root  # 远程数据库的用户名
+      SPRING_DATASOURCE_PASSWORD: OOD20241022  # 远程数据库的密码
+    container_name: springboot-app
+    command: ["java", "-Dspring.profiles.active=dev", "-jar", "/app.jar"]  # 使用 jar 启动 Spring Boot 应用
+
