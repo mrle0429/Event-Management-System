@@ -30,14 +30,14 @@ activate ac
 
 ac -> as: getAccount(email : String)
 activate as
-as->cr:a := getByEmail(email : String)
+as->cr:a := findByEmail(email : String)
 alt the value of a is null
-  as->ar:a := getByEmail(email : String)
+  as->ar:a := findByEmail(email : String)
 end
 alt the value of a is null
-  as->or:a := getByEmail(email : String)
+  as->or:a := findByEmail(email : String)
 end
-as-->ac:return a
+as-->ac:return account
 deactivate as
 
 ac -> as: deleteAccount(a : Account)

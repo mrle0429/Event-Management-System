@@ -26,7 +26,14 @@ activate servlet
 servlet->es: deleteEvent(name : String, model : Model)
 activate es
 
-es->eventService: event := getEvent(eventName: String,eventDate: Date)
+es->eventService: event := getEvent(eventName: String)
+activate eventService
+eventService -> eventRepo : getEventByName(eventName: String)
+deactivate eventService
+
+activate eventRepo
+eventRepo -> es : return event
+deactivate eventRepo
 
 es->eventService: deleteEvent(event : Event)
 activate eventService
@@ -40,7 +47,7 @@ deactivate eventService
 es->es: fillModel(model : Model)
 es-->model: addAttribute("events" : String, allEvents : Event[*])
 
-es-->servlet: return "list-events"
+es-->servlet: return "event-list-page"
 deactivate es
 
 create nv

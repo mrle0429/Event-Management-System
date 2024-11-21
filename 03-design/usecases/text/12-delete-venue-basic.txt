@@ -27,7 +27,14 @@ servlet->vs: deleteVenue(name : String, model : Model)
 activate vs
 
 
-vs->venueService: venue := getVenueByName(vid : String)
+vs->venueService: venue := getVenue(venueName: String)
+activate venueService
+venueService -> venueRepo : getVenueByName(venueName : String)
+deactivate venueService
+
+activate venueRepo
+venueRepo -> vs : return venue
+deactivate venueRepo
 
 vs->venueService: deleteVenue(venue : Venue)
 activate venueService
@@ -42,7 +49,7 @@ vs->vs: fillModel(model : Model)
 
 vs-->model: addAttribute("venues" : String, allVenues : Venue[*])
 
-vs-->servlet: return "list-venues"
+vs-->servlet: return "venue-list-page"
 deactivate vs
 
 create nv
