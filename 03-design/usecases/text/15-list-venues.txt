@@ -1,0 +1,53 @@
+@startuml
+
+title List Venues - Basic Course of Events (Retrieve)
+actor "Admin" as u
+participant "Web Browser" as w
+boundary "__View__" as v
+boundary "__:DispatchServlet__" as d
+entity "__model: Model__" as m
+control "__:EventSystem__" as ts
+participant "__:VenueService__" as tss
+database "__VenueRepository__" as db
+
+== 1. The Administrator or Organizer clicks "Manage Venues" on the dashboard ==
+u -> w : click('Manage Venues')
+activate w
+w -> d : GET(url : String, data : JSON)
+activate d
+d -> ts : displayAllVenues()
+activate ts
+
+ts->tss:getAllVenues()
+activate tss
+tss->db: venues := findAllVenues()
+note over tss: venues from repository are combined to a list
+tss-->ts: return venues
+deactivate tss
+
+ts->m:addAttributes("venue": String, venues: Venues)
+
+ts-->d:return "23-organizer-manage-venue.html"
+deactivate ts
+
+create v
+d -> v : View(model: Model)
+activate v
+
+v --> d :
+deactivate v
+
+d --> w : return newView
+deactivate d
+
+w -> v : render()
+activate v
+
+note over v : When loaded by the browser \njavascript and CSS will be \nexecuted to render the page.\nThis happens in the browser.
+
+v --> w :
+deactivate v
+
+== 2. The system retrieves all venues and displays the venue list to the administrator and Organizer ==
+
+@enduml
