@@ -5,12 +5,12 @@ title Delete Venue - Basic Course of Events
 actor "Admin" as admin
 boundary "Web Browser" as web
 boundary "newView：View" as nv
-boundary ": DispatchServlet" as servlet
-entity "m: Model" as model
-control ": VenueSystem" as vs
-participant ": VenueRepository" as venueRepo
-participant ": VenueService" as venueService
-entity "selected : Venue" as selectedVenue
+boundary "__: DispatchServlet__" as servlet
+entity "__m: Model__" as model
+control "__: VenueSystem__" as vs
+participant "__: VenueRepository__" as venueRepo
+participant "__: VenueService__" as venueService
+entity "__selected : Venue__" as selectedVenue
 
 
 ==1. The administrator performs the List Venue page  **(01 - Manage Venue Page)**\n2. The administrator selects the relevant venue to delete ==
@@ -27,14 +27,7 @@ servlet->vs: deleteVenue(name : String, model : Model)
 activate vs
 
 
-vs->venueService: venue := getVenue(venueName: String)
-activate venueService
-venueService -> venueRepo : getVenueByName(venueName : String)
-deactivate venueService
-
-activate venueRepo
-venueRepo -> vs : return venue
-deactivate venueRepo
+vs->venueService: venue := getVenueByName(vid : String)
 
 vs->venueService: deleteVenue(venue : Venue)
 activate venueService
@@ -49,7 +42,7 @@ vs->vs: fillModel(model : Model)
 
 vs-->model: addAttribute("venues" : String, allVenues : Venue[*])
 
-vs-->servlet: return "venue-list-page"
+vs-->servlet: return "list-venues"
 deactivate vs
 
 create nv

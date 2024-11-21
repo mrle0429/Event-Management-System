@@ -4,17 +4,17 @@ title Delete Account - 01 Basic Course of Events
 
 actor "User" as u
 boundary "Web Browser" as w
-boundary ": newView : View " as nv
-boundary ": DispatchServlet" as d
-entity "m : Model" as m
+boundary "__: newView : View __" as nv
+boundary "__: DispatchServlet__" as d
+entity "__m : Model__" as m
 
-control ": AccountSystem" as ac
+control "__: AccountSystem__" as ac
 
-participant ": CustomerRepository" as cr
-participant ": AdminRepository" as ar
-participant ": OrganiserRepository" as or
-participant ": AccountService" as as
-entity ": Account" as a
+participant "__: CustomerRepository__" as cr
+participant "__: AdminRepository__" as ar
+participant "__: OrganiserRepository__" as or
+participant "__: AccountService__" as as
+entity "__: Account__" as a
 
 ==1. The administrator performs the List Account page **(01 - Manage Account Page)**\n2. The administrator selects the relevant account to delete\n3. The administrator confirms the action==
 
@@ -30,14 +30,14 @@ activate ac
 
 ac -> as: getAccount(email : String)
 activate as
-as->cr:a := findByEmail(email : String)
+as->cr:a := getByEmail(email : String)
 alt the value of a is null
-  as->ar:a := findByEmail(email : String)
+  as->ar:a := getByEmail(email : String)
 end
 alt the value of a is null
-  as->or:a := findByEmail(email : String)
+  as->or:a := getByEmail(email : String)
 end
-as-->ac:return account
+as-->ac:return a
 deactivate as
 
 ac -> as: deleteAccount(a : Account)
