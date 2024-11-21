@@ -1,0 +1,13 @@
+@startuml
+
+title Delete Event - 02 Alternate Course of Events (Cancel)
+
+actor "Admin" as a
+boundary "Web Browser" as w
+
+==1. The admin selects the remove events functionality of the event to be deleted  **(01 - Manage Event Page)** \n2. The system asks the Administrator to confirm ==
+note over w,a:This part of the functionality is completed in Javascript\nIt does not need to be shown here
+==3. The admin selects **Cancel** (02 - Delete Event Confirm Page) \n4. The system returns to the list events page with no changes **(01 - Manage Event Page)** ==
+note over w,a:This part of the functionality is completed in Javascript\nIt does not need to be shown here
+
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+
+title Delete Venue - 02 Alternate Course of Events (Cancel)
+
+actor "Admin" as a
+boundary "Web Browser" as w
+
+
+==1. The administrator selects the delete venue functionality adjacent to the venue they want to remove on the list venues page **(01 - Manage Venue Page)**\n2. The system asks the Administrator to confirm==
+note over w,a:This part of the functionality is completed in Javascript\nIt does not need to be shown here
+==3. The Administrator selects **Cancel** **(02 - Delete Venue Confirm Page)** \n4. The system returns to the list venues page with no changes **(01 - Manage Venue Page)** ==
+note over w,a:This part of the functionality is completed in Javascript\nIt does not need to be shown here
+
+@enduml

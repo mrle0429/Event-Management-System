@@ -1,0 +1,59 @@
+@startuml
+
+title Delete Venue - Basic Course of Events
+
+actor "Admin" as admin
+boundary "Web Browser" as web
+boundary "newView：View" as nv
+boundary ": DispatchServlet" as servlet
+entity "m: Model" as model
+control ": VenueSystem" as vs
+participant ": VenueRepository" as venueRepo
+participant ": VenueService" as venueService
+entity "selected : Venue" as selectedVenue
+
+
+==1. The administrator performs the List Venue page  **(01 - Manage Venue Page)**\n2. The administrator selects the relevant venue to delete ==
+note over web, servlet: This part of the functionality is completed in JavaScript\nIt does not need to be shown here
+==3. The system asks the user to confirm **(01 - Manage Venue Page)** \n4. The administrator selects **"Yes"**(02 - Delete Venue Confirm Page)==
+
+admin->>web: click()
+activate web
+
+web->servlet: POST(url : String, payload : json)
+activate servlet
+
+servlet->vs: deleteVenue(name : String, model : Model)
+activate vs
+
+
+vs->venueService: venue := getVenueByName(vid : String)
+
+vs->venueService: deleteVenue(venue : Venue)
+activate venueService
+
+venueService->venueRepo: delete(venue : Venue)
+venueService->selectedVenue: <<destroy>>
+destroy selectedVenue
+venueService-->vs:
+deactivate venueService
+
+vs->vs: fillModel(model : Model)
+
+vs-->model: addAttribute("venues" : String, allVenues : Venue[*])
+
+vs-->servlet: return "list-venues"
+deactivate vs
+
+create nv
+servlet->nv: View(model : Model)
+activate nv
+nv-->servlet
+deactivate nv
+servlet-->web: return newView
+
+deactivate servlet
+
+==5. The system updates the display to show the existing venues **(01 - Manage Venue Page)**==
+
+@enduml

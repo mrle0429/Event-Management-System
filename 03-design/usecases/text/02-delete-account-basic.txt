@@ -1,0 +1,85 @@
+@startuml
+
+title Delete Account - 01 Basic Course of Events
+
+actor "User" as u
+boundary "Web Browser" as w
+boundary ": newView : View " as nv
+boundary ": DispatchServlet" as d
+entity "m : Model" as m
+
+control ": AccountSystem" as ac
+
+participant ": CustomerRepository" as cr
+participant ": AdminRepository" as ar
+participant ": OrganiserRepository" as or
+participant ": AccountService" as as
+entity ": Account" as a
+
+==1. The administrator performs the List Account page **(01 - Manage Account Page)**\n2. The administrator selects the relevant account to delete\n3. The administrator confirms the action==
+
+
+u -> w: click()
+activate w
+
+w->d:POST(url : String, data : JSON)
+activate d
+
+d->ac:deleteAccount(accountId : long, m : Model)
+activate ac
+
+ac -> as: getAccount(email : String)
+activate as
+as->cr:a := getByEmail(email : String)
+alt the value of a is null
+  as->ar:a := getByEmail(email : String)
+end
+alt the value of a is null
+  as->or:a := getByEmail(email : String)
+end
+as-->ac:return a
+deactivate as
+
+ac -> as: deleteAccount(a : Account)
+activate as
+alt the account is a customer
+  as->cr:delete(a : Customer)
+else the account is an administrator
+  as->ar:delete(a : Administrator)
+else the account is an organiser
+  as->or:delete(a : Organiser)
+end
+as->a:<<destroy>>
+destroy a
+as-->ac:
+deactivate as
+
+ac -> as: getAccounts()
+activate as
+  as->cr:getAccounts()
+  as->ar:getAccounts()
+  as->or:getAccounts()
+as-->ac: return allAccounts
+deactivate as
+
+ac->m: addAttribute("accounts" : String, allAccounts : Account[*])
+
+
+ac-->d:return "list-accounts"
+deactivate ac
+
+create nv
+d->nv:View(model : Model)
+activate nv
+
+
+nv-->d:
+deactivate nv
+
+d-->w:return newView
+deactivate d
+
+==4. The system displays the list accounts page **(01 - Manage Account Page)** which shows the details of all accounts in the system==
+
+
+@enduml
