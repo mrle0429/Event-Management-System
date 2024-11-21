@@ -3,7 +3,7 @@ title Register Account - Basic Course of Events
 
 actor "User" as us
 boundary "Web Browser" as w
-boundary "__:newview:View__" as view
+boundary "__newview:View__" as view
 boundary "__:DispatchServlet__" as d
 entity "__model: Model__" as m
 control ": __AccountSystem__" as accountSys
@@ -11,7 +11,7 @@ entity "__user: User__" as userAcc
 participant "__:UserRepository__" as accountRepo
 participant ": __:AccountService__" as accountSer
 
-== 1. The user clicks the "register" button ==
+== 1. The user clicks the "Register" button on the login page. (01- Login Page)\n2. The system navigates to the account creation page. (02 - register page)\n3. The user clicks the "register" button ==
 us -> w: Click "Register"
 activate w
 w -> d: POST /registerAccount (url: String, data:JSON)
@@ -23,7 +23,7 @@ activate accountSys
 
 
 
-accountSys -> accountSer: createAccount(username: String, password: String, email: String)
+accountSys -> accountSer: createAccount(username: String, password: String, email: String, USER: AccountType)
 activate accountSer
 accountSer -> accountRepo: null:=findByEmail(email: String)
 create userAcc
@@ -52,5 +52,5 @@ d --> w: return newView
 deactivate d
 
 
-== 2. The system returns to user dashboard page==
+== 4. The system returns to user dashboard page==
 @enduml

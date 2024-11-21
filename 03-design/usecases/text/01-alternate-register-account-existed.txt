@@ -13,7 +13,7 @@ participant ": __AdminRepository__" as adminRepo
 participant ": __OrganizerRepository__" as organizerRepo
 
 
-== 1. The user clicks the "Sign Up" button on the login page ==
+== 1. The user clicks the "Register" button on the login page. (01- Login Page)\n2. The system navigates to the account creation page. (02 - register page)\n3. The user clicks the "register" button ==
 us -> w: "click Sign Up"
 activate w
 w -> d: POST/SignUp(url: String, data:JSON)
@@ -21,24 +21,24 @@ activate d
 d -> accountSys: signUp(username: String, password: String, email: String, type: accountType, m:Model)
 activate accountSys
 
-== 2. The system checks if the account already exists ==
-accountSys -> accountSer: getAccount(email, accountType)
+
+accountSys -> accountSer: getAccount(email: String)
 activate accountSer
 
 alt Account type is User
-    accountSer -> userRepo: null:=findByEmail(email)
+    accountSer -> userRepo: a:=findByEmail(email)
 
 else Account type is Admin
-    accountSer -> adminRepo: null:=findByEmail(email)
+    accountSer -> adminRepo: a:=findByEmail(email)
 
 else Account type is Organizer
-    accountSer -> organizerRepo: null:=findByEmail(email)
+    accountSer -> organizerRepo: a:=findByEmail(email)
 end
 
 accountSer --> accountSys: return Error.emailExisting
 deactivate accountSer
 
-== 3. The system displays an error message indicating that the account already exists ==
+
 
     accountSys -> m: addAttribute("errorMessage": String, "Account already exists": errorMessage)
     
@@ -51,6 +51,6 @@ deactivate accountSer
     d --> w: return newView
     deactivate d
 
+== 4. The system displays an error message indicating that the account already exists and return account creation page==
 
-== 4. The system returns to the account creation page ==
 @enduml

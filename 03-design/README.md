@@ -24,21 +24,21 @@ Each use case contains the separate sequence diagrams for each course of events.
 ### Account Management
 1. [Create Account](/03-design/usecases/docs/01-create-account)
 2. [Delete Account](/03-design/usecases/docs/02-delete-account.md)
-3. [Updata Account]()
+3. [Updata Account](/03-design/usecases/docs/03-update-account.md)
 4. [View Details Account](/03-design/usecases/docs/04-view-account-details.md)
 5. [List Accounts](/03-design/usecases/docs/05-list-accounts.md)
 
 ### Event Management
 6. [Create Event](/03-design/usecases/docs/06-create-event.md)
 7. [Delete Event](/03-design/usecases/docs/07-delete-event.md)
-8. [Update Event]()
+8. [Update Event](/03-design/usecases/docs/08-update-event.md)
 9. [View Details Event](/03-design/usecases/docs/09-view-event-details.md)
 10. [List Events](/03-design/usecases/docs/10-list-events.md)
 
 ### Venue Management
 11. [Create Venue](/03-design/usecases/docs/11-create-venue.md)
 12. [Delete Venue](/03-design/usecases/docs/12-delete-venue.md)
-13. [Update Venue]()
+13. [Update Venue](/03-design/usecases/images/13-update-venue.png)
 14. [View Details Venue](/03-design/usecases/docs/14-view-venue-details.md)
 15. [List Venue](/03-design/usecases/docs/15-list-venues.md)
 
@@ -78,18 +78,19 @@ Within the Event Management System the following classes should be maintained be
 
 | Team Member | TM1 | TM2 | TM3 | TM4 | TM5 | TM6 | TM7 |
 |-------------|-----|-----|-----|-----|-----|-----|-----|
-| Percentage  | 15% | 14% | 15% | 15% | 13% | 13% | 15% |
+| Percentage  | 15% | 14% | 15% | 15% | 12% | 14% | 15% |
 
 #### Task Allocation
 | Item               | Primary Author | Contributor | Contributor | Reviewer |
 |--------------------|-----|-----|-----|-----|
-| Data Persistence   |Sicheng | Ziheng |     |  |
+| Data Persistence   |Sicheng         |  Ziheng     |             |          |
 | Class Diagram      |ZihengWang  |     |     |  LeLiu   |
 | Create "..."       | Le  |
-| Retrieved "..."    | Xinya|
-| Update "..."       | Yunhan |
-| Delete "..."       | Yuxuan|
-| List "..."         | Bohan |
+| Retrieved "..."    | Xinya| | | Le|
+| Update "..."       | Yunhan | | | Yunhan|
+| Delete "..."       | Yuxuan|  | | Yunhan|
+| List "..."         | Bohan |  |  | Le|
+| Img generation & Document Improvement| Bohan|
 
 
 

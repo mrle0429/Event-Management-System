@@ -1,6 +1,6 @@
 # Use Case 03 - Update Account
 
-## 01 -Basic Course of Events - Any User Modifying Their Account
+## 01 - Basic Course of Events - Any User Modifying Their Account
 
 1. The user clicks "edit" to update their account information on the account info page. (10-Admin-information) (22-organizer-information)  (26-user-info)
 2. The system displays the account update form.
