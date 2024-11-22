@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.yaml.snakeyaml.events.Event;
+
 import ucd.comp3013j.ems.model.Account;
 import ucd.comp3013j.ems.model.Administrator;
 import ucd.comp3013j.ems.model.Customer;
@@ -16,6 +18,8 @@ import ucd.comp3013j.ems.model.Organiser;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
 import ucd.comp3013j.ems.model.services.AccountService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
+
+
 
 import java.util.List;
 
@@ -30,10 +34,16 @@ public class AccountController {
 
     @GetMapping(value={"/", "","/login", "/login/"})
     public String login(Model model) {
-        model.addAttribute("registration", new AccountDTO());
+        //model.addAttribute("registration", new AccountDTO());
         return "login";
     }
 
+    @GetMapping("/signup")
+    public String signup(Model model) {
+        model.addAttribute("registration", new AccountDTO());
+        return "signup";
+
+    }
 
     @PostMapping("/register")
     public String registerPost(
@@ -47,7 +57,7 @@ public class AccountController {
         }
         if(result.hasErrors()){
             model.addAttribute("user", registration);
-            return "/login";
+            return "signup";
         }
         accountService.saveUser(registration);
         return "redirect:/login?register_success";
@@ -67,14 +77,7 @@ public class AccountController {
         return "main-admin";
     }
 
-    @GetMapping(value = {"/customer", "/customer/"})
-    public String customerPage(Authentication authentication, Model model) {
-        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
-            Customer account = accountService.getCustomerAccount(aw.getUsername());
-            model.addAttribute("customer", account);
-        }
-        return "main-customer";
-    }
+
 
     @GetMapping(value = {"/organiser", "/organiser/"})
     public String organiserPage(Authentication authentication, Model model) {

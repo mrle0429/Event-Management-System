@@ -29,6 +29,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/administrator").hasAuthority("ADMINISTRATOR")
                 .requestMatchers("/customer").hasAuthority("CUSTOMER")
                 .requestMatchers("/organiser").hasAuthority("ORGANISER")
+                .requestMatchers("/signup").permitAll()
                 )
             .formLogin((form) -> form.loginPage("/login").loginProcessingUrl("/login")
                 .successHandler(new AuthSuccess())
