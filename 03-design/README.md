@@ -22,7 +22,7 @@ Decisions made while constructing these diagrams are also documented in the clas
 Each use case contains the separate sequence diagrams for each course of events. The diagrams are stored in the `images` folder and referenced in the markdown files.
 
 ### Account Management
-1. [Create Account](/03-design/usecases/docs/01-create-account)
+1. [Create Account](/03-design/usecases/docs/01-create-account.md)
 2. [Delete Account](/03-design/usecases/docs/02-delete-account.md)
 3. [Update Account](/03-design/usecases/docs/03-update-account.md)
 4. [View Details Account](/03-design/usecases/docs/04-view-account-details.md)
@@ -38,7 +38,7 @@ Each use case contains the separate sequence diagrams for each course of events.
 ### Venue Management
 11. [Create Venue](/03-design/usecases/docs/11-create-venue.md)
 12. [Delete Venue](/03-design/usecases/docs/12-delete-venue.md)
-13. [Update Venue](/03-design/usecases/images/13-update-venue.png)
+13. [Update Venue](/03-design/usecases/docs/13-update-venue.md)
 14. [View Details Venue](/03-design/usecases/docs/14-view-venue-details.md)
 15. [List Venue](/03-design/usecases/docs/15-list-venues.md)
 
