@@ -1,3 +1,8 @@
+### Message From Sean
+
+I have now checked out the contents of the repository for grading. Any further details added after the deadline will be ignored.
+
+
 # Team Project: *Group XX*
 
 ## Team Members
