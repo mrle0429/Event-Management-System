@@ -45,7 +45,7 @@
         - time : Time
         {static} Event(eventName : String, eventDescription : String, eventDate : Date, eventTime : Date, venue : Venue, ticketQuantities : TicketQuantity[*])
         setDescription(newEventDescription : String)
-        setTicketQuantities(newTicketQuantities : TicketQuantity[]) : int
+        setTicketQuantities(newTicketQuantities : TicketQuantity[])
         setTime(newEventTime : Date)
         getTicketQuantities() : TicketQuantity[]
         reduceQuantity(type : String, quantity : int) : int
@@ -88,9 +88,9 @@
         - password : String
         - email : String
         - role : String
-        +setName(name : String) : int
-        +setEmail(email : String) : int
-        +setPassword(password : String) : int
+        +setName(name : String)
+        +setEmail(email : String)
+        +setPassword(password : String)
         +setRole() : String
         +getRole() : String
         +getName() : String
@@ -176,7 +176,7 @@
     class EventService {
         +createEvent(name : String, description : String,
         date : Date, time : Time, venue : Venue, creator : Organiser, tickets : List<Ticket>) : Event
-        +deleteEvent(eventName : String, eventDate : Date) : int
+        +deleteEvent(eventName : String, eventDate : Date)
         +getEvent(eventName : String, eventDate : Date) : Event
         +getEvents() : Event[]
         +isAvailable(event : Event, date Date) : boolean
