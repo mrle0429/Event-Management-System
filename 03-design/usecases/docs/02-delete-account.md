@@ -1,6 +1,12 @@
 # Use Case 02 - Delete Account
 
 ## 01 - Basic Course of Events - Delete Account
+
+## Course of Events
+1. The administrator selects the user account to delete.
+2. The system prompts for confirmation of the deletion. **(02- Deletion Confirmation)**
+3. The administrator confirms the deletion.
+4. The system deletes the account and notifies the administrator of the successful deletion.
    ![](/03-design/usecases/images/02-delete-account-basic.png)
 
 ## Related UI Prototypes
