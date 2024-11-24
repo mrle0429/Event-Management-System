@@ -1,4 +1,4 @@
-package ucd.comp3013j.ems.model;
+package ucd.comp3013j.ems.model.entities;
 
 import jakarta.persistence.Entity;
 import lombok.Data;

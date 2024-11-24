@@ -9,12 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.yaml.snakeyaml.events.Event;
 
-import ucd.comp3013j.ems.model.Account;
-import ucd.comp3013j.ems.model.Administrator;
-import ucd.comp3013j.ems.model.Customer;
-import ucd.comp3013j.ems.model.Organiser;
+import ucd.comp3013j.ems.model.entities.Account;
+import ucd.comp3013j.ems.model.entities.Administrator;
+import ucd.comp3013j.ems.model.entities.Organiser;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
 import ucd.comp3013j.ems.model.services.AccountService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;

@@ -1,4 +1,4 @@
-package ucd.comp3013j.ems.model;
+package ucd.comp3013j.ems.model.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -6,8 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @MappedSuperclass @Data @NoArgsConstructor

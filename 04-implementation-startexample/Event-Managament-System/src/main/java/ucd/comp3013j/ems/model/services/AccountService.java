@@ -2,10 +2,10 @@ package ucd.comp3013j.ems.model.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ucd.comp3013j.ems.model.Account;
-import ucd.comp3013j.ems.model.Administrator;
-import ucd.comp3013j.ems.model.Customer;
-import ucd.comp3013j.ems.model.Organiser;
+import ucd.comp3013j.ems.model.entities.Account;
+import ucd.comp3013j.ems.model.entities.Administrator;
+import ucd.comp3013j.ems.model.entities.Customer;
+import ucd.comp3013j.ems.model.entities.Organiser;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
 import ucd.comp3013j.ems.model.repos.AdminRepository;
 import ucd.comp3013j.ems.model.repos.CustomerRepository;
