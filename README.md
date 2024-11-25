@@ -65,3 +65,27 @@ The included pdf has been annotated with the notes I made while I was grading. W
 * SD22: you have used the same initial method in different use cases and shown a different result
 
 In addition, there is also an included class file that was generated based on the sequence diagrams that you created. This serves to allow you to compare the methods in the class diagram you submitted against the methods in the generated diagram for reference. 
+
+
+# Part 3 Feedback Legend
+
+While I did not use these notes in all of the feedback, here are the ones from some of your feedback that I did use.
+
+
+## Class Diagram
+1. Data type missing from parameter or return type
+2. Repository indicates that the objects have an id, but it is not included in the class
+3. Searching is not done by the id of the object, but instead by the object e.g. findTicketsByUser(user : User) will work but findTicketsByUserId(userId : long) will not work as the ticket object remembers the user account not it's id
+4. This method should not be in the repository, this is something that should be a part of the entity that is being remembered
+
+
+## Sequence Diagram
+1. This method does not conform to the naming expected for repository methods
+2. There is a problem with control flow here, a method/constructor must always return to the object that initially called it
+3. You have user the same method name and parameters for two different use cases, if we expect the code to do something different then we need to call a different method
+4. Unnecessary parameters supplied to the method here
+5. The DTO is just another object in the system, if you want to call one of its methods you need to show it in the sequence diagram and have an arrow to show the method being called
+6. This return value does not match what would be expected of a method with the name given
+7. The addAttribute method should take two parameters, one a string that is an identifier to be used in the template and the second is the actual data to be used
+
+CF. Control Flow Error
