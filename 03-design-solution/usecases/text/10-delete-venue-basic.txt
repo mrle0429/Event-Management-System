@@ -1,0 +1,62 @@
+actor "Administrator" as u
+image data:image/png;base64,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 "Web Browser" as w
+boundary "<link:_>newView : View " as nv
+
+entity "<link:_>m : Model" as m
+boundary "<link:_>: DispatchServlet" as d
+
+entity "<link:_>v : Venue" as v
+control "<link:_>: EventSystem" as ec
+participant "<link:_>: VenueRepository" as vr
+participant "<link:_>: EventService" as es
+
+
+
+
+
+==1. The administrator selects the delete venue functionality adjacent to the venue they want to remove on the list venues page\n2. The system asks the administrator to confirm the deletion of the venue (13-delete-venue-warning)\n3. The administrator clicks OK==
+
+
+u -> w: click()
+activate w
+
+w->d:POST(url : String, data : JSON)
+activate d
+
+d->ec:deleteVenue(venueID : int, m : Model)
+activate ec
+
+
+
+
+ec->es:deleteVenue(venueID : int)
+activate es
+es->vr: v := findById(venueID : int)
+es-->vr: delete(v : Venue)
+destroy v
+es-->ec: return Error.NONE
+deactivate es
+
+ec->es:getVenues()
+activate es
+es->vr: venues := findAll()
+es-->ec: return venues
+deactivate es
+
+ec->m:addAttribute("venues" : String, venues : Venue[*])
+ec-->d: return "list-venues"
+deactivate ec
+
+
+d->*nv:View(model : Model)
+activate nv
+
+
+nv-->d:
+deactivate nv
+
+d-->w:return newView
+deactivate d
+
+
+==4. The system returns to the list venues page (09-list-venues) and the venue is no longer displayed==
