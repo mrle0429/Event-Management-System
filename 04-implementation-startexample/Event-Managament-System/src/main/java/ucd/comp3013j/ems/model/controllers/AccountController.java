@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import ucd.comp3013j.ems.model.entities.Account;
 import ucd.comp3013j.ems.model.entities.Administrator;
+import ucd.comp3013j.ems.model.entities.Customer;
 import ucd.comp3013j.ems.model.entities.Organiser;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
 import ucd.comp3013j.ems.model.services.AccountService;
@@ -75,7 +76,14 @@ public class AccountController {
         return "main-admin";
     }
 
-
+    @GetMapping(value = {"/customer", "/customer/"})
+    public String customerPage(Authentication authentication, Model model) {
+        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+            Customer account = accountService.getCustomerAccount(aw.getUsername());
+            model.addAttribute("customer", account);
+        }
+        return "main-customer";
+    }
 
     @GetMapping(value = {"/organiser", "/organiser/"})
     public String organiserPage(Authentication authentication, Model model) {
