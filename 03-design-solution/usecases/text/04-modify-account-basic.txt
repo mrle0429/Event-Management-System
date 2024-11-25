@@ -7,7 +7,7 @@ entity "<link:_>m : Model" as m
 entity "<link:_>m2 : Model" as m2
 
 control "<link:_>: AccountSystem" as ac
-entity "<link:_>adto : ModifyAccountDTO" as adto
+entity "<link:_>adto : AccountDTO" as adto
 
 participant "<link:_>: CustomerRepository" as cr
 participant "<link:_>: AdminRepository" as ar
@@ -39,12 +39,12 @@ end
 as-->ac:return a
 deactivate as
 
-ac->m: addAttribute("account" : String, a : Account)
-ac->*adto: ModifyAccountDTO()
+
+ac->*adto: AccountDTO(a : Account)
 activate adto
 adto-->ac:
 deactivate adto
-ac->m: addAttribute("accDTO" : String, adto : ModifyAccountDTO)
+ac->m: addAttribute("accDTO" : String, adto : AccountDTO)
 
 ac-->d:return "modify-account"
 deactivate ac
@@ -65,13 +65,13 @@ u -> w: click()
 w->d:POST(url : String, data : JSON)
 activate d
 
-d->ac:modifyAccount(adto : ModifyAccountDTO, m2 : Model)
+d->ac:modifyAccount(adto : AccountDTO, m2 : Model)
 
 activate ac
 
 ac -> as: a := getAccount(email : String)
 
-ac -> as: modifyAccount(adto : ModifyAccountDTO, a : Account)
+ac -> as: modifyAccount(adto : AccountDTO, a : Account)
 
 activate as
 as->a:setName(newName : String)

@@ -23,14 +23,14 @@ activate d
 d->ac:displayAccount(accountId : long, m : Model)
 activate ac
 
-ac -> as: account := getAccount(email : String)
+ac -> as: account := getAccount(accountId : long)
 activate as
-as->cr:a := findByEmail(email : String)
+as->cr:a := findById(accountId : long)
 alt the value of a is null
-  as->ar:a := findByEmail(email : String)
+  as->ar:a := findById(accountId : long)
 end
 alt the value of a is null
-  as->or:a := findByEmail(email : String)
+  as->or:a := findById(accountId : long)
 end
 as-->ac:return a
 deactivate as
