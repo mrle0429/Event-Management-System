@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+    <h2>Create Account</h2>
+    <form th:action="@{/create-account}" th:object="${accountDTO}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required/><br/>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required/><br/>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" required/><br/>
+
+        <label for="role">Role:</label>
+        <select id="role" th:field="*{role}" required>
+            <option value="ADMINISTRATOR">Administrator</option>
+            <option value="ORGANISER">Organiser</option>
+            <option value="CUSTORMER">CUSTORMER</option>
+        </select><br/>
+
+
+
+        <button type="submit">Create Account</button>
+    </form>
+    <div th:if="${errorMessage}">
+        <p th:text="${errorMessage}"></p>
+    </div>
+</body>
+</html>

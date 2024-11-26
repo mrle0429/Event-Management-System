@@ -93,4 +93,37 @@ public class AccountSystem {
         }
         return "main-organiser";
     }
+
+
+    /**
+     * 跳转管理员创建账户页面
+     * @param model
+     * @return
+     */
+    @GetMapping("/create-account")
+    public String showCreateAccountForm(Model model) {
+        model.addAttribute("accountDTO", new AccountDTO());
+        return "create-account";
+    }
+
+
+    /**
+     * 处理管理员创建用户表单
+     * @param accountDTO
+     * @param model
+     * @return
+     */
+    @PostMapping("/create-account")
+    public String createAccount(@ModelAttribute AccountDTO accountDTO, Model model) {
+        try {
+            accountService.createAccount(accountDTO);
+            return "redirect:/administrator";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "create-account";
+        }
+    }
+
+
+
 }

@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sean's Event Management System</title>
+    <title>Event Management System</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
 </head>
 <body>
 <main class="container">
-    <h2>Sean's Event Management System</h2>
+    <h2>Event Management System</h2>
     <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
     <nav class="container-fluid">
         <ul>
@@ -28,32 +28,22 @@
             <table role="grid">
                 <thead>
                 <tr>
-                    <th scope="col">Account Type</th>
-                    <th scope="col">Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">Admin</th>
-                    <td>DATA NEEDED</td>
-                </tr>
+                <tr th:each="account : ${accounts}">
+                    <td th:text="${account.name}"></td>
+                    <td th:text="${account.email}"></td>
+                    <td th:text="${account.role}"></td>
 
-                <tr>
-                    <th scope="row">Organiser</th>
-                    <td>DATA NEEDED</td>
-                </tr>
-                <tr>
-                    <th scope="row">User</th>
-                    <td>DATA NEEDED</td>
                 </tr>
                 </tbody>
             </table>
-            <button>
-                List Accounts
-            </button>
-            <button>
-                Create Account
-            </button>
+            <a th:href="@{/create-account}" class="button">Create Account</a>
+
         </figure>
         <h5>Events and Venues</h5>
         <figure>
