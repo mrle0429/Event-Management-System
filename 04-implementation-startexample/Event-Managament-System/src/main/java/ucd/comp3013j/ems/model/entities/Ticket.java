@@ -3,6 +3,8 @@ package ucd.comp3013j.ems.model.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ucd.comp3013j.ems.model.enums.TicketType;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -26,13 +28,14 @@ public class Ticket {
     private BigDecimal price;
     
     @Enumerated(EnumType.STRING)
-    private TicketLevel level;
+    private TicketType type;
     
     @Column(unique = true)
     private String ticketCode;
+
     
-    @Enumerated(EnumType.STRING)
-    private TicketStatus status;
+    
+
     
     @PrePersist
     private void generateTicketCode() {

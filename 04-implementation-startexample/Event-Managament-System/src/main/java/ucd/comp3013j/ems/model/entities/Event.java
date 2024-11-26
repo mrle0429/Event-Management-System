@@ -3,8 +3,11 @@ package ucd.comp3013j.ems.model.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import ucd.comp3013j.ems.model.enums.TicketType;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +23,11 @@ public class Event {
     @Column(length = 1000)
     private String description;
     
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    @Temporal(TemporalType.DATE)
+    private Date date;
+    
+    @Temporal(TemporalType.TIME)
+    private Date time;
     
     @ManyToOne
     @JoinColumn(name = "venue_id")
@@ -31,21 +37,22 @@ public class Event {
     @JoinColumn(name = "organiser_id")
     private Organiser organiser;
     
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<Ticket> tickets;
-    
+
     @ElementCollection
     @CollectionTable(name = "event_prices_by_level")
     @MapKeyEnumerated(EnumType.STRING)
     @Column(name = "price")
-    private Map<TicketLevel, BigDecimal> pricesByLevel;
+    private Map<TicketType, BigDecimal> pricesByLevel;
     
-    @Enumerated(EnumType.STRING)
-    private EventStatus status;
+
     
     @ElementCollection
     @CollectionTable(name = "event_remaining_seats")
     @MapKeyEnumerated(EnumType.STRING)
     @Column(name = "remaining_count")
-    private Map<TicketLevel, Integer> remainingSeats;
+    private Map<TicketType, Integer> remainingSeats;
+
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 } 

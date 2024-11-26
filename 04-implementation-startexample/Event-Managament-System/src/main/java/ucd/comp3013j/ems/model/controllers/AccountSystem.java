@@ -23,11 +23,11 @@ import ucd.comp3013j.ems.websecurity.AccountWrapper;
 import java.util.List;
 
 @Controller
-public class AccountController {
+public class AccountSystem {
     private final AccountService accountService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     @Autowired
-    public AccountController(AccountService as) {
+    public AccountSystem(AccountService as) {
         this.accountService = as;
     }
 

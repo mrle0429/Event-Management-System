@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ucd.comp3013j.ems.model.entities.Role;
+import ucd.comp3013j.ems.model.enums.Role;
 import ucd.comp3013j.ems.model.repos.AdminRepository;
 import ucd.comp3013j.ems.model.repos.CustomerRepository;
 import ucd.comp3013j.ems.model.repos.OrganiserRepository;

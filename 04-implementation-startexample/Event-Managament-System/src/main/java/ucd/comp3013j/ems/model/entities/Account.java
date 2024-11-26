@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ucd.comp3013j.ems.model.enums.Role;
 
 
 @MappedSuperclass @Data @NoArgsConstructor

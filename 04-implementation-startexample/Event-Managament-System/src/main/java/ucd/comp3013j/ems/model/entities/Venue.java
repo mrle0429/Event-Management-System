@@ -3,6 +3,8 @@ package ucd.comp3013j.ems.model.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ucd.comp3013j.ems.model.enums.TicketType;
+
 import java.util.List;
 import java.util.Map;
 
@@ -16,17 +18,21 @@ public class Venue {
     private String name;
     private String address;
     private String description;
-    private Integer capacity;
+
+    // 不需要总容量
+    //private Integer capacity;
+    private String contactPhone;
+    private String contactEmail;
+    private String contactName;
     
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
     private List<Event> events;
     
-    private String contactPhone;
-    private String contactEmail;
+
     
     @ElementCollection
     @CollectionTable(name = "venue_seats_by_level")
     @MapKeyEnumerated(EnumType.STRING)
     @Column(name = "seat_count")
-    private Map<TicketLevel, Integer> seatsByLevel;
+    private Map<TicketType, Integer> seatsByLevel;
 } 
