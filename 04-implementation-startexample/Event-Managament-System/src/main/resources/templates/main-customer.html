@@ -14,7 +14,7 @@
   <nav class="container-fluid">
     <ul>
       <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
-      <li><a th:href="@{/admin/accounts}" class="secondary">Events</a></li>
+      <li><a th:href="@{/avliable_events}" class="secondary">Events</a></li>
       <li><a th:href="@{/admin/majors}" class="secondary">Tickets</a></li>
       <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
       <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
@@ -88,6 +88,7 @@
       <button>
         Search For Events
       </button>
+      <a href="/events/available" class="btn btn-primary">浏览可用活动</a>
     </div>
   </article>
 </main>
