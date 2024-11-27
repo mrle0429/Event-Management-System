@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Venues List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+</head>
+<body>
+<main class="container-fluid">
+    <h2>Event Management System</h2>
+    <article id="article">
+
+        <h3>Venues</h3>
+        <figure>
+
+            <table role="grid">
+
+                <thead>
+                <tr>
+                    <th scope="col">Venue Name</th>
+                    <th scope="col">Venue Address</th>
+                    <th scope="col">Contact Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+                <tr th:each="venue : ${venues}">
+                    <td th:text="${venue.name}"></td>
+                    <td th:text="${venue.address}"></td>
+                    <td th:text="${venue.contactName}"></td>
+                    <td>
+                        <button>View</button>
+                    </td>
+                </tr>
+                </thead>
+
+            </table>
+        </figure>
+    </article>
+
+</main>
+</body>
+</html>

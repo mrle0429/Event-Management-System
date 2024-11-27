@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Venue</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+</head>
+<body>
+
+<main class="container">
+
+    <h1>Event Management System</h1>
+    <article id="article">
+        <h2>Create Venue</h2>
+        <form th:action="@{/events/venues/create}" method="POST">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <div><label>Venue Name: <input type="text" id="name" name="name"
+                                           placeholder="Enter the name of venue"></label>
+            </div>
+
+            <div><label>Address: <input type="text" id="address" name="address"
+                                        placeholder="Enter the address of venue"></label></div>
+
+            <div><label>Contact Name: <input type="text" id="contactName" name="contactName"
+                                             placeholder="Enter the contact name of venue"></label></div>
+
+            <div><label>Contact Phone: <input type="text" id="contactPhone" name="contactPhone"
+                                              placeholder="Enter the contact's phone of venue"></label></div>
+
+            <div><label>Contact Email: <input type="email" id="contactEmail" name="contactEmail"
+                                              placeholder="Enter the contact's email of venue"></label></div>
+
+            <div><label>Description: <textarea id="description" name="description"
+                                               placeholder="Enter the description of venue"></textarea></label>
+            </div>
+
+            <div><label>Premium: <input type="number" id="premium" name="premium" min="0"
+                                        placeholder="Enter number of seats..."></label></div>
+
+            <div><label>Standing: <input type="number" id="standing" name="standing" min="0"
+                                         placeholder="Enter number of seats..."></label></div>
+
+            <div><label>Economy: <input type="number" id="economy" name="economy" min="0"
+                                        placeholder="Enter number of seats..."></label></div>
+
+            <div>
+                <button type="submit">Create Venue</button>
+            </div>
+        </form>
+    </article>
+</main>
+
+<script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name');
+        const address = document.getElementById('address');
+        const contactName = document.getElementById('contactName');
+        const contactPhone = document.getElementById('contactPhone');
+        const contactEmail = document.getElementById('contactEmail');
+        const description = document.getElementById('description');
+        const premium = document.getElementById('premium');
+        const standing = document.getElementById('standing');
+        const economy = document.getElementById('economy');
+
+        if (!name.value || !address.value || !contactName.value || !contactEmail.value || !description.value||
+        !premium.value || !standing.value || !economy.value || !contactPhone.value){
+            alert("You need to enter all fields");
+            return;
+        }
+
+        if (!/^\d+$/.test(contactPhone.value)){
+            alert("Phone number must be number");
+            return;
+        }
+
+        form.submit();
+    })
+</script>
+
+</body>
+</html>

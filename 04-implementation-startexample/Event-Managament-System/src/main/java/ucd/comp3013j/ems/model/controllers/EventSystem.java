@@ -6,9 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ucd.comp3013j.ems.model.dto.EventDTO;
+import ucd.comp3013j.ems.model.dto.VenueDTO;
 import ucd.comp3013j.ems.model.entities.Event;
 import ucd.comp3013j.ems.model.entities.Organiser;
+import ucd.comp3013j.ems.model.entities.Venue;
 import ucd.comp3013j.ems.model.services.EventService;
+import ucd.comp3013j.ems.model.services.VenueService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
 
 import java.util.List;
@@ -19,6 +22,9 @@ public class EventSystem {
     
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private VenueService venueService;
 
     @GetMapping
     public String listEvents(Model model) {
@@ -82,5 +88,46 @@ public class EventSystem {
         List<Event> availableEvents = eventService.getAvailableEvents();
         model.addAttribute("events", availableEvents);
         return "events/available";
+    }
+
+    // venue 部分 ----------------------------------------------------------------
+
+    // 显示所有场馆
+    @GetMapping("/venues")
+    public String listVenues(Model model) {
+        // 获取所有场馆
+        List<Venue> venues = venueService.getAllVenues();
+        model.addAttribute("venues", venues);
+        return "venue/list";
+    }
+
+    // 显示创建场馆表单
+    @GetMapping("/venues/create")
+    public String showCreateVenueForm(Model model) {
+        model.addAttribute("venue", new VenueDTO());
+        return "venue/create";
+    }
+
+    // 处理创建场馆的请求
+    @PostMapping("/venues/create")
+    public String createVenue(@ModelAttribute VenueDTO venueDTO, Authentication authentication) {
+        if (authentication.getPrincipal() instanceof AccountWrapper accountWrapper) {
+            String role = accountWrapper.getAuthorities().iterator().next().getAuthority();
+            // 只有ORGANISER可以创建
+            if ("ORGANISER".equals(role)) {
+                Venue venue = new Venue();
+                venue.setName(venueDTO.getName());
+                venue.setAddress(venueDTO.getAddress());
+                venue.setContactName(venueDTO.getContactName());
+                venue.setContactPhone(venueDTO.getContactPhone());
+                venue.setContactEmail(venueDTO.getContactEmail());
+                venue.setDescription(venueDTO.getDescription());
+                venue.setSeatsByLevel(venueDTO.getSeatsByLevel());
+
+                venueService.createVenue(venue);
+            }
+        }
+        // 返回场馆列表
+        return "redirect:/events/venues";
     }
 }
