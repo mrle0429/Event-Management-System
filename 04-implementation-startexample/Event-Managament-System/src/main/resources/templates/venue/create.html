@@ -38,7 +38,7 @@
             <div><label>Premium: <input type="number" id="premium" name="premium" min="0"
                                         placeholder="Enter number of seats..."></label></div>
 
-            <div><label>Standing: <input type="number" id="standing" name="standing" min="0"
+            <div><label>Standard: <input type="number" id="standard" name="standard" min="0"
                                          placeholder="Enter number of seats..."></label></div>
 
             <div><label>Economy: <input type="number" id="economy" name="economy" min="0"
@@ -64,11 +64,11 @@
         const contactEmail = document.getElementById('contactEmail');
         const description = document.getElementById('description');
         const premium = document.getElementById('premium');
-        const standing = document.getElementById('standing');
+        const standard = document.getElementById('standard');
         const economy = document.getElementById('economy');
 
         if (!name.value || !address.value || !contactName.value || !contactEmail.value || !description.value||
-        !premium.value || !standing.value || !economy.value || !contactPhone.value){
+        !premium.value || !standard.value || !economy.value || !contactPhone.value){
             alert("You need to enter all fields");
             return;
         }
