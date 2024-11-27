@@ -159,16 +159,8 @@ public class EventSystem {
             String role = accountWrapper.getAuthorities().iterator().next().getAuthority();
             // 只有ORGANISER可以创建
             if ("ORGANISER".equals(role)) {
-                Venue venue = new Venue();
-                venue.setName(venueDTO.getName());
-                venue.setAddress(venueDTO.getAddress());
-                venue.setContactName(venueDTO.getContactName());
-                venue.setContactPhone(venueDTO.getContactPhone());
-                venue.setContactEmail(venueDTO.getContactEmail());
-                venue.setDescription(venueDTO.getDescription());
-                venue.setSeatsByLevel(venueDTO.getSeatsByLevel());
 
-                venueService.createVenue(venue);
+                venueService.createVenue(venueDTO);
             }
         }
         // 返回场馆列表
