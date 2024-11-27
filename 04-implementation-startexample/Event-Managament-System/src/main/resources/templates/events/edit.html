@@ -22,21 +22,23 @@
             <input type="time" id="time" name="timeStr" th:value="${#dates.format(eventDTO.time, 'HH:mm')}" required/>
 
             <label for="venue">Venue:</label>
-            <select id="venue" th:field="*{venueId}" required>
+            <select id="venue" name="venue.id" required>
                 <option value="">Select Venue</option>
                 <option th:each="venue : ${venues}" 
                         th:value="${venue.id}" 
-                        th:text="${venue.name}">
+                        th:text="${venue.name}"
+                        th:selected="${eventDTO.venue != null && eventDTO.venue.id == venue.id}">
                 </option>
             </select>
 
             <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
                 <label for="organiser">Organiser:</label>
-                <select id="organiser" th:field="*{organiserId}" required>
+                <select id="organiser" name="organiser.id" required>
                     <option value="">Select Organiser</option>
                     <option th:each="org : ${organisers}" 
                             th:value="${org.id}" 
-                            th:text="${org.name}">
+                            th:text="${org.name}"
+                            th:selected="${eventDTO.organiser != null && eventDTO.organiser.id == org.id}">
                     </option>
                 </select>
             </div>

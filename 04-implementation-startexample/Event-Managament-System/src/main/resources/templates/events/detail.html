@@ -57,13 +57,23 @@
             </table>
             
             <div class="grid">
-                <a th:href="@{/events/available}" role="button" class="secondary">Back to Events</a>
+                <a th:href="@{/administrator}" 
+                   th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}"
+                   role="button" class="secondary">Back to Events</a>
+                <a th:href="@{/events/available}"
+                   th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}"
+                   role="button" class="secondary">Back to Events</a>
             </div>
         </div>
         
         <div th:if="${event == null}">
             <p>Event not found</p>
-            <a th:href="@{/events/available}" role="button" class="secondary">Back to Events</a>
+            <a th:href="@{/administrator}"
+               th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}"
+               role="button" class="secondary">Back to Events</a>
+            <a th:href="@{/events/available}"
+               th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}"
+               role="button" class="secondary">Back to Events</a>
         </div>
     </main>
 </body>

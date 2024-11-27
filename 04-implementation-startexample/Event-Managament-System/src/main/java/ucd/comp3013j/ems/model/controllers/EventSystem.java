@@ -30,7 +30,7 @@ public class EventSystem {
     public String listEvents(Model model) {
         List<Event> events = eventService.getAllEvents();
         model.addAttribute("events", events);
-        return "event/list";
+        return "events/list";
     }
 
     @GetMapping("/{id}")
@@ -66,7 +66,7 @@ public class EventSystem {
                 .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
             model.addAttribute("organisers", eventService.getAllOrganisers());
         }
-        return "event/create";
+        return "events/create";
     }
 
     @PostMapping("/create")
@@ -109,7 +109,7 @@ public class EventSystem {
         Event event = eventService.getEvent(id);
         // TODO: 将Event转换为EventDTO
         model.addAttribute("eventDTO", event);
-        return "event/edit";
+        return "events/edit";
     }
 
     @PostMapping("/{id}/edit")
