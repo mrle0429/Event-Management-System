@@ -30,6 +30,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                                       @Param("maxPrice") BigDecimal maxPrice);
     
     // 查找当前日期之后的活动，并按日期排序
-    @Query("SELECT e FROM Event e WHERE e.date >= CURRENT_DATE ORDER BY e.date ASC")
+    @Query("SELECT e FROM Event e WHERE FUNCTION('DATE', e.date) >= FUNCTION('DATE', CURRENT_DATE) ORDER BY e.date ASC")
     List<Event> findAvailableEvents();
 }

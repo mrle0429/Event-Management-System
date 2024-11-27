@@ -74,6 +74,6 @@ public class EventSystem {
     public String listAvailableEvents(Model model) {
         List<Event> availableEvents = eventService.getAvailableEvents();
         model.addAttribute("events", availableEvents);
-        return availableEvents.isEmpty() ? "event/empty" : "event/list";
+        return "events/available";
     }
 }

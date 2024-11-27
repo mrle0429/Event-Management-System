@@ -10,6 +10,7 @@ import ucd.comp3013j.ems.model.repos.EventRepository;
 import ucd.comp3013j.ems.model.repos.OrganiserRepository;
 import ucd.comp3013j.ems.model.repos.VenueRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +78,24 @@ public class EventService {
     }
 
     public List<Event> getAvailableEvents() {
-        return eventRepository.findAvailableEvents();
+        List<Event> events = eventRepository.findAvailableEvents();
+        
+        if (events == null || events.isEmpty()) {
+            System.out.println("没有找到可用的活动");
+            return new ArrayList<>();
+        }
+        
+        System.out.println("找到 " + events.size() + " 个可用活动：");
+        /*events.forEach(event -> {
+            System.out.println("活动ID: " + event.getId());
+            System.out.println("活动名称: " + event.getName());
+            System.out.println("活动日期: " + event.getDate());
+            System.out.println("活动地点: " + event.getVenue().getName());
+            System.out.println("------------------------");
+        });
+
+         */
+        
+        return events;
     }
 }
