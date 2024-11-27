@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Event Management System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+<main class="container">
+    <h2>Event Management System</h2>
+    <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+    <nav class="container-fluid">
+        <ul>
+            <li><a th:href="@{/administrator}" class="secondary">Main Page</a></li>
+            <li><a th:href="@{/events}" class="secondary">Events</a></li>
+            <li><a th:href="@{/venues}" class="secondary">Venues</a></li>
+            <li><a th:href="@{/create-account}" class="secondary">Create Account</a></li>
+            <li><a th:href="@{/administrator/profile}" class="secondary">My Account</a></li>
+            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+        </ul>
+    </nav>
+
+    <article id="article">
+        <h3>Venues Management</h3>
+        <div class="grid">
+            <a th:href="@{/venue/create}" role="button">Create New Venue</a>
+        </div>
+        
+        <div th:if="${venues.empty}">
+            <p>There are currently no venues.</p>
+        </div>
+        
+        <div th:if="${not venues.empty}">
+            <table role="grid">
+                <thead>
+                    <tr>
+                        <th scope="col">Venue Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Contact Name</th>
+                        <th scope="col">Contact Phone</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="venue : ${venues}">
+                        <td th:text="${venue.name}">Venue name</td>
+                        <td th:text="${venue.address}">Address</td>
+                        <td th:text="${venue.contactName}">Contact Name</td>
+                        <td th:text="${venue.contactPhone}">Contact Phone</td>
+                        <td>
+                            <div class="grid">
+                                <a th:href="@{/venue/{id}(id=${venue.id})}" role="button">View</a>
+                                <a th:href="@{/venue/{id}/edit(id=${venue.id})}" role="button">Edit</a>
+                                <form th:action="@{/venue/{id}/delete(id=${venue.id})}" method="post" style="display: inline;">
+                                    <button type="submit" class="secondary">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</main>
+</body>
+</html> 

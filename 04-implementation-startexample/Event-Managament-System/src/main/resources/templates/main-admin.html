@@ -13,11 +13,11 @@
     <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
     <nav class="container-fluid">
         <ul>
-            <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
-            <li><a th:href="@{/admin/accounts}" class="secondary">Accounts</a></li>
-            <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
-            <li><a th:href="@{/admin/modules}" class="secondary">Events</a></li>
-            <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
+            <li><a th:href="@{/administrator}" class="secondary">Main Page</a></li>
+            <li><a th:href="@{/events}" class="secondary">Events</a></li>
+            <li><a th:href="@{/venue}" class="secondary">Venues</a></li>
+            <li><a th:href="@{/create-account}" class="secondary">Create Account</a></li>
+            <li><a th:href="@{/administrator/profile}" class="secondary">My Account</a></li>
             <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
         </ul>
     </nav>
@@ -51,20 +51,20 @@
                 <tbody>
                 <tr>
                     <th scope="col">Number of Events</th>
-                    <th scope="col">DATA NEEDED</th>
+                    <td th:text="${eventCount}">0</td>
                 </tr>
                 <tr>
                     <th scope="row">Number of Venues</th>
-                    <td>DATA NEEDED</td>
+                    <td th:text="${venueCount}">0</td>
                 </tr>
                 </tbody>
             </table>
-            <button>
-                List Events
-            </button>
-            <button>
-                List Venues
-            </button>
+            <div class="grid">
+                <a th:href="@{/events}" class="button">List Events</a>
+                <a th:href="@{/events/create}" class="button">Create Event</a>
+                <a th:href="@{/venue}" class="button">List Venues</a>
+                <a th:href="@{/venue/create}" class="button">Create Venue</a>
+            </div>
         </figure>
     </article>
 </main>

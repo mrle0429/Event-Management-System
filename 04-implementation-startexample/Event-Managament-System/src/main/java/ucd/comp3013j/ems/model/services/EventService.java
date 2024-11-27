@@ -7,12 +7,16 @@ import ucd.comp3013j.ems.model.dto.EventDTO;
 import ucd.comp3013j.ems.model.entities.Event;
 import ucd.comp3013j.ems.model.entities.Organiser;
 import ucd.comp3013j.ems.model.entities.Venue;
+import ucd.comp3013j.ems.model.enums.TicketType;
 import ucd.comp3013j.ems.model.repos.EventRepository;
 import ucd.comp3013j.ems.model.repos.OrganiserRepository;
 import ucd.comp3013j.ems.model.repos.VenueRepository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -36,6 +40,16 @@ public class EventService {
     }
 
     public Event createEvent(EventDTO eventDTO) {
+        Venue venue = venueRepository.findById(eventDTO.getVenueId())
+            .orElseThrow(() -> new RuntimeException("Venue not found"));
+            
+        Organiser organiser = organiserRepository.findById(eventDTO.getOrganiserId())
+            .orElseThrow(() -> new RuntimeException("Organiser not found"));
+            
+        if (!isValidSeatingCapacity(venue, eventDTO.getRemainingSeats())) {
+            throw new RuntimeException("Seating capacity exceeds venue limit");
+        }
+        
         Event event = new Event();
         updateEventFromDTO(event, eventDTO);
         return eventRepository.save(event);
@@ -58,22 +72,28 @@ public class EventService {
     private void updateEventFromDTO(Event event, EventDTO dto) {
         event.setName(dto.getName());
         event.setDescription(dto.getDescription());
-        event.setDate(dto.getDate());
-        event.setTime(dto.getTime());
         
-        // 设置场地
-        if (dto.getVenueId() != null) {
-            Venue venue = venueRepository.findById(dto.getVenueId()).orElse(null);
-            event.setVenue(venue);
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            
+            String dateStr = dateFormat.format(dto.getDate());
+            String timeStr = timeFormat.format(dto.getTime());
+            
+            event.setDate(dateFormat.parse(dateStr));
+            event.setTime(timeFormat.parse(timeStr));
+        } catch (ParseException e) {
+            throw new RuntimeException("Error parsing date/time", e);
         }
         
-        // 设置组织者
-        if (dto.getOrganiserId() != null) {
-            Organiser organiser = organiserRepository.findById(dto.getOrganiserId()).orElse(null);
-            event.setOrganiser(organiser);
-        }
+        Venue venue = venueRepository.findById(dto.getVenueId())
+            .orElseThrow(() -> new RuntimeException("Venue not found"));
+        event.setVenue(venue);
         
-        // 设置票价和座位数量
+        Organiser organiser = organiserRepository.findById(dto.getOrganiserId())
+            .orElseThrow(() -> new RuntimeException("Organiser not found"));
+        event.setOrganiser(organiser);
+        
         event.setPricesByLevel(dto.getPricesByLevel());
         event.setRemainingSeats(dto.getRemainingSeats());
     }
@@ -102,6 +122,26 @@ public class EventService {
 
     public Event getEventById(Long id) {
         return eventRepository.findById(id).orElse(null);
+    }
+
+    public Organiser getOrganiserByEmail(String email) {
+        return organiserRepository.findByEmail(email);
+    }
+
+    private boolean isValidSeatingCapacity(Venue venue, Map<TicketType, Integer> eventSeats) {
+        if (venue.getSeatsByLevel() == null || eventSeats == null) {
+            return false;
+        }
+        
+        return eventSeats.entrySet().stream()
+            .allMatch(entry -> {
+                Integer venueCapacity = venue.getSeatsByLevel().get(entry.getKey());
+                return venueCapacity != null && entry.getValue() <= venueCapacity;
+            });
+    }
+
+    public List<Organiser> getAllOrganisers() {
+        return organiserRepository.findAll();
     }
 
 }

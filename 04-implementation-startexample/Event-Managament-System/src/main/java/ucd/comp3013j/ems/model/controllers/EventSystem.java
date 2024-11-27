@@ -10,7 +10,10 @@ import ucd.comp3013j.ems.model.entities.Event;
 import ucd.comp3013j.ems.model.entities.Organiser;
 import ucd.comp3013j.ems.model.services.EventService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
+import ucd.comp3013j.ems.model.services.VenueService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -19,6 +22,9 @@ public class EventSystem {
     
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private VenueService venueService;
 
     @GetMapping
     public String listEvents(Model model) {
@@ -42,19 +48,60 @@ public class EventSystem {
     }
 
     @GetMapping("/create")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(Model model, Authentication authentication) {
+        if (!(authentication.getPrincipal() instanceof AccountWrapper)) {
+            return "redirect:/login";
+        }
+        
+        AccountWrapper aw = (AccountWrapper) authentication.getPrincipal();
+        if (!aw.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR") || 
+                             a.getAuthority().equals("ORGANISER"))) {
+            return "redirect:/";
+        }
+        
         model.addAttribute("eventDTO", new EventDTO());
+        model.addAttribute("venues", venueService.getAllVenues());
+        if (aw.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+            model.addAttribute("organisers", eventService.getAllOrganisers());
+        }
         return "event/create";
     }
 
     @PostMapping("/create")
-    public String createEvent(@ModelAttribute EventDTO eventDTO, Authentication authentication) {
-        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
-            // 设置组织者ID
-            // TODO: 根据实际需求设置organiserId
+    public String createEvent(@ModelAttribute EventDTO eventDTO, 
+                             @RequestParam("dateStr") String dateStr,
+                             @RequestParam("timeStr") String timeStr,
+                             Authentication authentication) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            
+            eventDTO.setDate(dateFormat.parse(dateStr));
+            eventDTO.setTime(timeFormat.parse(timeStr));
+            
+            if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+                String userEmail = aw.getUsername();
+                if (aw.getAuthorities().stream()
+                        .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                    if (eventDTO.getOrganiserId() == null) {
+                        throw new RuntimeException("Administrator must specify an organiser");
+                    }
+                    Event event = eventService.createEvent(eventDTO);
+                    return "redirect:/administrator";
+                } else {
+                    Organiser organiser = eventService.getOrganiserByEmail(userEmail);
+                    eventDTO.setOrganiserId(organiser.getId());
+                    Event event = eventService.createEvent(eventDTO);
+                    return "redirect:/events/organiser";
+                }
+            }
+            
+            throw new RuntimeException("Invalid authentication");
+        } catch (ParseException e) {
+            throw new RuntimeException("Invalid date or time format", e);
         }
-        eventService.createEvent(eventDTO);
-        return "redirect:/events";
     }
 
     @GetMapping("/{id}/edit")
@@ -83,4 +130,5 @@ public class EventSystem {
         model.addAttribute("events", availableEvents);
         return "events/available";
     }
+    
 }

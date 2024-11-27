@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Event</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+    <main class="container">
+        <h2>Edit Event</h2>
+        <form th:action="@{/events/{id}/edit(id=${eventDTO.id})}" th:object="${eventDTO}" method="post">
+            <label for="name">Event Name:</label>
+            <input type="text" id="name" th:field="*{name}" required/>
+
+            <label for="description">Description:</label>
+            <textarea id="description" th:field="*{description}" required></textarea>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="dateStr" th:value="${#dates.format(eventDTO.date, 'yyyy-MM-dd')}" required/>
+
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="timeStr" th:value="${#dates.format(eventDTO.time, 'HH:mm')}" required/>
+
+            <label for="venue">Venue:</label>
+            <select id="venue" th:field="*{venueId}" required>
+                <option value="">Select Venue</option>
+                <option th:each="venue : ${venues}" 
+                        th:value="${venue.id}" 
+                        th:text="${venue.name}">
+                </option>
+            </select>
+
+            <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
+                <label for="organiser">Organiser:</label>
+                <select id="organiser" th:field="*{organiserId}" required>
+                    <option value="">Select Organiser</option>
+                    <option th:each="org : ${organisers}" 
+                            th:value="${org.id}" 
+                            th:text="${org.name}">
+                    </option>
+                </select>
+            </div>
+
+            <div id="ticketPricing">
+                <h4>Ticket Pricing</h4>
+                <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
+                    <div class="grid">
+                        <div>
+                            <label th:for="${'price-' + type}" th:text="${type} + ' Price'">Level Price</label>
+                            <input type="number" th:id="${'price-' + type}" 
+                                   th:field="*{pricesByLevel[__${type}__]}" 
+                                   min="0" step="0.01"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <a th:href="@{/events}" role="button" class="secondary">Cancel</a>
+                <button type="submit">Update Event</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html> 
