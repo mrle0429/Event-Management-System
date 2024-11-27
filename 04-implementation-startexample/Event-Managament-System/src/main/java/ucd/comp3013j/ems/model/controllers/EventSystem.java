@@ -112,6 +112,7 @@ public class EventSystem {
         Event event = eventService.getEvent(id);
         // TODO: 将Event转换为EventDTO
         model.addAttribute("eventDTO", event);
+        model.addAttribute("venues", venueService.getAllVenues());
         return "events/edit";
     }
 
@@ -132,39 +133,6 @@ public class EventSystem {
         List<Event> availableEvents = eventService.getAvailableEvents();
         model.addAttribute("events", availableEvents);
         return "events/available";
-    }
-
-    // venue 部分 ----------------------------------------------------------------
-
-    // 显示所有场馆
-    @GetMapping("/venues")
-    public String listVenues(Model model) {
-        // 获取所有场馆
-        List<Venue> venues = venueService.getAllVenues();
-        model.addAttribute("venues", venues);
-        return "venue/list";
-    }
-
-    // 显示创建场馆表单
-    @GetMapping("/venues/create")
-    public String showCreateVenueForm(Model model) {
-        model.addAttribute("venue", new VenueDTO());
-        return "venue/create";
-    }
-
-    // 处理创建场馆的请求
-    @PostMapping("/venues/create")
-    public String createVenue(@ModelAttribute VenueDTO venueDTO, Authentication authentication) {
-        if (authentication.getPrincipal() instanceof AccountWrapper accountWrapper) {
-            String role = accountWrapper.getAuthorities().iterator().next().getAuthority();
-            // 只有ORGANISER可以创建
-            if ("ORGANISER".equals(role)) {
-
-                venueService.createVenue(venueDTO);
-            }
-        }
-        // 返回场馆列表
-        return "redirect:/events/venues";
     }
 
 }

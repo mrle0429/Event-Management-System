@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <title>Event Management System</title>
     <meta charset="UTF-8">
@@ -27,11 +27,11 @@
             <a th:href="@{/venue/create}" role="button">Create New Venue</a>
         </div>
         
-        <div th:if="${venues.empty}">
+        <div th:if="${#lists.isEmpty(venues)}">
             <p>There are currently no venues.</p>
         </div>
         
-        <div th:if="${not venues.empty}">
+        <div th:if="${not #lists.isEmpty(venues)}">
             <table role="grid">
                 <thead>
                     <tr>
@@ -39,7 +39,7 @@
                         <th scope="col">Address</th>
                         <th scope="col">Contact Name</th>
                         <th scope="col">Contact Phone</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col" colspan="3">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,12 +48,12 @@
                         <td th:text="${venue.address}">Address</td>
                         <td th:text="${venue.contactName}">Contact Name</td>
                         <td th:text="${venue.contactPhone}">Contact Phone</td>
+                        <td><a th:href="@{/venue/{id}(id=${venue.id})}" role="button">View</a></td>
+                        <td><a th:href="@{/venue/{id}/edit(id=${venue.id})}" role="button">Edit</a></td>
                         <td>
-                            <div class="grid">
-                                <a th:href="@{/venue/{id}(id=${venue.id})}" role="button">View</a>
-                                <a th:href="@{/venue/{id}/edit(id=${venue.id})}" role="button">Edit</a>
+                            <div sec:authorize="hasRole('ADMINISTRATOR')">
                                 <form th:action="@{/venue/{id}/delete(id=${venue.id})}" method="post" style="display: inline;">
-                                    <button type="submit" class="secondary">Delete</button>
+                                    <button type="submit">Delete</button>
                                 </form>
                             </div>
                         </td>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <title>Event Management System</title>
     <meta charset="UTF-8">
@@ -40,7 +40,7 @@
                         <th scope="col">Time</th>
                         <th scope="col">Venue</th>
                         <th scope="col">Organiser</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col" colspan="3">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,12 +50,12 @@
                         <td th:text="${#dates.format(event.time, 'HH:mm')}">Time</td>
                         <td th:text="${event.venue != null ? event.venue.name : 'Venue not set'}">Venue</td>
                         <td th:text="${event.organiser != null ? event.organiser.name : 'Not assigned'}">Organiser</td>
+                        <td><a th:href="@{/events/{id}(id=${event.id})}" role="button">View</a></td>
+                        <td><a th:href="@{/events/{id}/edit(id=${event.id})}" role="button">Edit</a></td>
                         <td>
-                            <div class="grid">
-                                <a th:href="@{/events/{id}(id=${event.id})}" role="button">View</a>
-                                <a th:href="@{/events/{id}/edit(id=${event.id})}" role="button">Edit</a>
+                            <div sec:authorize="hasRole('ADMINISTRATOR')">
                                 <form th:action="@{/events/{id}/delete(id=${event.id})}" method="post" style="display: inline;">
-                                    <button type="submit" class="secondary">Delete</button>
+                                    <button type="submit">Delete</button>
                                 </form>
                             </div>
                         </td>

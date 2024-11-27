@@ -13,9 +13,9 @@
     <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
     <nav class="container-fluid">
         <ul>
-            <li><a th:href="@{/admin}" class="secondary">Main Page</a></li>
-            <li><a th:href="@{/admin/accounts}" class="secondary">Events</a></li>
-            <li><a th:href="@{/admin/majors}" class="secondary">Venues</a></li>
+            <li><a th:href="@{/organiser}" class="secondary">Main Page</a></li>
+            <li><a th:href="@{/events}" class="secondary">Events</a></li>
+            <li><a th:href="@{/venue}" class="secondary">Venues</a></li>
             <li><a th:href="@{/admin/modules}" class="secondary">My Events</a></li>
             <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
             <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>
@@ -117,10 +117,10 @@
 
 <script>
     document.querySelector("#listVenues").addEventListener("click", function () {
-        window.location.href = "events/venues";
+        window.location.href = "venue";
     });
     document.querySelector("#createVenue").addEventListener("click", function () {
-        window.location.href = "/events/venues/create";
+        window.location.href = "/venue/create";
     });
 </script>
 </body>
