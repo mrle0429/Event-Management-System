@@ -116,6 +116,9 @@ public class AccountSystem {
     @PostMapping("/create-account")
     public String createAccount(@ModelAttribute AccountDTO accountDTO, Model model) {
         try {
+            if (accountDTO.getRole().equals("CUSTOMER")) {
+                accountDTO.setRole("USER");
+            }
             accountService.createAccount(accountDTO);
             return "redirect:/administrator";
         } catch (Exception e) {

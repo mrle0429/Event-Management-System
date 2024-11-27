@@ -13,8 +13,8 @@ public class Organiser extends Account {
     private String address;
     private String phoneNumber;
 
-    public Organiser(String name, String email, String password, String companyName, String address, String phoneNumber) {
-        super(name, email, password);
+    public Organiser(String email, String name, String password, String companyName, String address, String phoneNumber) {
+        super(email, name, password);
         this.setRole(Role.ORGANISER);
         this.companyName = companyName;
         this.address = address;

@@ -1,6 +1,7 @@
 package ucd.comp3013j.ems.model.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ucd.comp3013j.ems.model.entities.Account;
 import ucd.comp3013j.ems.model.entities.Administrator;
@@ -16,6 +17,9 @@ import java.util.List;
 
 @Service
 public class AccountService {
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     private final CustomerRepository customerRepository;
     private final AdminRepository adminRepository;
     private final OrganiserRepository organiserRepository;
@@ -86,18 +90,21 @@ public class AccountService {
             throw new RuntimeException("Email already exists");
         }
 
+        accountDTO.setPassword(passwordEncoder.encode(accountDTO.getPassword()));
+
         Account account;
         switch (accountDTO.getRole()) {
             case "ADMINISTRATOR":
-                account = new Administrator(accountDTO.getName(), accountDTO.getEmail(), accountDTO.getPassword());
+                account = new Administrator(accountDTO.getEmail(), accountDTO.getName(), accountDTO.getPassword());
                 adminRepository.save((Administrator) account);
                 break;
             case "ORGANISER":
-                account = new Organiser(accountDTO.getName(), accountDTO.getEmail(), accountDTO.getPassword(), accountDTO.getCompanyName(), accountDTO.getCompanyAddress(), accountDTO.getCompanyPhone());
+                account = new Organiser(accountDTO.getEmail(), accountDTO.getName(), accountDTO.getPassword(), 
+                                      accountDTO.getCompanyName(), accountDTO.getCompanyAddress(), accountDTO.getCompanyPhone());
                 organiserRepository.save((Organiser) account);
                 break;
             case "USER":
-                account = new Customer(accountDTO.getName(), accountDTO.getEmail(), accountDTO.getPassword());
+                account = new Customer(accountDTO.getEmail(), accountDTO.getName(), accountDTO.getPassword());
                 customerRepository.save((Customer) account);
                 break;
             default:

@@ -21,8 +21,8 @@ public class Customer extends Account {
         this.setRole(Role.CUSTOMER);
     }
 
-    public Customer(String name, String email, String pass){
-        super(email, name, pass);
+    public Customer(String email, String name, String password){
+        super(email, name, password);
         this.setRole(Role.CUSTOMER);
     }
 }
