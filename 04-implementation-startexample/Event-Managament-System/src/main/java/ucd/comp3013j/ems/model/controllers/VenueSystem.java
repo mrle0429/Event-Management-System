@@ -33,7 +33,6 @@ public class VenueSystem {
     
     @PostMapping("/{id}/edit")
     public String updateVenue(@PathVariable Long id, @ModelAttribute VenueDTO venueDTO) {
-        venueDTO.setId(id);
         venueService.updateVenue(venueDTO);
         return "redirect:/venue";
     }
