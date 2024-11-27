@@ -2,6 +2,7 @@ package ucd.comp3013j.ems.model.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ucd.comp3013j.ems.model.dto.EventDTO;
 import ucd.comp3013j.ems.model.entities.Event;
 import ucd.comp3013j.ems.model.entities.Organiser;
@@ -98,4 +99,9 @@ public class EventService {
         
         return events;
     }
+
+    public Event getEventById(Long id) {
+        return eventRepository.findById(id).orElse(null);
+    }
+
 }

@@ -28,10 +28,17 @@ public class EventSystem {
     }
 
     @GetMapping("/{id}")
-    public String viewEvent(@PathVariable Long id, Model model) {
-        Event event = eventService.getEvent(id);
+    public String showEventDetails(@PathVariable Long id, Model model) {
+        Event event = eventService.getEventById(id);
+        System.out.println("Fetching event with ID: " + id);
+        if (event != null) {
+            System.out.println("Found event: " + event.getName());
+        } else {
+            System.out.println("Event not found");
+        }
+        
         model.addAttribute("event", event);
-        return "event/view";
+        return "events/detail";
     }
 
     @GetMapping("/create")
