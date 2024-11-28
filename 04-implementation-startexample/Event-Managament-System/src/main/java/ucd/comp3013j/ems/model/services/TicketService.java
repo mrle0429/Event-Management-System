@@ -11,6 +11,7 @@ import ucd.comp3013j.ems.model.repos.EventRepository;
 import ucd.comp3013j.ems.model.repos.TicketRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -82,5 +83,45 @@ public class TicketService {
     public Ticket getTicket(Long ticketId) {
         return ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new RuntimeException("Ticket not found"));
+    }
+
+    @Transactional
+    public List<Ticket> purchaseTickets(Event event, Customer customer, TicketType ticketType, int quantity) {
+        // 检查剩余座位
+        Map<TicketType, Integer> remainingSeats = event.getRemainingSeats();
+        Integer remaining = remainingSeats.get(ticketType);
+        
+        if (remaining == null) {
+            throw new RuntimeException("Invalid ticket type");
+        }
+        
+        if (remaining < quantity) {
+            throw new RuntimeException("Only " + remaining + " seats remaining for " + ticketType);
+        }
+
+        List<Ticket> tickets = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            Ticket ticket = new Ticket();
+            ticket.setEvent(event);
+            ticket.setCustomer(customer);
+            ticket.setType(ticketType);
+            ticket.setPurchaseTime(LocalDateTime.now());
+            ticket.setPrice(event.getPricesByLevel().get(ticketType));
+            tickets.add(ticketRepository.save(ticket));
+        }
+
+        // 更新剩余座位数
+        remainingSeats.put(ticketType, remaining - quantity);
+        event.setRemainingSeats(remainingSeats);
+        eventRepository.save(event);
+        
+        return tickets;
+    }
+
+    /**
+     * 获取同一时间购买的票
+     */
+    public List<Ticket> getTicketsByEventAndCustomerAndPurchaseTime(Event event, Customer customer, LocalDateTime purchaseTime) {
+        return ticketRepository.findByEventAndCustomerAndPurchaseTime(event, customer, purchaseTime);
     }
 }

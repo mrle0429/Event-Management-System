@@ -47,6 +47,7 @@ public class TicketSystem {
     public String purchaseTicket(
             @PathVariable Long eventId,
             @RequestParam TicketType ticketType,
+            @RequestParam Integer quantity,  // 添加数量参数
             Authentication authentication,
             Model model) {
         try {
@@ -58,15 +59,15 @@ public class TicketSystem {
                     return "redirect:/events/available?error=event_not_found";
                 }
                 
-                Ticket ticket = ticketService.purchaseTicket(event, customer, ticketType);
-                return "redirect:/tickets/confirmation/" + ticket.getId();
+                List<Ticket> tickets = ticketService.purchaseTickets(event, customer, ticketType, quantity);
+                model.addAttribute("tickets", tickets);
+                return "redirect:/tickets/confirmation/" + tickets.get(0).getId();  // 重定向到第一张票的确认页
             }
             return "redirect:/login";
         } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
             return "redirect:/tickets/purchase/" + eventId + "?error=" + e.getMessage();
         }
-    }
+}
 
     // 显示购票确认页面
     @GetMapping("/confirmation/{ticketId}")
@@ -76,7 +77,14 @@ public class TicketSystem {
             return "redirect:/events/available?error=ticket_not_found";
         }
         
+        List<Ticket> tickets = ticketService.getTicketsByEventAndCustomerAndPurchaseTime(
+            ticket.getEvent(), 
+            ticket.getCustomer(), 
+            ticket.getPurchaseTime()
+        );
+        
         model.addAttribute("ticket", ticket);
+        model.addAttribute("tickets", tickets);
         return "tickets/confirmation";
     }
 

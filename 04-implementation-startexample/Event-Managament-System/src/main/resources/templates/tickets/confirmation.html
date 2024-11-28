@@ -8,8 +8,17 @@
 </head>
 <body>
     <main class="container-fluid">
-        <h2>Ticket Confirmation</h2>
-        
+        <h2>Sean's Event Management System</h2>
+        <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+        <nav class="container-fluid">
+            <ul>
+                <li><a th:href="@{/customer}" class="secondary">Main Page</a></li>
+                <li><a th:href="@{/events/available}" class="secondary">Events</a></li>
+                <li><a th:href="@{/account/my-account}" class="secondary">My Account</a></li>
+                <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+            </ul>
+        </nav>
+
         <article>
             <h3>Purchase Successful!</h3>
             
@@ -24,16 +33,20 @@
                         <td th:text="${ticket.type}">Ticket Type</td>
                     </tr>
                     <tr>
-                        <th scope="row">Price</th>
+                        <th scope="row">Quantity</th>
+                        <td th:text="${tickets.size()}">Quantity</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Price per Ticket</th>
                         <td th:text="${'¥' + ticket.price}">Price</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total Price</th>
+                        <td th:text="${'¥' + (ticket.price * tickets.size())}">Total Price</td>
                     </tr>
                     <tr>
                         <th scope="row">Purchase Time</th>
                         <td th:text="${#temporals.format(ticket.purchaseTime, 'yyyy-MM-dd HH:mm:ss')}">Purchase Time</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Ticket Code</th>
-                        <td th:text="${ticket.ticketCode}">Ticket Code</td>
                     </tr>
                 </tbody>
             </table>
