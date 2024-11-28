@@ -27,11 +27,11 @@
             <a th:href="@{/events/create}" role="button">Create New Event</a>
         </div>
         
-        <div th:if="${events.empty}">
+        <div th:if="${#lists.isEmpty(events)}">
             <p>There are currently no events.</p>
         </div>
         
-        <div th:if="${not events.empty}">
+        <div th:if="${not #lists.isEmpty(events)}">
             <table role="grid">
                 <thead>
                     <tr>

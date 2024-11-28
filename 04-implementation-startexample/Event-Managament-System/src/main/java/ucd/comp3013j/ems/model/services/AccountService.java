@@ -5,10 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ucd.comp3013j.ems.model.entities.*;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
-import ucd.comp3013j.ems.model.repos.AdminRepository;
-import ucd.comp3013j.ems.model.repos.CustomerRepository;
-import ucd.comp3013j.ems.model.repos.EventRepository;
-import ucd.comp3013j.ems.model.repos.OrganiserRepository;
+import ucd.comp3013j.ems.model.repos.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +21,9 @@ public class AccountService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
 
     @Autowired
     public AccountService(CustomerRepository cr, AdminRepository ar, OrganiserRepository or) {
@@ -54,6 +54,53 @@ public class AccountService {
         return a;
     }
 
+    public void updateAccount(AccountDTO accountDTO){
+        Account account = null;
+        if (accountDTO.getRole().equals("ADMINISTRATOR")){
+            account = adminRepository.findById(accountDTO.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
+            account.setName(accountDTO.getName());
+            account.setEmail(accountDTO.getEmail());
+            adminRepository.save((Administrator) account);
+        } else if (accountDTO.getRole().equals("ORGANISER")) {
+            account = organiserRepository.findById(accountDTO.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
+            account.setName(accountDTO.getName());
+            account.setEmail(accountDTO.getEmail());
+            Organiser organiser = (Organiser) account;
+            organiser.setCompanyName(accountDTO.getCompanyName());
+            organiser.setAddress(accountDTO.getCompanyAddress());
+            organiser.setPhoneNumber(accountDTO.getCompanyPhone());
+            organiserRepository.save(organiser);
+        }else{
+            account = customerRepository.findById(accountDTO.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
+            account.setName(accountDTO.getName());
+            account.setEmail(accountDTO.getEmail());
+            customerRepository.save((Customer) account);
+        }
+    }
+
+    public void deleteCustomer(Long customerId){
+        List<Ticket> tickets = ticketRepository.findByCustomerId(customerId);
+
+        // 删除相关的票
+        for (Ticket ticket : tickets) {
+            ticketRepository.delete(ticket);
+        }
+
+        customerRepository.deleteById(customerId);
+    }
+
+    public void deleteOrganiser(Long organiserId){
+        List<Event> events = eventRepository.findByOrganiserId(organiserId);
+
+        // 把所有的活动保留，组织者设置为null
+        for (Event event : events) {
+            event.setOrganiser(null);
+            eventRepository.save(event);
+        }
+
+        organiserRepository.deleteById(organiserId);
+    }
+
     public void saveUser(AccountDTO registration) {
         Customer c = new Customer(registration);
         customerRepository.save(c);
@@ -82,6 +129,8 @@ public class AccountService {
     public List<Event> findEventsByOrganiser(Organiser organiser) {
         return eventRepository.findByOrganiser(organiser);
     }
+
+
 
     /**
      * 管理员创建账户

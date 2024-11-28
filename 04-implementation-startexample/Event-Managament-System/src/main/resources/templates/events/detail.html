@@ -62,7 +62,7 @@
                    role="button" class="secondary">Back to Events</a>
                 <a th:href="@{/events/available}"
                    th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}"
-                   role="button" class="secondary">Back to Events</a>
+                   role="button" class="secondary">View Available Events</a>
             </div>
         </div>
         

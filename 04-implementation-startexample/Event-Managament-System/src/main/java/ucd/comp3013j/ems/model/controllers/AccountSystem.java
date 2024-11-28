@@ -10,14 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import ucd.comp3013j.ems.model.entities.*;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
+import ucd.comp3013j.ems.model.enums.Role;
 import ucd.comp3013j.ems.model.services.AccountService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
 
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AccountSystem {
@@ -94,6 +97,96 @@ public class AccountSystem {
         return "main-organiser";
     }
 
+    // 用参数代替用户ID保护url安全
+    @GetMapping("/detail")
+    public String viewAccount(@RequestParam(required = false) String userEmail, Authentication authentication, Model model) {
+
+        Account account = null;
+
+        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+            String email = aw.getUsername();
+            if (aw.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                // 管理员通过用户ID获取账户信息
+                account = accountService.getAccount(userEmail);
+            }else{
+                // 非管理员只能查看自己的信息
+                account = accountService.getAccount(email);
+            }
+
+            if (account.getRole() == Role.ORGANISER){
+                Organiser organiser = (Organiser) account;
+                model.addAttribute("account", organiser);
+                return "detail";
+            }
+
+            model.addAttribute("account", account);
+        }
+
+        return "detail";
+    }
+
+    @GetMapping("/edit")
+    public String editAccount(@RequestParam(required = false) String userEmail, Authentication authentication, Model model) {
+
+        Account account = null;
+        AccountDTO accountDTO = new AccountDTO();
+
+        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+            String email = aw.getUsername();
+            if (aw.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                // 管理员通过用户ID获取账户信息
+                account = accountService.getAccount(userEmail);
+
+            }else{
+                // 非管理员只能修改自己的信息
+                account = accountService.getAccount(email);
+            }
+            accountDTO.setId(account.getId());
+            accountDTO.setName(account.getName());
+            accountDTO.setEmail(account.getEmail());
+            accountDTO.setRole(String.valueOf(account.getRole()));
+
+            if (account.getRole() == Role.ORGANISER){
+                Organiser organiser = (Organiser) account;
+                accountDTO.setCompanyName(organiser.getCompanyName());
+                accountDTO.setCompanyAddress(organiser.getAddress());
+                accountDTO.setCompanyPhone(organiser.getPhoneNumber());
+            }
+
+            model.addAttribute("accountDTO", accountDTO);
+        }
+
+        return "edit";
+    }
+
+    @PostMapping("/edit")
+    public String updateAccount(@ModelAttribute AccountDTO accountDTO, Authentication authentication) {
+
+        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+            accountService.updateAccount(accountDTO);
+            if (aw.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                return "redirect:/detail?userEmail=" + accountDTO.getEmail();
+            }
+        }
+
+        return "redirect:/detail";
+    }
+
+    // 删除顾客
+    @PostMapping("/deleteCustomer")
+    public String deleteCustomer(@RequestParam Long customerId) {
+        accountService.deleteCustomer(customerId);
+        return "redirect:/administrator";
+    }
+
+    @PostMapping("/deleteOrganiser")
+    public String deleteOrganiser(@RequestParam Long organiserId) {
+        accountService.deleteOrganiser(organiserId);
+        return "redirect:/administrator";
+    }
 
     /**
      * 跳转管理员创建账户页面

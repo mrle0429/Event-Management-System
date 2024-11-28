@@ -13,6 +13,9 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long> {
     // 根据组织者查询事件
     List<Event> findByOrganiser(Organiser organiser);
+
+    // 根据组织者ID查找所有相关的动
+    List<Event> findByOrganiserId(Long organiserId);
     
     // 根据活动名称模糊查询
     List<Event> findByNameContaining(String name);

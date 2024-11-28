@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Account</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+</head>
+<body>
+<main class="container">
+
+    <h2>Edit Account</h2>
+    <form th:action="@{/edit}" th:object="${accountDTO}" method="post">
+
+        <input type="hidden" th:name="id" th:value="${accountDTO.id}" />
+        <input type="hidden" th:name="role" th:value="${accountDTO.role}" />
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required/>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required/>
+
+        <div th:if="${accountDTO.role == 'ORGANISER'}">
+            <label for="companyName">Company Name:</label>
+            <input type="text" id="companyName" th:field="*{companyName}"/>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" th:field="*{companyAddress}"/>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" th:field="*{companyPhone}"/>
+        </div>
+
+        <div class="grid">
+            <a th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}" th:href="@{/detail(userEmail=${accountDTO.email})}"
+               role="button" class="secondary">Cancel</a>
+            <a th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}" th:href="@{/detail}" role="button" class="secondary">Cancel</a>
+            <button type="submit">Update Venue</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>
