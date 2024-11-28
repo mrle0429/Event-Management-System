@@ -53,7 +53,7 @@
                         <td><a th:href="@{/events/{id}(id=${event.id})}" role="button">View</a></td>
                         <td><a th:href="@{/events/{id}/edit(id=${event.id})}" role="button">Edit</a></td>
                         <td>
-                            <div sec:authorize="hasRole('ADMINISTRATOR')">
+                            <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
                                 <form th:action="@{/events/{id}/delete(id=${event.id})}" method="post" style="display: inline;">
                                     <button type="submit">Delete</button>
                                 </form>
