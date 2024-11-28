@@ -3,13 +3,11 @@ package ucd.comp3013j.ems.model.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ucd.comp3013j.ems.model.entities.Account;
-import ucd.comp3013j.ems.model.entities.Administrator;
-import ucd.comp3013j.ems.model.entities.Customer;
-import ucd.comp3013j.ems.model.entities.Organiser;
+import ucd.comp3013j.ems.model.entities.*;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
 import ucd.comp3013j.ems.model.repos.AdminRepository;
 import ucd.comp3013j.ems.model.repos.CustomerRepository;
+import ucd.comp3013j.ems.model.repos.EventRepository;
 import ucd.comp3013j.ems.model.repos.OrganiserRepository;
 
 import java.util.ArrayList;
@@ -23,6 +21,9 @@ public class AccountService {
     private final CustomerRepository customerRepository;
     private final AdminRepository adminRepository;
     private final OrganiserRepository organiserRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Autowired
     public AccountService(CustomerRepository cr, AdminRepository ar, OrganiserRepository or) {
@@ -78,6 +79,9 @@ public class AccountService {
         return organiserRepository.findByEmail(email);
     }
 
+    public List<Event> findEventsByOrganiser(Organiser organiser) {
+        return eventRepository.findByOrganiser(organiser);
+    }
 
     /**
      * 管理员创建账户

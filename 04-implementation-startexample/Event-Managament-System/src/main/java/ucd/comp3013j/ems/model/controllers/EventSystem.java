@@ -91,13 +91,13 @@ public class EventSystem {
                     if (eventDTO.getOrganiserId() == null) {
                         throw new RuntimeException("Administrator must specify an organiser");
                     }
-                    Event event = eventService.createEvent(eventDTO);
+                    eventService.createEvent(eventDTO);
                     return "redirect:/administrator";
                 } else {
                     Organiser organiser = eventService.getOrganiserByEmail(userEmail);
                     eventDTO.setOrganiserId(organiser.getId());
-                    Event event = eventService.createEvent(eventDTO);
-                    return "redirect:/events/organiser";
+                    eventService.createEvent(eventDTO);
+                    return "redirect:/organiser";
                 }
             }
 
@@ -108,17 +108,63 @@ public class EventSystem {
     }
 
     @GetMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    public String showEditForm(@PathVariable Long id, Model model, Authentication authentication) {
         Event event = eventService.getEvent(id);
-        // TODO: 将Event转换为EventDTO
-        model.addAttribute("eventDTO", event);
+
+        // 将 Event 转换为 EventDTO
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setName(event.getName());
+        eventDTO.setDescription(event.getDescription());
+        eventDTO.setDate(event.getDate());
+        eventDTO.setTime(event.getTime());
+        eventDTO.setVenueId(event.getVenue().getId());
+        eventDTO.setOrganiserId(event.getOrganiser().getId());
+        eventDTO.setPricesByLevel(event.getPricesByLevel());
+        eventDTO.setRemainingSeats(event.getRemainingSeats());
+
+        model.addAttribute("event", event);
+        model.addAttribute("eventDTO", eventDTO);
         model.addAttribute("venues", venueService.getAllVenues());
+
+        AccountWrapper aw = (AccountWrapper) authentication.getPrincipal();
+        if (aw.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+            model.addAttribute("organisers", eventService.getAllOrganisers());
+        }
         return "events/edit";
     }
 
     @PostMapping("/{id}/edit")
-    public String updateEvent(@PathVariable Long id, @ModelAttribute EventDTO eventDTO) {
-        eventService.updateEvent(id, eventDTO);
+    public String updateEvent(@PathVariable Long id, @ModelAttribute EventDTO eventDTO,
+                              @RequestParam("dateStr") String dateStr,
+                              @RequestParam("timeStr") String timeStr,
+                              Authentication authentication) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+            eventDTO.setDate(dateFormat.parse(dateStr));
+            eventDTO.setTime(timeFormat.parse(timeStr));
+        } catch (ParseException e) {
+            throw new RuntimeException("Invalid date or time format", e);
+        }
+
+        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+            String userEmail = aw.getUsername();
+            if (aw.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                if (eventDTO.getOrganiserId() == null) {
+                    throw new RuntimeException("Administrator must specify an organiser");
+                }
+                eventService.updateEvent(id, eventDTO);
+                return "redirect:/administrator";
+            }else {
+                Organiser organiser = eventService.getOrganiserByEmail(userEmail);
+                eventDTO.setOrganiserId(organiser.getId());
+                eventService.updateEvent(id, eventDTO);
+                return "redirect:/organiser";
+            }
+        }
         return "redirect:/events";
     }
 

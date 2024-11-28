@@ -31,7 +31,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/organiser").hasAuthority("ORGANISER")
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers("/events/**").hasAnyAuthority("ADMINISTRATOR", "ORGANISER", "CUSTOMER")
-                .requestMatchers("/events/create").hasAuthority("ADMINISTRATOR")
+                .requestMatchers("/events/create").hasAnyAuthority("ADMINISTRATOR", "ORGANISER")
                 .requestMatchers("/venue/**").hasAnyAuthority("ADMINISTRATOR", "ORGANISER")
 
                 .anyRequest().authenticated()

@@ -16,7 +16,6 @@
             <li><a th:href="@{/organiser}" class="secondary">Main Page</a></li>
             <li><a th:href="@{/events}" class="secondary">Events</a></li>
             <li><a th:href="@{/venue}" class="secondary">Venues</a></li>
-            <li><a th:href="@{/admin/modules}" class="secondary">My Events</a></li>
             <li><a th:href="@{/admin/modules}" class="secondary">My Account</a></li>
             <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>
             </li>
@@ -24,7 +23,6 @@
     </nav>
     <article id="article">
         <h3>My Events</h3>
-        <h5>Accounts</h5>
         <figure>
             <table role="grid">
                 <thead>
@@ -37,66 +35,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>
-                        <button>View</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>
-                        <button>View</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>
-                        <button>View</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>
-                        <button>View</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>DATA NEEDED</td>
-                    <td>
-                        <button>View</button>
-                    </td>
+                <tr th:each="event : ${events}">
+                    <td th:text="${event.name}"></td>
+                    <td th:text="${event.venue.name}"></td>
+                    <td th:text="${event.date}"></td>
+                    <td th:text="${event.time}"></td>
+                    <td><a th:href="@{/events/{id}(id=${event.id})}" role="button">View</a></td>
+                    <td><a th:href="@{/events/{id}/edit(id=${event.id})}" role="button">Edit</a></td>
                 </tr>
                 </tbody>
             </table>
             <div class="grid">
                 <div>
-                    <button>
+                    <button id="listAllEvents">
                         List All Events
                     </button>
                 </div>
                 <div>
-                    <button>
-                        List My Events
-                    </button>
-                </div>
-                <div>
-                    <button>
+                    <button id="createEvent">
                         Create New Event
                     </button>
                 </div>
@@ -121,6 +77,12 @@
     });
     document.querySelector("#createVenue").addEventListener("click", function () {
         window.location.href = "/venue/create";
+    });
+    document.querySelector("#createEvent").addEventListener("click", function () {
+        window.location.href = "/events/create";
+    });
+    document.querySelector("#listAllEvents").addEventListener("click", function () {
+        window.location.href = "/events";
     });
 </script>
 </body>

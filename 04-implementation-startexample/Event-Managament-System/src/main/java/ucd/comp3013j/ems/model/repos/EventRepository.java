@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
-    // 根据组织者查找活动
+    // 根据组织者查询事件
     List<Event> findByOrganiser(Organiser organiser);
     
     // 根据活动名称模糊查询
