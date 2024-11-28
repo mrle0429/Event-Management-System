@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>My Account</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+    <main class="container-fluid">
+        <h2>Sean's Event Management System</h2>
+        <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+        <nav class="container-fluid">
+            <ul>
+                <li th:if="${account.role.name() == 'ADMINISTRATOR'}">
+                    <a th:href="@{/administrator}" class="secondary">Main Page</a>
+                </li>
+                <li th:if="${account.role.name() == 'ORGANISER'}">
+                    <a th:href="@{/organiser}" class="secondary">Main Page</a>
+                </li>
+                <li th:if="${account.role.name() == 'CUSTOMER'}">
+                    <a th:href="@{/customer}" class="secondary">Main Page</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 基本信息 - 所有角色都有 -->
+        <article>
+            <h3>Basic Information</h3>
+            <table role="grid">
+                <tbody>
+                    <tr>
+                        <th scope="row">Name</th>
+                        <td th:text="${account.name}">Name</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td th:text="${account.email}">Email</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Role</th>
+                        <td th:text="${account.role}">Role</td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+
+        <!-- 组织者特有信息 -->
+        <article th:if="${account.role.name() == 'ORGANISER'}">
+            <h3>Company Information</h3>
+            <table role="grid">
+                <tbody>
+                    <tr>
+                        <th scope="row">Company Name</th>
+                        <td th:text="${account.companyName}">Company Name</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Company Address</th>
+                        <td th:text="${account.companyAddress}">Company Address</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Company Phone</th>
+                        <td th:text="${account.companyPhone}">Company Phone</td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+
+        <!-- 操作按钮 -->
+        <div class="grid">
+            <a th:href="@{/account/edit}" role="button">Edit Account</a>
+            <a th:href="@{/account/change-password}" role="button" class="secondary">Change Password</a>
+        </div>
+
+        <!-- 显示成功/错误消息 -->
+        <div th:if="${param.update_success}" class="alert alert-success">
+            <p>Account updated successfully!</p>
+        </div>
+        <div th:if="${param.password_changed}" class="alert alert-success">
+            <p>Password changed successfully!</p>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-error">
+            <p th:text="${errorMessage}">Error message</p>
+        </div>
+    </main>
+</body>
+</html> 

@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ucd.comp3013j.ems.model.entities.*;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
@@ -127,6 +128,97 @@ public class AccountSystem {
         }
     }
 
+    @GetMapping("/account/my-account")
+    public String showMyAccount(Authentication authentication, Model model) {
+        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+            String email = aw.getUsername();
+            Account account = accountService.getAccount(email);
+            
+            // 根据不同角色获取详细信息
+            switch (account.getRole()) {
+                case ADMINISTRATOR:
+                    Administrator admin = accountService.getAdminAccount(email);
+                    model.addAttribute("account", admin);
+                    break;
+                case ORGANISER:
+                    Organiser organiser = accountService.getOrganiserAccount(email);
+                    model.addAttribute("account", organiser);
+                    break;
+                case CUSTOMER:  // CUSTOMER
+                    Customer customer = accountService.getCustomerAccount(email);
+                    model.addAttribute("account", customer);
+                    break;
+            }
+            
+            return "account/my-account";
+        }
+        
+        // 如果没有认证信息，重定向到登录页面
+        return "redirect:/login";
+    }
 
+    @GetMapping("/account/edit")
+    public String showEditAccount(Authentication authentication, Model model) {
+        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+            Account account = accountService.getAccount(aw.getUsername());
+            AccountDTO accountDTO = new AccountDTO();
+            // 填充基本信息
+            accountDTO.setEmail(account.getEmail());
+            accountDTO.setName(account.getName());
+            accountDTO.setRole(String.valueOf(account.getRole()));
+            
+            // 如果是组织者，填充额外信息
+            if (account instanceof Organiser organiser) {
+                accountDTO.setCompanyName(organiser.getCompanyName());
+                accountDTO.setCompanyAddress(organiser.getCompanyAddress());
+                accountDTO.setCompanyPhone(organiser.getCompanyPhone());
+            }
+            
+            model.addAttribute("accountDTO", accountDTO);
+            return "account/edit-account";
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping("/account/edit")
+    public String updateAccount(
+            @ModelAttribute AccountDTO accountDTO,
+            Authentication authentication,
+            Model model) {
+        try {
+            if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+                accountDTO.setEmail(aw.getUsername()); // 保持邮箱不变
+                accountService.updateAccount(accountDTO);
+                return "redirect:/account/my-account?update_success";
+            }
+            return "redirect:/login";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "account/edit-account";
+        }
+    }
+
+    @GetMapping("/account/change-password")
+    public String showChangePassword(Model model) {
+        return "account/change-password";
+    }
+
+    @PostMapping("/account/change-password")
+    public String changePassword(
+            @RequestParam String currentPassword,
+            @RequestParam String newPassword,
+            Authentication authentication,
+            Model model) {
+        try {
+            if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+                accountService.changePassword(aw.getUsername(), currentPassword, newPassword);
+                return "redirect:/account/my-account?password_changed";
+            }
+            return "redirect:/login";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "account/change-password";
+        }
+    }
 
 }

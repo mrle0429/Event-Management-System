@@ -1,5 +1,6 @@
 package ucd.comp3013j.ems.model.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class AccountService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -113,6 +115,52 @@ public class AccountService {
                 break;
             default:
                 throw new RuntimeException("Invalid role");
+        }
+    }
+
+    public void updateAccount(AccountDTO accountDTO) {
+        Account account = getAccount(accountDTO.getEmail());
+        if (account == null) {
+            throw new RuntimeException("Account not found");
+        }
+
+        account.setName(accountDTO.getName());
+        
+        if (account instanceof Administrator) {
+            Administrator admin = (Administrator) account;
+            adminRepository.save(admin);
+        } else if (account instanceof Organiser) {
+            Organiser organiser = (Organiser) account;
+            if (accountDTO.getRole().equals("ORGANISER")) {
+                organiser.setCompanyName(accountDTO.getCompanyName());
+                organiser.setCompanyAddress(accountDTO.getCompanyAddress());
+                organiser.setCompanyPhone(accountDTO.getCompanyPhone());
+            }
+            organiserRepository.save(organiser);
+        } else if (account instanceof Customer) {
+            Customer customer = (Customer) account;
+            customerRepository.save(customer);
+        }
+    }
+
+    public void changePassword(String email, String currentPassword, String newPassword) {
+        Account account = getAccount(email);
+        if (account == null) {
+            throw new RuntimeException("Account not found");
+        }
+        
+        if (!passwordEncoder.matches(currentPassword, account.getPassword())) {
+            throw new RuntimeException("Current password is incorrect");
+        }
+        
+        account.setPassword(passwordEncoder.encode(newPassword));
+        
+        if (account instanceof Administrator) {
+            adminRepository.save((Administrator) account);
+        } else if (account instanceof Organiser) {
+            organiserRepository.save((Organiser) account);
+        } else if (account instanceof Customer) {
+            customerRepository.save((Customer) account);
         }
     }
 }

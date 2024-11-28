@@ -10,14 +10,14 @@ import ucd.comp3013j.ems.model.enums.Role;
 @Entity @Data @NoArgsConstructor
 public class Organiser extends Account {
     private String companyName;
-    private String address;
-    private String phoneNumber;
+    private String companyAddress;
+    private String companyPhone;
 
     public Organiser(String email, String name, String password, String companyName, String address, String phoneNumber) {
         super(email, name, password);
         this.setRole(Role.ORGANISER);
         this.companyName = companyName;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
+        this.companyAddress = address;
+        this.companyPhone = phoneNumber;
     }
 }
