@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Ticket Confirmation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+    <main class="container-fluid">
+        <h2>Ticket Confirmation</h2>
+        
+        <article>
+            <h3>Purchase Successful!</h3>
+            
+            <table role="grid">
+                <tbody>
+                    <tr>
+                        <th scope="row">Event</th>
+                        <td th:text="${ticket.event.name}">Event Name</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ticket Type</th>
+                        <td th:text="${ticket.type}">Ticket Type</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Price</th>
+                        <td th:text="${'¥' + ticket.price}">Price</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Purchase Time</th>
+                        <td th:text="${#temporals.format(ticket.purchaseTime, 'yyyy-MM-dd HH:mm:ss')}">Purchase Time</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ticket Code</th>
+                        <td th:text="${ticket.ticketCode}">Ticket Code</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="grid">
+                <div>
+                    <a th:href="@{/customer}" role="button">Back to Dashboard</a>
+                </div>
+                <div>
+                    <a th:href="@{/events/available}" role="button" class="secondary outline">Browse More Events</a>
+                </div>
+            </div>
+        </article>
+    </main>
+</body>
+</html> 

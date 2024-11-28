@@ -106,7 +106,7 @@ public class AccountService {
                 break;
             case "ORGANISER":
                 account = new Organiser(accountDTO.getEmail(), accountDTO.getName(), accountDTO.getPassword(), 
-                                      accountDTO.getCompanyName(), accountDTO.getCompanyAddress(), accountDTO.getCompanyPhone());
+                                      accountDTO.getCompanyName(), accountDTO.getAddress(), accountDTO.getPhoneNumber());
                 organiserRepository.save((Organiser) account);
                 break;
             case "USER":
@@ -133,8 +133,8 @@ public class AccountService {
             Organiser organiser = (Organiser) account;
             if (accountDTO.getRole().equals("ORGANISER")) {
                 organiser.setCompanyName(accountDTO.getCompanyName());
-                organiser.setCompanyAddress(accountDTO.getCompanyAddress());
-                organiser.setCompanyPhone(accountDTO.getCompanyPhone());
+                organiser.setAddress(accountDTO.getAddress());
+                organiser.setPhoneNumber(accountDTO.getPhoneNumber());
             }
             organiserRepository.save(organiser);
         } else if (account instanceof Customer) {

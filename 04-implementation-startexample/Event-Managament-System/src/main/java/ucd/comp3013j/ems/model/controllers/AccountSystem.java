@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ucd.comp3013j.ems.model.entities.*;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
 import ucd.comp3013j.ems.model.services.AccountService;
+import ucd.comp3013j.ems.model.services.TicketService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
 
 
@@ -23,10 +24,12 @@ import java.util.List;
 @Controller
 public class AccountSystem {
     private final AccountService accountService;
+    private final TicketService ticketService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     @Autowired
-    public AccountSystem(AccountService as) {
+    public AccountSystem(AccountService as, TicketService ts) {
         this.accountService = as;
+        this.ticketService = ts;
     }
 
     @GetMapping(value={"/", "","/login", "/login/"})
@@ -77,8 +80,11 @@ public class AccountSystem {
     @GetMapping(value = {"/customer", "/customer/"})
     public String customerPage(Authentication authentication, Model model) {
         if (authentication.getPrincipal() instanceof AccountWrapper aw) {
-            Customer account = accountService.getCustomerAccount(aw.getUsername());
-            model.addAttribute("customer", account);
+            Customer customer = accountService.getCustomerAccount(aw.getUsername());
+            List<Ticket> tickets = ticketService.getCustomerTickets(customer);
+            
+            model.addAttribute("customer", customer);
+            model.addAttribute("tickets", tickets);
         }
         return "main-customer";
     }
@@ -170,8 +176,8 @@ public class AccountSystem {
             // 如果是组织者，填充额外信息
             if (account instanceof Organiser organiser) {
                 accountDTO.setCompanyName(organiser.getCompanyName());
-                accountDTO.setCompanyAddress(organiser.getCompanyAddress());
-                accountDTO.setCompanyPhone(organiser.getCompanyPhone());
+                accountDTO.setAddress(organiser.getAddress());
+                accountDTO.setPhoneNumber(organiser.getPhoneNumber());
             }
             
             model.addAttribute("accountDTO", accountDTO);
@@ -219,6 +225,17 @@ public class AccountSystem {
             model.addAttribute("errorMessage", e.getMessage());
             return "account/change-password";
         }
+    }
+
+    @GetMapping("/customer/tickets")
+    public String showCustomerTickets(Authentication authentication, Model model) {
+        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+            Customer customer = accountService.getCustomerAccount(aw.getUsername());
+            List<Ticket> tickets = ticketService.getCustomerTickets(customer);
+            model.addAttribute("tickets", tickets);
+            return "main-customer";
+        }
+        return "redirect:/login";
     }
 
 }

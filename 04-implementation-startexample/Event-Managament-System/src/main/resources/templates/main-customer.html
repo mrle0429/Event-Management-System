@@ -1,93 +1,56 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sean's Event Management System</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <meta charset="UTF-8">
+    <title>Sean's Event Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
 </head>
 <body>
 <main class="container-fluid">
-  <h2>Sean's Event Management System</h2>
-  <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
-  <nav class="container-fluid">
-    <ul>
-      <li><a th:href="@{/events/available}" class="secondary">Events</a></li>
-      <li><a th:href="@{/admin/majors}" class="secondary">Tickets</a></li>
-      <li><a th:href="@{/account/my-account}" class="secondary">My Account</a></li>
-      <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
-    </ul>
-  </nav>
-  <article id="article">
-    <h3>Welcome <span th:text="${customer.name}">Customer Name</span>!</h3>
-    <h5>My Upcoming Events</h5>
-    <table role="grid">
-      <thead>
-      <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Time</th>
-        <th scope="col">Event</th>
-        <th scope="col">Venue</th>
-        <th scope="col">Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>
-          <button>Details</button>
-        </td>
-      </tr>
-      <tr>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>
-          <button>Details</button>
-        </td>
-      </tr>
-      <tr>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>
-          <button>Details</button>
-        </td>
-      </tr>
-      <tr>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>
-          <button>Details</button>
-        </td>
-      </tr>
-      <tr>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>DATA NEEDED</td>
-        <td>
-          <button>Details</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <div class="grid">
-      <button>
-        View Event History
-      </button>
-      <button>
-        Search For Events
-      </button>
-    </div>
-  </article>
+    <h2>Sean's Event Management System</h2>
+    <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+    <nav class="container-fluid">
+        <ul>
+            <li><a th:href="@{/events/available}" class="secondary">Events</a></li>
+            <li><a th:href="@{/account/my-account}" class="secondary">My Account</a></li>
+            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+        </ul>
+    </nav>
+    <article id="article">
+        <h3>My Tickets</h3>
+        <figure>
+            <table role="grid">
+                <thead>
+                <tr>
+                    <th scope="col">Event Name</th>
+                    <th scope="col">Venue</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Ticket Type</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ticket Code</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ticket : ${tickets}">
+                    <td th:text="${ticket.event.name}">Event Name</td>
+                    <td th:text="${ticket.event.venue.name}">Venue Name</td>
+                    <td th:text="${ticket.event.date}">Date</td>
+                    <td th:text="${ticket.event.time}">Time</td>
+                    <td th:text="${ticket.type}">Ticket Type</td>
+                    <td th:text="${'¥' + ticket.price}">Price</td>
+                    <td th:text="${ticket.ticketCode}">Ticket Code</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="grid">
+                <div>
+                    <a th:href="@{/events/available}" role="button">Browse Events</a>
+                </div>
+            </div>
+        </figure>
+    </article>
 </main>
 </body>
+</html>

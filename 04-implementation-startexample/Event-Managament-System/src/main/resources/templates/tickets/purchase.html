@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Purchase Ticket</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+</head>
+<body>
+    <main class="container-fluid">
+        <h2>Purchase Ticket</h2>
+        
+        <article>
+            <h3>Purchase Ticket</h3>
+            
+            <form th:action="@{/tickets/purchase/{id}(id=${event.id})}" method="post">
+                <label for="ticketType">Select Ticket Type:</label>
+                <select id="ticketType" name="ticketType" required>
+                    <option value="">Choose a ticket type</option>
+                    <option th:each="type : ${ticketTypes}"
+                            th:if="${event.remainingSeats.get(type) > 0}"
+                            th:value="${type}"
+                            th:text="${type + ' - ¥' + event.pricesByLevel.get(type) + ' (' + event.remainingSeats.get(type) + ' remaining)'}">
+                    </option>
+                </select>
+
+                <div class="grid">
+                    <div>
+                        <button type="submit">Purchase</button>
+                    </div>
+                    <div>
+                        <a th:href="@{/events/available}" role="button" class="secondary outline">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </article>
+
+        <div th:if="${param.error}" class="alert alert-error">
+            <p th:text="${param.error}">Error message</p>
+        </div>
+    </main>
+</body>
+</html> 
