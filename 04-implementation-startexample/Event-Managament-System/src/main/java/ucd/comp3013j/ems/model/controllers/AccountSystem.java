@@ -170,6 +170,9 @@ public class AccountSystem {
                     .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
                 return "redirect:/detail?userEmail=" + accountDTO.getEmail();
             }
+            if (!aw.getUsername().equals(accountDTO.email)){
+                return "redirect:/logout";
+            }
         }
 
         return "redirect:/detail";
