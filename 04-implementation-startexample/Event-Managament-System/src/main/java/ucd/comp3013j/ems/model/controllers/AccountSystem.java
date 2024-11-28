@@ -110,7 +110,7 @@ public class AccountSystem {
     @GetMapping("/create-account")
     public String showCreateAccountForm(Model model) {
         model.addAttribute("accountDTO", new AccountDTO());
-        return "create-account";
+        return "account/create-account";
     }
 
 
@@ -130,7 +130,7 @@ public class AccountSystem {
             return "redirect:/administrator";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "create-account";
+            return "account/create-account";
         }
     }
 
