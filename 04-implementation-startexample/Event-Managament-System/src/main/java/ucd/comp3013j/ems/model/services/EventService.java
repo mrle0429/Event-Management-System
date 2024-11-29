@@ -95,7 +95,7 @@ public class EventService {
         event.setOrganiser(organiser);
         
         event.setPricesByLevel(dto.getPricesByLevel());
-        event.setRemainingSeats(dto.getRemainingSeats());
+        //event.setRemainingSeats(dto.getRemainingSeats());
     }
 
     public List<Event> getAvailableEvents() {
