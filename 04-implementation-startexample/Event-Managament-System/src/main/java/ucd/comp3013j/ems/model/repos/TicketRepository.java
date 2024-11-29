@@ -12,4 +12,5 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByCustomer(Customer customer);
     List<Ticket> findByEvent(Event event);
     List<Ticket> findByEventAndCustomerAndPurchaseTime(Event event, Customer customer, LocalDateTime purchaseTime);
+
 }

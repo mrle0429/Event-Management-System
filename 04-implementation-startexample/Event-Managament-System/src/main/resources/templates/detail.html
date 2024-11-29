@@ -38,6 +38,7 @@
     </table>
 
     <div class="grid">
+        <a th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}" th:href="@{/administrator}" role="button" class="secondary">Back to MainPage</a>
         <a th:href="@{edit(userEmail=${account.email})}" role="button">Edit Account Information</a>
     </div>
 </main>

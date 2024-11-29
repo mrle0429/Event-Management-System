@@ -56,39 +56,39 @@ public class AccountService {
         return a;
     }
 
-    public void updateAccount(AccountDTO accountDTO){
-        Account account = null;
-        if (accountDTO.getRole().equals("ADMINISTRATOR")){
-            account = adminRepository.findById(accountDTO.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
-            account.setName(accountDTO.getName());
-            account.setEmail(accountDTO.getEmail());
-            adminRepository.save((Administrator) account);
-        } else if (accountDTO.getRole().equals("ORGANISER")) {
-            account = organiserRepository.findById(accountDTO.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
-            account.setName(accountDTO.getName());
-            account.setEmail(accountDTO.getEmail());
-            Organiser organiser = (Organiser) account;
-            organiser.setCompanyName(accountDTO.getCompanyName());
-            organiser.setAddress(accountDTO.getCompanyAddress());
-            organiser.setPhoneNumber(accountDTO.getCompanyPhone());
-            organiserRepository.save(organiser);
-        }else{
-            account = customerRepository.findById(accountDTO.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
-            account.setName(accountDTO.getName());
-            account.setEmail(accountDTO.getEmail());
-            customerRepository.save((Customer) account);
-        }
-    }
+//    public void updateAccount(AccountDTO accountDTO){
+//        Account account = null;
+//        if (accountDTO.getRole().equals("ADMINISTRATOR")){
+//            account = adminRepository.findById(accountDTO.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
+//            account.setName(accountDTO.getName());
+//            account.setEmail(accountDTO.getEmail());
+//            adminRepository.save((Administrator) account);
+//        } else if (accountDTO.getRole().equals("ORGANISER")) {
+//            account = organiserRepository.findById(accountDTO.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
+//            account.setName(accountDTO.getName());
+//            account.setEmail(accountDTO.getEmail());
+//            Organiser organiser = (Organiser) account;
+//            organiser.setCompanyName(accountDTO.getCompanyName());
+//            organiser.setAddress(accountDTO.getCompanyAddress());
+//            organiser.setPhoneNumber(accountDTO.getCompanyPhone());
+//            organiserRepository.save(organiser);
+//        }else{
+//            account = customerRepository.findById(accountDTO.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
+//            account.setName(accountDTO.getName());
+//            account.setEmail(accountDTO.getEmail());
+//            customerRepository.save((Customer) account);
+//        }
+//    }
 
-    public void deleteCustomer(Long customerId){
-        List<Ticket> tickets = ticketRepository.findByCustomerId(customerId);
+    public void deleteCustomer(Customer account){
+        List<Ticket> tickets = ticketRepository.findByCustomer(account);
 
         // 删除相关的票
         for (Ticket ticket : tickets) {
             ticketRepository.delete(ticket);
         }
 
-        customerRepository.deleteById(customerId);
+        customerRepository.deleteById(account.getId());
     }
 
     public void deleteOrganiser(Long organiserId){

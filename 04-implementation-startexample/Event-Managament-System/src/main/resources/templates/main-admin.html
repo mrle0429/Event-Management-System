@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
 <main class="container">
@@ -22,7 +23,7 @@
     </nav>
     <article id="article">
         <h3>Administration</h3>
-        <h5>Accounts</h5>
+        <h5>Account List</h5>
         <figure>
             <table role="grid">
                 <thead>
@@ -34,27 +35,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="account : ${accounts}">
+                <tr th:each="account, iterStat: ${accounts}">
                     <td th:text="${account.name}"></td>
                     <td th:text="${account.email}"></td>
                     <td th:text="${account.role}"></td>
-                    <td>
-                        <a th:href="@{/detail(userEmail=${account.email})}" role="button">View</a>
-                    </td>
-                    <td>
-                        <a th:href="@{/edit(userEmail=${account.email})}" role="button">Edit</a>
-                    </td>
-                    <td th:if="${account.role.name() == 'CUSTOMER'}">
-                        <form th:action="@{/deleteCustomer}" method="post">
-                            <input type="hidden" name="customerId" th:value="${account.id}" />
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                    <td th:if="${account.role.name() == 'ORGANISER'}">
-                        <form th:action="@{/deleteOrganiser}" method="post">
-                            <input type="hidden" name="organiserId" th:value="${account.id}" />
-                            <button type="submit">Delete</button>
-                        </form>
+                    <td th:if="${iterStat.index > 0}">
+                        <div class="button-group">
+                            <a th:href="@{/detail(userEmail=${account.email})}" role="button" class="action-button">View </a>
+                            <a th:href="@{/edit(userEmail=${account.email})}" role="button" class="action-button">Edit </a>
+                            <form th:action="@{/deleteCustomer}" method="post" th:if="${account.role.name() == 'CUSTOMER'}">
+                                <input type="hidden" name="customerId" th:value="${account.id}" />
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
+                            <form th:action="@{/deleteOrganiser}" method="post" th:if="${account.role.name() == 'ORGANISER'}">
+                                <input type="hidden" name="organiserId" th:value="${account.id}" />
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 </tbody>

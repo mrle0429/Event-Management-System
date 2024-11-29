@@ -17,6 +17,8 @@ import ucd.comp3013j.ems.model.dto.AccountDTO;
 import ucd.comp3013j.ems.model.enums.Role;
 import ucd.comp3013j.ems.model.services.AccountService;
 import ucd.comp3013j.ems.model.services.TicketService;
+import ucd.comp3013j.ems.model.services.EventService;
+import ucd.comp3013j.ems.model.services.VenueService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
 
 
@@ -28,11 +30,15 @@ import java.util.Optional;
 public class AccountSystem {
     private final AccountService accountService;
     private final TicketService ticketService;
+    private final EventService eventService;
+    private final VenueService venueService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     @Autowired
-    public AccountSystem(AccountService as, TicketService ts) {
+    public AccountSystem(AccountService as, TicketService ts, EventService es, VenueService vs) {
         this.accountService = as;
         this.ticketService = ts;
+        this.eventService = es;
+        this.venueService = vs;
     }
 
     @GetMapping(value={"/", "","/login", "/login/"})
@@ -71,13 +77,24 @@ public class AccountSystem {
         if (authentication.getPrincipal() instanceof AccountWrapper aw) {
             Administrator account = accountService.getAdminAccount(aw.getUsername());
             model.addAttribute("account", account);
-        }
+        
 
-        System.out.println("Admin page");
-        List<Account> accounts  = accountService.getAccounts();
-        System.out.println("Number of accounts: " + accounts.size());
-        model.addAttribute("accounts", accounts);
-        return "main-admin";
+        //System.out.println("Admin page");
+            List<Account> accounts  = accountService.getAccounts();
+            accounts.remove(account);
+            accounts.add(0,account);
+            //System.out.println("Number of accounts: " + accounts.size());
+            model.addAttribute("accounts", accounts);
+
+            List<Event> events = eventService.getAllEvents();
+            List<Venue> venues = venueService.getAllVenues();
+            int eventCount = events.size();
+            int venueCount = venues.size();
+            model.addAttribute("eventCount", eventCount);
+            model.addAttribute("venueCount", venueCount);
+            return "main-admin";
+        }
+        return "redirect:/login";
     }
 
     @GetMapping(value = {"/customer", "/customer/"})
@@ -158,8 +175,8 @@ public class AccountSystem {
             if (account.getRole() == Role.ORGANISER){
                 Organiser organiser = (Organiser) account;
                 accountDTO.setCompanyName(organiser.getCompanyName());
-                accountDTO.setCompanyAddress(organiser.getAddress());
-                accountDTO.setCompanyPhone(organiser.getPhoneNumber());
+                accountDTO.setAddress(organiser.getAddress());
+                accountDTO.setPhoneNumber(organiser.getPhoneNumber());
             }
 
             model.addAttribute("accountDTO", accountDTO);
@@ -188,7 +205,9 @@ public class AccountSystem {
     // 删除顾客
     @PostMapping("/deleteCustomer")
     public String deleteCustomer(@RequestParam Long customerId) {
-        accountService.deleteCustomer(customerId);
+        Customer customer = (Customer) accountService.getAccount(customerId);
+
+        accountService.deleteCustomer(customer);
         return "redirect:/administrator";
     }
 
