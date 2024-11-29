@@ -57,6 +57,7 @@ public class VenueSystem {
     
     @GetMapping
     public String listVenues(Model model) {
+        
         model.addAttribute("venues", venueService.getAllVenues());
         return "venue/list";
     }

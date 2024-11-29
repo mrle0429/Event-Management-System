@@ -52,6 +52,7 @@ public class EventService {
         
         Event event = new Event();
         updateEventFromDTO(event, eventDTO);
+        event.setRemainingSeats(eventDTO.getRemainingSeats());
         return eventRepository.save(event);
     }
 
@@ -95,7 +96,7 @@ public class EventService {
         event.setOrganiser(organiser);
         
         event.setPricesByLevel(dto.getPricesByLevel());
-        //event.setRemainingSeats(dto.getRemainingSeats());
+
     }
 
     public List<Event> getAvailableEvents() {

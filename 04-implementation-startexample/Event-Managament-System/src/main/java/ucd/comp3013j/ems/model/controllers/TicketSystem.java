@@ -14,7 +14,9 @@ import ucd.comp3013j.ems.model.services.EventService;
 import ucd.comp3013j.ems.model.services.TicketService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/tickets")
@@ -92,4 +94,5 @@ public class TicketSystem {
         }
         return "redirect:/login";
     }
+
 } 

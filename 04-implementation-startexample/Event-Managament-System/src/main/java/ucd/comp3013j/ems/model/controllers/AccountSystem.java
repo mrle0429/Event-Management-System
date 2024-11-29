@@ -101,7 +101,7 @@ public class AccountSystem {
     public String customerPage(Authentication authentication, Model model) {
         if (authentication.getPrincipal() instanceof AccountWrapper aw) {
             Customer customer = accountService.getCustomerAccount(aw.getUsername());
-            List<Ticket> tickets = ticketService.getCustomerTickets(customer);
+            List<Ticket> tickets = ticketService.getUpcomingTickets(customer);
             
             model.addAttribute("customer", customer);
             model.addAttribute("tickets", tickets);

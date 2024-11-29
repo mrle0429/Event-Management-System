@@ -11,9 +11,8 @@ import ucd.comp3013j.ems.model.repos.EventRepository;
 import ucd.comp3013j.ems.model.repos.TicketRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketService {
@@ -124,4 +123,30 @@ public class TicketService {
     public List<Ticket> getTicketsByEventAndCustomerAndPurchaseTime(Event event, Customer customer, LocalDateTime purchaseTime) {
         return ticketRepository.findByEventAndCustomerAndPurchaseTime(event, customer, purchaseTime);
     }
+
+        // 获取未开始的票
+    public List<Ticket> getUpcomingTickets(Customer customer) {
+        LocalDateTime now = LocalDateTime.now();
+        return ticketRepository.findByCustomer(customer).stream()
+                .filter(ticket -> {
+                    Date eventDate = ticket.getEvent().getDate();
+                    Date eventTime = ticket.getEvent().getTime();
+                    return combineDateTime(eventDate, eventTime).after(new Date());
+                })
+                .collect(Collectors.toList());
+    }
+
+    private Date combineDateTime(Date date, Date time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        
+        Calendar timeCalendar = Calendar.getInstance();
+        timeCalendar.setTime(time);
+        
+        calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
+        
+        return calendar.getTime();
+    }
+
 }

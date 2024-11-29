@@ -2,25 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sean's Event Management System</title>
+    <title>Event Management System</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
 </head>
 <body>
 <main class="container-fluid">
-    <h2>Sean's Event Management System</h2>
+    <h2>Event Management System</h2>
     <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
     <nav class="container-fluid">
         <ul>
             <li><a th:href="@{/organiser}" class="secondary">Main Page</a></li>
-            <li><a th:href="@{/events}" class="secondary">Events</a></li>
-            <li><a th:href="@{/venue}" class="secondary">Venues</a></li>
             <li><a th:href="@{/account/my-account}" class="secondary">My Account</a></li>
             <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>
             </li>
         </ul>
     </nav>
+    <h3>Welcome, <span th:text="${organiser.name}">Organiser Name</span>!</h3>
     <article id="article">
         <h3>My Events</h3>
         <figure>
@@ -46,11 +45,7 @@
                 </tbody>
             </table>
             <div class="grid">
-                <div>
-                    <button id="listAllEvents">
-                        List All Events
-                    </button>
-                </div>
+
                 <div>
                     <button id="createEvent">
                         Create New Event

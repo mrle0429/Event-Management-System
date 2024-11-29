@@ -2,25 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sean's Event Management System</title>
+    <title>Purchase History - Event Management System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
 </head>
 <body>
 <main class="container-fluid">
-    <h2>Event Management System</h2>
-    <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+    <h2>Purchase History</h2>
     <nav class="container-fluid">
         <ul>
+            <li><a th:href="@{/customer}" class="secondary">Back to Main</a></li>
             <li><a th:href="@{/events/available}" class="secondary">Events</a></li>
             <li><a th:href="@{/account/my-account}" class="secondary">My Account</a></li>
-            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
         </ul>
     </nav>
-    <article id="article">
-        <h3>Welcome <span th:text="${customer.name}">Customer Name</span>!</h3>
-        <h3>Upcoming Tickets</h3>
-
+    
+    <article>
         <figure>
             <table role="grid">
                 <thead>
@@ -38,17 +35,14 @@
                 <tr th:each="ticket : ${tickets}">
                     <td th:text="${ticket.event.name}">Event Name</td>
                     <td th:text="${ticket.event.venue.name}">Venue Name</td>
-                    <td th:text="${ticket.event.date}">Date</td>
-                    <td th:text="${ticket.event.time}">Time</td>
+                    <td th:text="${#dates.format(ticket.event.date, 'yyyy-MM-dd')}">Date</td>
+                    <td th:text="${#dates.format(ticket.event.time, 'HH:mm')}">Time</td>
                     <td th:text="${ticket.type}">Ticket Type</td>
                     <td th:text="${'¥' + ticket.price}">Price</td>
                     <td th:text="${ticket.ticketCode}">Ticket Code</td>
                 </tr>
                 </tbody>
-
             </table>
-            <a th:href="@{/tickets/my-tickets}" class="secondary">Purchase History</a></li>
-
         </figure>
     </article>
 </main>

@@ -174,17 +174,18 @@ public class AccountService {
         }
 
         account.setName(accountDTO.getName());
+
         
         if (account instanceof Administrator) {
             Administrator admin = (Administrator) account;
             adminRepository.save(admin);
         } else if (account instanceof Organiser) {
             Organiser organiser = (Organiser) account;
-            if (accountDTO.getRole().equals("ORGANISER")) {
+
                 organiser.setCompanyName(accountDTO.getCompanyName());
                 organiser.setAddress(accountDTO.getAddress());
                 organiser.setPhoneNumber(accountDTO.getPhoneNumber());
-            }
+
             organiserRepository.save(organiser);
         } else if (account instanceof Customer) {
             Customer customer = (Customer) account;
