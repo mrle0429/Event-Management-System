@@ -10,6 +10,22 @@
     <main class="container-fluid">
         <h2>Event Management System</h2>
         <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+        <nav class="container-fluid">
+            <ul>
+                <ul>
+                    <li th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
+                        <a th:href="@{/administrator}" class="secondary">Main Page</a>
+                    </li>
+                    <li th:if="${#authorization.expression('hasAuthority(''ORGANISER'')')}">
+                        <a th:href="@{/organiser}" class="secondary">Main Page</a>
+                    </li>
+                    <li th:if="${#authorization.expression('hasAuthority(''CUSTOMER'')')}">
+                        <a th:href="@{/custumer}" class="secondary">Main Page</a>
+                    </li>
+                </ul>
+                <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+            </ul>
+        </nav>
 
         <article id="article">
             <h3>Available Events</h3>
@@ -48,11 +64,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-
-            <div class="grid">
-                <a href="/customer" role="button" class="secondary">Back to Main Page</a>
-                <a href="/events/search" role="button">Search Events</a>
             </div>
         </article>
     </main>
