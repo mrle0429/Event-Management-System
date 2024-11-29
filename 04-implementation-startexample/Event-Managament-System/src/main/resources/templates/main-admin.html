@@ -30,6 +30,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
+                    <th scope="col" colspan="3">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,7 +38,24 @@
                     <td th:text="${account.name}"></td>
                     <td th:text="${account.email}"></td>
                     <td th:text="${account.role}"></td>
-
+                    <td>
+                        <a th:href="@{/detail(userEmail=${account.email})}" role="button">View</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/edit(userEmail=${account.email})}" role="button">Edit</a>
+                    </td>
+                    <td th:if="${account.role.name() == 'CUSTOMER'}">
+                        <form th:action="@{/deleteCustomer}" method="post">
+                            <input type="hidden" name="customerId" th:value="${account.id}" />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    <td th:if="${account.role.name() == 'ORGANISER'}">
+                        <form th:action="@{/deleteOrganiser}" method="post">
+                            <input type="hidden" name="organiserId" th:value="${account.id}" />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
