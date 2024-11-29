@@ -1,6 +1,8 @@
 package ucd.comp3013j.ems.model.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import ucd.comp3013j.ems.model.services.VenueService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -105,6 +108,11 @@ public class EventSystem {
         } catch (ParseException e) {
             throw new RuntimeException("Invalid date or time format", e);
         }
+    }
+
+    @GetMapping("checkVenue")
+    public ResponseEntity<Boolean> checkVenue(@RequestParam Long venueId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
+        return ResponseEntity.ok(eventService.isVenueEmptyForDate(venueId, date));
     }
 
     @GetMapping("/{id}/edit")

@@ -8,7 +8,7 @@
 <body>
     <main class="container">
         <h2>Create Event</h2>
-        <form th:action="@{/events/create}" th:object="${eventDTO}" method="post">
+        <form id="editEvent" th:action="@{/events/create}" th:object="${eventDTO}" method="post">
             <label for="name">Event Name:</label>
             <input type="text" id="name" th:field="*{name}" required/>
 
@@ -69,5 +69,30 @@
             </div>
         </form>
     </main>
+
+    <script>
+        document.querySelector("#editEvent").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const venueId = document.querySelector("#venue").value;
+            const date = document.querySelector("#date").value;
+
+            if (venueId && date){
+                fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (result) {
+                        if (!result){
+                            // 不可用提示更改
+                            alert("Date is occupied, change it!");
+                        }else{
+                            // 可用就提交表单
+                            document.querySelector("#editEvent").submit();
+                        }
+                    })
+            }
+        });
+    </script>
 </body>
 </html> 

@@ -14,10 +14,7 @@ import ucd.comp3013j.ems.model.repos.VenueRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EventService {
@@ -119,6 +116,10 @@ public class EventService {
          */
         
         return events;
+    }
+
+    public boolean isVenueEmptyForDate(Long venueId, Date date){
+        return eventRepository.findByVenueIdAndDate(venueId, date).isEmpty();
     }
 
     public Event getEventById(Long id) {

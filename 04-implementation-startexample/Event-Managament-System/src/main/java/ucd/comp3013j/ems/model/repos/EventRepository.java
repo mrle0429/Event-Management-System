@@ -16,7 +16,10 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     // 根据组织者ID查找所有相关的动
     List<Event> findByOrganiserId(Long organiserId);
-    
+
+    // 根据场馆ID合日期来找事件
+    List<Event> findByVenueIdAndDate(Long venueId, Date date);
+
     // 根据活动名称模糊查询
     List<Event> findByNameContaining(String name);
     
