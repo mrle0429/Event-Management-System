@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <script>
+        function toggleFields() {
+            const role = document.getElementById('role').value;
+            const organiserFields = document.getElementById('organiserFields');
+
+            if (role === 'ORGANISER') {
+                organiserFields.style.display = 'block';
+            } else {
+                organiserFields.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+<h2>Create Account</h2>
+<form method="post" th:action="@{/create-account}" th:object="${accountDTO}">
+    <label for="role">Role:</label>
+    <select id="role" onchange="toggleFields()" required th:field="*{role}">
+        <option value="">Select Role</option>
+        <option value="ADMINISTRATOR">Administrator</option>
+        <option value="ORGANISER">Organiser</option>
+        <option value="CUSTOMER">Customer</option>
+    </select><br/>
+
+    <label for="name">Name:</label>
+    <input id="name" required th:field="*{name}" type="text"/><br/>
+
+    <label for="email">Email:</label>
+    <input id="email" required th:field="*{email}" type="email"/><br/>
+
+    <label for="password">Password:</label>
+    <input id="password" required th:field="*{password}" type="password"/><br/>
+
+    <div id="organiserFields" style="display: none;">
+        <label for="companyName">Company Name:</label>
+        <input id="companyName" th:field="*{companyName}" type="text"/><br/>
+
+        <label for="companyAddress">Company Address:</label>
+        <input id="companyAddress" th:field="*{address}" type="text"/><br/>
+
+        <label for="companyPhone">Company Phone:</label>
+        <input id="companyPhone" th:field="*{phoneNumber}" type="text"/><br/>
+    </div>
+
+    <button type="submit">Create Account</button>
+</form>
+<div th:if="${errorMessage}">
+    <p th:text="${errorMessage}"></p>
+</div>
+</body>
+</html>

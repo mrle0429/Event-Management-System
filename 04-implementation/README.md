@@ -1,3 +1,4 @@
+# 注意：开发路径在·04-implementation-startexample/Event-Managament-System
 
 # Team Project: *Group 04*
 
