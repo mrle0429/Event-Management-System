@@ -1,9 +1,10 @@
-package ucd.comp3013j.ems.model;
+package ucd.comp3013j.ems.model.entities;
 
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
+import ucd.comp3013j.ems.model.enums.Role;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -20,8 +21,8 @@ public class Customer extends Account {
         this.setRole(Role.CUSTOMER);
     }
 
-    public Customer(String name, String email, String pass){
-        super(email, name, pass);
+    public Customer(String email, String name, String password) {
+        super(email, name, password);
         this.setRole(Role.CUSTOMER);
     }
 }

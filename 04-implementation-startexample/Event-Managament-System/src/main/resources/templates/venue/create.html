@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Venue</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+</head>
+<body>
+<main class="container">
+    <h2>Create Venue</h2>
+    <form method="post" th:action="@{/venue/create}" th:object="${venueDTO}">
+        <label for="name">Venue Name:</label>
+        <input id="name" required th:field="*{name}" type="text"/>
+
+        <label for="address">Address:</label>
+        <input id="address" required th:field="*{address}" type="text"/>
+
+        <label for="description">Description:</label>
+        <textarea id="description" required th:field="*{description}"></textarea>
+
+        <label for="contactName">Contact Name:</label>
+        <input id="contactName" required th:field="*{contactName}" type="text"/>
+
+        <label for="contactPhone">Contact Phone:</label>
+        <input id="contactPhone" required th:field="*{contactPhone}" type="text"/>
+
+        <label for="contactEmail">Contact Email:</label>
+        <input id="contactEmail" required th:field="*{contactEmail}" type="email"/>
+
+        <div id="seatingCapacity">
+            <h4>Seating Capacity by Level</h4>
+            <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
+                <label th:for="${'seats-' + type}" th:text="${type}">Level</label>
+                <input min="0" required
+                       th:field="*{seatsByLevel[__${type}__]}" th:id="${'seats-' + type}" type="number"/>
+            </div>
+        </div>
+        <div>
+            <button class="secondary" onclick="history.back()" type="button">Back</button>
+        </div>
+
+        <div>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+</main>
+</body>
+</html> 
