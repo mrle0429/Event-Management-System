@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Purchase Ticket</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+</head>
+<body>
+<main class="container-fluid">
+    <h2>Purchase Ticket</h2>
+
+    <article>
+        <h3>Purchase Ticket</h3>
+
+        <form method="post" onsubmit="return validateQuantity()" th:action="@{/tickets/purchase/{id}(id=${event.id})}">
+            <div class="grid">
+                <label for="ticketType">
+                    Ticket Type:
+                    <select id="ticketType" name="ticketType" required>
+                        <option value="">Choose a ticket type</option>
+                        <option th:data-remaining="${event.remainingSeats.get(type)}"
+                                th:each="type : ${ticketTypes}"
+                                th:if="${event.remainingSeats.get(type) > 0}"
+                                th:text="${type + ' - ¥' + event.pricesByLevel.get(type) + ' (' + event.remainingSeats.get(type) + ' remaining)'}"
+                                th:value="${type}">
+                        </option>
+                    </select>
+                </label>
+
+                <label for="quantity">
+                    Quantity:
+                    <input id="quantity"
+                           min="1"
+                           name="quantity"
+                           required
+                           type="number"
+                           value="1"/>
+                    <small id="quantityError" style="color: red; display: none;">
+                        Quantity exceeds available seats!
+                    </small>
+                </label>
+            </div>
+
+            <div id="totalPrice">
+                Total Price: ¥<span>0</span>
+            </div>
+
+            <div class="grid">
+                <div>
+                    <button type="submit">Purchase</button>
+                </div>
+                <div>
+                    <a class="secondary outline" role="button" th:href="@{/events/available}">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </article>
+
+    <script>
+        const ticketTypeSelect = document.getElementById('ticketType');
+        const quantityInput = document.getElementById('quantity');
+        const quantityError = document.getElementById('quantityError');
+
+        ticketTypeSelect.addEventListener('change', function () {
+            updateTotal();
+            validateQuantity();
+        });
+
+        quantityInput.addEventListener('input', function () {
+            updateTotal();
+            validateQuantity();
+        });
+
+        function validateQuantity() {
+            const selectedOption = ticketTypeSelect.options[ticketTypeSelect.selectedIndex];
+            if (!selectedOption.value) return false;
+
+            const remaining = parseInt(selectedOption.dataset.remaining);
+            const quantity = parseInt(quantityInput.value);
+
+            if (quantity > remaining) {
+                quantityError.style.display = 'block';
+                quantityError.textContent = `Only ${remaining} seats remaining for this type!`;
+                return false;
+            } else {
+                quantityError.style.display = 'none';
+                return true;
+            }
+        }
+
+        function updateTotal() {
+            const select = document.getElementById('ticketType');
+            const quantity = document.getElementById('quantity').value;
+            const option = select.options[select.selectedIndex];
+            const price = option.text.match(/¥(\d+)/);
+
+            if (price) {
+                const total = price[1] * quantity;
+                document.querySelector('#totalPrice span').textContent = total;
+            }
+        }
+    </script>
+</main>
+</body>
+</html> 

@@ -3,7 +3,7 @@ package ucd.comp3013j.ems.websecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ucd.comp3013j.ems.model.Account;
+import ucd.comp3013j.ems.model.entities.Account;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Event Management System</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+</head>
+<body>
+<main class="container">
+    <h2>Event Management System</h2>
+    <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
+    <nav class="container-fluid">
+        <ul>
+            <li><a class="secondary" th:href="@{/administrator}">Main Page</a></li>
+            <li><a class="secondary" th:href="@{/events}">Events</a></li>
+            <li><a class="secondary" th:href="@{/venue}">Venues</a></li>
+            <li><a class="secondary" th:href="@{/create-account}">Create Account</a></li>
+            <li><a class="secondary" th:href="@{/administrator/profile}">My Account</a></li>
+            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>
+            </li>
+        </ul>
+    </nav>
+
+    <article id="article">
+        <h3>Events Management</h3>
+        <div class="grid">
+            <a role="button" th:href="@{/events/create}">Create New Event</a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(events)}">
+            <p>There are currently no events.</p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(events)}">
+            <table role="grid">
+                <thead>
+                <tr>
+                    <th scope="col">Event Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Venue</th>
+                    <th scope="col">Organiser</th>
+                    <th colspan="3" scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="event : ${events}">
+                    <td th:text="${event.name}">Event name</td>
+                    <td th:text="${#dates.format(event.date, 'yyyy-MM-dd')}">Date</td>
+                    <td th:text="${#dates.format(event.time, 'HH:mm')}">Time</td>
+                    <td th:text="${event.venue != null ? event.venue.name : 'Venue not set'}">Venue</td>
+                    <td th:text="${event.organiser != null ? event.organiser.name : 'Not assigned'}">Organiser</td>
+                    <td><a role="button" th:href="@{/events/{id}(id=${event.id})}">View</a></td>
+                    <td><a role="button" th:href="@{/events/{id}/edit(id=${event.id})}">Edit</a></td>
+                    <td>
+                        <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
+                            <form method="post" style="display: inline;"
+                                  th:action="@{/events/{id}/delete(id=${event.id})}">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</main>
+</body>
+</html> 

@@ -1,19 +1,22 @@
-package ucd.comp3013j.ems.model;
+package ucd.comp3013j.ems.model.entities;
 
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import ucd.comp3013j.ems.model.enums.Role;
 
 @EqualsAndHashCode(callSuper = true)
-@Entity @Data @NoArgsConstructor
+@Entity
+@Data
+@NoArgsConstructor
 public class Organiser extends Account {
     private String companyName;
     private String address;
     private String phoneNumber;
 
-    public Organiser(String name, String email, String password, String companyName, String address, String phoneNumber) {
-        super(name, email, password);
+    public Organiser(String email, String name, String password, String companyName, String address, String phoneNumber) {
+        super(email, name, password);
         this.setRole(Role.ORGANISER);
         this.companyName = companyName;
         this.address = address;
