@@ -8,16 +8,30 @@ import ucd.comp3013j.ems.model.repos.VenueRepository;
 
 import java.util.List;
 
+/**
+ * Venue Management Service
+ * Handles all business logic related to venues, including:
+ * - Venue creation and modification
+ * - Venue queries and searches
+ * - Venue capacity management
+ * - Venue information management
+ */
 @Service
 public class VenueService {
-    
+
     private final VenueRepository venueRepository;
-    
+
     @Autowired
     public VenueService(VenueRepository venueRepository) {
         this.venueRepository = venueRepository;
     }
-    
+
+    /**
+     * Creates a new venue.
+     * Initializes venue with basic information and seating configuration.
+     *
+     * @param venueDTO DTO containing venue information
+     */
     public void createVenue(VenueDTO venueDTO) {
         Venue venue = new Venue();
         venue.setName(venueDTO.getName());
@@ -27,30 +41,60 @@ public class VenueService {
         venue.setContactEmail(venueDTO.getContactEmail());
         venue.setContactName(venueDTO.getContactName());
         venue.setSeatsByLevel(venueDTO.getSeatsByLevel());
-        
+
         venueRepository.save(venue);
     }
-    
+
+    /**
+     * Retrieves all venues in the system.
+     *
+     * @return List of all venues
+     */
     public List<Venue> getAllVenues() {
         return venueRepository.findAll();
     }
-    
+
+    /**
+     * Retrieves a specific venue by its ID.
+     *
+     * @param id Venue ID to search for
+     * @return The found Venue object, or null if not found
+     */
     public Venue getVenueById(Long id) {
         return venueRepository.findById(id).orElse(null);
     }
-    
+
+    /**
+     * Updates an existing venue's information.
+     * Validates venue existence before update.
+     *
+     * @param venueDTO DTO containing updated venue information
+     * @throws RuntimeException if venue not found
+     */
     public void updateVenue(VenueDTO venueDTO) {
         Venue venue = venueRepository.findById(venueDTO.getId())
-            .orElseThrow(() -> new RuntimeException("Venue not found"));
-            
+                .orElseThrow(() -> new RuntimeException("Venue not found"));
+
         updateVenueFromDTO(venue, venueDTO);
         venueRepository.save(venue);
     }
-    
+
+    /**
+     * Deletes a venue by its ID.
+     *
+     * @param id Venue ID to delete
+     */
     public void deleteVenue(Long id) {
         venueRepository.deleteById(id);
     }
-    
+
+    /**
+     * Updates venue information from DTO.
+     * Helper method for create and update operations.
+     *
+     * @param venue Venue object to update
+     * @param dto DTO containing new venue information
+     */
     private void updateVenueFromDTO(Venue venue, VenueDTO dto) {
         venue.setName(dto.getName());
         venue.setAddress(dto.getAddress());

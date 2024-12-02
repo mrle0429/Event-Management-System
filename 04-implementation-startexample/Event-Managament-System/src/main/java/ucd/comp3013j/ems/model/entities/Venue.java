@@ -12,24 +12,24 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 public class Venue {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String name;
     private String address;
     private String description;
 
-    // 不需要总容量
-    //private Integer capacity;
+
+
     private String contactPhone;
     private String contactEmail;
     private String contactName;
-    
+
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
     private List<Event> events;
-    
 
-    
+
     @ElementCollection
     @CollectionTable(name = "venue_seats_by_level")
     @MapKeyEnumerated(EnumType.STRING)

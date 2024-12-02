@@ -1,80 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Event Details</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <main class="container">
-        <h2>Event Details</h2>
-        
-        <div th:if="${event != null}">
-            <h3 th:text="${event.name}">Event Name</h3>
-            
-            <table role="grid">
-                <tbody>
-                    <tr>
-                        <th scope="row">Description</th>
-                        <td th:text="${event.description}">Description</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Date</th>
-                        <td th:text="${#dates.format(event.date, 'yyyy-MM-dd')}">Date</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Time</th>
-                        <td th:text="${event.time != null ? #dates.format(event.time, 'HH:mm') : '-'}">Time</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Venue</th>
-                        <td th:text="${event.venue?.name}">Venue</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Organiser</th>
-                        <td th:text="${event.organiser?.name}">Organiser</td>
-                    </tr>
-                </tbody>
-            </table>
+<main class="container">
+    <h2>Event Details</h2>
 
-            <!-- 票价信息 -->
-            <h4>Ticket Prices</h4>
-            <table role="grid">
-                <thead>
-                    <tr>
-                        <th>Ticket Type</th>
-                        <th>Price</th>
-                        <th>Remaining Seats</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="price : ${event.pricesByLevel}">
-                        <td th:text="${price.key}">Type</td>
-                        <td th:text="${'¥' + price.value}">Price</td>
-                        <td th:text="${event.remainingSeats.get(price.key)}">Remaining</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <div class="grid">
-                <a th:href="@{/administrator}" 
-                   th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}"
-                   role="button" class="secondary">Back to Events</a>
-                <a th:href="@{/events/available}"
-                   th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}"
-                   role="button" class="secondary">View Available Events</a>
-            </div>
+    <div th:if="${event != null}">
+        <h3 th:text="${event.name}">Event Name</h3>
+
+        <table role="grid">
+            <tbody>
+            <tr>
+                <th scope="row">Description</th>
+                <td th:text="${event.description}">Description</td>
+            </tr>
+            <tr>
+                <th scope="row">Date</th>
+                <td th:text="${#dates.format(event.date, 'yyyy-MM-dd')}">Date</td>
+            </tr>
+            <tr>
+                <th scope="row">Time</th>
+                <td th:text="${event.time != null ? #dates.format(event.time, 'HH:mm') : '-'}">Time</td>
+            </tr>
+            <tr>
+                <th scope="row">Venue</th>
+                <td th:text="${event.venue?.name}">Venue</td>
+            </tr>
+            <tr>
+                <th scope="row">Organiser</th>
+                <td th:text="${event.organiser?.name}">Organiser</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- 票价信息 -->
+        <h4>Ticket Prices</h4>
+        <table role="grid">
+            <thead>
+            <tr>
+                <th>Ticket Type</th>
+                <th>Price</th>
+                <th>Remaining Seats</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="price : ${event.pricesByLevel}">
+                <td th:text="${price.key}">Type</td>
+                <td th:text="${'¥' + price.value}">Price</td>
+                <td th:text="${event.remainingSeats.get(price.key)}">Remaining</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="grid">
+            <a class="secondary"
+               role="button"
+               th:href="@{/administrator}" th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Back to Events</a>
+            <a class="secondary"
+               role="button"
+               th:href="@{/events/available}" th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">View Available Events</a>
         </div>
-        
-        <div th:if="${event == null}">
-            <p>Event not found</p>
-            <a th:href="@{/administrator}"
-               th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}"
-               role="button" class="secondary">Back to Events</a>
-            <a th:href="@{/events/available}"
-               th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}"
-               role="button" class="secondary">Back to Events</a>
-        </div>
-    </main>
+    </div>
+
+    <div th:if="${event == null}">
+        <p>Event not found</p>
+        <a class="secondary"
+           role="button"
+           th:href="@{/administrator}" th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Back to Events</a>
+        <a class="secondary"
+           role="button"
+           th:href="@{/events/available}" th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Back to Events</a>
+    </div>
+</main>
 </body>
 </html> 

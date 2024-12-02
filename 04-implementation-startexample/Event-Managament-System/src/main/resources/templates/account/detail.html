@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Account Detail</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container">
@@ -38,8 +38,9 @@
     </table>
 
     <div class="grid">
-        <a th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}" th:href="@{/administrator}" role="button" class="secondary">Back to MainPage</a>
-        <a th:href="@{edit(userEmail=${account.email})}" role="button">Edit Account Information</a>
+        <a class="secondary" role="button"
+           th:href="@{/administrator}" th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Back to MainPage</a>
+        <a role="button" th:href="@{edit(userEmail=${account.email})}">Edit Account Information</a>
     </div>
 </main>
 </body>

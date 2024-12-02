@@ -16,6 +16,7 @@ public class AuthSuccess implements AuthenticationSuccessHandler {
     SimpleUrlAuthenticationSuccessHandler customerSuccessHandler = new SimpleUrlAuthenticationSuccessHandler("/customer");
     SimpleUrlAuthenticationSuccessHandler organiserSuccessHandler = new SimpleUrlAuthenticationSuccessHandler("/organiser");
     SimpleUrlAuthenticationSuccessHandler adminSuccessHandler = new SimpleUrlAuthenticationSuccessHandler("/administrator");
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

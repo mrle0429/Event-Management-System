@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import ucd.comp3013j.ems.model.enums.Role;
 
 @EqualsAndHashCode(callSuper = true)
-@Entity @Data @NoArgsConstructor
+@Entity
+@Data
+@NoArgsConstructor
 public class Organiser extends Account {
     private String companyName;
     private String address;

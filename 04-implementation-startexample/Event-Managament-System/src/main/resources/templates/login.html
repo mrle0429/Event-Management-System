@@ -1,71 +1,74 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
 <head>
-  <meta charset="UTF-8">
-  <title> Event Management System</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <meta charset="UTF-8">
+    <title> Event Management System</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container">
-  <h1>Event Management System</h1>
-  <article id="article">
-    <h2>Login</h2>
-    <figure>
-      <div th:if="${param.error}">
-        <div class="alert alert-danger">Invalid Email or Password</div>
-      </div>
-      <div th:if="${param.register_success}">
-        <div class="alert alert-danger">Account Successfully registered, please log in</div>
-      </div>
-      <div th:if="${param.logout}">
-        <div class="alert alert-danger">You have successfully logged out</div>
-      </div>
-      <form th:action="@{/login}" method="post">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        <div><label> Email: <input type="text" id="login_email" onChange="empty_verify(this, 'l');" aria-invalid="false" name="username"/> </label></div>
-        <div><label> Password: <input type="password" id="login_password" onChange="empty_verify(this, 'l');" aria-invalid="false" name="password"/> </label></div>
-        <div><input type="submit" id="login_submit" value="Sign In"/></div>
-      </form>
-    </figure>
-    <div class="signup-link">
-      <p>Don't have an account? <a href="/signup">Sign Up</a></p>
-    </div>
-  </article>
+    <h1>Event Management System</h1>
+    <article id="article">
+        <h2>Login</h2>
+        <figure>
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">Invalid Email or Password</div>
+            </div>
+            <div th:if="${param.register_success}">
+                <div class="alert alert-danger">Account Successfully registered, please log in</div>
+            </div>
+            <div th:if="${param.logout}">
+                <div class="alert alert-danger">You have successfully logged out</div>
+            </div>
+            <form method="post" th:action="@{/login}">
+                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                <div><label> Email: <input aria-invalid="false" id="login_email" name="username"
+                                           onChange="empty_verify(this, 'l');" type="text"/> </label></div>
+                <div><label> Password: <input aria-invalid="false" id="login_password" name="password"
+                                              onChange="empty_verify(this, 'l');" type="password"/> </label></div>
+                <div><input id="login_submit" type="submit" value="Sign In"/></div>
+            </form>
+        </figure>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+        </div>
+    </article>
 
 </main>
 <script>
-  function empty_verify(element, which) {
-    console.log(element, which);
-    let login_submit = document.getElementById("login_submit");
-    let register_submit = document.getElementById("register_submit");
-    if (which == 'r'){
-        if (element.value == ''){
-            element.ariaInvalid = true;
-            register_submit.disabled = true;
-        } else {
-            var register_name = document.getElementById("register_name");
-            var register_email = document.getElementById("register_email");
-            var register_pass1 = document.getElementById("register_pass1");
-            var register_pass2 = document.getElementById("register_pass2");
-            if (register_name.value != '' && register_email.value != '' && register_pass1.value != '' && register_pass2.value != '') {
-                register_submit.disabled = false;
+    function empty_verify(element, which) {
+        console.log(element, which);
+        let login_submit = document.getElementById("login_submit");
+        let register_submit = document.getElementById("register_submit");
+        if (which == 'r') {
+            if (element.value == '') {
+                element.ariaInvalid = true;
+                register_submit.disabled = true;
+            } else {
+                var register_name = document.getElementById("register_name");
+                var register_email = document.getElementById("register_email");
+                var register_pass1 = document.getElementById("register_pass1");
+                var register_pass2 = document.getElementById("register_pass2");
+                if (register_name.value != '' && register_email.value != '' && register_pass1.value != '' && register_pass2.value != '') {
+                    register_submit.disabled = false;
+                }
             }
-        }
-    } else {
-        if (element.value == ''){
-            element.ariaInvalid = true;
-            login_submit.disabled = true;
         } else {
-            var login_email = document.getElementById("login_email");
-            var login_password = document.getElementById("login_password");
-            if (login_email.value != '' && login_password.value != '') {
-                login_submit.disabled = false;
+            if (element.value == '') {
+                element.ariaInvalid = true;
+                login_submit.disabled = true;
+            } else {
+                var login_email = document.getElementById("login_email");
+                var login_password = document.getElementById("login_password");
+                if (login_email.value != '' && login_password.value != '') {
+                    login_submit.disabled = false;
+                }
             }
         }
     }
-  }
 
 </script>
 </body>

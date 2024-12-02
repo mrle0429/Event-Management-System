@@ -16,20 +16,21 @@ import ucd.comp3013j.ems.model.repos.OrganiserRepository;
 @Profile("dev")
 public class ApplicationRunner implements CommandLineRunner {
     @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
     private AdminRepository adminRepository;
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private OrganiserRepository organiserRepository;
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public void run(String... args) throws Exception {
-        Administrator admin = new Administrator("admin@ucd.ie","Sean Russell", bCryptPasswordEncoder.encode( "admin"));
+        Administrator admin = new Administrator("admin@ucd.ie", "Sean Russell", bCryptPasswordEncoder.encode("admin"));
         adminRepository.save(admin);
-        Customer customer = new Customer("sean","sean", bCryptPasswordEncoder.encode( "sean"));
+        Customer customer = new Customer("sean", "sean", bCryptPasswordEncoder.encode("sean"));
         customerRepository.save(customer);
-        Organiser organiser = new Organiser("dave","dave", bCryptPasswordEncoder.encode( "dave"), "ACME 123","123 Fake Street", "0877777777");
+        Organiser organiser = new Organiser("dave", "dave", bCryptPasswordEncoder.encode("dave"), "ACME 123", "123 Fake Street", "0877777777");
         organiserRepository.save(organiser);
     }
 }

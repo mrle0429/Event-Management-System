@@ -1,30 +1,34 @@
-# 开发人员04阶段文档说明
+# Event Management System
 
-# Team Project: Group 04
-This report details the work that was completed by together by all team members for the Implementation phase of the project.
+## 概述
+活动管理系统是一个web应用程序使用spring boot框架。 这个活动管理系统包括账户管理，场馆管理，事件管理，票务管理。这个平台有三种类型的用户：管理员，组织者和客户。
 
-## Team Members
-| Number | Name         | Email(s)                   | CSGitLab Username |
-|--------|--------------|----------------------------|-------------------|
-| TM1    | Le Liu       | le.liu1@ucdconnect.ie      | @Mrle             |
-| TM2    | Ziheng Wang  | ziheng.wang1@ucdconnect.ie | @zihengWang       |     
-| TM3    | Yunhan Gao   | yunhan.gao@ucdconnect.ie   | @YunhanGao        |     
-| TM4    | Bohan Zhang  | bohan.zhang@ucdconnect.ie  | @BohanZhang       |     
-| TM5    | Sicheng Yi   | sicheng.yi@ucdconnect.ie   | @Prestine         |     
-| TM6    | Xinya Shi    | xinya.shi@ucdconnect.ie    | @Shirley          |     
-| TM7    | Yuxuan Zhang | yuxuan.zhang@ucdconnect.ie | @WhiteCamellia    |
+## 快速开始
+### 项目DEMO
+网址
+### 本地部署（Docker）
+#### 环境要求
+- JDK 
+- Maven 
+- MySQL 
 
-# 功能需求概述
+#### 安装步骤
 
-**顾客** （GYH）
+### 默认账户
 
-- 修改个人信息
-- 查看已购买未开始的票
-- 查看已购买已开始的票
-- 查看即将开始的演唱会
-- 购买票（可以选择票类型和购买的数量）
+管理员:
+- 邮箱: admin@ucd.ie
+- 密码: admin
 
+组织者:
+- 邮箱: organiser@ucd.ie
+- 密码: organiser
 
-**组织者** （WZH）
+客户:
+- 邮箱: customer@ucd.ie
+- 密码: customer
 
-**管理者** （ZBH）
+## 许可证
+
+## 技术支持
+如需支持，请发送邮件至 le.liu1@ucdconnect.ie 或在仓库中创建 issue。

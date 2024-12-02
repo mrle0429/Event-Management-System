@@ -1,58 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit Account</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <main class="container">
-        <h2>Edit Account</h2>
-        
-        <form th:action="@{/account/edit}" th:object="${accountDTO}" method="post">
-            <!-- 基本信息 -->
-            <label for="name">
-                Name:
-                <input type="text" id="name" th:field="*{name}" required/>
+<main class="container">
+    <h2>Edit Account</h2>
+
+    <form method="post" th:action="@{/account/edit}" th:object="${accountDTO}">
+        <!-- 基本信息 -->
+        <label for="name">
+            Name:
+            <input id="name" required th:field="*{name}" type="text"/>
+        </label>
+
+        <label for="email">
+            Email:
+            <input id="email" readonly th:field="*{email}" type="email"/>
+        </label>
+
+        <!-- 组织者特有信息 -->
+        <div th:if="${accountDTO.role == 'ORGANISER'}">
+            <label for="companyName">
+                Company Name:
+                <input id="companyName" th:field="*{companyName}" type="text"/>
             </label>
 
-            <label for="email">
-                Email:
-                <input type="email" id="email" th:field="*{email}" readonly/>
+            <label for="companyAddress">
+                Company Address:
+                <input id="companyAddress" th:field="*{address}" type="text"/>
             </label>
 
-            <!-- 组织者特有信息 -->
-            <div th:if="${accountDTO.role == 'ORGANISER'}">
-                <label for="companyName">
-                    Company Name:
-                    <input type="text" id="companyName" th:field="*{companyName}"/>
-                </label>
-
-                <label for="companyAddress">
-                    Company Address:
-                    <input type="text" id="companyAddress" th:field="*{address}"/>
-                </label>
-
-                <label for="companyPhone">
-                    Company Phone:
-                    <input type="text" id="companyPhone" th:field="*{phoneNumber}"/>
-                </label>
-            </div>
-
-            <div class="grid">
-                <div>
-                    <button type="submit">Save Changes</button>
-                </div>
-                <div>
-                    <a th:href="@{/account/my-account}" role="button" class="secondary outline">Cancel</a>
-                </div>
-            </div>
-        </form>
-
-        <!-- 错误消息显示 -->
-        <div th:if="${errorMessage}" class="alert alert-error">
-            <p th:text="${errorMessage}">Error message</p>
+            <label for="companyPhone">
+                Company Phone:
+                <input id="companyPhone" th:field="*{phoneNumber}" type="text"/>
+            </label>
         </div>
-    </main>
+
+        <div class="grid">
+            <div>
+                <button type="submit">Save Changes</button>
+            </div>
+            <div>
+                <a class="secondary outline" role="button" th:href="@{/account/my-account}">Cancel</a>
+            </div>
+        </div>
+    </form>
+
+    <!-- 错误消息显示 -->
+    <div class="alert alert-error" th:if="${errorMessage}">
+        <p th:text="${errorMessage}">Error message</p>
+    </div>
+</main>
 </body>
 </html> 

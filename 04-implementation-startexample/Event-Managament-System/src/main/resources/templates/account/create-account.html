@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Account</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
     <script>
         function toggleFields() {
             const role = document.getElementById('role').value;
             const organiserFields = document.getElementById('organiserFields');
-            
+
             if (role === 'ORGANISER') {
                 organiserFields.style.display = 'block';
             } else {
@@ -18,40 +18,40 @@
     </script>
 </head>
 <body>
-    <h2>Create Account</h2>
-    <form th:action="@{/create-account}" th:object="${accountDTO}" method="post">
-        <label for="role">Role:</label>
-        <select id="role" th:field="*{role}" required onchange="toggleFields()">
-            <option value="">Select Role</option>
-            <option value="ADMINISTRATOR">Administrator</option>
-            <option value="ORGANISER">Organiser</option>
-            <option value="CUSTOMER">Customer</option>
-        </select><br/>
+<h2>Create Account</h2>
+<form method="post" th:action="@{/create-account}" th:object="${accountDTO}">
+    <label for="role">Role:</label>
+    <select id="role" onchange="toggleFields()" required th:field="*{role}">
+        <option value="">Select Role</option>
+        <option value="ADMINISTRATOR">Administrator</option>
+        <option value="ORGANISER">Organiser</option>
+        <option value="CUSTOMER">Customer</option>
+    </select><br/>
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" th:field="*{name}" required/><br/>
+    <label for="name">Name:</label>
+    <input id="name" required th:field="*{name}" type="text"/><br/>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required/><br/>
+    <label for="email">Email:</label>
+    <input id="email" required th:field="*{email}" type="email"/><br/>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" required/><br/>
+    <label for="password">Password:</label>
+    <input id="password" required th:field="*{password}" type="password"/><br/>
 
-        <div id="organiserFields" style="display: none;">
-            <label for="companyName">Company Name:</label>
-            <input type="text" id="companyName" th:field="*{companyName}"/><br/>
+    <div id="organiserFields" style="display: none;">
+        <label for="companyName">Company Name:</label>
+        <input id="companyName" th:field="*{companyName}" type="text"/><br/>
 
-            <label for="companyAddress">Company Address:</label>
-            <input type="text" id="companyAddress" th:field="*{address}"/><br/>
+        <label for="companyAddress">Company Address:</label>
+        <input id="companyAddress" th:field="*{address}" type="text"/><br/>
 
-            <label for="companyPhone">Company Phone:</label>
-            <input type="text" id="companyPhone" th:field="*{phoneNumber}"/><br/>
-        </div>
-
-        <button type="submit">Create Account</button>
-    </form>
-    <div th:if="${errorMessage}">
-        <p th:text="${errorMessage}"></p>
+        <label for="companyPhone">Company Phone:</label>
+        <input id="companyPhone" th:field="*{phoneNumber}" type="text"/><br/>
     </div>
+
+    <button type="submit">Create Account</button>
+</form>
+<div th:if="${errorMessage}">
+    <p th:text="${errorMessage}"></p>
+</div>
 </body>
 </html>
