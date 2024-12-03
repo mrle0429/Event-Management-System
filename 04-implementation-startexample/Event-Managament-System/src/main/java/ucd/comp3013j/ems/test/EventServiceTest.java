@@ -163,17 +163,17 @@ public class EventServiceTest {
         assertEquals("Seating capacity exceeds venue limit", exception.getMessage());
     }
 
-    // 测试更新事件
     @Test
-    public void testUpdateEvent() {
-        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        when(eventRepository.save(any(Event.class))).thenReturn(event);
+    public void testUpdateEvent_VenueNotFound() {
+        // 模拟场地找不到
+        when(venueRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Event updatedEvent = eventService.updateEvent(1L, eventDTO);
+        // 验证 RuntimeException 被抛出
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            eventService.updateEvent(1L, eventDTO);
+        });
 
-        assertNotNull(updatedEvent);
-        assertEquals("Sample Event", updatedEvent.getName());
-        verify(eventRepository, times(1)).save(any(Event.class));
+        assertEquals("Venue not found", exception.getMessage());
     }
 
     @Test

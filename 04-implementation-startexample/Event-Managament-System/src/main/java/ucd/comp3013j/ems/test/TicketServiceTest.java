@@ -71,7 +71,7 @@ public class TicketServiceTest {
 
         assertNotNull(purchasedTicket);
         assertEquals(TicketType.PREMIUM, purchasedTicket.getType());
-        assertEquals(50.0, purchasedTicket.getPrice());
+        assertEquals(BigDecimal.valueOf(50.0), purchasedTicket.getPrice());
         assertEquals(99, event.getRemainingSeats().get(TicketType.PREMIUM));  // 剩余票数应减少 1
 
         verify(ticketRepository, times(1)).save(any(Ticket.class));
@@ -193,7 +193,7 @@ public class TicketServiceTest {
             ticketService.purchaseTickets(event, customer, TicketType.PREMIUM, 2);
         });
 
-        assertEquals("Only 0 seats remaining for REGULAR", exception.getMessage());
+        assertEquals("Only 0 seats remaining for PREMIUM", exception.getMessage());
     }
 
     // 测试获取即将开始的票
