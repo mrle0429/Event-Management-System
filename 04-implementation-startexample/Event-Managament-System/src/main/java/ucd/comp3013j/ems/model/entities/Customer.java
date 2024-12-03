@@ -6,6 +6,19 @@ import lombok.EqualsAndHashCode;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
 import ucd.comp3013j.ems.model.enums.Role;
 
+/**
+ * Customer account entity.
+ * Extends the base Account class to represent regular users of the system.
+ * 
+ * Customers can:
+ * - Browse available events
+ * - Purchase tickets
+ * - View purchase history
+ * - Manage their profile
+ * 
+ * @see Account
+ * @see Ticket
+ */
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data

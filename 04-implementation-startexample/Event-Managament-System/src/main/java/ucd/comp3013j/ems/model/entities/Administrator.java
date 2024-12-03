@@ -5,6 +5,17 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ucd.comp3013j.ems.model.enums.Role;
 
+/**
+ * Administrator account entity.
+ * Extends the base Account class to represent system administrators.
+ * Administrators have the highest level of system access and can manage:
+ * - User accounts
+ * - Venues
+ * - Events
+ * - System configurations
+ * 
+ * @see Account
+ */
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
