@@ -77,21 +77,91 @@
         const venueId = document.querySelector("#venue").value;
         const date = document.querySelector("#date").value;
 
-        if (venueId && date) {
-            fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (result) {
-                    if (!result) {
-                        // 不可用提示更改
-                        alert("Date is occupied, change it!");
-                    } else {
-                        // 可用就提交表单
-                        document.querySelector("#editEvent").submit();
-                    }
-                })
+        // 检查所有票种的座位数是否超过场馆容量
+        let capacityValid = true;
+        const checkCapacityPromises = [];
+
+        document.querySelectorAll('[id^="seats-"]').forEach(input => {
+            const type = input.id.replace('seats-', '');
+            const seats = parseInt(input.value || 0);
+
+            if (seats > 0) {
+                const promise = fetch(`/events/checkVenueCapacity?venueId=${venueId}&type=${type}&requestedSeats=${seats}`)
+                    .then(response => response.json())
+                    .then(result => {
+                        if (!result) {
+                            // 修改提示方式
+                            input.style.borderColor = 'red';
+                            if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
+                                const errorMsg = document.createElement('small');
+                                errorMsg.style.color = 'red';
+                                errorMsg.classList.add('error-message');
+                                errorMsg.textContent = `${type}Ticket quantity exceeds venue capacity limit!`;
+                                input.parentNode.insertBefore(errorMsg, input.nextSibling);
+                            }
+                            capacityValid = false;
+                        } else {
+                            input.style.borderColor = '';
+                            const errorMsg = input.nextElementSibling;
+                            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                                errorMsg.remove();
+                            }
+                        }
+                    });
+                checkCapacityPromises.push(promise);
+            }
+        });
+
+        Promise.all(checkCapacityPromises).then(() => {
+            if (!capacityValid) {
+                // 添加总体错误提示
+                const existingError = document.getElementById('generalError');
+                if (!existingError) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.id = 'generalError';
+                    errorDiv.style.color = 'red';
+                    errorDiv.style.marginBottom = '1rem';
+                    errorDiv.textContent = 'Some ticket types exceed venue capacity limits. Please modify and try again!';
+                    document.querySelector('#ticketPricing').insertBefore(errorDiv, document.querySelector('#ticketPricing').firstChild);
+                }
+                return;
+            }
+
+            // 原有的场馆日期检查逻辑
+            if (venueId && date) {
+                fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (result) {
+                        if (!result) {
+                            alert("Date is already occupied, please choose another!");
+                        } else {
+                            document.querySelector("#editEvent").submit();
+                        }
+                    });
+            }
+        });
+    });
+
+    // 添加场馆选择变更监听
+    document.querySelector("#venue").addEventListener("change", function() {
+        // 清空所有座位输入和错误提示
+        document.querySelectorAll('[id^="seats-"]').forEach(input => {
+            input.value = "";
+            input.style.borderColor = '';
+            const errorMsg = input.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                errorMsg.remove();
+            }
+        });
+
+        const generalError = document.getElementById('generalError');
+        if (generalError) {
+            generalError.remove();
         }
+
+        
     });
 </script>
 </body>

@@ -21,9 +21,9 @@
                         <option value="">Choose a ticket type</option>
                         <option th:data-remaining="${event.remainingSeats.get(type)}"
                                 th:each="type : ${ticketTypes}"
-                                th:if="${event.remainingSeats.get(type) > 0}"
                                 th:text="${type + ' - ¥' + event.pricesByLevel.get(type) + ' (' + event.remainingSeats.get(type) + ' remaining)'}"
-                                th:value="${type}">
+                                th:value="${type}"
+                                th:disabled="${event.remainingSeats.get(type) <= 0}">
                         </option>
                     </select>
                 </label>

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import ucd.comp3013j.ems.model.dto.VenueDTO;
 import ucd.comp3013j.ems.model.services.VenueService;
 
@@ -92,7 +94,9 @@ public class VenueSystem {
      * @return Redirects to venues list page
      */
     @PostMapping("/create")
-    public String createVenue(@ModelAttribute VenueDTO venueDTO) {
+    public String createVenue(@ModelAttribute VenueDTO venueDTO, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message", "Venue Create Success!");
+        redirectAttributes.addFlashAttribute("messageType", "success");
         venueService.createVenue(venueDTO);
         return "redirect:/venue";
     }

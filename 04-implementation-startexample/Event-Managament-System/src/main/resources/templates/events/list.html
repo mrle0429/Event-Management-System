@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container">
@@ -51,14 +52,16 @@
                     <td th:text="${#dates.format(event.time, 'HH:mm')}">Time</td>
                     <td th:text="${event.venue != null ? event.venue.name : 'Venue not set'}">Venue</td>
                     <td th:text="${event.organiser != null ? event.organiser.name : 'Not assigned'}">Organiser</td>
-                    <td><a role="button" th:href="@{/events/{id}(id=${event.id})}">View</a></td>
-                    <td><a role="button" th:href="@{/events/{id}/edit(id=${event.id})}">Edit</a></td>
                     <td>
-                        <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
-                            <form method="post" style="display: inline;"
-                                  th:action="@{/events/{id}/delete(id=${event.id})}">
-                                <button type="submit">Delete</button>
-                            </form>
+                        <div class="button-group">
+                            <a class="action-button" role="button" th:href="@{/events/{id}(id=${event.id})}">View</a>
+                            <a class="action-button" role="button" th:href="@{/events/{id}/edit(id=${event.id})}">Edit</a>
+                            <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
+                                <form method="post" style="display: inline;"
+                                      th:action="@{/events/{id}/delete(id=${event.id})}">
+                                    <button class="delete-button" type="submit">Delete</button>
+                                </form>
+                            </div>
                         </div>
                     </td>
                 </tr>

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import ucd.comp3013j.ems.model.dto.EventDTO;
 import ucd.comp3013j.ems.model.entities.Event;
 import ucd.comp3013j.ems.model.entities.Organiser;
+import ucd.comp3013j.ems.model.entities.Venue;
+import ucd.comp3013j.ems.model.enums.TicketType;
 import ucd.comp3013j.ems.model.services.EventService;
 import ucd.comp3013j.ems.model.services.VenueService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
@@ -148,6 +150,20 @@ public class EventSystem {
     public ResponseEntity<Boolean> checkVenue(@RequestParam Long venueId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         return ResponseEntity.ok(eventService.isVenueEmptyForDate(venueId, date));
     }
+
+    @GetMapping("checkVenueCapacity")
+    public ResponseEntity<Boolean> checkVenueCapacity(
+        @RequestParam Long venueId,
+        @RequestParam("type") String ticketType,
+        @RequestParam Integer requestedSeats) {
+    Venue venue = venueService.getVenueById(venueId);
+    if (venue == null) {
+        return ResponseEntity.ok(false);
+    }
+    
+    Integer capacity = venue.getSeatsByLevel().get(TicketType.valueOf(ticketType));
+    return ResponseEntity.ok(capacity >= requestedSeats);
+}
 
     /**
      * Displays the event edit form.

@@ -5,10 +5,14 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container">
     <h2>Event Management System</h2>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
     <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
     <nav class="container-fluid">
         <ul>
@@ -53,14 +57,16 @@
                     <td th:text="${venue.address}">Address</td>
                     <td th:text="${venue.contactName}">Contact Name</td>
                     <td th:text="${venue.contactPhone}">Contact Phone</td>
-                    <td><a role="button" th:href="@{/venue/{id}(id=${venue.id})}">View</a></td>
-                    <td><a role="button" th:href="@{/venue/{id}/edit(id=${venue.id})}">Edit</a></td>
                     <td>
-                        <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
-                            <form method="post" style="display: inline;"
-                                  th:action="@{/venue/{id}/delete(id=${venue.id})}">
-                                <button type="submit">Delete</button>
-                            </form>
+                        <div class="button-group">
+                            <a class="action-button" role="button" th:href="@{/venue/{id}(id=${venue.id})}">View</a>
+                            <a class="action-button" role="button" th:href="@{/venue/{id}/edit(id=${venue.id})}">Edit</a>
+                            <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
+                                <form method="post" style="display: inline;"
+                                      th:action="@{/venue/{id}/delete(id=${venue.id})}">
+                                    <button class="delete-button" type="submit">Delete</button>
+                                </form>
+                            </div>
                         </div>
                     </td>
                 </tr>

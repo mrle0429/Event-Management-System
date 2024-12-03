@@ -48,7 +48,10 @@
         <input id="companyPhone" th:field="*{phoneNumber}" type="text"/><br/>
     </div>
 
-    <button type="submit">Create Account</button>
+    <div class="grid">
+        <button class="secondary" th:href="@{/administrator}" type="button" onclick="window.location.href='/administrator'">Back to Main Page</button>
+        <button type="submit">Create Account</button>
+    </div>
 </form>
 <div th:if="${errorMessage}">
     <p th:text="${errorMessage}"></p>
