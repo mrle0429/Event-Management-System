@@ -20,7 +20,7 @@
                     <a class="secondary" th:href="@{/organiser}">Main Page</a>
                 </li>
                 <li th:if="${#authorization.expression('hasAuthority(''CUSTOMER'')')}">
-                    <a class="secondary" th:href="@{/custumer}">Main Page</a>
+                    <a class="secondary" th:href="@{/customer}">Main Page</a>
                 </li>
             </ul>
             <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>

@@ -58,3 +58,19 @@
 .delete-button:hover {
     background-color: #c82333;
 }
+
+.error-message {
+    background-color: #ffebee;
+    border: 1px solid #ef5350;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.success-message {
+    background-color: #e8f5e9;
+    border: 1px solid #66bb6a;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
