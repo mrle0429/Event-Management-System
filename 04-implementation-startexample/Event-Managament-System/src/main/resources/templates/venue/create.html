@@ -3,46 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Venue</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <main class="container">
-        <h2>Create Venue</h2>
-        <form th:action="@{/venue/create}" th:object="${venueDTO}" method="post">
-            <label for="name">Venue Name:</label>
-            <input type="text" id="name" th:field="*{name}" required/>
+<main class="container">
+    <h2>Create Venue</h2>
+    <form method="post" th:action="@{/venue/create}" th:object="${venueDTO}">
+        <label for="name">Venue Name:</label>
+        <input id="name" required th:field="*{name}" type="text"/>
 
-            <label for="address">Address:</label>
-            <input type="text" id="address" th:field="*{address}" required/>
+        <label for="address">Address:</label>
+        <input id="address" required th:field="*{address}" type="text"/>
 
-            <label for="description">Description:</label>
-            <textarea id="description" th:field="*{description}" required></textarea>
+        <label for="description">Description:</label>
+        <textarea id="description" required th:field="*{description}"></textarea>
 
-            <label for="contactName">Contact Name:</label>
-            <input type="text" id="contactName" th:field="*{contactName}" required/>
+        <label for="contactName">Contact Name:</label>
+        <input id="contactName" required th:field="*{contactName}" type="text"/>
 
-            <label for="contactPhone">Contact Phone:</label>
-            <input type="text" id="contactPhone" th:field="*{contactPhone}" required/>
+        <label for="contactPhone">Contact Phone:</label>
+        <input id="contactPhone" required th:field="*{contactPhone}" type="text"/>
 
-            <label for="contactEmail">Contact Email:</label>
-            <input type="email" id="contactEmail" th:field="*{contactEmail}" required/>
+        <label for="contactEmail">Contact Email:</label>
+        <input id="contactEmail" required th:field="*{contactEmail}" type="email"/>
 
-            <div id="seatingCapacity">
-                <h4>Seating Capacity by Level</h4>
-                <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
-                    <label th:for="${'seats-' + type}" th:text="${type}">Level</label>
-                    <input type="number" th:id="${'seats-' + type}" 
-                           th:field="*{seatsByLevel[__${type}__]}" min="0" required/>
-                </div>
+        <div id="seatingCapacity">
+            <h4>Seating Capacity by Level</h4>
+            <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
+                <label th:for="${'seats-' + type}" th:text="${type}">Level</label>
+                <input min="0" required
+                       th:field="*{seatsByLevel[__${type}__]}" th:id="${'seats-' + type}" type="number"/>
             </div>
-            <div>
-                <button type="button" class="secondary" onclick="history.back()">Back</button>
-            </div>
+        </div>
+        <div>
+            <button class="secondary" onclick="history.back()" type="button">Back</button>
+        </div>
 
-            <div>
-                <button type="submit">Create</button>
-            </div>
-        </form>
-    </main>
+        <div>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+</main>
 </body>
 </html> 

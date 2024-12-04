@@ -14,10 +14,12 @@ import ucd.comp3013j.ems.model.services.EventService;
 import ucd.comp3013j.ems.model.services.TicketService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * Controller for handling ticket-related operations.
+ * This controller manages ticket purchases, confirmations, and ticket viewing.
+ */
 @Controller
 @RequestMapping("/tickets")
 public class TicketSystem {
@@ -31,20 +33,35 @@ public class TicketSystem {
     @Autowired
     private AccountService accountService;
 
-    // 显示购票页面
+    /**
+     * Displays the ticket purchase form for a specific event.
+     * Accessible by: All authenticated users
+     * @param eventId ID of the event to purchase tickets for
+     * @param model Spring MVC Model object
+     * @return The ticket purchase page view or redirects to available events with error
+     */
     @GetMapping("/purchase/{eventId}")
     public String showPurchaseForm(@PathVariable Long eventId, Model model) {
         Event event = eventService.getEvent(eventId);
         if (event == null) {
             return "redirect:/events/available?error=event_not_found";
         }
-        
+
         model.addAttribute("event", event);
         model.addAttribute("ticketTypes", TicketType.values());
         return "tickets/purchase";
     }
 
-    // 处理购票请求
+    /**
+     * Processes a ticket purchase request.
+     * Accessible by: Authenticated customers
+     * @param eventId ID of the event to purchase tickets for
+     * @param ticketType Type of ticket being purchased (e.g., VIP, Standard)
+     * @param quantity Number of tickets to purchase
+     * @param authentication Current user's authentication information
+     * @param model Spring MVC Model object
+     * @return Redirects to confirmation page on success, or purchase page with error
+     */
     @PostMapping("/purchase/{eventId}")
     public String purchaseTicket(
             @PathVariable Long eventId,
@@ -56,11 +73,11 @@ public class TicketSystem {
             if (authentication.getPrincipal() instanceof AccountWrapper aw) {
                 Customer customer = accountService.getCustomerAccount(aw.getUsername());
                 Event event = eventService.getEvent(eventId);
-                
+
                 if (event == null) {
                     return "redirect:/events/available?error=event_not_found";
                 }
-                
+
                 List<Ticket> tickets = ticketService.purchaseTickets(event, customer, ticketType, quantity);
                 return "redirect:/tickets/confirmation/" + tickets.get(0).getId() + "?quantity=" + quantity;
             }
@@ -70,20 +87,33 @@ public class TicketSystem {
         }
     }
 
-    // 显示购票确认页面
+    /**
+     * Displays the ticket purchase confirmation page.
+     * Accessible by: Ticket purchaser
+     * @param ticketId ID of the purchased ticket
+     * @param quantity Number of tickets purchased
+     * @param model Spring MVC Model object
+     * @return The confirmation page view or redirects to available events with error
+     */
     @GetMapping("/confirmation/{ticketId}")
     public String showConfirmation(@PathVariable Long ticketId, @RequestParam Integer quantity, Model model) {
         Ticket ticket = ticketService.getTicket(ticketId);
         if (ticket == null) {
             return "redirect:/events/available?error=ticket_not_found";
         }
-        
+
         model.addAttribute("ticket", ticket);
         model.addAttribute("quantity", quantity);
         return "tickets/confirmation";
     }
 
-    // 显示用户的所有票
+    /**
+     * Displays all tickets owned by the current user.
+     * Accessible by: Authenticated customers
+     * @param authentication Current user's authentication information
+     * @param model Spring MVC Model object
+     * @return The user's tickets page view or redirects to login page
+     */
     @GetMapping("/my-tickets")
     public String showMyTickets(Authentication authentication, Model model) {
         if (authentication.getPrincipal() instanceof AccountWrapper aw) {

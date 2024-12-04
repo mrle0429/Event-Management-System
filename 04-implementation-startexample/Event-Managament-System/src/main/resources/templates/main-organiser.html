@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <title>Event Management System</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container-fluid">
     <h2>Event Management System</h2>
-    <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+    <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
     <nav class="container-fluid">
         <ul>
-            <li><a th:href="@{/organiser}" class="secondary">Main Page</a></li>
-            <li><a th:href="@{/account/my-account}" class="secondary">My Account</a></li>
+            <li><a class="secondary" th:href="@{/organiser}">Main Page</a></li>
+            <li><a class="secondary" th:href="@{/account/my-account}">My Account</a></li>
             <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>
             </li>
         </ul>
@@ -39,8 +39,8 @@
                     <td th:text="${event.venue.name}"></td>
                     <td th:text="${event.date}"></td>
                     <td th:text="${event.time}"></td>
-                    <td><a th:href="@{/events/{id}(id=${event.id})}" role="button">View</a></td>
-                    <td><a th:href="@{/events/{id}/edit(id=${event.id})}" role="button">Edit</a></td>
+                    <td><a role="button" th:href="@{/events/{id}(id=${event.id})}">View</a></td>
+                    <td><a role="button" th:href="@{/events/{id}/edit(id=${event.id})}">Edit</a></td>
                 </tr>
                 </tbody>
             </table>

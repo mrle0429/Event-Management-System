@@ -1,4 +1,300 @@
 @startuml class-diagram
+    left to right direction
+
+    package ui {
+        package dtos {
+            class AccountDTO{
+                {static} +AccountDTO(account : Account)
+                {static} +AccountDTO()
+                - id : int
+                - name : String
+                - email : String
+                - password : String
+                - role : Role
+                - contactEmail : String
+                - contactName : String
+                - contactPhone : String
+            }
+
+            class VenueDTO{
+                {static} +VenueDTO(venue : Venue)
+                {static} +VenueDTO()
+                - id : int
+                - name : String
+                - address : String
+                - contactEmail : String
+                - contactName : String
+                - contactPhone : String
+                - ticketTypes : String[*]
+                - ticketQuantities : int[*]
+            }
+
+            class EventDTO{
+                {static} +EventDTO(event : Event)
+                {static} +EventDTO()
+                - id : int
+                - name : String
+                - description : String
+                - date : Date
+                - time : Time
+                - venueId : int
+                - ticketQuantities : TicketQuantity[*]
+            }
+
+            class TicketDTO{
+                {static} +TicketDTO(event : Event, customerId : int)
+                {static} +TicketDTO()
+                - id : int
+                - types : String[*]
+                - pricees : double[*]
+                - quantities : int[*]
+                - eventId : int
+                - customerId : int
+            }
+        }
+        class AccountSystem {
+            {static} +AccountSystem(accountService : AccountService)
+            +showCreateAccountPage(model : Model) : String
+            +showModifyAccount(accountID : int, model : Model) : String
+            +createAccount(registrationDTO : AccountDTO, m : Model) : String
+            +listAccounts(model : Model) : String
+            +displayAccount(accountId : int, model : Model) : String
+            +modifyAccount(adto : AccountDTO, model : Model) : String
+            +registerUser(email: String, password: String, model: Model) : String
+            +deleteAccount(accountId : int) : Error
+        }
+        class EventSystem {
+            +listVenues(m : Model) : String
+            +createVenue(name : String, address : String, \ncontactName : String, contactPhone : String, contactEmail : String, \nticketTypes : String[*], ticketQuantities : int[*])
+            +viewVenue(venueId: int, model: Model) : String
+            +showModifyVenue(venueId: int, model: Model) : String
+            +modifyVenue(venueDTO: VenueDTO, model: Model) : String
+            +deleteVenue(venueId: int, model: Model) : String
+            +listEvents(m : Model) : String
+            +showAddEventPage(model : Model) : String
+            +addEvent(eventDto : EventDTO, model : Model) : String
+            +viewEvent(eventId: int, model: Model) : String
+            +showModifyEvent(eventId: int, model: Model) : String
+            +modifyEvent(eventDto: EventDTO, model: Model) : String
+            +deleteEvent(eventId: int, model: Model) : String
+            +listMyEvents(organiserId : int, m : Model) : String
+            +listMyTickets(customerId : int, m : Model) : String
+            +showBuyTickets(eventId : int, model : Model) : String
+            +buyTickets(ticketDto : TicketDTO, model : Model) : String
+            +showTickets(ticketId : int, model : Model) : String
+        }
+    }
+
+    package application {
+        package accounts {
+            package repositories {
+            interface CustomerRepository {
+                +save(customer : Customer)
+                +findByEmail(email : String) : Customer
+                +findAll() : Customer[*]
+                +delete(customer : Customer)
+            }
+            interface OrganiserRepository {
+                +save(organiser : Organiser)
+                +findByEmail(email : String) : Organiser
+                +findAll() : Organiser[*]
+                +delete(organiser : Organiser)
+            }
+            interface AdministratorRepository {
+                +save(administrator : Administrator)
+                +findByEmail(email : String) : Administrator
+                +findAll() : Administrator[*]
+                +delete(administrator : Administrator)
+            }
+            
+        }
+        class Organiser {
+            - address : String
+            - companyName : String
+            - phoneNumber : String
+            {static}+Organiser(name : String, address : String, companyName : String, \nphoneNumber : String, email : String, password : String)
+            +setAddress(address : String)
+            +setCompanyName(companyName : String)
+            +setPhoneNumber(phoneNumber : String)
+        }
+
+        class Administrator {
+            {static}+Administrator(name : String, email : String, password : String)
+        }
+
+        class Customer {
+            {static} Customer(name : String, email : String, password : String)
+            +getTickets() : Ticket[*]
+            +addTicket(ticket : Ticket)
+        }
+
+        abstract class Account {
+            - id : long
+            - name : String
+            - password : String
+            - email : String
+            - role : Role
+            +setName(name : String)
+            +setEmail(email : String)
+            +setPassword(password : String)
+        }
+
+        
+
+        class AccountService {
+            +createAdminAccount(name : String, email : String, password : String) : Error
+            +createOrganiserAccount(name : String, email : String, password : String, companyName : String, phoneNumber : String) : Error
+            +createCustomerAccount(name : String, email : String, password : String) : Error
+            +getAccount(email : String) : Account
+            +getAccounts() : Account[*]
+            +modifyAccount(adto : AccountDTO, account : Account) : Error
+            +getOrganiser(organiserId : int) : Organiser
+            +getCustoemr(customerId : int) : Customer
+            +saveCustomer(customer : Customer)
+            +deleteAccount(account : Account) : Error
+        }
+
+        enum Role{
+            +ADMINISTRATOR
+            +ORGANISER
+            +CUSTOMER
+        }
+    }
+
+    package events {
+
+        class Venue {
+            - id : long
+            - name : String
+            - address : String
+            - contactName : String
+            - contactNumber : String
+            - contactEmail : String
+            {static} + Venue(name : String, address : String, \ncontactName : String, contactPhone : String, \ncontactEmail : String, ticketAvailabilities : TicketAvailability[*])
+            + getTicketAvailabilities() : TicketAvailability[*]
+            + setAddress(newAddress : String)
+            +setContactEmail(newEmail)
+            +setContactName(newContact)
+            +setContactPhone(newPhone)
+            +setName(newName)
+            +setTicketAvailabilities(availabilities: TicketAvailability[*] )
+        }
+
+        class TicketAvailability {
+            - type : String
+            - numberAvailable : int
+            {static} +TicketAvailability(type : String, capacity : int)
+            +getType() : String
+            +getNumberAvailable() : int
+        }
+
+        class TicketQuantity {
+            - type : String
+            - numberAvailable : int
+            - numberSold : int
+            - price : double
+            {static} +TicketQuantity(type : String, numAvailable : int, price : double)
+            +reduceQuantity(quantity : int)
+        }
+
+
+        class Event {
+            - id : long
+            - name : String
+            - description : String
+            - date : Date
+            - time : Time
+            {static} +Event(eventName : String, eventDescription : String, date :Date, \ntime : Time, venue : Venue, ticketQuantities : TicketQuantity[*])
+            +getVenue() : Venue
+            +setDescription(newEventDescription : String)
+            +setTicketQuantities(newTicketQuantities : TicketQuantity[*])
+            +setDate(newEventDate : Date)
+            +setTime(newEventTime : Time)
+            +setVenue(newVenue : Venue)
+            +getTicketQuantities() : TicketQuantity[*]
+            +reduceQuantity(type : String, quantity : int)
+        }
+
+        class Ticket {
+            - id : long
+            - type : String
+            - price : double
+            - quantity : int
+            - event : Event
+            - customer : Customer
+            {static} +Ticket(type : String, price : double, quantity : int, event : Event, customer : Customer)
+        }
+
+        
+
+        class EventService {
+            +getVenues() : Venue[*]
+            +getVenue(name : String) : Venue
+            +getVenue(id : int) : Venue
+            +createVenue(name : String, address : String, \ncontactName : String, contactPhone : String, contactEmail : String, \nticketTypes : String[*], ticketQuantities : int[*])
+            +modifyVenue(venueDTO: VenueDTO) : Error
+            +deleteVenue(venueId: int) : Error
+            +getEvents() : Event[*]
+            +getEvent(eventName : String) : Event
+            +getEvent(eventId : int) : Event
+            +addEvent(eventDto : EventDTO) : Error
+            +getEvent(eventName : String) : Event
+            +modifyEvent(eventDto: EventDTO) : Error
+            +deleteEvent(eventId: int) : Error
+            +getEventsForOrganiser(organiserId : int) : Event[*]
+            +getCustomerTickets(customerId : int) : Ticket[*]
+            +buyTickets(ticketDto : TicketDTO) : Error
+            +getTicket(ticketId : int) : Ticket
+        }
+        package repositories {
+            interface EventRepository {
+                +save(event : Event)
+                +findAll() : Event[*]
+                +findByName(eventName : String) : Event
+                +findById(eventId : int) : Event
+                +delete(event : Event)
+            }
+            interface VenueRepository {
+                +save(venue : Venue)
+                +findAll() : Venue[*]
+                +findByName(venueName : String) : Venue
+                +findById(venueId : int) : Venue
+                +delete(venue : Venue)
+            }
+            interface TicketRepository {
+                +save(ticket : Ticket)
+                +findById(ticketId : int) : Ticket
+            }
+        }
+    }
+
+}
     
+    EventService --> application.events.repositories.EventRepository
+    EventService --> application.events.repositories.VenueRepository
+    EventService --> application.events.repositories.TicketRepository
+    AccountService --> application.accounts.repositories.CustomerRepository
+    AccountService --> application.accounts.repositories.OrganiserRepository
+    AccountService --> application.accounts.repositories.AdministratorRepository
+
+    AccountSystem "1" --> "-accountService 1" AccountService
+    AccountService "1" --> "-accounts *" Account 
+    EventSystem "1" ---> "-eventService 1" EventService
+    EventService "1" ---> "-accountService 1" AccountService
+    EventService "1" ---> "-events *" Event 
+    EventService "1" ---> "-venues *" Venue 
+
+    Organiser --|> Account
+    Administrator --|> Account
+    Customer --|> Account
+    
+    Venue "1" --> "-ticketAvailabilities *" TicketAvailability
+    Event "1" ---> "-ticketQuantities *" TicketQuantity
+    Event ---> "-venue 1" Venue
+    Event "1" ---> "-organiser 1" Organiser
+    Organiser "1" ---> "-events *" Event
+
+    Ticket "1" -> "-event 1" Event
+    Ticket "-tickets *" <-- "1" Customer
 @enduml
 

@@ -1,67 +1,75 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Event Management System</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container">
     <h2>Event Management System</h2>
-    <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
+    <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
     <nav class="container-fluid">
         <ul>
             <ul>
                 <li th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
-                    <a th:href="@{/administrator}" class="secondary">Main Page</a>
+                    <a class="secondary" th:href="@{/administrator}">Main Page</a>
                 </li>
                 <li th:if="${#authorization.expression('hasAuthority(''ORGANISER'')')}">
-                    <a th:href="@{/organiser}" class="secondary">Main Page</a>
+                    <a class="secondary" th:href="@{/organiser}">Main Page</a>
                 </li>
 
             </ul>
-            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>
+            </li>
         </ul>
     </nav>
 
     <article id="article">
         <h3>Venues Management</h3>
         <div class="grid">
-            <a th:href="@{/venue/create}" role="button">Create New Venue</a>
+            <a role="button" th:href="@{/venue/create}">Create New Venue</a>
         </div>
-        
+
         <div th:if="${#lists.isEmpty(venues)}">
             <p>There are currently no venues.</p>
         </div>
-        
+
         <div th:if="${not #lists.isEmpty(venues)}">
             <table role="grid">
                 <thead>
-                    <tr>
-                        <th scope="col">Venue Name</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Contact Name</th>
-                        <th scope="col">Contact Phone</th>
-                        <th scope="col" colspan="3">Actions</th>
-                    </tr>
+                <tr>
+                    <th scope="col">Venue Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Contact Name</th>
+                    <th scope="col">Contact Phone</th>
+                    <th colspan="3" scope="col">Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="venue : ${venues}">
-                        <td th:text="${venue.name}">Venue name</td>
-                        <td th:text="${venue.address}">Address</td>
-                        <td th:text="${venue.contactName}">Contact Name</td>
-                        <td th:text="${venue.contactPhone}">Contact Phone</td>
-                        <td><a th:href="@{/venue/{id}(id=${venue.id})}" role="button">View</a></td>
-                        <td><a th:href="@{/venue/{id}/edit(id=${venue.id})}" role="button">Edit</a></td>
-                        <td>
+                <tr th:each="venue : ${venues}">
+                    <td th:text="${venue.name}">Venue name</td>
+                    <td th:text="${venue.address}">Address</td>
+                    <td th:text="${venue.contactName}">Contact Name</td>
+                    <td th:text="${venue.contactPhone}">Contact Phone</td>
+                    <td>
+                        <div class="button-group">
+                            <a class="action-button" role="button" th:href="@{/venue/{id}(id=${venue.id})}">View</a>
+                            <a class="action-button" role="button" th:href="@{/venue/{id}/edit(id=${venue.id})}">Edit</a>
                             <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
-                                <form th:action="@{/venue/{id}/delete(id=${venue.id})}" method="post" style="display: inline;">
-                                    <button type="submit">Delete</button>
+                                <form method="post" style="display: inline;"
+                                      th:action="@{/venue/{id}/delete(id=${venue.id})}">
+                                    <button class="delete-button" type="submit">Delete</button>
                                 </form>
                             </div>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

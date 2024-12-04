@@ -6,8 +6,24 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ucd.comp3013j.ems.model.enums.Role;
 
+/**
+ * Organiser account entity.
+ * Extends the base Account class to represent event organisers.
+ * Contains additional fields for company and contact information.
+ * 
+ * Organisers can:
+ * - Create and manage events
+ * - Configure ticket pricing and seating
+ * - Monitor ticket sales
+ * - Update event details
+ * 
+ * @see Account
+ * @see Event
+ */
 @EqualsAndHashCode(callSuper = true)
-@Entity @Data @NoArgsConstructor
+@Entity
+@Data
+@NoArgsConstructor
 public class Organiser extends Account {
     private String companyName;
     private String address;

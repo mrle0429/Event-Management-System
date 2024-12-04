@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Purchase History - Event Management System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container-fluid">
     <h2>Purchase History</h2>
     <nav class="container-fluid">
         <ul>
-            <li><a th:href="@{/customer}" class="secondary">Back to Main</a></li>
-            <li><a th:href="@{/events/available}" class="secondary">Events</a></li>
-            <li><a th:href="@{/account/my-account}" class="secondary">My Account</a></li>
+            <li><a class="secondary" th:href="@{/customer}">Back to Main</a></li>
+            <li><a class="secondary" th:href="@{/events/available}">Events</a></li>
+            <li><a class="secondary" th:href="@{/account/my-account}">My Account</a></li>
         </ul>
     </nav>
-    
+
     <article>
         <figure>
             <table role="grid">

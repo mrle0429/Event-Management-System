@@ -47,7 +47,7 @@ else the account is an organiser
 end
 as->a:<<destroy>>
 destroy a
-as-->ac:
+as-->ac: return Error.NONE
 deactivate as
 
 ac -> as: getAccounts()

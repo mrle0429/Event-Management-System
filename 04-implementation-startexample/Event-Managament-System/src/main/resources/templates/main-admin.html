@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <title>Event Management System</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
-    <link rel="stylesheet" href="/css/style.css" />
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container">
     <h2>Event Management System</h2>
-    <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+    <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
     <nav class="container-fluid">
         <ul>
-            <li><a th:href="@{/events}" class="secondary">Events</a></li>
-            <li><a th:href="@{/venue}" class="secondary">Venues</a></li>
-            <li><a th:href="@{/create-account}" class="secondary">Create Account</a></li>
-            <li><a th:href="@{/account/my-account}" class="secondary">My Account</a></li>
-            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+            <li><a class="secondary" th:href="@{/events}">Events</a></li>
+            <li><a class="secondary" th:href="@{/venue}">Venues</a></li>
+            <li><a class="secondary" th:href="@{/create-account}">Create Account</a></li>
+            <li><a class="secondary" th:href="@{/account/my-account}">My Account</a></li>
+            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>
+            </li>
         </ul>
     </nav>
     <article id="article">
@@ -31,7 +32,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
-                    <th scope="col" colspan="3">Action</th>
+                    <th colspan="3" scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,22 +42,26 @@
                     <td th:text="${account.role}"></td>
                     <td th:if="${iterStat.index > 0}">
                         <div class="button-group">
-                            <a th:href="@{/detail(userEmail=${account.email})}" role="button" class="action-button">View </a>
-                            <a th:href="@{/edit(userEmail=${account.email})}" role="button" class="action-button">Edit </a>
-                            <form th:action="@{/deleteCustomer}" method="post" th:if="${account.role.name() == 'CUSTOMER'}">
-                                <input type="hidden" name="customerId" th:value="${account.id}" />
-                                <button type="submit" class="delete-button">Delete</button>
+                            <a class="action-button" role="button"
+                               th:href="@{/detail(userEmail=${account.email})}">View </a>
+                            <a class="action-button" role="button"
+                               th:href="@{/edit(userEmail=${account.email})}">Edit </a>
+                            <form method="post" th:action="@{/deleteCustomer}"
+                                  th:if="${account.role.name() == 'CUSTOMER'}">
+                                <input name="customerId" th:value="${account.id}" type="hidden"/>
+                                <button class="delete-button" type="submit">Delete</button>
                             </form>
-                            <form th:action="@{/deleteOrganiser}" method="post" th:if="${account.role.name() == 'ORGANISER'}">
-                                <input type="hidden" name="organiserId" th:value="${account.id}" />
-                                <button type="submit" class="delete-button">Delete</button>
+                            <form method="post" th:action="@{/deleteOrganiser}"
+                                  th:if="${account.role.name() == 'ORGANISER'}">
+                                <input name="organiserId" th:value="${account.id}" type="hidden"/>
+                                <button class="delete-button" type="submit">Delete</button>
                             </form>
                         </div>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <a th:href="@{/create-account}" class="button">Create Account</a>
+            <a class="button" th:href="@{/create-account}">Create Account</a>
 
         </figure>
         <h5>Events and Venues</h5>
@@ -74,10 +79,10 @@
                 </tbody>
             </table>
             <div class="grid">
-                <a th:href="@{/events}" class="button">List Events</a>
-                <a th:href="@{/events/create}" class="button">Create Event</a>
-                <a th:href="@{/venue}" class="button">List Venues</a>
-                <a th:href="@{/venue/create}" class="button">Create Venue</a>
+                <a class="button" th:href="@{/events}">List Events</a>
+                <a class="button" th:href="@{/events/create}">Create Event</a>
+                <a class="button" th:href="@{/venue}">List Venues</a>
+                <a class="button" th:href="@{/venue/create}">Create Venue</a>
             </div>
         </figure>
     </article>

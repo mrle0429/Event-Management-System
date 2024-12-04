@@ -2,11 +2,15 @@
 
 ## 01 - Basic Course of Events
 
+1. User navigates to create event page and enters event details
+2. System displays updated event list including the new event
 
 ![Use Case Name - Basic Course of Events](/03-design/usecases/images/06-create-event.png)
 
-## 02  - Alternate Course of Events - Booking Clash
+## 02 - Alternate Course of Events - Booking Clash
 
+1. The organiser/administrator enters the event details and clicks "Create"
+2. The System return create event page with errorMessage
 
 ![Use Case Name - Basic Course of Events](/03-design/usecases/images/06-create-event-bookingClash.png)
 

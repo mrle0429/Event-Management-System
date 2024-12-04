@@ -5,12 +5,12 @@ title Delete Event - Basic Course of Events
 actor "Admin" as admin
 boundary "Web Browser" as web
 boundary "newView：View" as nv
-boundary ": DispatchServlet" as servlet
-entity "m: Model" as model
-control ": EventSystem" as es
-participant ": EventRepository" as eventRepo
-participant ": EventService" as eventService
-entity "selected : Event" as selectedEvent
+boundary "__: DispatchServlet__" as servlet
+entity "__m: Model__" as model
+control "__: EventSystem__" as es
+participant "__: EventRepository__" as eventRepo
+participant "__: EventService__" as eventService
+entity "__selected : Event__" as selectedEvent
 
 
 ==1. The administrator performs the List Event page  **(01 - Manage Event Page)**\n2. The administrator selects the relevant event to delete ==

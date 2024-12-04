@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Sean's Event Management System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container-fluid">
     <h2>Event Management System</h2>
-    <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+    <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
     <nav class="container-fluid">
         <ul>
-            <li><a th:href="@{/events/available}" class="secondary">Events</a></li>
-            <li><a th:href="@{/account/my-account}" class="secondary">My Account</a></li>
-            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a></li>
+            <li><a class="secondary" th:href="@{/events/available}">Events</a></li>
+            <li><a class="secondary" th:href="@{/account/my-account}">My Account</a></li>
+            <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>
+            </li>
         </ul>
     </nav>
     <article id="article">
@@ -47,7 +48,7 @@
                 </tbody>
 
             </table>
-            <a th:href="@{/tickets/my-tickets}" class="secondary">Purchase History</a></li>
+            <a class="secondary" th:href="@{/tickets/my-tickets}">Purchase History</a></li>
 
         </figure>
     </article>

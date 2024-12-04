@@ -1,57 +1,59 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Ticket Confirmation</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <main class="container-fluid">
-        <h2>Sean's Event Management System</h2>
-        <form id="logout-form" name="logout-form" th:action="@{/logout}" method="post"></form>
+<main class="container-fluid">
+    <h2>Sean's Event Management System</h2>
+    <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
 
-        <article>
-            <h3>Purchase Successful!</h3>
-            
-            <table role="grid">
-                <tbody>
-                    <tr>
-                        <th scope="row">Event</th>
-                        <td th:text="${ticket.event.name}">Event Name</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Ticket Type</th>
-                        <td th:text="${ticket.type}">Ticket Type</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Quantity</th>
-                        <td th:text="${quantity}">Quantity</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Price per Ticket</th>
-                        <td th:text="${'¥' + ticket.price}">Price per Ticket</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Total Price</th>
-                        <td th:text="${'¥' + (#numbers.formatDecimal(ticket.price * quantity, 1, 'COMMA', 2, 'POINT'))}">Total Price</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Purchase Time</th>
-                        <td th:text="${#temporals.format(ticket.purchaseTime, 'yyyy-MM-dd HH:mm:ss')}">Purchase Time</td>
-                    </tr>
-                </tbody>
-            </table>
+    <article>
+        <h3>Purchase Successful!</h3>
 
-            <div class="grid">
-                <div>
-                    <a th:href="@{/customer}" role="button">Back to Dashboard</a>
-                </div>
-                <div>
-                    <a th:href="@{/events/available}" role="button" class="secondary outline">Browse More Events</a>
-                </div>
+        <table role="grid">
+            <tbody>
+            <tr>
+                <th scope="row">Event</th>
+                <td th:text="${ticket.event.name}">Event Name</td>
+            </tr>
+            <tr>
+                <th scope="row">Ticket Type</th>
+                <td th:text="${ticket.type}">Ticket Type</td>
+            </tr>
+            <tr>
+                <th scope="row">Quantity</th>
+                <td th:text="${quantity}">Quantity</td>
+            </tr>
+            <tr>
+                <th scope="row">Price per Ticket</th>
+                <td th:text="${'¥' + ticket.price}">Price per Ticket</td>
+            </tr>
+            <tr>
+                <th scope="row">Total Price</th>
+                <td th:text="${'¥' + (#numbers.formatDecimal(ticket.price * quantity, 1, 'COMMA', 2, 'POINT'))}">Total
+                    Price
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Purchase Time</th>
+                <td th:text="${#temporals.format(ticket.purchaseTime, 'yyyy-MM-dd HH:mm:ss')}">Purchase Time</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="grid">
+            <div>
+                <a role="button" th:href="@{/customer}">Back to Dashboard</a>
             </div>
-        </article>
-    </main>
+            <div>
+                <a class="secondary outline" role="button" th:href="@{/events/available}">Browse More Events</a>
+            </div>
+        </div>
+    </article>
+</main>
 </body>
 </html> 
