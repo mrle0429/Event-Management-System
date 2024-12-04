@@ -42,7 +42,7 @@ public class EventSystem {
     public String listEvents(Model model) {
         List<Event> events = eventService.getAllEvents();
         model.addAttribute("events", events);
-        return "events/list";
+        return "events/list-events";
     }
 
     /**
@@ -64,7 +64,7 @@ public class EventSystem {
         }
 
         model.addAttribute("event", event);
-        return "events/detail";
+        return "events/detail-event";
     }
 
     /**
@@ -94,7 +94,7 @@ public class EventSystem {
                 .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
             model.addAttribute("organisers", eventService.getAllOrganisers());
         }
-        return "events/create";
+        return "events/create-event";
     }
 
     /**
@@ -207,7 +207,7 @@ public class EventSystem {
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
-        return "events/edit";
+        return "events/edit-event";
     }
 
     /**
@@ -280,7 +280,7 @@ public class EventSystem {
     public String listAvailableEvents(Model model) {
         List<Event> availableEvents = eventService.getAvailableEvents();
         model.addAttribute("events", availableEvents);
-        return "events/available";
+        return "events/available-events";
     }
 
 }

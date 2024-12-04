@@ -1,5 +1,10 @@
 package ucd.comp3013j.ems.model.enums;
 
+import ucd.comp3013j.ems.model.entities.Account;
+import ucd.comp3013j.ems.model.entities.Administrator;
+import ucd.comp3013j.ems.model.entities.Customer;
+import ucd.comp3013j.ems.model.entities.Organiser;
+
 /**
  * Enumeration of user roles in the Event Management System.
  * 

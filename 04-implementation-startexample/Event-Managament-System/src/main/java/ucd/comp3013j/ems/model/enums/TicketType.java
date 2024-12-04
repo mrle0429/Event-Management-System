@@ -1,5 +1,9 @@
 package ucd.comp3013j.ems.model.enums;
 
+import ucd.comp3013j.ems.model.entities.Event;
+import ucd.comp3013j.ems.model.entities.Ticket;
+import ucd.comp3013j.ems.model.entities.Venue;
+
 /**
  * Enumeration of ticket types available for events.
  * 

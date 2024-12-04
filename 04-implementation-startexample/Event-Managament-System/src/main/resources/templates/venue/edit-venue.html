@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Edit Venue</title>
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container">
@@ -43,8 +44,11 @@
             </div>
 
             <div class="grid">
-                <a class="secondary" role="button" th:href="@{/venue}">Cancel</a>
-                <button type="submit">Update Venue</button>
+                <a class="secondary" role="button" th:href="@{/venue}">Back</a>
+            </div>
+<p></p>
+            <div class="grid">
+                <button type="submit">Update</button>
             </div>
         </form>
     </div>

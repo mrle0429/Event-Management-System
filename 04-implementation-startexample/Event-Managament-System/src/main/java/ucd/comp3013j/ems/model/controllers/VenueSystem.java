@@ -38,7 +38,7 @@ public class VenueSystem {
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
-        return "venue/detail";
+        return "venue/detail-venue";
     }
 
     /**
@@ -55,7 +55,7 @@ public class VenueSystem {
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
-        return "venue/edit";
+        return "venue/edit-venue";
     }
 
     /**
@@ -66,9 +66,17 @@ public class VenueSystem {
      * @return Redirects to venues list page
      */
     @PostMapping("/{id}/edit")
-    public String updateVenue(@PathVariable Long id, @ModelAttribute VenueDTO venueDTO) {
-        venueService.updateVenue(venueDTO);
-        return "redirect:/venue";
+    public String updateVenue(@PathVariable Long id, @ModelAttribute VenueDTO venueDTO, RedirectAttributes redirectAttributes) {
+        try{
+            venueService.updateVenue(venueDTO);
+            redirectAttributes.addFlashAttribute("message", "Venue Update Success!");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/venue/" + id ;
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/venue/" + id + "/edit";
+        }
     }
 
     /**
@@ -92,7 +100,7 @@ public class VenueSystem {
     @GetMapping("/create")
     public String showCreateVenueForm(Model model) {
         model.addAttribute("venueDTO", new VenueDTO());
-        return "venue/create";
+        return "venue/create-venue";
     }
 
     /**
@@ -118,6 +126,6 @@ public class VenueSystem {
     @GetMapping
     public String listVenues(Model model) {
         model.addAttribute("venues", venueService.getAllVenues());
-        return "venue/list";
+        return "venue/list-venues";
     }
 } 

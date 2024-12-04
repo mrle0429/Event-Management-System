@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ucd.comp3013j.ems.model.dto.AccountDTO;
 import ucd.comp3013j.ems.model.entities.*;
 import ucd.comp3013j.ems.model.enums.Role;
@@ -250,7 +251,7 @@ public class AccountSystem {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
-        return "account/edit";
+        return "account/admin-update-account";
     }
 
     /**
@@ -283,10 +284,27 @@ public class AccountSystem {
      * @return Redirects to administrator page
      */
     @PostMapping("/deleteCustomer")
-    public String deleteCustomer(@RequestParam Long customerId) {
-        Customer customer = (Customer) accountService.getAccount(customerId);
+    public String deleteCustomer(@RequestParam Long customerId, RedirectAttributes redirectAttributes, Authentication authentication) {
+        try {
+            if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+                if (!aw.getAuthorities().stream()
+                        .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                    redirectAttributes.addFlashAttribute("message", "Only administrators can delete accounts");
+                    redirectAttributes.addFlashAttribute("messageType", "error");
+                    return "redirect:/administrator";
+                }
+    
 
-        accountService.deleteCustomer(customer);
+                Customer customer = (Customer) accountService.getAccount(customerId);
+                accountService.deleteCustomer(customerId);
+                redirectAttributes.addFlashAttribute("message", 
+                    String.format("Successfully deleted customer account: %s", customer.getName()));
+                redirectAttributes.addFlashAttribute("messageType", "success");
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Error deleting customer account: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+        }
         return "redirect:/administrator";
     }
 
@@ -325,12 +343,14 @@ public class AccountSystem {
      * @return Redirects to administrator page or returns create account page on error
      */
     @PostMapping("/create-account")
-    public String createAccount(@ModelAttribute AccountDTO accountDTO, Model model) {
+    public String createAccount(@ModelAttribute AccountDTO accountDTO, Model model, Authentication authentication, RedirectAttributes redirectAttributes) {
         try {
             if (accountDTO.getRole().equals("CUSTOMER")) {
-                accountDTO.setRole("USER");
+                accountDTO.setRole("CUSTOMER");
             }
             accountService.createAccount(accountDTO);
+            redirectAttributes.addFlashAttribute("message", "Account created successfully!");
+            redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/administrator";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
@@ -401,7 +421,7 @@ public class AccountSystem {
             }
 
             model.addAttribute("accountDTO", accountDTO);
-            return "account/edit-account";
+            return "account/edit-profile";
         }
         return "redirect:/login";
     }
@@ -429,7 +449,7 @@ public class AccountSystem {
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "account/edit-account";
+            return "account/edit-profile";
         }
     }
 

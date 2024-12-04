@@ -11,6 +11,9 @@
 <body>
 <main class="container">
     <h2>Event Management System</h2>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
     <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
     <nav class="container-fluid">
         <ul>

@@ -57,12 +57,10 @@
         </table>
 
         <div class="grid">
+            <button class="button secondary" type="button" onclick="history.back()">Back</button>
             <a class="secondary"
                role="button"
-               th:href="@{/administrator}" th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Back to Events</a>
-            <a class="secondary"
-               role="button"
-               th:href="@{/events/available}" th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">View Available Events</a>
+               th:href="@{/events/available}" th:if="${#authorization.expression('hasAuthority(''CUSTOMER'')')}">View Available Events</a>
         </div>
     </div>
 
