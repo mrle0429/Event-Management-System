@@ -61,7 +61,8 @@ public class VenueService {
      * @return The found Venue object, or null if not found
      */
     public Venue getVenueById(Long id) {
-        return venueRepository.findById(id).orElse(null);
+        return venueRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venue not found"));
     }
 
     /**
@@ -85,6 +86,9 @@ public class VenueService {
      * @param id Venue ID to delete
      */
     public void deleteVenue(Long id) {
+        venueRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venue not found"));
+
         venueRepository.deleteById(id);
     }
 

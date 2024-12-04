@@ -34,6 +34,7 @@ public class EventSystem {
     /**
      * Lists all events in the system.
      * Accessible by: All users
+     *
      * @param model Spring MVC Model object
      * @return The events list page view
      */
@@ -47,7 +48,8 @@ public class EventSystem {
     /**
      * Displays detailed information for a specific event.
      * Accessible by: All users
-     * @param id Event ID
+     *
+     * @param id    Event ID
      * @param model Spring MVC Model object
      * @return The event detail page view
      */
@@ -68,7 +70,8 @@ public class EventSystem {
     /**
      * Displays the event creation form.
      * Accessible by: Administrators and Organisers
-     * @param model Spring MVC Model object
+     *
+     * @param model          Spring MVC Model object
      * @param authentication Current user's authentication information
      * @return The event creation page view or redirects to login/home page
      */
@@ -97,9 +100,10 @@ public class EventSystem {
     /**
      * Handles the creation of a new event.
      * Accessible by: Administrators and Organisers
-     * @param eventDTO Event data transfer object
-     * @param dateStr Event date string in yyyy-MM-dd format
-     * @param timeStr Event time string in HH:mm format
+     *
+     * @param eventDTO       Event data transfer object
+     * @param dateStr        Event date string in yyyy-MM-dd format
+     * @param timeStr        Event time string in HH:mm format
      * @param authentication Current user's authentication information
      * @return Redirects to administrator or organiser page based on user role
      * @throws RuntimeException if date/time format is invalid or administrator doesn't specify organiser
@@ -142,8 +146,9 @@ public class EventSystem {
     /**
      * Checks if a venue is available for a specific date.
      * Accessible by: Administrators and Organisers
+     *
      * @param venueId Venue ID to check
-     * @param date Date to check availability for
+     * @param date    Date to check availability for
      * @return ResponseEntity containing boolean indicating venue availability
      */
     @GetMapping("checkVenue")
@@ -153,49 +158,54 @@ public class EventSystem {
 
     @GetMapping("checkVenueCapacity")
     public ResponseEntity<Boolean> checkVenueCapacity(
-        @RequestParam Long venueId,
-        @RequestParam("type") String ticketType,
-        @RequestParam Integer requestedSeats) {
-    Venue venue = venueService.getVenueById(venueId);
-    if (venue == null) {
-        return ResponseEntity.ok(false);
+            @RequestParam Long venueId,
+            @RequestParam("type") String ticketType,
+            @RequestParam Integer requestedSeats) {
+        Venue venue = venueService.getVenueById(venueId);
+        if (venue == null) {
+            return ResponseEntity.ok(false);
+        }
+
+        Integer capacity = venue.getSeatsByLevel().get(TicketType.valueOf(ticketType));
+        return ResponseEntity.ok(capacity >= requestedSeats);
     }
-    
-    Integer capacity = venue.getSeatsByLevel().get(TicketType.valueOf(ticketType));
-    return ResponseEntity.ok(capacity >= requestedSeats);
-}
 
     /**
      * Displays the event edit form.
      * Accessible by: Administrators and event owners (Organisers)
-     * @param id Event ID
-     * @param model Spring MVC Model object
+     *
+     * @param id             Event ID
+     * @param model          Spring MVC Model object
      * @param authentication Current user's authentication information
      * @return The event edit page view
      */
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model, Authentication authentication) {
-        Event event = eventService.getEvent(id);
+        try {
+            Event event = eventService.getEvent(id);
 
-        // 将 Event 转换为 EventDTO
-        EventDTO eventDTO = new EventDTO();
-        eventDTO.setName(event.getName());
-        eventDTO.setDescription(event.getDescription());
-        eventDTO.setDate(event.getDate());
-        eventDTO.setTime(event.getTime());
-        eventDTO.setVenueId(event.getVenue().getId());
-        eventDTO.setOrganiserId(event.getOrganiser().getId());
-        eventDTO.setPricesByLevel(event.getPricesByLevel());
-        eventDTO.setRemainingSeats(event.getRemainingSeats());
+            // 将 Event 转换为 EventDTO
+            EventDTO eventDTO = new EventDTO();
+            eventDTO.setName(event.getName());
+            eventDTO.setDescription(event.getDescription());
+            eventDTO.setDate(event.getDate());
+            eventDTO.setTime(event.getTime());
+            eventDTO.setVenueId(event.getVenue().getId());
+            eventDTO.setOrganiserId(event.getOrganiser().getId());
+            eventDTO.setPricesByLevel(event.getPricesByLevel());
+            eventDTO.setRemainingSeats(event.getRemainingSeats());
 
-        model.addAttribute("event", event);
-        model.addAttribute("eventDTO", eventDTO);
-        model.addAttribute("venues", venueService.getAllVenues());
+            model.addAttribute("event", event);
+            model.addAttribute("eventDTO", eventDTO);
+            model.addAttribute("venues", venueService.getAllVenues());
 
-        AccountWrapper aw = (AccountWrapper) authentication.getPrincipal();
-        if (aw.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
-            model.addAttribute("organisers", eventService.getAllOrganisers());
+            AccountWrapper aw = (AccountWrapper) authentication.getPrincipal();
+            if (aw.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                model.addAttribute("organisers", eventService.getAllOrganisers());
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
         }
         return "events/edit";
     }
@@ -203,10 +213,11 @@ public class EventSystem {
     /**
      * Updates an existing event.
      * Accessible by: Administrators and event owners (Organisers)
-     * @param id Event ID
-     * @param eventDTO Event data transfer object
-     * @param dateStr Event date string in yyyy-MM-dd format
-     * @param timeStr Event time string in HH:mm format
+     *
+     * @param id             Event ID
+     * @param eventDTO       Event data transfer object
+     * @param dateStr        Event date string in yyyy-MM-dd format
+     * @param timeStr        Event time string in HH:mm format
      * @param authentication Current user's authentication information
      * @return Redirects to administrator or organiser page based on user role
      * @throws RuntimeException if date/time format is invalid or administrator doesn't specify organiser
@@ -248,6 +259,7 @@ public class EventSystem {
     /**
      * Deletes an event.
      * Accessible by: Administrators and event owners (Organisers)
+     *
      * @param id Event ID to delete
      * @return Redirects to events list page
      */
@@ -260,6 +272,7 @@ public class EventSystem {
     /**
      * Lists all available events (events with remaining seats).
      * Accessible by: All users
+     *
      * @param model Spring MVC Model object
      * @return The available events list page view
      */

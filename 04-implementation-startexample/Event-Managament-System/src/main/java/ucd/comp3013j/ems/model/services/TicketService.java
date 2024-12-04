@@ -181,6 +181,12 @@ public class TicketService {
                 .filter(ticket -> {
                     Date eventDate = ticket.getEvent().getDate();
                     Date eventTime = ticket.getEvent().getTime();
+
+                    if (eventDate == null || eventTime == null){
+                        // Skip the time or date is null
+                        return false;
+                    }
+
                     return combineDateTime(eventDate, eventTime).after(new Date());
                 })
                 .collect(Collectors.toList());
@@ -195,6 +201,10 @@ public class TicketService {
      * @return Combined Date object
      */
     private Date combineDateTime(Date date, Date time) {
+        if (date == null || time == null){
+            throw new RuntimeException("Date and time must not be null!");
+        }
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 

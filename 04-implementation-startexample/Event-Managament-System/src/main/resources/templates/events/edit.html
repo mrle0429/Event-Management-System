@@ -7,61 +7,69 @@
 </head>
 <body>
 <main class="container">
-    <h2>Edit Event</h2>
-    <form id="editEvent" method="post" th:action="@{/events/{id}/edit(id=${event.id})}" th:object="${eventDTO}">
-        <label for="name">Event Name:</label>
-        <input id="name" required th:field="*{name}" type="text"/>
 
-        <label for="description">Description:</label>
-        <textarea id="description" required th:field="*{description}"></textarea>
+    <div class="alert alert-error" th:if="${errorMessage}">
+        <p th:text="${errorMessage}">Error message</p>
+    </div>
 
-        <label for="date">Date:</label>
-        <input id="date" name="dateStr" required th:value="${#dates.format(eventDTO.date, 'yyyy-MM-dd')}" type="date"/>
+    <div th:if="${eventDTO}">
+        <h2>Edit Event</h2>
+        <form id="editEvent" method="post" th:action="@{/events/{id}/edit(id=${event.id})}" th:object="${eventDTO}">
+            <label for="name">Event Name:</label>
+            <input id="name" required th:field="*{name}" type="text"/>
 
-        <label for="time">Time:</label>
-        <input id="time" name="timeStr" required th:value="${#dates.format(eventDTO.time, 'HH:mm')}" type="time"/>
+            <label for="description">Description:</label>
+            <textarea id="description" required th:field="*{description}"></textarea>
 
-        <label for="venue">Venue:</label>
-        <select id="venue" name="venueId" required>
-            <option value="">Select Venue</option>
-            <option th:each="venue : ${venues}"
-                    th:selected="${eventDTO.venueId  != null && eventDTO.venueId  == venue.id}"
-                    th:text="${venue.name}"
-                    th:value="${venue.id}">
-            </option>
-        </select>
+            <label for="date">Date:</label>
+            <input id="date" name="dateStr" required th:value="${#dates.format(eventDTO.date, 'yyyy-MM-dd')}"
+                   type="date"/>
 
-        <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
-            <label for="organiser">Organiser:</label>
-            <select id="organiser" name="organiserId" required>
-                <option value="">Select Organiser</option>
-                <option th:each="org : ${organisers}"
-                        th:selected="${eventDTO.organiserId  != null && eventDTO.organiserId == org.id}"
-                        th:text="${org.name}"
-                        th:value="${org.id}">
+            <label for="time">Time:</label>
+            <input id="time" name="timeStr" required th:value="${#dates.format(eventDTO.time, 'HH:mm')}" type="time"/>
+
+            <label for="venue">Venue:</label>
+            <select id="venue" name="venueId" required>
+                <option value="">Select Venue</option>
+                <option th:each="venue : ${venues}"
+                        th:selected="${eventDTO.venueId  != null && eventDTO.venueId  == venue.id}"
+                        th:text="${venue.name}"
+                        th:value="${venue.id}">
                 </option>
             </select>
-        </div>
 
-        <div id="ticketPricing">
-            <h4>Ticket Pricing</h4>
-            <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
-                <div class="grid">
-                    <div>
-                        <label th:for="${'price-' + type}" th:text="${type} + ' Price'">Level Price</label>
-                        <input min="0" step="0.01"
-                               th:field="*{pricesByLevel[__${type}__]}"
-                               th:id="${'price-' + type}" type="number"/>
+            <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
+                <label for="organiser">Organiser:</label>
+                <select id="organiser" name="organiserId" required>
+                    <option value="">Select Organiser</option>
+                    <option th:each="org : ${organisers}"
+                            th:selected="${eventDTO.organiserId  != null && eventDTO.organiserId == org.id}"
+                            th:text="${org.name}"
+                            th:value="${org.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div id="ticketPricing">
+                <h4>Ticket Pricing</h4>
+                <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
+                    <div class="grid">
+                        <div>
+                            <label th:for="${'price-' + type}" th:text="${type} + ' Price'">Level Price</label>
+                            <input min="0" step="0.01"
+                                   th:field="*{pricesByLevel[__${type}__]}"
+                                   th:id="${'price-' + type}" type="number"/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="grid">
-            <a class="secondary" role="button" th:href="@{/events}">Cancel</a>
-            <button type="submit">Update Event</button>
-        </div>
-    </form>
+            <div class="grid">
+                <a class="secondary" role="button" th:href="@{/events}">Cancel</a>
+                <button type="submit">Update Event</button>
+            </div>
+        </form>
+    </div>
 </main>
 
 <script>

@@ -7,40 +7,47 @@
 </head>
 <body>
 <main class="container">
-    <h2>Edit Venue</h2>
-    <form method="post" th:action="@{/venue/{id}/edit(id=${venueDTO.id})}" th:object="${venueDTO}">
-        <label for="name">Venue Name:</label>
-        <input id="name" required th:field="*{name}" type="text"/>
 
-        <label for="address">Address:</label>
-        <input id="address" required th:field="*{address}" type="text"/>
+    <div class="alert alert-error" th:if="${errorMessage}">
+        <p th:text="${errorMessage}">Error message</p>
+    </div>
 
-        <label for="description">Description:</label>
-        <textarea id="description" required th:field="*{description}"></textarea>
+    <div th:if="${venueDTO}">
+        <h2>Edit Venue</h2>
+        <form method="post" th:action="@{/venue/{id}/edit(id=${venueDTO.id})}" th:object="${venueDTO}">
+            <label for="name">Venue Name:</label>
+            <input id="name" required th:field="*{name}" type="text"/>
 
-        <label for="contactName">Contact Name:</label>
-        <input id="contactName" required th:field="*{contactName}" type="text"/>
+            <label for="address">Address:</label>
+            <input id="address" required th:field="*{address}" type="text"/>
 
-        <label for="contactPhone">Contact Phone:</label>
-        <input id="contactPhone" required th:field="*{contactPhone}" type="text"/>
+            <label for="description">Description:</label>
+            <textarea id="description" required th:field="*{description}"></textarea>
 
-        <label for="contactEmail">Contact Email:</label>
-        <input id="contactEmail" required th:field="*{contactEmail}" type="email"/>
+            <label for="contactName">Contact Name:</label>
+            <input id="contactName" required th:field="*{contactName}" type="text"/>
 
-        <div id="seatingCapacity">
-            <h4>Seating Capacity by Level</h4>
-            <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
-                <label th:for="${'seats-' + type}" th:text="${type}">Level</label>
-                <input min="0" th:field="*{seatsByLevel[__${type}__]}"
-                       th:id="${'seats-' + type}" type="number"/>
+            <label for="contactPhone">Contact Phone:</label>
+            <input id="contactPhone" required th:field="*{contactPhone}" type="text"/>
+
+            <label for="contactEmail">Contact Email:</label>
+            <input id="contactEmail" required th:field="*{contactEmail}" type="email"/>
+
+            <div id="seatingCapacity">
+                <h4>Seating Capacity by Level</h4>
+                <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
+                    <label th:for="${'seats-' + type}" th:text="${type}">Level</label>
+                    <input min="0" th:field="*{seatsByLevel[__${type}__]}"
+                           th:id="${'seats-' + type}" type="number"/>
+                </div>
             </div>
-        </div>
 
-        <div class="grid">
-            <a class="secondary" role="button" th:href="@{/venue}">Cancel</a>
-            <button type="submit">Update Venue</button>
-        </div>
-    </form>
+            <div class="grid">
+                <a class="secondary" role="button" th:href="@{/venue}">Cancel</a>
+                <button type="submit">Update Venue</button>
+            </div>
+        </form>
+    </div>
 </main>
 </body>
 </html> 

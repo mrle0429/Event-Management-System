@@ -51,7 +51,8 @@ public class EventService {
      * @return The found Event object, or null if not found
      */
     public Event getEvent(Long id) {
-        return eventRepository.findById(id).orElse(null);
+        return eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
     }
 
     /**
@@ -102,7 +103,8 @@ public class EventService {
      * @param id Event ID to delete
      */
     public void deleteEvent(Long id) {
-        eventRepository.deleteById(id);
+        eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
     }
 
     /**

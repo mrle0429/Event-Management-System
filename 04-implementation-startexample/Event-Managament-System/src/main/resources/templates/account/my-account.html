@@ -24,6 +24,17 @@
         </ul>
     </nav>
 
+    <!-- 显示成功/错误消息 -->
+    <div class="alert alert-success" th:if="${param.update_success}">
+        <p>Account updated successfully!</p>
+    </div>
+    <div class="alert alert-success" th:if="${param.password_changed}">
+        <p>Password changed successfully!</p>
+    </div>
+    <div class="alert alert-error" th:if="${errorMessage}">
+        <p th:text="${errorMessage}">Error message</p>
+    </div>
+
     <!-- 基本信息 - 所有角色都有 -->
     <article>
         <h3>Basic Information</h3>
@@ -70,17 +81,6 @@
     <div class="grid">
         <a role="button" th:href="@{/account/edit}">Edit Account</a>
         <a class="secondary" role="button" th:href="@{/account/change-password}">Change Password</a>
-    </div>
-
-    <!-- 显示成功/错误消息 -->
-    <div class="alert alert-success" th:if="${param.update_success}">
-        <p>Account updated successfully!</p>
-    </div>
-    <div class="alert alert-success" th:if="${param.password_changed}">
-        <p>Password changed successfully!</p>
-    </div>
-    <div class="alert alert-error" th:if="${errorMessage}">
-        <p th:text="${errorMessage}">Error message</p>
     </div>
 </main>
 </body>

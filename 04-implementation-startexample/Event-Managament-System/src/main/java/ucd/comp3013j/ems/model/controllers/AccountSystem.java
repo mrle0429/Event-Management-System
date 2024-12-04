@@ -40,6 +40,7 @@ public class AccountSystem {
     /**
      * Handles GET requests for the login page.
      * Accessible by: All users
+     *
      * @param model Spring MVC Model object
      * @return The login page view
      */
@@ -52,6 +53,7 @@ public class AccountSystem {
     /**
      * Handles GET requests for the signup page.
      * Accessible by: Unauthenticated users
+     *
      * @param model Spring MVC Model object
      * @return The signup page view
      */
@@ -65,9 +67,10 @@ public class AccountSystem {
     /**
      * Handles POST requests for user registration.
      * Accessible by: Unauthenticated users
+     *
      * @param registration Registration form data
-     * @param result Form validation result
-     * @param model Spring MVC Model object
+     * @param result       Form validation result
+     * @param model        Spring MVC Model object
      * @return Redirects to login page on success, or returns signup page on failure
      */
     @PostMapping("/register")
@@ -91,8 +94,9 @@ public class AccountSystem {
     /**
      * Displays the administrator home page.
      * Accessible by: Administrators
+     *
      * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param model          Spring MVC Model object
      * @return The main admin page view or redirects to login page
      */
     @GetMapping(value = {"/administrator", "/administrator/"})
@@ -123,8 +127,9 @@ public class AccountSystem {
     /**
      * Displays the customer home page.
      * Accessible by: Customers
+     *
      * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param model          Spring MVC Model object
      * @return The main customer page view
      */
     @GetMapping(value = {"/customer", "/customer/"})
@@ -142,8 +147,9 @@ public class AccountSystem {
     /**
      * Displays the organiser home page.
      * Accessible by: Organisers
+     *
      * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param model          Spring MVC Model object
      * @return The main organiser page view
      */
     @GetMapping(value = {"/organiser", "/organiser/"})
@@ -161,9 +167,10 @@ public class AccountSystem {
     /**
      * Displays account details.
      * Accessible by: Administrators and the account owner
-     * @param userEmail Email of the user to view (optional)
+     *
+     * @param userEmail      Email of the user to view (optional)
      * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param model          Spring MVC Model object
      * @return The account detail page view
      */
     @GetMapping("/detail")
@@ -171,35 +178,40 @@ public class AccountSystem {
 
         Account account = null;
 
-        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
-            String email = aw.getUsername();
-            if (aw.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
-                // 管理员通过用户ID获取账户信息
-                account = accountService.getAccount(userEmail);
-            } else {
-                // 非管理员只能查看自己的信息
-                account = accountService.getAccount(email);
-            }
+        try {
+            if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+                String email = aw.getUsername();
+                if (aw.getAuthorities().stream()
+                        .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                    // 管理员通过用户ID获取账户信息
+                    account = accountService.getAccount(userEmail);
+                } else {
+                    // 非管理员只能查看自己的信息
+                    account = accountService.getAccount(email);
+                }
 
-            if (account.getRole() == Role.ORGANISER) {
-                Organiser organiser = (Organiser) account;
-                model.addAttribute("account", organiser);
-                return "detail";
-            }
+                if (account.getRole() == Role.ORGANISER) {
+                    Organiser organiser = (Organiser) account;
+                    model.addAttribute("account", organiser);
+                    return "account/detail";
+                }
 
-            model.addAttribute("account", account);
+                model.addAttribute("account", account);
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
         }
 
-        return "detail";
+        return "account/detail";
     }
 
     /**
      * Displays the account edit page.
      * Accessible by: Administrators and the account owner
-     * @param userEmail Email of the user to edit (optional)
+     *
+     * @param userEmail      Email of the user to edit (optional)
      * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param model          Spring MVC Model object
      * @return The account edit page view
      */
     @GetMapping("/edit")
@@ -208,39 +220,44 @@ public class AccountSystem {
         Account account = null;
         AccountDTO accountDTO = new AccountDTO();
 
-        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
-            String email = aw.getUsername();
-            if (aw.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
-                // 管理员通过用户ID获取账户信息
-                account = accountService.getAccount(userEmail);
+        try {
+            if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+                String email = aw.getUsername();
+                if (aw.getAuthorities().stream()
+                        .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                    // 管理员通过用户ID获取账户信息
+                    account = accountService.getAccount(userEmail);
 
-            } else {
-                // 非管理员只能修改自己的信息
-                account = accountService.getAccount(email);
+                } else {
+                    // 非管理员只能修改自己的信息
+                    account = accountService.getAccount(email);
+                }
+                accountDTO.setId(account.getId());
+                accountDTO.setName(account.getName());
+                accountDTO.setEmail(account.getEmail());
+                accountDTO.setRole(String.valueOf(account.getRole()));
+
+                if (account.getRole() == Role.ORGANISER) {
+                    Organiser organiser = (Organiser) account;
+                    accountDTO.setCompanyName(organiser.getCompanyName());
+                    accountDTO.setAddress(organiser.getAddress());
+                    accountDTO.setPhoneNumber(organiser.getPhoneNumber());
+                }
+
+                model.addAttribute("accountDTO", accountDTO);
             }
-            accountDTO.setId(account.getId());
-            accountDTO.setName(account.getName());
-            accountDTO.setEmail(account.getEmail());
-            accountDTO.setRole(String.valueOf(account.getRole()));
-
-            if (account.getRole() == Role.ORGANISER) {
-                Organiser organiser = (Organiser) account;
-                accountDTO.setCompanyName(organiser.getCompanyName());
-                accountDTO.setAddress(organiser.getAddress());
-                accountDTO.setPhoneNumber(organiser.getPhoneNumber());
-            }
-
-            model.addAttribute("accountDTO", accountDTO);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
         }
 
-        return "edit";
+        return "account/edit";
     }
 
     /**
      * Updates account information.
      * Accessible by: Administrators and the account owner
-     * @param accountDTO Account data transfer object
+     *
+     * @param accountDTO     Account data transfer object
      * @param authentication Current user's authentication information
      * @return Redirects to account detail page or logout
      */
@@ -253,9 +270,6 @@ public class AccountSystem {
                     .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
                 return "redirect:/detail?userEmail=" + accountDTO.getEmail();
             }
-            if (!aw.getUsername().equals(accountDTO.email)) {
-                return "redirect:/logout";
-            }
         }
 
         return "redirect:/detail";
@@ -264,6 +278,7 @@ public class AccountSystem {
     /**
      * Deletes a customer account.
      * Accessible by: Administrators
+     *
      * @param customerId ID of the customer to delete
      * @return Redirects to administrator page
      */
@@ -278,6 +293,7 @@ public class AccountSystem {
     /**
      * Deletes an organiser account.
      * Accessible by: Administrators
+     *
      * @param organiserId ID of the organiser to delete
      * @return Redirects to administrator page
      */
@@ -290,6 +306,7 @@ public class AccountSystem {
     /**
      * Displays the create account form for administrators.
      * Accessible by: Administrators
+     *
      * @param model Spring MVC Model object
      * @return The create account page view
      */
@@ -302,8 +319,9 @@ public class AccountSystem {
     /**
      * Handles the creation of a new account by an administrator.
      * Accessible by: Administrators
+     *
      * @param accountDTO Account data transfer object
-     * @param model Spring MVC Model object
+     * @param model      Spring MVC Model object
      * @return Redirects to administrator page or returns create account page on error
      */
     @PostMapping("/create-account")
@@ -323,8 +341,9 @@ public class AccountSystem {
     /**
      * Displays the current user's account information.
      * Accessible by: All authenticated users
+     *
      * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param model          Spring MVC Model object
      * @return The my account page view or redirects to login page
      */
     @GetMapping("/account/my-account")
@@ -359,8 +378,9 @@ public class AccountSystem {
     /**
      * Displays the edit account page for the current user.
      * Accessible by: All authenticated users
+     *
      * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param model          Spring MVC Model object
      * @return The edit account page view or redirects to login page
      */
     @GetMapping("/account/edit")
@@ -389,9 +409,10 @@ public class AccountSystem {
     /**
      * Updates the current user's account information.
      * Accessible by: All authenticated users
-     * @param accountDTO Account data transfer object
+     *
+     * @param accountDTO     Account data transfer object
      * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param model          Spring MVC Model object
      * @return Redirects to my account page or returns edit account page on error
      */
     @PostMapping("/account/edit")
@@ -415,6 +436,7 @@ public class AccountSystem {
     /**
      * Displays the change password page.
      * Accessible by: All authenticated users
+     *
      * @param model Spring MVC Model object
      * @return The change password page view
      */
@@ -426,10 +448,11 @@ public class AccountSystem {
     /**
      * Changes the current user's password.
      * Accessible by: All authenticated users
+     *
      * @param currentPassword Current password
-     * @param newPassword New password
-     * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param newPassword     New password
+     * @param authentication  Current user's authentication information
+     * @param model           Spring MVC Model object
      * @return Redirects to my account page or returns change password page on error
      */
     @PostMapping("/account/change-password")
@@ -453,8 +476,9 @@ public class AccountSystem {
     /**
      * Displays the customer's tickets.
      * Accessible by: Customers
+     *
      * @param authentication Current user's authentication information
-     * @param model Spring MVC Model object
+     * @param model          Spring MVC Model object
      * @return The main customer page view or redirects to login page
      */
     @GetMapping("/customer/tickets")

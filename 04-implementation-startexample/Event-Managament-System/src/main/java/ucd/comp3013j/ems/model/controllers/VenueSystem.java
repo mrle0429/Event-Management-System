@@ -33,7 +33,11 @@ public class VenueSystem {
      */
     @GetMapping("/{id}")
     public String showVenueDetails(@PathVariable Long id, Model model) {
-        model.addAttribute("venue", venueService.getVenueById(id));
+        try {
+            model.addAttribute("venue", venueService.getVenueById(id));
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
         return "venue/detail";
     }
 
@@ -46,7 +50,11 @@ public class VenueSystem {
      */
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("venueDTO", venueService.getVenueById(id));
+        try {
+            model.addAttribute("venueDTO", venueService.getVenueById(id));
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
         return "venue/edit";
     }
 

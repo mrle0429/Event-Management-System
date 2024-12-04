@@ -8,38 +8,44 @@
 <body>
 <main class="container">
 
-    <h2>Edit Account</h2>
-    <form method="post" th:action="@{/edit}" th:object="${accountDTO}">
+    <div class="alert alert-error" th:if="${errorMessage}">
+        <p th:text="${errorMessage}">Error message</p>
+    </div>
 
-        <input th:name="id" th:value="${accountDTO.id}" type="hidden"/>
-        <input th:name="role" th:value="${accountDTO.role}" type="hidden"/>
+    <div th:if="${accountDTO}">
+        <h2>Edit Account</h2>
+        <form method="post" th:action="@{/edit}" th:object="${accountDTO}">
 
-        <label for="name">Name:</label>
-        <input id="name" required th:field="*{name}" type="text"/>
+            <input th:name="id" th:value="${accountDTO.id}" type="hidden"/>
+            <input th:name="role" th:value="${accountDTO.role}" type="hidden"/>
 
-        <label for="email">Email:</label>
-        <input id="email" readonly required th:field="*{email}" type="email"/>
+            <label for="name">Name:</label>
+            <input id="name" required th:field="*{name}" type="text"/>
 
-        <div th:if="${accountDTO.role == 'ORGANISER'}">
-            <label for="companyName">Company Name:</label>
-            <input id="companyName" th:field="*{companyName}" type="text"/>
+            <label for="email">Email:</label>
+            <input id="email" readonly required th:field="*{email}" type="email"/>
 
-            <label for="address">Address:</label>
-            <input id="address" th:field="*{Address}" type="text"/>
+            <div th:if="${accountDTO.role == 'ORGANISER'}">
+                <label for="companyName">Company Name:</label>
+                <input id="companyName" th:field="*{companyName}" type="text"/>
 
-            <label for="phoneNumber">Phone Number:</label>
-            <input id="phoneNumber" th:field="*{phoneNumber}" type="text"/>
-        </div>
+                <label for="address">Address:</label>
+                <input id="address" th:field="*{address}" type="text"/>
 
-        <div class="grid">
-            <a class="secondary"
-               role="button"
-               th:href="@{/detail(userEmail=${accountDTO.email})}" th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Cancel</a>
-            <a class="secondary" role="button"
-               th:href="@{/detail}" th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Cancel</a>
-            <button type="submit">Save</button>
-        </div>
-    </form>
+                <label for="phoneNumber">Phone Number:</label>
+                <input id="phoneNumber" th:field="*{phoneNumber}" type="text"/>
+            </div>
+
+            <div class="grid">
+                <a class="secondary"
+                   role="button"
+                   th:href="@{/detail(userEmail=${accountDTO.email})}" th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Cancel</a>
+                <a class="secondary" role="button"
+                   th:href="@{/detail}" th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Cancel</a>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
 </main>
 </body>
 </html>
