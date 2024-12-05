@@ -104,7 +104,7 @@ public class TicketSystem {
 
         model.addAttribute("ticket", ticket);
         model.addAttribute("quantity", quantity);
-        return "ticketspurchase-success";
+        return "tickets/purchase-success";
     }
 
     /**

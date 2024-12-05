@@ -71,11 +71,59 @@
 </main>
 
 <script>
+    // 添加日期验证函数
+    function isValidDate(dateInput) {
+        const selectedDate = new Date(dateInput.value);
+        selectedDate.setHours(0, 0, 0, 0);
+        
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        return selectedDate > today;
+    }
+
+    // 添加日期输入验证
+    document.querySelector("#date").addEventListener("change", function(e) {
+        const dateInput = e.target;
+        const errorMsg = dateInput.nextElementSibling;
+        
+        if (!isValidDate(dateInput)) {
+            dateInput.style.borderColor = 'red';
+            if (!errorMsg || !errorMsg.classList.contains('error-message')) {
+                const error = document.createElement('small');
+                error.style.color = 'red';
+                error.classList.add('error-message');
+                error.textContent = 'Please select a future date';
+                dateInput.parentNode.insertBefore(error, dateInput.nextSibling);
+            }
+        } else {
+            dateInput.style.borderColor = '';
+            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                errorMsg.remove();
+            }
+        }
+    });
+
     document.querySelector("#editEvent").addEventListener("submit", function (e) {
         e.preventDefault();
 
+        const dateInput = document.querySelector("#date");
+        // 添加日期验证
+        if (!isValidDate(dateInput)) {
+            dateInput.style.borderColor = 'red';
+            const errorMsg = dateInput.nextElementSibling;
+            if (!errorMsg || !errorMsg.classList.contains('error-message')) {
+                const error = document.createElement('small');
+                error.style.color = 'red';
+                error.classList.add('error-message');
+                error.textContent = 'Please select a future date';
+                dateInput.parentNode.insertBefore(error, dateInput.nextSibling);
+            }
+            return;
+        }
+
         const venueId = document.querySelector("#venue").value;
-        const date = document.querySelector("#date").value;
+        const date = dateInput.value;
 
         // 检查所有票种的座位数是否超过场馆容量
         let capacityValid = true;
