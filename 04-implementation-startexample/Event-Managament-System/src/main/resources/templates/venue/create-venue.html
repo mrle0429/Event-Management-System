@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <title>Create Venue</title>
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container">
     <h2>Create Venue</h2>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
+
     <form method="post" th:action="@{/venue/create}" th:object="${venueDTO}">
         <label for="name">Venue Name:</label>
         <input id="name" required th:field="*{name}" type="text"/>

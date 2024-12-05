@@ -4,9 +4,13 @@
     <title>Event Details</title>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container">
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
     <h2>Event Details</h2>
 
     <div th:if="${event != null}">

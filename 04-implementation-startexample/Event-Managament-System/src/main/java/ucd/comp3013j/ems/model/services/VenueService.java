@@ -33,6 +33,9 @@ public class VenueService {
      * @param venueDTO DTO containing venue information
      */
     public void createVenue(VenueDTO venueDTO) {
+        if(venueRepository.findByName(venueDTO.getName()) != null){
+            throw new RuntimeException("Venue already exists");
+        }
         Venue venue = new Venue();
         venue.setName(venueDTO.getName());
         venue.setAddress(venueDTO.getAddress());
@@ -75,6 +78,13 @@ public class VenueService {
     public void updateVenue(VenueDTO venueDTO) {
         Venue venue = venueRepository.findById(venueDTO.getId())
                 .orElseThrow(() -> new RuntimeException("Venue not found"));
+
+        if (!venue.getName().equals(venueDTO.getName())) {
+                    Venue venueWithSameName = venueRepository.findByName(venueDTO.getName());
+                    if (venueWithSameName != null && !venueWithSameName.getId().equals(venueDTO.getId())) {
+                        throw new RuntimeException("Venue name already exists");
+                    }
+                }
 
         updateVenueFromDTO(venue, venueDTO);
         venueRepository.save(venue);

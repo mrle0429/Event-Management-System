@@ -86,7 +86,9 @@ public class VenueSystem {
      * @return Redirects to venues list page
      */
     @PostMapping("/{id}/delete")
-    public String deleteVenue(@PathVariable Long id) {
+    public String deleteVenue(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message", "Venue Deleted Success!");
+        redirectAttributes.addFlashAttribute("messageType", "success");
         venueService.deleteVenue(id);
         return "redirect:/venue";
     }
@@ -111,10 +113,17 @@ public class VenueSystem {
      */
     @PostMapping("/create")
     public String createVenue(@ModelAttribute VenueDTO venueDTO, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("message", "Venue Create Success!");
-        redirectAttributes.addFlashAttribute("messageType", "success");
-        venueService.createVenue(venueDTO);
-        return "redirect:/venue";
+        try {
+            venueService.createVenue(venueDTO);
+            redirectAttributes.addFlashAttribute("message", "Venue created successfully");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/venue";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            redirectAttributes.addFlashAttribute("venueDTO", venueDTO);
+            return "redirect:/venue/create";
+        }
     }
 
     /**

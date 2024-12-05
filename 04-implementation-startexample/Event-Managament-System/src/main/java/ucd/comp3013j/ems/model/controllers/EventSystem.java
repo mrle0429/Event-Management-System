@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ucd.comp3013j.ems.model.dto.EventDTO;
 import ucd.comp3013j.ems.model.entities.Event;
 import ucd.comp3013j.ems.model.entities.Organiser;
@@ -112,7 +113,8 @@ public class EventSystem {
     public String createEvent(@ModelAttribute EventDTO eventDTO,
                               @RequestParam("dateStr") String dateStr,
                               @RequestParam("timeStr") String timeStr,
-                              Authentication authentication) {
+                              Authentication authentication,
+                              RedirectAttributes redirectAttributes) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -128,11 +130,15 @@ public class EventSystem {
                         throw new RuntimeException("Administrator must specify an organiser");
                     }
                     eventService.createEvent(eventDTO);
-                    return "redirect:/administrator";
+                    redirectAttributes.addFlashAttribute("message", "Event created successfully");
+                    redirectAttributes.addFlashAttribute("messageType", "success");
+                    return "redirect:/events";
                 } else {
                     Organiser organiser = eventService.getOrganiserByEmail(userEmail);
                     eventDTO.setOrganiserId(organiser.getId());
                     eventService.createEvent(eventDTO);
+                    redirectAttributes.addFlashAttribute("message", "Event created successfully");
+                    redirectAttributes.addFlashAttribute("messageType", "success");
                     return "redirect:/organiser";
                 }
             }
@@ -226,45 +232,55 @@ public class EventSystem {
     public String updateEvent(@PathVariable Long id, @ModelAttribute EventDTO eventDTO,
                               @RequestParam("dateStr") String dateStr,
                               @RequestParam("timeStr") String timeStr,
-                              Authentication authentication) {
+                              Authentication authentication,
+                              RedirectAttributes redirectAttributes) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
             eventDTO.setDate(dateFormat.parse(dateStr));
             eventDTO.setTime(timeFormat.parse(timeStr));
+
+            if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+                String userEmail = aw.getUsername();
+                if (aw.getAuthorities().stream()
+                        .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
+                    if (eventDTO.getOrganiserId() == null) {
+                        throw new RuntimeException("Administrator must specify an organiser");
+                    }
+                    eventService.updateEvent(id, eventDTO);
+                    redirectAttributes.addFlashAttribute("message", "Event updated successfully");
+                    redirectAttributes.addFlashAttribute("messageType", "success");
+                    return "redirect:/events/" + id;
+                } else {
+                    Organiser organiser = eventService.getOrganiserByEmail(userEmail);
+                    eventDTO.setOrganiserId(organiser.getId());
+                    eventService.updateEvent(id, eventDTO);
+                    redirectAttributes.addFlashAttribute("message", "Event updated successfully");
+                    redirectAttributes.addFlashAttribute("messageType", "success");
+                    return "redirect:/organiser";
+                }
+            }
         } catch (ParseException e) {
             throw new RuntimeException("Invalid date or time format", e);
         }
 
-        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
-            String userEmail = aw.getUsername();
-            if (aw.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
-                if (eventDTO.getOrganiserId() == null) {
-                    throw new RuntimeException("Administrator must specify an organiser");
-                }
-                eventService.updateEvent(id, eventDTO);
-                return "redirect:/administrator";
-            } else {
-                Organiser organiser = eventService.getOrganiserByEmail(userEmail);
-                eventDTO.setOrganiserId(organiser.getId());
-                eventService.updateEvent(id, eventDTO);
-                return "redirect:/organiser";
-            }
-        }
+
         return "redirect:/events";
     }
 
     /**
      * Deletes an event.
-     * Accessible by: Administrators and event owners (Organisers)
+     * Accessible by: Administrators 
      *
      * @param id Event ID to delete
      * @return Redirects to events list page
      */
     @PostMapping("/{id}/delete")
-    public String deleteEvent(@PathVariable Long id) {
+    public String deleteEvent(@PathVariable Long id, Authentication authentication, RedirectAttributes redirectAttributes) {
+        
+        redirectAttributes.addFlashAttribute("message", "Event deleted successfully");
+        redirectAttributes.addFlashAttribute("messageType", "success");
         eventService.deleteEvent(id);
         return "redirect:/events";
     }

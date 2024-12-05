@@ -103,8 +103,9 @@ public class EventService {
      * @param id Event ID to delete
      */
     public void deleteEvent(Long id) {
-        eventRepository.findById(id)
+        Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Event not found"));
+        eventRepository.delete(event);
     }
 
     /**
