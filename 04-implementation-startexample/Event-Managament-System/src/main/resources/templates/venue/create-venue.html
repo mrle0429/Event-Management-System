@@ -7,13 +7,11 @@
     <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="notification" class="notification"></div>
 <main class="container">
     <h2>Create Venue</h2>
-    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
-        <p th:text="${message}"></p>
-    </div>
 
-    <form method="post" th:action="@{/venue/create}" th:object="${venueDTO}">
+    <form id="createVenueForm" method="post" th:action="@{/venue/create}" th:object="${venueDTO}">
         <label for="name">Venue Name:</label>
         <input id="name" required th:field="*{name}" type="text"/>
 
@@ -49,5 +47,26 @@
         </div>
     </form>
 </main>
+
+<script>
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    document.querySelector("#createVenueForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        showNotification("Venue created successfully!", "success");
+        setTimeout(() => {
+            this.submit();
+        }, 1000);
+    });
+</script>
 </body>
 </html> 

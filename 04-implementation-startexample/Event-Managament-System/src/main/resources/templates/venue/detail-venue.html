@@ -12,10 +12,6 @@
         <p th:text="${errorMessage}">Error message</p>
     </div>
 
-    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
-        <p th:text="${message}"></p>
-    </div>
-
     <div th:if="${venue}">
         <h2>Venue Details</h2>
         <table role="grid">
