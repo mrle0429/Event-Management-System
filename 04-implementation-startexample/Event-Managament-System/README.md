@@ -1,3 +1,6 @@
+[English](#event-management-system)
+[中文](#演唱会管理系统)
+
 # Event Management System
 
 ## Overview
@@ -53,25 +56,43 @@ docker-compose down
 - Password: customer
 
 ## Licence
+MIT
 
 ## Technical Support
 For support, please email le.liu1@ucdconnect.ie or create an issue in the repository.
 
-# Event Management System
+# 演唱会管理系统
 
 ## 概述
 活动管理系统是一个web应用程序使用spring boot框架。 这个活动管理系统包括账户管理，场馆管理，事件管理，票务管理。这个平台有三种类型的用户：管理员，组织者和客户。
 
 ## 快速开始
-### 项目DEMO
+### 项目演示
 网址
 ### 本地部署（Docker）
 #### 环境要求
-- JDK 
+- JDK 17
 - Maven 
-- MySQL 
+- Docker
+- Docker Compose
 
-#### 安装步骤
+#### 运行程序
+``` bash
+cd 04-implementation-startexample/Event-Managament-System
+
+mvn clean package
+
+docker pull amazoncorretto: 17-alpine
+
+```
+
+这将构建应用程序并在 8080 端口运行。然后，您可以在浏览器中访问 localhost:8080 来访问应用程序。这也会启动数据库，因此您所做的任何更改都应在运行之间持久化
+
+#### 停止应用程序
+```bash
+docker-compose down
+```
+
 
 ### 默认账户
 
@@ -88,6 +109,7 @@ For support, please email le.liu1@ucdconnect.ie or create an issue in the reposi
 - 密码: customer
 
 ## 许可证
+MIT
 
 ## 技术支持
 如需支持，请发送邮件至 le.liu1@ucdconnect.ie 或在仓库中创建 issue。

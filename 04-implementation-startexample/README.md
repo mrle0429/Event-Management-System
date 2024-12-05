@@ -14,6 +14,8 @@ This report details the work that was completed by together by all team members 
 
 # Implementation 
 
+## README
+[About Project](/04-implementation-startexample/Event-Managament-System/README.md)
 
 
 
@@ -25,19 +27,19 @@ This report details the work that was completed by together by all team members 
 
 | Team Member | TM1 | TM2 | TM3 | TM4 | TM5 | TM6 | TM7 |
 |-------------|-----|-----|-----|-----|-----|-----|-----|
-| Percentage  | 15% | 16%  | 16%   | 16%   | 12%   | 10%   | 10%   |
+| Percentage  | 16% | 17%  | 17%   | 17%   | 9%   | 12%   | 12%   |
 
 #### Task Allocation
 | Item               | Primary Author | Contributor | Contributor | Reviewer |
 |--------------------|-----|-----|-----|-----|
-|  Docker development  | Yunhan  |  |     |  |
-|  Custom Functionality    | Yunhan | Yuxuan    |     |     |
-|  Admin  Functionlity  |  Bohan |  Le |
-|  Organiser Functionlity  | Ziheng    |  Sicheng|
-|  User authentication  |  Le   |  Xinya|
+|  Docker development  | Yunhan  |     |     |      |
+|  Custom Functionality | Yunhan | Yuxuan    |     |  Le   |
+|  Admin  Functionlity  |  Bohan |  Le       |      | Yunhan|
+|  Organiser Functionlity  | Ziheng    | Le    |      | Le |
+|  User authentication  |  Le   |  Xinya| Sean |    Le|
 |  Database setup     | Le  |
-|  Documentation      | Xinya |
+|  Documentation      | Xinya |   Yunhan |    |  |
 |  Remote development | Bohan |
 |  Custom Testing | Yuxuan|
 |  Admin Testing| Sicheng|
-| Organiser Testing| Xinya|
+|  Organiser Testing| Xinya|
