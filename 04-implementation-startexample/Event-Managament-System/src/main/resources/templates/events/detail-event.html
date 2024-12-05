@@ -62,9 +62,6 @@
 
         <div class="grid">
             <button class="button secondary" type="button" onclick="history.back()">Back</button>
-            <a class="secondary"
-               role="button"
-               th:href="@{/events/available}" th:if="${#authorization.expression('hasAuthority(''CUSTOMER'')')}">View Available Events</a>
         </div>
     </div>
 
