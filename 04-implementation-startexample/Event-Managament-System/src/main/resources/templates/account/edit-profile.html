@@ -4,12 +4,14 @@
     <title>Edit Account</title>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="notification" class="notification"></div>
 <main class="container">
     <h2>Edit Account</h2>
 
-    <form method="post" th:action="@{/account/edit}" th:object="${accountDTO}">
+    <form id="editForm" method="post" th:action="@{/account/edit}" th:object="${accountDTO}">
         <!-- 基本信息 -->
         <label for="name">
             Name:
@@ -54,5 +56,26 @@
         <p th:text="${errorMessage}">Error message</p>
     </div>
 </main>
+
+<script>
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    document.querySelector("#editForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        showNotification("Profile updated successfully!", "success");
+        setTimeout(() => {
+            this.submit();
+        }, 1000);
+    });
+</script>
 </body>
 </html> 

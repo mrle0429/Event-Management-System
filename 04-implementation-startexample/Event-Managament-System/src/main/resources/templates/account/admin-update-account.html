@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>Edit Account2</title>
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="notification" class="notification"></div>
 <main class="container">
 
     <div class="alert alert-error" th:if="${errorMessage}">
@@ -14,7 +16,7 @@
 
     <div th:if="${accountDTO}">
         <h2>Edit Account</h2>
-        <form method="post" th:action="@{/edit}" th:object="${accountDTO}">
+        <form id="updateForm" method="post" th:action="@{/edit}" th:object="${accountDTO}">
 
             <input th:name="id" th:value="${accountDTO.id}" type="hidden"/>
             <input th:name="role" th:value="${accountDTO.role}" type="hidden"/>
@@ -47,5 +49,26 @@
         </form>
     </div>
 </main>
+
+<script>
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    document.querySelector("#updateForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        showNotification("Account updated successfully!", "success");
+        setTimeout(() => {
+            this.submit();
+        }, 1000);
+    });
+</script>
 </body>
 </html>
