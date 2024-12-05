@@ -7,6 +7,8 @@
     <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="notification" class="notification"></div>
+
 <main class="container">
     <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
         <p th:text="${message}"></p>
@@ -75,5 +77,18 @@
            th:href="@{/events/available}" th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Back to Events</a>
     </div>
 </main>
+
+<script>
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+</script>
 </body>
 </html> 

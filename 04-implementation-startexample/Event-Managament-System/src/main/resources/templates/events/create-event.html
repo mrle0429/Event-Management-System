@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Create Event</title>
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+<!-- 添加通知元素 -->
+<div id="notification" class="notification"></div>
+
 <main class="container">
     <h2>Create Event</h2>
     <form id="editEvent" method="post" th:action="@{/events/create}" th:object="${eventDTO}">
@@ -104,92 +108,46 @@
         }
     });
 
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
     document.querySelector("#editEvent").addEventListener("submit", function (e) {
         e.preventDefault();
-
+        
+        const form = e.target;  // 保存form引用
         const dateInput = document.querySelector("#date");
-        // 添加日期验证
         if (!isValidDate(dateInput)) {
-            dateInput.style.borderColor = 'red';
-            const errorMsg = dateInput.nextElementSibling;
-            if (!errorMsg || !errorMsg.classList.contains('error-message')) {
-                const error = document.createElement('small');
-                error.style.color = 'red';
-                error.classList.add('error-message');
-                error.textContent = 'Please select a future date';
-                dateInput.parentNode.insertBefore(error, dateInput.nextSibling);
-            }
+            showNotification("Please select a future date", "error");
             return;
         }
 
         const venueId = document.querySelector("#venue").value;
         const date = dateInput.value;
 
-        // 检查所有票种的座位数是否超过场馆容量
-        let capacityValid = true;
-        const checkCapacityPromises = [];
-
-        document.querySelectorAll('[id^="seats-"]').forEach(input => {
-            const type = input.id.replace('seats-', '');
-            const seats = parseInt(input.value || 0);
-
-            if (seats > 0) {
-                const promise = fetch(`/events/checkVenueCapacity?venueId=${venueId}&type=${type}&requestedSeats=${seats}`)
-                    .then(response => response.json())
-                    .then(result => {
-                        if (!result) {
-                            // 修改提示方式
-                            input.style.borderColor = 'red';
-                            if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
-                                const errorMsg = document.createElement('small');
-                                errorMsg.style.color = 'red';
-                                errorMsg.classList.add('error-message');
-                                errorMsg.textContent = `${type}Ticket quantity exceeds venue capacity limit!`;
-                                input.parentNode.insertBefore(errorMsg, input.nextSibling);
-                            }
-                            capacityValid = false;
-                        } else {
-                            input.style.borderColor = '';
-                            const errorMsg = input.nextElementSibling;
-                            if (errorMsg && errorMsg.classList.contains('error-message')) {
-                                errorMsg.remove();
-                            }
-                        }
-                    });
-                checkCapacityPromises.push(promise);
-            }
-        });
-
-        Promise.all(checkCapacityPromises).then(() => {
-            if (!capacityValid) {
-                // 添加总体错误提示
-                const existingError = document.getElementById('generalError');
-                if (!existingError) {
-                    const errorDiv = document.createElement('div');
-                    errorDiv.id = 'generalError';
-                    errorDiv.style.color = 'red';
-                    errorDiv.style.marginBottom = '1rem';
-                    errorDiv.textContent = 'Some ticket types exceed venue capacity limits. Please modify and try again!';
-                    document.querySelector('#ticketPricing').insertBefore(errorDiv, document.querySelector('#ticketPricing').firstChild);
-                }
-                return;
-            }
-
-            // 原有的场馆日期检查逻辑
-            if (venueId && date) {
-                fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
-                    .then(function (response) {
-                        return response.json();
-                    })
-                    .then(function (result) {
-                        if (!result) {
-                            alert("Date is already occupied, please choose another!");
-                        } else {
-                            document.querySelector("#editEvent").submit();
-                        }
-                    });
-            }
-        });
+        if (venueId && date) {
+            fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (result) {
+                    if (!result) {
+                        showNotification("Date is already occupied, please choose another!", "error");
+                    } else {
+                        showNotification("Event created successfully!", "success");
+                        setTimeout(() => {
+                            form.submit();  // 使用保存的form引用
+                        }, 1000);
+                    }
+                });
+        }
     });
 
     // 添加场馆选择变更监听

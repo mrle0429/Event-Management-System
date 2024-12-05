@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="notification" class="notification"></div>
+
 <main class="container-fluid">
     <h2>Purchase Ticket</h2>
 
@@ -72,6 +74,17 @@
             validateQuantity();
         });
 
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification ' + type;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
         function validateQuantity() {
             const selectedOption = ticketTypeSelect.options[ticketTypeSelect.selectedIndex];
             if (!selectedOption.value) return false;
@@ -80,6 +93,7 @@
             const quantity = parseInt(quantityInput.value);
 
             if (quantity > remaining) {
+                showNotification(`Only ${remaining} seats remaining for this type!`, 'error');
                 quantityError.style.display = 'block';
                 quantityError.textContent = `Only ${remaining} seats remaining for this type!`;
                 return false;

@@ -8,6 +8,8 @@
     <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="notification" class="notification"></div>
+
 <main class="container">
     <h2>Event Management System</h2>
     <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
@@ -56,8 +58,8 @@
                             <a class="action-button" role="button" th:href="@{/events/{id}(id=${event.id})}">View</a>
                             <a class="action-button" role="button" th:href="@{/events/{id}/edit(id=${event.id})}">Edit</a>
                             <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
-                                <form method="post" style="display: inline;"
-                                      th:action="@{/events/{id}/delete(id=${event.id})}">
+                                <form method="post" style="display: inline;" th:action="@{/events/{id}/delete(id=${event.id})}"
+                                      onsubmit="return handleDelete(event)">
                                     <button class="delete-button" type="submit">Delete</button>
                                 </form>
                             </div>
@@ -69,5 +71,29 @@
         </div>
     </article>
 </main>
+
+<script>
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    function handleDelete(event) {
+        event.preventDefault();
+        if (confirm('Are you sure you want to delete this event?')) {
+            showNotification("Event deleted successfully!", "success");
+            setTimeout(() => {
+                event.target.submit();
+            }, 1000);
+        }
+        return false;
+    }
+</script>
 </body>
 </html> 

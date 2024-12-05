@@ -130,16 +130,12 @@ public class EventSystem {
                         throw new RuntimeException("Administrator must specify an organiser");
                     }
                     eventService.createEvent(eventDTO);
-                    redirectAttributes.addFlashAttribute("message", "Event created successfully");
-                    redirectAttributes.addFlashAttribute("messageType", "success");
-                    return "redirect:/events";
+                    return "redirect:/events?success=create";
                 } else {
                     Organiser organiser = eventService.getOrganiserByEmail(userEmail);
                     eventDTO.setOrganiserId(organiser.getId());
                     eventService.createEvent(eventDTO);
-                    redirectAttributes.addFlashAttribute("message", "Event created successfully");
-                    redirectAttributes.addFlashAttribute("messageType", "success");
-                    return "redirect:/organiser";
+                    return "redirect:/organiser?success=create";
                 }
             }
 
@@ -249,22 +245,17 @@ public class EventSystem {
                         throw new RuntimeException("Administrator must specify an organiser");
                     }
                     eventService.updateEvent(id, eventDTO);
-                    redirectAttributes.addFlashAttribute("message", "Event updated successfully");
-                    redirectAttributes.addFlashAttribute("messageType", "success");
-                    return "redirect:/events/" + id;
+                    return "redirect:/events?success=update";
                 } else {
                     Organiser organiser = eventService.getOrganiserByEmail(userEmail);
                     eventDTO.setOrganiserId(organiser.getId());
                     eventService.updateEvent(id, eventDTO);
-                    redirectAttributes.addFlashAttribute("message", "Event updated successfully");
-                    redirectAttributes.addFlashAttribute("messageType", "success");
-                    return "redirect:/organiser";
+                    return "redirect:/organiser?success=update";
                 }
             }
         } catch (ParseException e) {
             throw new RuntimeException("Invalid date or time format", e);
         }
-
 
         return "redirect:/events";
     }
@@ -278,11 +269,8 @@ public class EventSystem {
      */
     @PostMapping("/{id}/delete")
     public String deleteEvent(@PathVariable Long id, Authentication authentication, RedirectAttributes redirectAttributes) {
-        
-        redirectAttributes.addFlashAttribute("message", "Event deleted successfully");
-        redirectAttributes.addFlashAttribute("messageType", "success");
         eventService.deleteEvent(id);
-        return "redirect:/events";
+        return "redirect:/events?success=delete";
     }
 
     /**

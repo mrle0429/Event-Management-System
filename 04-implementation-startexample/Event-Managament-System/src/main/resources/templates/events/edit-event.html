@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>Edit Event</title>
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="notification" class="notification"></div>
+
 <main class="container">
 
     <div class="alert alert-error" th:if="${errorMessage}">
@@ -73,27 +76,23 @@
 </main>
 
 <script>
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
     document.querySelector("#editEvent").addEventListener("submit", function (e) {
         e.preventDefault();
-
-        const venueId = document.querySelector("#venue").value;
-        const date = document.querySelector("#date").value;
-
-        if (venueId && date) {
-            fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (result) {
-                    if (!result) {
-                        // 不可用提示更改
-                        alert("Date is occupied, change it!");
-                    } else {
-                        // 可用就提交表单
-                        document.querySelector("#editEvent").submit();
-                    }
-                })
-        }
+        showNotification("Event updated successfully!", "success");
+        setTimeout(() => {
+            this.submit();
+        }, 1000);
     });
 </script>
 </body>
