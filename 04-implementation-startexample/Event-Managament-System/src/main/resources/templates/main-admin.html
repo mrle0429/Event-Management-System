@@ -50,18 +50,12 @@
                                th:href="@{/detail(userEmail=${account.email})}">View </a>
                             <a class="action-button" role="button"
                                th:href="@{/edit(userEmail=${account.email})}">Edit </a>
-                            <form method="post" th:action="@{/deleteCustomer}"
-                                  th:if="${account.role.name() == 'CUSTOMER'}"
-                                  onsubmit="return handleDelete(event, 'Customer deleted successfully!')">
-                                <input name="customerId" th:value="${account.id}" type="hidden"/>
+                            <form th:if="${account.role.name() != 'ADMINISTRATOR'}" method="post" th:action="@{/deleteAccount}"
+                               onsubmit="return handleDelete(event, 'Account deleted successfully!')">
+                                <input name="accountId" th:value="${account.id}" type="hidden"/>
+                                <input name="role" th:value="${account.role}" type="hidden"/>
                                 <button class="delete-button" type="submit">Delete</button>
-                            </form>
-                            <form method="post" th:action="@{/deleteOrganiser}"
-                                  th:if="${account.role.name() == 'ORGANISER'}"
-                                  onsubmit="return handleDelete(event, 'Organiser deleted successfully!')">
-                                <input name="organiserId" th:value="${account.id}" type="hidden"/>
-                                <button class="delete-button" type="submit">Delete</button>
-                            </form>
+                         </form>
                         </div>
                     </td>
                 </tr>

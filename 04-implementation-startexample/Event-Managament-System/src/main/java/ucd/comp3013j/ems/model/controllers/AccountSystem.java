@@ -107,11 +107,10 @@ public class AccountSystem {
             model.addAttribute("account", account);
 
 
-            //System.out.println("Admin page");
             List<Account> accounts = accountService.getAccounts();
             accounts.remove(account);
             accounts.add(0, account);
-            //System.out.println("Number of accounts: " + accounts.size());
+
             model.addAttribute("accounts", accounts);
 
             List<Event> events = eventService.getAllEvents();
@@ -166,8 +165,8 @@ public class AccountSystem {
     }
 
     /**
-     * Displays account details.
-     * Accessible by: Administrators and the account owner
+     * Admin view other account details.
+     * Accessible by: Administrators
      *
      * @param userEmail      Email of the user to view (optional)
      * @param authentication Current user's authentication information
@@ -177,14 +176,14 @@ public class AccountSystem {
     @GetMapping("/detail")
     public String viewAccount(@RequestParam(required = false) String userEmail, Authentication authentication, Model model) {
 
-        Account account = null;
+        Account account;
 
         try {
             if (authentication.getPrincipal() instanceof AccountWrapper aw) {
-                String email = aw.getUsername();
+                String email = aw.getUsername();    // 其实是获取email
                 if (aw.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
-                    // 管理员通过用户ID获取账户信息
+                    // 管理员通过用户Email获取账户信息
                     account = accountService.getAccount(userEmail);
                 } else {
                     // 非管理员只能查看自己的信息
@@ -208,7 +207,7 @@ public class AccountSystem {
 
     /**
      * Displays the account edit page.
-     * Accessible by: Administrators and the account owner
+     * Accessible by: Administrators
      *
      * @param userEmail      Email of the user to edit (optional)
      * @param authentication Current user's authentication information
@@ -255,8 +254,8 @@ public class AccountSystem {
     }
 
     /**
-     * Updates account information.
-     * Accessible by: Administrators and the account owner
+     * Admin Updates account information.
+     * Accessible by: Administrators
      *
      * @param accountDTO     Account data transfer object
      * @param authentication Current user's authentication information
@@ -264,62 +263,64 @@ public class AccountSystem {
      */
     @PostMapping("/edit")
     public String updateAccount(@ModelAttribute AccountDTO accountDTO, Authentication authentication) {
-
-        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
-            accountService.updateAccount(accountDTO);
-            if (aw.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
-                return "redirect:/detail?userEmail=" + accountDTO.getEmail();
-            }
-        }
-
-        return "redirect:/detail";
+        accountService.updateAccount(accountDTO);
+        return "redirect:/detail?userEmail=" + accountDTO.getEmail();
     }
 
     /**
-     * Deletes a customer account.
+     * Deletes an account.
      * Accessible by: Administrators
      *
-     * @param customerId ID of the customer to delete
+     * @param accountId ID of the account to delete
+     * @param role      Role of the account to delete
      * @return Redirects to administrator page
      */
-    @PostMapping("/deleteCustomer")
-    public String deleteCustomer(@RequestParam Long customerId, RedirectAttributes redirectAttributes, Authentication authentication) {
+    @PostMapping("/deleteAccount")
+    public String deleteAccount(
+            @RequestParam Long accountId,
+            @RequestParam String role,
+            RedirectAttributes redirectAttributes,
+            Authentication authentication) {
         try {
             if (authentication.getPrincipal() instanceof AccountWrapper aw) {
+                // 检查是否为管理员
                 if (!aw.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ADMINISTRATOR"))) {
                     redirectAttributes.addFlashAttribute("message", "Only administrators can delete accounts");
                     redirectAttributes.addFlashAttribute("messageType", "error");
                     return "redirect:/administrator";
                 }
-    
 
-                Customer customer = (Customer) accountService.getAccount(customerId);
-                accountService.deleteCustomer(customerId);
-                redirectAttributes.addFlashAttribute("message", 
-                    String.format("Successfully deleted customer account: %s", customer.getName()));
+                Account account = accountService.getAccount(accountId);
+
+                // 根据角色删除账户
+                switch (Role.valueOf(role)) {
+                    case CUSTOMER -> {
+                        accountService.deleteCustomer(accountId);
+                        redirectAttributes.addFlashAttribute("message",
+                                String.format("Successfully deleted customer account: %s", account.getName()));
+                    }
+                    case ORGANISER -> {
+                        accountService.deleteOrganiser(accountId);
+                        redirectAttributes.addFlashAttribute("message",
+                                String.format("Successfully deleted organiser account: %s", account.getName()));
+                    }
+                    default -> {
+                        redirectAttributes.addFlashAttribute("message", "Invalid account role");
+                        redirectAttributes.addFlashAttribute("messageType", "error");
+                        return "redirect:/administrator";
+                    }
+                }
                 redirectAttributes.addFlashAttribute("messageType", "success");
             }
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "Error deleting customer account: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Error deleting %s account: %s", role.toLowerCase(), e.getMessage()));
             redirectAttributes.addFlashAttribute("messageType", "error");
         }
         return "redirect:/administrator";
     }
 
-    /**
-     * Deletes an organiser account.
-     * Accessible by: Administrators
-     *
-     * @param organiserId ID of the organiser to delete
-     * @return Redirects to administrator page
-     */
-    @PostMapping("/deleteOrganiser")
-    public String deleteOrganiser(@RequestParam Long organiserId) {
-        accountService.deleteOrganiser(organiserId);
-        return "redirect:/administrator";
-    }
 
     /**
      * Displays the create account form for administrators.
@@ -491,25 +492,6 @@ public class AccountSystem {
             model.addAttribute("errorMessage", e.getMessage());
             return "account/change-password";
         }
-    }
-
-    /**
-     * Displays the customer's tickets.
-     * Accessible by: Customers
-     *
-     * @param authentication Current user's authentication information
-     * @param model          Spring MVC Model object
-     * @return The main customer page view or redirects to login page
-     */
-    @GetMapping("/customer/tickets")
-    public String showCustomerTickets(Authentication authentication, Model model) {
-        if (authentication.getPrincipal() instanceof AccountWrapper aw) {
-            Customer customer = accountService.getCustomerAccount(aw.getUsername());
-            List<Ticket> tickets = ticketService.getCustomerTickets(customer);
-            model.addAttribute("tickets", tickets);
-            return "main-customer";
-        }
-        return "redirect:/login";
     }
 
 }

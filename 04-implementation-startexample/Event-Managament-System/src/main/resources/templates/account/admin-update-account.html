@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Account2</title>
+    <title>Admin Edit Account</title>
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
     <link href="/css/style.css" rel="stylesheet"/>
 </head>
@@ -15,17 +15,20 @@
     </div>
 
     <div th:if="${accountDTO}">
-        <h2>Edit Account</h2>
+        <h2>Admin Edit Account</h2>
         <form id="updateForm" method="post" th:action="@{/edit}" th:object="${accountDTO}">
 
             <input th:name="id" th:value="${accountDTO.id}" type="hidden"/>
-            <input th:name="role" th:value="${accountDTO.role}" type="hidden"/>
+
+            <label for="role">Role:</label>
+            <input id="role"  readonly required th:value="${accountDTO.role}" type="text"/>
 
             <label for="name">Name:</label>
             <input id="name" required th:field="*{name}" type="text"/>
 
             <label for="email">Email:</label>
             <input id="email" readonly required th:field="*{email}" type="email"/>
+
 
             <div th:if="${accountDTO.role == 'ORGANISER'}">
                 <label for="companyName">Company Name:</label>
@@ -39,13 +42,12 @@
             </div>
 
             <div class="grid">
-                <a class="secondary"
-                   role="button"
-                   th:href="@{/detail(userEmail=${accountDTO.email})}" th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Cancel</a>
-                <a class="secondary" role="button"
-                   th:href="@{/detail}" th:unless="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">Cancel</a>
+                <button class="button secondary" type="button" onclick="history.back()">Back</button>
+
                 <button type="submit">Save</button>
             </div>
+
+            
         </form>
     </div>
 </main>

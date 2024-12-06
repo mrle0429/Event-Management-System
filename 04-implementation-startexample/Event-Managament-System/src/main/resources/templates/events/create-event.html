@@ -119,10 +119,11 @@
         }, 3000);
     }
 
+    // 表单提交处理
     document.querySelector("#editEvent").addEventListener("submit", function (e) {
         e.preventDefault();
         
-        const form = e.target;  // 保存form引用
+        const form = e.target;
         const dateInput = document.querySelector("#date");
         if (!isValidDate(dateInput)) {
             showNotification("Please select a future date", "error");
@@ -132,27 +133,73 @@
         const venueId = document.querySelector("#venue").value;
         const date = dateInput.value;
 
-        if (venueId && date) {
-            fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (result) {
-                    if (!result) {
-                        showNotification("Date is already occupied, please choose another!", "error");
-                    } else {
-                        showNotification("Event created successfully!", "success");
-                        setTimeout(() => {
-                            form.submit();  // 使用保存的form引用
-                        }, 1000);
-                    }
-                });
-        }
+        // 检查所有票种的座位数是否超过场馆容量
+        let capacityValid = true;
+        const checkCapacityPromises = [];
+
+        document.querySelectorAll('[id^="seats-"]').forEach(input => {
+            const type = input.id.replace('seats-', '');
+            const seats = parseInt(input.value || 0);
+
+            if (seats > 0) {
+                const promise = fetch(`/events/checkVenueCapacity?venueId=${venueId}&type=${type}&requestedSeats=${seats}`)
+                    .then(response => response.json())
+                    .then(result => {
+                        if (!result) {
+                            input.style.borderColor = 'red';
+                            if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
+                                const errorMsg = document.createElement('small');
+                                errorMsg.style.color = 'red';
+                                errorMsg.classList.add('error-message');
+                                errorMsg.textContent = `${type} Ticket quantity exceeds venue capacity limit!`;
+                                input.parentNode.insertBefore(errorMsg, input.nextSibling);
+                            }
+                            capacityValid = false;
+                        } else {
+                            input.style.borderColor = '';
+                            const errorMsg = input.nextElementSibling;
+                            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                                errorMsg.remove();
+                            }
+                        }
+                    });
+                checkCapacityPromises.push(promise);
+            }
+        });
+
+        Promise.all(checkCapacityPromises).then(() => {
+            if (!capacityValid) {
+                const existingError = document.getElementById('generalError');
+                if (!existingError) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.id = 'generalError';
+                    errorDiv.style.color = 'red';
+                    errorDiv.style.marginBottom = '1rem';
+                    errorDiv.textContent = 'Some ticket types exceed venue capacity limits. Please modify and try again!';
+                    document.querySelector('#ticketPricing').insertBefore(errorDiv, document.querySelector('#ticketPricing').firstChild);
+                }
+                return;
+            }
+
+            if (venueId && date) {
+                fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
+                    .then(response => response.json())
+                    .then(result => {
+                        if (!result) {
+                            showNotification("Date is already occupied, please choose another!", "error");
+                        } else {
+                            showNotification("Event created successfully!", "success");
+                            setTimeout(() => {
+                                form.submit();
+                            }, 1000);
+                        }
+                    });
+            }
+        });
     });
 
-    // 添加场馆选择变更监听
+    // 场馆选择变更监听
     document.querySelector("#venue").addEventListener("change", function() {
-        // 清空所有座位输入和错误提示
         document.querySelectorAll('[id^="seats-"]').forEach(input => {
             input.value = "";
             input.style.borderColor = '';
@@ -166,8 +213,6 @@
         if (generalError) {
             generalError.remove();
         }
-
-        
     });
 </script>
 </body>
