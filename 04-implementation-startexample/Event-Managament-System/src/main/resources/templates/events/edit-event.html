@@ -10,7 +10,7 @@
             position: relative;
             width: 100%;
         }
-        
+
         .char-counter {
             position: absolute;
             bottom: 0.5rem;
@@ -79,6 +79,12 @@
                                    th:field="*{pricesByLevel[__${type}__]}"
                                    th:id="${'price-' + type}" type="number"/>
                         </div>
+                        <div>
+                            <label th:for="${'seats-' + type}" th:text="${type} + ' Seats'">Level Seats</label>
+                            <input min="0" required
+                                   th:field="*{remainingSeats[__${type}__]}"
+                                   th:id="${'seats-' + type}" type="number"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,12 +98,50 @@
 </main>
 
 <script>
+    const initData = {
+        venueId: document.querySelector("#venue").value,
+        date: document.querySelector("#date").value
+    }
+
+    // 添加日期验证函数
+    function isValidDate(dateInput) {
+        const selectedDate = new Date(dateInput.value);
+        selectedDate.setHours(0, 0, 0, 0);
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        return selectedDate > today;
+    }
+
+    // 添加日期输入验证
+    document.querySelector("#date").addEventListener("change", function(e) {
+        const dateInput = e.target;
+        const errorMsg = dateInput.nextElementSibling;
+
+        if (!isValidDate(dateInput)) {
+            dateInput.style.borderColor = 'red';
+            if (!errorMsg || !errorMsg.classList.contains('error-message')) {
+                const error = document.createElement('small');
+                error.style.color = 'red';
+                error.classList.add('error-message');
+                error.textContent = 'Please select a future date';
+                dateInput.parentNode.insertBefore(error, dateInput.nextSibling);
+            }
+        } else {
+            dateInput.style.borderColor = '';
+            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                errorMsg.remove();
+            }
+        }
+    });
+
     function showNotification(message, type) {
         const notification = document.getElementById('notification');
         notification.textContent = message;
         notification.className = 'notification ' + type;
         notification.classList.add('show');
-        
+
         setTimeout(() => {
             notification.classList.remove('show');
         }, 3000);
@@ -105,21 +149,115 @@
 
     document.querySelector("#editEvent").addEventListener("submit", function (e) {
         e.preventDefault();
-        showNotification("Event updated successfully!", "success");
-        setTimeout(() => {
-            this.submit();
-        }, 1000);
+
+        const form = e.target;
+
+        const dateInput = document.querySelector("#date");
+        if (!isValidDate(dateInput)) {
+            showNotification("Please select a future date", "error");
+            return;
+        }
+
+        const venueId = document.querySelector("#venue").value;
+        const date = dateInput.value;
+
+        // 检查所有票种的座位数是否超过场馆容量
+        let capacityValid = true;
+        let venueDateAvailable = true;
+        const checkCapacityPromises = [];
+
+        document.querySelectorAll('[id^="seats-"]').forEach(input => {
+            const type = input.id.replace('seats-', '');
+            const seats = parseInt(input.value || 0);
+
+            if (seats > 0) {
+                const promise = fetch(`/events/checkVenueCapacity?venueId=${venueId}&type=${type}&requestedSeats=${seats}`)
+                    .then(response => response.json())
+                    .then(result => {
+                        if (!result) {
+                            input.style.borderColor = 'red';
+                            if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
+                                const errorMsg = document.createElement('small');
+                                errorMsg.style.color = 'red';
+                                errorMsg.classList.add('error-message');
+                                errorMsg.textContent = `${type} Ticket quantity exceeds venue capacity limit!`;
+                                input.parentNode.insertBefore(errorMsg, input.nextSibling);
+                            }
+                            capacityValid = false;
+                        } else {
+                            input.style.borderColor = '';
+                            const errorMsg = input.nextElementSibling;
+                            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                                errorMsg.remove();
+                            }
+                        }
+                    });
+                checkCapacityPromises.push(promise);
+            }
+        });
+
+        if (venueId && date) {
+            if (venueId !== initData.venueId || date !== initData.date){
+                const checkVenueDate = fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
+                    .then(response => response.json())
+                    .then(result => {
+                        venueDateAvailable = result;
+                    });
+                checkCapacityPromises.push(checkVenueDate);
+            }
+        }
+
+        Promise.all(checkCapacityPromises).then(() => {
+            if (!capacityValid) {
+                const existingError = document.getElementById('generalError');
+                if (!existingError) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.id = 'generalError';
+                    errorDiv.style.color = 'red';
+                    errorDiv.style.marginBottom = '1rem';
+                    errorDiv.textContent = 'Some ticket types exceed venue capacity limits. Please modify and try again!';
+                    document.querySelector('#ticketPricing').insertBefore(errorDiv, document.querySelector('#ticketPricing').firstChild);
+                }
+            }
+            if (!venueDateAvailable){
+                showNotification("Date is already occupied, please choose another!", "error");
+            }
+
+            if (venueDateAvailable && capacityValid){
+                showNotification("Event created successfully!", "success");
+                setTimeout(() => {
+                    form.submit();
+                }, 1000);
+            }
+        });
+    });
+
+    // 场馆选择变更监听
+    document.querySelector("#venue").addEventListener("change", function() {
+        document.querySelectorAll('[id^="seats-"]').forEach(input => {
+            input.value = "";
+            input.style.borderColor = '';
+            const errorMsg = input.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                errorMsg.remove();
+            }
+        });
+
+        const generalError = document.getElementById('generalError');
+        if (generalError) {
+            generalError.remove();
+        }
     });
 
     // 初始化字数统计
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const textarea = document.getElementById('description');
         const count = textarea.value.length;
         document.getElementById('descriptionCount').textContent = count;
     });
 
     // 监听输入更新字数
-    document.getElementById('description').addEventListener('input', function() {
+    document.getElementById('description').addEventListener('input', function () {
         const count = this.value.length;
         document.getElementById('descriptionCount').textContent = count;
     });

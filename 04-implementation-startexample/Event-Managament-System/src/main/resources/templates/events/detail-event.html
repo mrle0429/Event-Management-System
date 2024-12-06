@@ -51,6 +51,7 @@
                 <th>Ticket Type</th>
                 <th>Price</th>
                 <th>Remaining Seats</th>
+                <th>Sold Ticket</th>
             </tr>
             </thead>
             <tbody>
@@ -58,6 +59,7 @@
                 <td th:text="${price.key}">Type</td>
                 <td th:text="${'¥' + price.value}">Price</td>
                 <td th:text="${event.remainingSeats.get(price.key)}">Remaining</td>
+                <td th:text="${soldType.get(price.key)}">Sold Ticket</td>
             </tr>
             </tbody>
         </table>

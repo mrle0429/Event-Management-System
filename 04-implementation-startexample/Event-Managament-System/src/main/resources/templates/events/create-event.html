@@ -151,6 +151,7 @@
 
         // 检查所有票种的座位数是否超过场馆容量
         let capacityValid = true;
+        let venueDateAvailable = true;
         const checkCapacityPromises = [];
 
         document.querySelectorAll('[id^="seats-"]').forEach(input => {
@@ -183,6 +184,15 @@
             }
         });
 
+        if (venueId && date) {
+            const checkVenueDate = fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
+                .then(response => response.json())
+                .then(result => {
+                    venueDateAvailable = result;
+                });
+            checkCapacityPromises.push(checkVenueDate);
+        }
+
         Promise.all(checkCapacityPromises).then(() => {
             if (!capacityValid) {
                 const existingError = document.getElementById('generalError');
@@ -194,22 +204,14 @@
                     errorDiv.textContent = 'Some ticket types exceed venue capacity limits. Please modify and try again!';
                     document.querySelector('#ticketPricing').insertBefore(errorDiv, document.querySelector('#ticketPricing').firstChild);
                 }
-                return;
             }
-
-            if (venueId && date) {
-                fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
-                    .then(response => response.json())
-                    .then(result => {
-                        if (!result) {
-                            showNotification("Date is already occupied, please choose another!", "error");
-                        } else {
-                            showNotification("Event created successfully!", "success");
-                            setTimeout(() => {
-                                form.submit();
-                            }, 1000);
-                        }
-                    });
+            if (!venueDateAvailable){
+                showNotification("Date is already occupied, please choose another!", "error");
+            }else{
+                showNotification("Event created successfully!", "success");
+                setTimeout(() => {
+                    form.submit();
+                }, 1000);
             }
         });
     });

@@ -192,6 +192,25 @@ public class TicketService {
                 .collect(Collectors.toList());
     }
 
+    public Map<TicketType, Long> getSoldTicketCountByType(Long eventId) {
+        // 初始化数据，避免显示问题
+        Map<TicketType, Long> ticketCountByType = new HashMap<>();
+        ticketCountByType.put(TicketType.PREMIUM, 0L);
+        ticketCountByType.put(TicketType.STANDARD, 0L);
+        ticketCountByType.put(TicketType.ECONOMY, 0L);
+
+        // 获取查询结果并更新计数
+        List<Object[]> results = ticketRepository.countSoldTicketsByEventIdAndType(eventId);
+        for (Object[] result : results) {
+            TicketType type = (TicketType) result[0];
+            Long count = (Long) result[1];
+            ticketCountByType.put(type, count);
+        }
+
+        return ticketCountByType;
+    }
+
+
     /**
      * Combines a date and time into a single Date object.
      * Helper method for comparing event dates and times.

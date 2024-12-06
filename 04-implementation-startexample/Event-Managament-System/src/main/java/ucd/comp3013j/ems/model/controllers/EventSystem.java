@@ -14,6 +14,7 @@ import ucd.comp3013j.ems.model.entities.Organiser;
 import ucd.comp3013j.ems.model.entities.Venue;
 import ucd.comp3013j.ems.model.enums.TicketType;
 import ucd.comp3013j.ems.model.services.EventService;
+import ucd.comp3013j.ems.model.services.TicketService;
 import ucd.comp3013j.ems.model.services.VenueService;
 import ucd.comp3013j.ems.websecurity.AccountWrapper;
 
@@ -31,6 +32,9 @@ public class EventSystem {
 
     @Autowired
     private VenueService venueService;
+
+    @Autowired
+    private TicketService ticketService;
 
     /**
      * Lists all events in the system.
@@ -65,6 +69,8 @@ public class EventSystem {
         }
 
         model.addAttribute("event", event);
+        System.out.println(ticketService.getSoldTicketCountByType(event.getId()));
+        model.addAttribute("soldType", ticketService.getSoldTicketCountByType(event.getId()));
         return "events/detail-event";
     }
 

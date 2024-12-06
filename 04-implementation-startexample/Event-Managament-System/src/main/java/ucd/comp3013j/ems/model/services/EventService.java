@@ -92,6 +92,7 @@ public class EventService {
         if (existingEvent.isPresent()) {
             Event event = existingEvent.get();
             updateEventFromDTO(event, eventDTO);
+            event.setRemainingSeats(eventDTO.getRemainingSeats());
             return eventRepository.save(event);
         }
         return null;
