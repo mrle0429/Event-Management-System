@@ -5,6 +5,19 @@
     <title>Edit Event</title>
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
     <link href="/css/style.css" rel="stylesheet"/>
+    <style>
+        .description-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .char-counter {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            opacity: 0.7;
+        }
+    </style>
 </head>
 <body>
 <div id="notification" class="notification"></div>
@@ -22,7 +35,10 @@
             <input id="name" required th:field="*{name}" type="text"/>
 
             <label for="description">Description:</label>
-            <textarea id="description" required th:field="*{description}"></textarea>
+            <div class="description-container">
+                <textarea id="description" required th:field="*{description}" maxlength="255"></textarea>
+                <small class="char-counter"><span id="descriptionCount">0</span>/255</small>
+            </div>
 
             <label for="date">Date:</label>
             <input id="date" name="dateStr" required th:value="${#dates.format(eventDTO.date, 'yyyy-MM-dd')}"
@@ -93,6 +109,19 @@
         setTimeout(() => {
             this.submit();
         }, 1000);
+    });
+
+    // 初始化字数统计
+    document.addEventListener('DOMContentLoaded', function() {
+        const textarea = document.getElementById('description');
+        const count = textarea.value.length;
+        document.getElementById('descriptionCount').textContent = count;
+    });
+
+    // 监听输入更新字数
+    document.getElementById('description').addEventListener('input', function() {
+        const count = this.value.length;
+        document.getElementById('descriptionCount').textContent = count;
     });
 </script>
 </body>
