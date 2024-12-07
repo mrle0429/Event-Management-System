@@ -135,7 +135,7 @@
         }, 3000);
     }
 
-    // 表单提交处理
+    // 表单提交���理
     document.querySelector("#editEvent").addEventListener("submit", function (e) {
         e.preventDefault();
         
@@ -164,13 +164,15 @@
                     .then(result => {
                         if (!result) {
                             input.style.borderColor = 'red';
-                            if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
-                                const errorMsg = document.createElement('small');
-                                errorMsg.style.color = 'red';
-                                errorMsg.classList.add('error-message');
-                                errorMsg.textContent = `${type} Ticket quantity exceeds venue capacity limit!`;
-                                input.parentNode.insertBefore(errorMsg, input.nextSibling);
+                            const existingError = input.nextElementSibling;
+                            if (existingError && existingError.classList.contains('error-message')) {
+                                existingError.remove();
                             }
+                            const errorMsg = document.createElement('small');
+                            errorMsg.style.color = 'red';
+                            errorMsg.classList.add('error-message');
+                            errorMsg.textContent = `${type} Ticket quantity exceeds venue capacity limit!`;
+                            input.insertAdjacentElement('afterend', errorMsg);
                             capacityValid = false;
                         } else {
                             input.style.borderColor = '';
