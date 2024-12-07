@@ -34,7 +34,7 @@ public class VenueService {
      */
     public void createVenue(VenueDTO venueDTO) {
         if(venueRepository.findByName(venueDTO.getName()) != null){
-            throw new RuntimeException("Venue already exists");
+            throw new RuntimeException("Venue Name already exists");
         }
         Venue venue = new Venue();
         venue.setName(venueDTO.getName());
@@ -117,5 +117,9 @@ public class VenueService {
         venue.setContactPhone(dto.getContactPhone());
         venue.setContactEmail(dto.getContactEmail());
         venue.setSeatsByLevel(dto.getSeatsByLevel());
+    }
+
+    public boolean existsByName(String name) {
+        return venueRepository.findByName(name) != null;
     }
 }

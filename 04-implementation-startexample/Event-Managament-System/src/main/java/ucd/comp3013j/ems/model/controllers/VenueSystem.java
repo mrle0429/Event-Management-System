@@ -9,6 +9,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ucd.comp3013j.ems.model.dto.VenueDTO;
 import ucd.comp3013j.ems.model.services.VenueService;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * Controller for handling venue-related operations.
  * This controller manages venue creation, updates, deletions, and viewing.
@@ -136,5 +139,12 @@ public class VenueSystem {
     public String listVenues(Model model) {
         model.addAttribute("venues", venueService.getAllVenues());
         return "venue/list-venues";
+    }
+
+    @GetMapping("/check-name")
+    @ResponseBody
+    public Map<String, Boolean> checkVenueName(@RequestParam String name) {
+        boolean exists = venueService.existsByName(name);
+        return Collections.singletonMap("exists", exists);
     }
 } 

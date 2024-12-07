@@ -10,10 +10,16 @@
 <div id="notification" class="notification"></div>
 <main class="container">
     <h2>Create Venue</h2>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
 
     <form id="createVenueForm" method="post" th:action="@{/venue/create}" th:object="${venueDTO}">
         <label for="name">Venue Name:</label>
-        <input id="name" required th:field="*{name}" type="text"/>
+        <div class="input-container">
+            <input id="name" required th:field="*{name}" type="text"/>
+            <small class="error-message" th:if="${#fields.hasErrors('name')}" th:text="${#fields.getError('name')}">Error message</small>
+        </div>
 
         <label for="address">Address:</label>
         <input id="address" required th:field="*{address}" type="text"/>
@@ -52,24 +58,50 @@
 </main>
 
 <script>
-    function showNotification(message, type) {
-        const notification = document.getElementById('notification');
-        notification.textContent = message;
-        notification.className = 'notification ' + type;
-        notification.classList.add('show');
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 3000);
+    // 检查场馆名称是否存在
+    async function checkVenueName(name) {
+        try {
+            const response = await fetch(`/venue/check-name?name=${encodeURIComponent(name)}`);
+            const data = await response.json();
+            return data.exists;
+        } catch (error) {
+            console.error('Error checking venue name:', error);
+            return false;
+        }
     }
 
-    document.querySelector("#createVenueForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-        showNotification("Venue created successfully!", "success");
-        setTimeout(() => {
-            this.submit();
-        }, 1000);
-    });
+    // 场馆名称输入验证
+    document.getElementById('name').addEventListener('input', async function() {
+        const nameInput = this;
+        const submitButton = document.querySelector('button[type="submit"]');
+        const errorMessage = nameInput.parentNode.querySelector('.error-message');
+        
+        // 移除现有的错误消息
+
+        const existingError = nameInput.nextElementSibling;
+        if (existingError && existingError.classList.contains('error-message')) {
+            existingError.remove();
+        }
+
+        
+        if (nameInput.value.trim()) {
+            const exists = await checkVenueName(nameInput.value);
+            if (exists) {
+                // 显示错误消息
+                const errorMsg = document.createElement('small');
+                errorMsg.style.color = 'red';
+                errorMsg.classList.add('error-message');
+                errorMsg.textContent = 'This venue name already exists!';
+                nameInput.parentNode.insertBefore(errorMsg, nameInput.nextSibling);
+                nameInput.style.borderColor = 'red';
+                submitButton.disabled = true;
+            } else {
+                nameInput.style.borderColor = '';
+                submitButton.disabled = false;
+            }
+        }
+    }, 300);
+
 
     document.getElementById('description').addEventListener('input', function() {
         const count = this.value.length;
@@ -78,6 +110,18 @@
 </script>
 
 <style>
+    .input-container {
+        margin-bottom: 1rem;
+    }
+    
+    .error-message {
+        display: block;
+        margin-top: 0.5rem;
+    }
+    
+    input.error {
+        border-color: red;
+    }
     .description-container {
         position: relative;
         width: 100%;
