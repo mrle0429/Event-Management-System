@@ -22,6 +22,9 @@
 <div id="notification" class="notification"></div>
 <main class="container">
     <h2>Create Account</h2>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
     <form id="createForm" method="post" th:action="@{/create-account}" th:object="${accountDTO}">
         <label for="role">Role:</label>
         <select id="role" onchange="toggleFields()" required th:field="*{role}">
@@ -57,37 +60,5 @@
         </div>
     </form>
 </main>
-
-<script>
-    function showNotification(message, type) {
-        const notification = document.getElementById('notification');
-        notification.textContent = message;
-        notification.className = 'notification ' + type;
-        notification.classList.add('show');
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 3000);
-    }
-
-    document.querySelector("#createForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-        showNotification("Account created successfully!", "success");
-        setTimeout(() => {
-            this.submit();
-        }, 1000);
-    });
-
-    function toggleFields() {
-        const role = document.getElementById('role').value;
-        const organiserFields = document.getElementById('organiserFields');
-
-        if (role === 'ORGANISER') {
-            organiserFields.style.display = 'block';
-        } else {
-            organiserFields.style.display = 'none';
-        }
-    }
-</script>
 </body>
 </html>

@@ -354,7 +354,8 @@ public class AccountSystem {
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/administrator";
         } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("message", e.getMessage());
+            model.addAttribute("messageTye", "error");
             return "account/create-account";
         }
     }
