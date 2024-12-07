@@ -103,6 +103,49 @@
         const count = this.value.length;
         document.getElementById('descriptionCount').textContent = count;
     });
+
+    // 检查场馆名称是否存在
+    async function checkVenueName(name, currentId) {
+        try {
+            const response = await fetch(`/venue/check-name?name=${encodeURIComponent(name)}&currentId=${currentId}`);
+            const data = await response.json();
+            return data.exists;
+        } catch (error) {
+            console.error('Error checking venue name:', error);
+            return false;
+        }
+    }
+
+    // 场馆名称输入验证
+    document.getElementById('name').addEventListener('input', async function() {
+        const nameInput = this;
+        const submitButton = document.querySelector('button[type="submit"]');
+        const currentId = new URLSearchParams(window.location.search).get('id') || 
+                         window.location.pathname.split('/').filter(Boolean).pop();
+        
+        // 移除现有的错误消息
+        const existingError = nameInput.nextElementSibling;
+        if (existingError && existingError.classList.contains('error-message')) {
+            existingError.remove();
+        }
+        
+        if (nameInput.value.trim()) {
+            const exists = await checkVenueName(nameInput.value, currentId);
+            if (exists) {
+                // 显示错误消息
+                const errorMsg = document.createElement('small');
+                errorMsg.style.color = 'red';
+                errorMsg.classList.add('error-message');
+                errorMsg.textContent = 'This venue name already exists!';
+                nameInput.parentNode.insertBefore(errorMsg, nameInput.nextSibling);
+                nameInput.style.borderColor = 'red';
+                submitButton.disabled = true;
+            } else {
+                nameInput.style.borderColor = '';
+                submitButton.disabled = false;
+            }
+        }
+    });
 </script>
 </body>
 </html> 
