@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Create Account</title>
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
     <script>
         function toggleFields() {
             const role = document.getElementById('role').value;
@@ -18,40 +19,46 @@
     </script>
 </head>
 <body>
-<h2>Create Account</h2>
-<form method="post" th:action="@{/create-account}" th:object="${accountDTO}">
-    <label for="role">Role:</label>
-    <select id="role" onchange="toggleFields()" required th:field="*{role}">
-        <option value="">Select Role</option>
-        <option value="ADMINISTRATOR">Administrator</option>
-        <option value="ORGANISER">Organiser</option>
-        <option value="CUSTOMER">Customer</option>
-    </select><br/>
-
-    <label for="name">Name:</label>
-    <input id="name" required th:field="*{name}" type="text"/><br/>
-
-    <label for="email">Email:</label>
-    <input id="email" required th:field="*{email}" type="email"/><br/>
-
-    <label for="password">Password:</label>
-    <input id="password" required th:field="*{password}" type="password"/><br/>
-
-    <div id="organiserFields" style="display: none;">
-        <label for="companyName">Company Name:</label>
-        <input id="companyName" th:field="*{companyName}" type="text"/><br/>
-
-        <label for="companyAddress">Company Address:</label>
-        <input id="companyAddress" th:field="*{address}" type="text"/><br/>
-
-        <label for="companyPhone">Company Phone:</label>
-        <input id="companyPhone" th:field="*{phoneNumber}" type="text"/><br/>
+<div id="notification" class="notification"></div>
+<main class="container">
+    <h2>Create Account</h2>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
     </div>
+    <form id="createForm" method="post" th:action="@{/create-account}" th:object="${accountDTO}">
+        <label for="role">Role:</label>
+        <select id="role" onchange="toggleFields()" required th:field="*{role}">
+            <option value="">Select Role</option>
+            <option value="ADMINISTRATOR">Administrator</option>
+            <option value="ORGANISER">Organiser</option>
+            <option value="CUSTOMER">Customer</option>
+        </select><br/>
 
-    <button type="submit">Create Account</button>
-</form>
-<div th:if="${errorMessage}">
-    <p th:text="${errorMessage}"></p>
-</div>
+        <label for="name">Name:</label>
+        <input id="name" required th:field="*{name}" type="text"/><br/>
+
+        <label for="email">Email:</label>
+        <input id="email" required th:field="*{email}" type="email"/><br/>
+
+        <label for="password">Password:</label>
+        <input id="password" required th:field="*{password}" type="password"/><br/>
+
+        <div id="organiserFields" style="display: none;">
+            <label for="companyName">Company Name:</label>
+            <input id="companyName" th:field="*{companyName}" type="text"/><br/>
+
+            <label for="companyAddress">Company Address:</label>
+            <input id="companyAddress" th:field="*{address}" type="text"/><br/>
+
+            <label for="companyPhone">Company Phone:</label>
+            <input id="companyPhone" th:field="*{phoneNumber}" type="text"/><br/>
+        </div>
+
+        <div class="grid">
+            <button class="secondary" th:href="@{/administrator}" type="button" onclick="window.location.href='/administrator'">Back to Main Page</button>
+            <button type="submit">Create Account</button>
+        </div>
+    </form>
+</main>
 </body>
 </html>

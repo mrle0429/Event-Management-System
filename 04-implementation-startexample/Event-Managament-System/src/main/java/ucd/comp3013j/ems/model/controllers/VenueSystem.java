@@ -4,8 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import ucd.comp3013j.ems.model.dto.VenueDTO;
 import ucd.comp3013j.ems.model.services.VenueService;
+
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Controller for handling venue-related operations.
@@ -31,8 +36,12 @@ public class VenueSystem {
      */
     @GetMapping("/{id}")
     public String showVenueDetails(@PathVariable Long id, Model model) {
-        model.addAttribute("venue", venueService.getVenueById(id));
-        return "venue/detail";
+        try {
+            model.addAttribute("venue", venueService.getVenueById(id));
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+        return "venue/detail-venue";
     }
 
     /**
@@ -44,8 +53,12 @@ public class VenueSystem {
      */
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("venueDTO", venueService.getVenueById(id));
-        return "venue/edit";
+        try {
+            model.addAttribute("venueDTO", venueService.getVenueById(id));
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+        return "venue/edit-venue";
     }
 
     /**
@@ -56,9 +69,17 @@ public class VenueSystem {
      * @return Redirects to venues list page
      */
     @PostMapping("/{id}/edit")
-    public String updateVenue(@PathVariable Long id, @ModelAttribute VenueDTO venueDTO) {
-        venueService.updateVenue(venueDTO);
-        return "redirect:/venue";
+    public String updateVenue(@PathVariable Long id, @ModelAttribute VenueDTO venueDTO, RedirectAttributes redirectAttributes) {
+        try{
+            venueService.updateVenue(venueDTO);
+            redirectAttributes.addFlashAttribute("message", "Venue Update Success!");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/venue/" + id ;
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/venue/" + id + "/edit";
+        }
     }
 
     /**
@@ -68,7 +89,9 @@ public class VenueSystem {
      * @return Redirects to venues list page
      */
     @PostMapping("/{id}/delete")
-    public String deleteVenue(@PathVariable Long id) {
+    public String deleteVenue(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message", "Venue Deleted Success!");
+        redirectAttributes.addFlashAttribute("messageType", "success");
         venueService.deleteVenue(id);
         return "redirect:/venue";
     }
@@ -82,7 +105,7 @@ public class VenueSystem {
     @GetMapping("/create")
     public String showCreateVenueForm(Model model) {
         model.addAttribute("venueDTO", new VenueDTO());
-        return "venue/create";
+        return "venue/create-venue";
     }
 
     /**
@@ -92,9 +115,18 @@ public class VenueSystem {
      * @return Redirects to venues list page
      */
     @PostMapping("/create")
-    public String createVenue(@ModelAttribute VenueDTO venueDTO) {
-        venueService.createVenue(venueDTO);
-        return "redirect:/venue";
+    public String createVenue(@ModelAttribute VenueDTO venueDTO, RedirectAttributes redirectAttributes) {
+        try {
+            venueService.createVenue(venueDTO);
+            redirectAttributes.addFlashAttribute("message", "Venue created successfully");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/venue";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            redirectAttributes.addFlashAttribute("venueDTO", venueDTO);
+            return "redirect:/venue/create";
+        }
     }
 
     /**
@@ -106,6 +138,13 @@ public class VenueSystem {
     @GetMapping
     public String listVenues(Model model) {
         model.addAttribute("venues", venueService.getAllVenues());
-        return "venue/list";
+        return "venue/list-venues";
+    }
+
+    @GetMapping("/check-name")
+    @ResponseBody
+    public Map<String, Boolean> checkVenueName(@RequestParam String name) {
+        boolean exists = venueService.existsByName(name);
+        return Collections.singletonMap("exists", exists);
     }
 } 

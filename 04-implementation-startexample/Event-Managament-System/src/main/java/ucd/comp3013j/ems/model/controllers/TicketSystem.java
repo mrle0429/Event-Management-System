@@ -49,7 +49,7 @@ public class TicketSystem {
 
         model.addAttribute("event", event);
         model.addAttribute("ticketTypes", TicketType.values());
-        return "tickets/purchase";
+        return "tickets/purchase-ticket";
     }
 
     /**
@@ -104,7 +104,7 @@ public class TicketSystem {
 
         model.addAttribute("ticket", ticket);
         model.addAttribute("quantity", quantity);
-        return "tickets/confirmation";
+        return "tickets/purchase-success";
     }
 
     /**

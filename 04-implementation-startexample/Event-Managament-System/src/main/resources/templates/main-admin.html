@@ -9,8 +9,12 @@
     <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="notification" class="notification"></div>
 <main class="container">
     <h2>Event Management System</h2>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
     <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
     <nav class="container-fluid">
         <ul>
@@ -46,16 +50,12 @@
                                th:href="@{/detail(userEmail=${account.email})}">View </a>
                             <a class="action-button" role="button"
                                th:href="@{/edit(userEmail=${account.email})}">Edit </a>
-                            <form method="post" th:action="@{/deleteCustomer}"
-                                  th:if="${account.role.name() == 'CUSTOMER'}">
-                                <input name="customerId" th:value="${account.id}" type="hidden"/>
+                            <form th:if="${account.role.name() != 'ADMINISTRATOR'}" method="post" th:action="@{/deleteAccount}"
+                               onsubmit="return handleDelete(event, 'Account deleted successfully!')">
+                                <input name="accountId" th:value="${account.id}" type="hidden"/>
+                                <input name="role" th:value="${account.role}" type="hidden"/>
                                 <button class="delete-button" type="submit">Delete</button>
-                            </form>
-                            <form method="post" th:action="@{/deleteOrganiser}"
-                                  th:if="${account.role.name() == 'ORGANISER'}">
-                                <input name="organiserId" th:value="${account.id}" type="hidden"/>
-                                <button class="delete-button" type="submit">Delete</button>
-                            </form>
+                         </form>
                         </div>
                     </td>
                 </tr>
@@ -87,5 +87,29 @@
         </figure>
     </article>
 </main>
+
+<script>
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    function handleDelete(event, message) {
+        event.preventDefault();
+        if (confirm('Are you sure you want to delete this account?')) {
+            showNotification(message, "success");
+            setTimeout(() => {
+                event.target.submit();
+            }, 1000);
+        }
+        return false;
+    }
+</script>
 </body>
 </html>

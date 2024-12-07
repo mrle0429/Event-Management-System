@@ -51,7 +51,8 @@ public class EventService {
      * @return The found Event object, or null if not found
      */
     public Event getEvent(Long id) {
-        return eventRepository.findById(id).orElse(null);
+        return eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
     }
 
     /**
@@ -91,6 +92,7 @@ public class EventService {
         if (existingEvent.isPresent()) {
             Event event = existingEvent.get();
             updateEventFromDTO(event, eventDTO);
+            event.setRemainingSeats(eventDTO.getRemainingSeats());
             return eventRepository.save(event);
         }
         return null;
@@ -102,7 +104,9 @@ public class EventService {
      * @param id Event ID to delete
      */
     public void deleteEvent(Long id) {
-        eventRepository.deleteById(id);
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+        eventRepository.delete(event);
     }
 
     /**

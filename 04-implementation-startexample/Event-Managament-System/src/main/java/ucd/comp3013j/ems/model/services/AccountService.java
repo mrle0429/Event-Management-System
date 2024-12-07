@@ -78,17 +78,17 @@ public class AccountService {
      * 1. Deletes all tickets owned by the customer
      * 2. Deletes the customer account itself
      *
-     * @param account The customer account to delete
+     * @param accountID The customer account to delete
      */
-    public void deleteCustomer(Customer account) {
-        List<Ticket> tickets = ticketRepository.findByCustomer(account);
+    public void deleteCustomer(Long accountID) {
+        List<Ticket> tickets = ticketRepository.findByCustomerId(accountID);
 
         // 删除相关的票
         for (Ticket ticket : tickets) {
             ticketRepository.delete(ticket);
         }
 
-        customerRepository.deleteById(account.getId());
+        customerRepository.deleteById(accountID);
     }
 
     /**
@@ -178,7 +178,7 @@ public class AccountService {
                         accountDTO.getCompanyName(), accountDTO.getAddress(), accountDTO.getPhoneNumber());
                 organiserRepository.save((Organiser) account);
                 break;
-            case "USER":
+            case "CUSTOMER":
                 account = new Customer(accountDTO.getEmail(), accountDTO.getName(), accountDTO.getPassword());
                 customerRepository.save((Customer) account);
                 break;

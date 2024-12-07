@@ -9,6 +9,22 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Ticket entity representing a purchased ticket in the system.
+ * 
+ * Features:
+ * - Automatically generates unique ticket codes using UUID
+ * - Records purchase timestamp and price
+ * - Links to associated event and customer
+ * - Supports different ticket types (PREMIUM, STANDARD, ECONOMY)
+ * 
+ * Uses @PrePersist to ensure each ticket has a unique identifier
+ * before being persisted to the database.
+ * 
+ * @see Event
+ * @see Customer
+ * @see TicketType
+ */
 @Entity
 @Data
 @NoArgsConstructor

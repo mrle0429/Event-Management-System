@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Edit Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="notification" class="notification"></div>
+<main class="container">
+
+    <div class="alert alert-error" th:if="${errorMessage}">
+        <p th:text="${errorMessage}">Error message</p>
+    </div>
+
+    <div th:if="${accountDTO}">
+        <h2>Admin Edit Account</h2>
+        <form id="updateForm" method="post" th:action="@{/edit}" th:object="${accountDTO}">
+
+            <input th:name="id" th:value="${accountDTO.id}" type="hidden"/>
+
+            <label for="role">Role:</label>
+            <input id="role"  readonly required th:value="${accountDTO.role}" type="text"/>
+
+            <label for="name">Name:</label>
+            <input id="name" required th:field="*{name}" type="text"/>
+
+            <label for="email">Email:</label>
+            <input id="email" readonly required th:field="*{email}" type="email"/>
+
+
+            <div th:if="${accountDTO.role == 'ORGANISER'}">
+                <label for="companyName">Company Name:</label>
+                <input id="companyName" th:field="*{companyName}" type="text"/>
+
+                <label for="address">Address:</label>
+                <input id="address" th:field="*{address}" type="text"/>
+
+                <label for="phoneNumber">Phone Number:</label>
+                <input id="phoneNumber" th:field="*{phoneNumber}" type="text"/>
+            </div>
+
+            <div class="grid">
+                <button class="button secondary" type="button" onclick="history.back()">Back</button>
+
+                <button type="submit">Save</button>
+            </div>
+
+            
+        </form>
+    </div>
+</main>
+
+<script>
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    document.querySelector("#updateForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        showNotification("Account updated successfully!", "success");
+        setTimeout(() => {
+            this.submit();
+        }, 1000);
+    });
+</script>
+</body>
+</html>
