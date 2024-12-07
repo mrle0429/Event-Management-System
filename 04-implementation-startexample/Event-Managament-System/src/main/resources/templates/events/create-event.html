@@ -207,7 +207,9 @@
             }
             if (!venueDateAvailable){
                 showNotification("Date is already occupied, please choose another!", "error");
-            }else{
+            }
+
+            if (venueDateAvailable && capacityValid) {
                 showNotification("Event created successfully!", "success");
                 setTimeout(() => {
                     form.submit();
