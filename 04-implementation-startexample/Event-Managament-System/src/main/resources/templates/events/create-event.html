@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Event</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+    <style>
+        .description-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .char-counter {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+<!-- 添加通知元素 -->
+<div id="notification" class="notification"></div>
+
+<main class="container">
+    <h2>Create Event</h2>
+    <form id="editEvent" method="post" th:action="@{/events/create}" th:object="${eventDTO}">
+        <label for="name">Event Name:</label>
+        <input id="name" required th:field="*{name}" type="text"/>
+
+        <label for="description">Description:</label>
+        <div class="description-container">
+            <textarea id="description" required th:field="*{description}" maxlength="255"></textarea>
+            <small class="char-counter"><span id="descriptionCount">0</span>/255</small>
+        </div>
+
+        <label for="date">Date:</label>
+        <input id="date" name="dateStr" required type="date"/>
+
+        <label for="time">Time:</label>
+        <input id="time" name="timeStr" required type="time"/>
+
+        <label for="venue">Venue:</label>
+        <select id="venue" required th:field="*{venueId}">
+            <option value="">Select Venue</option>
+            <option th:each="venue : ${venues}"
+                    th:text="${venue.name}"
+                    th:value="${venue.id}">
+            </option>
+        </select>
+
+        <div th:if="${#authorization.expression('hasAuthority(''ADMINISTRATOR'')')}">
+            <label for="organiser">Organiser:</label>
+            <select id="organiser" required th:field="*{organiserId}">
+                <option value="">Select Organiser</option>
+                <option th:each="org : ${organisers}"
+                        th:text="${org.name}"
+                        th:value="${org.id}">
+                </option>
+            </select>
+        </div>
+
+        <div id="ticketPricing">
+            <h4>Ticket Pricing</h4>
+            <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
+                <div class="grid">
+                    <div>
+                        <label th:for="${'price-' + type}" th:text="${type} + ' Price'">Level Price</label>
+                        <input min="0" required
+                               step="0.01"
+                               th:field="*{pricesByLevel[__${type}__]}" th:id="${'price-' + type}" type="number"/>
+                    </div>
+                    <div>
+                        <label th:for="${'seats-' + type}" th:text="${type} + ' Seats'">Level Seats</label>
+                        <input min="0" required
+                               th:field="*{remainingSeats[__${type}__]}"
+                               th:id="${'seats-' + type}" type="number"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="secondary" onclick="history.back()" type="button">Back</button>
+        </div>
+
+        <div>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+</main>
+
+<script>
+    // 添加日期验证函数
+    function isValidDate(dateInput) {
+        const selectedDate = new Date(dateInput.value);
+        selectedDate.setHours(0, 0, 0, 0);
+        
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        return selectedDate > today;
+    }
+
+    // 添加日期输入验证
+    document.querySelector("#date").addEventListener("change", function(e) {
+        const dateInput = e.target;
+        const errorMsg = dateInput.nextElementSibling;
+        
+        if (!isValidDate(dateInput)) {
+            dateInput.style.borderColor = 'red';
+            if (!errorMsg || !errorMsg.classList.contains('error-message')) {
+                const error = document.createElement('small');
+                error.style.color = 'red';
+                error.classList.add('error-message');
+                error.textContent = 'Please select a future date';
+                dateInput.parentNode.insertBefore(error, dateInput.nextSibling);
+            }
+        } else {
+            dateInput.style.borderColor = '';
+            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                errorMsg.remove();
+            }
+        }
+    });
+
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    // 表单提交���理
+    document.querySelector("#editEvent").addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const dateInput = document.querySelector("#date");
+        if (!isValidDate(dateInput)) {
+            showNotification("Please select a future date", "error");
+            return;
+        }
+
+        const venueId = document.querySelector("#venue").value;
+        const date = dateInput.value;
+
+        // 检查所有票种的座位数是否超过场馆容量
+        let capacityValid = true;
+        let venueDateAvailable = true;
+        const checkCapacityPromises = [];
+
+        document.querySelectorAll('[id^="seats-"]').forEach(input => {
+            const type = input.id.replace('seats-', '');
+            const seats = parseInt(input.value || 0);
+
+            if (seats > 0) {
+                const promise = fetch(`/events/checkVenueCapacity?venueId=${venueId}&type=${type}&requestedSeats=${seats}`)
+                    .then(response => response.json())
+                    .then(result => {
+                        if (!result) {
+                            input.style.borderColor = 'red';
+                            const existingError = input.nextElementSibling;
+                            if (existingError && existingError.classList.contains('error-message')) {
+                                existingError.remove();
+                            }
+                            const errorMsg = document.createElement('small');
+                            errorMsg.style.color = 'red';
+                            errorMsg.classList.add('error-message');
+                            errorMsg.textContent = `${type} Ticket quantity exceeds venue capacity limit!`;
+                            input.insertAdjacentElement('afterend', errorMsg);
+                            capacityValid = false;
+                        } else {
+                            input.style.borderColor = '';
+                            const errorMsg = input.nextElementSibling;
+                            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                                errorMsg.remove();
+                            }
+                        }
+                    });
+                checkCapacityPromises.push(promise);
+            }
+        });
+
+        if (venueId && date) {
+            const checkVenueDate = fetch(`/events/checkVenue?venueId=${venueId}&date=${date}`)
+                .then(response => response.json())
+                .then(result => {
+                    venueDateAvailable = result;
+                });
+            checkCapacityPromises.push(checkVenueDate);
+        }
+
+        Promise.all(checkCapacityPromises).then(() => {
+            if (!capacityValid) {
+                const existingError = document.getElementById('generalError');
+                if (!existingError) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.id = 'generalError';
+                    errorDiv.style.color = 'red';
+                    errorDiv.style.marginBottom = '1rem';
+                    errorDiv.textContent = 'Some ticket types exceed venue capacity limits. Please modify and try again!';
+                    document.querySelector('#ticketPricing').insertBefore(errorDiv, document.querySelector('#ticketPricing').firstChild);
+                }
+            }
+            if (!venueDateAvailable){
+                showNotification("Date is already occupied, please choose another!", "error");
+            }
+
+            if (venueDateAvailable && capacityValid) {
+                showNotification("Event created successfully!", "success");
+                setTimeout(() => {
+                    form.submit();
+                }, 1000);
+            }
+        });
+    });
+
+    // 场馆选择变更监听
+    document.querySelector("#venue").addEventListener("change", function() {
+        document.querySelectorAll('[id^="seats-"]').forEach(input => {
+            input.value = "";
+            input.style.borderColor = '';
+            const errorMsg = input.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                errorMsg.remove();
+            }
+        });
+
+        const generalError = document.getElementById('generalError');
+        if (generalError) {
+            generalError.remove();
+        }
+    });
+
+    document.getElementById('description').addEventListener('input', function() {
+        const count = this.value.length;
+        document.getElementById('descriptionCount').textContent = count;
+    });
+</script>
+</body>
+</html> 

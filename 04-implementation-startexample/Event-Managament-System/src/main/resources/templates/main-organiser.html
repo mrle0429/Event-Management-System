@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <main class="container-fluid">
@@ -13,7 +14,6 @@
     <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
     <nav class="container-fluid">
         <ul>
-            <li><a class="secondary" th:href="@{/organiser}">Main Page</a></li>
             <li><a class="secondary" th:href="@{/account/my-account}">My Account</a></li>
             <li><a class="secondary" onClick="javascript: document.getElementById('logout-form').submit();">Log Out</a>
             </li>
@@ -58,7 +58,7 @@
                 </div>
                 <div>
                     <button id="createVenue">
-                        Create New Venues
+                        Create New Venue
                     </button>
                 </div>
             </div>

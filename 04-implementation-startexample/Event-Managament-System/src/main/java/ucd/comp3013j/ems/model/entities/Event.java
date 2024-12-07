@@ -10,6 +10,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Event entity representing performance or show events in the system.
+ * 
+ * Key features:
+ * - Manages event basic information (name, description, date/time)
+ * - Links to venue and organiser
+ * - Handles tiered pricing structure
+ * - Tracks seat availability
+ * - Maintains ticket sales records
+ * 
+ * The event entity uses @ElementCollection for efficient storage of
+ * price levels and seat availability using Map structures.
+ * 
+ * @see Venue
+ * @see Organiser
+ * @see Ticket
+ * @see TicketType
+ */
 @Entity
 @Data
 @NoArgsConstructor

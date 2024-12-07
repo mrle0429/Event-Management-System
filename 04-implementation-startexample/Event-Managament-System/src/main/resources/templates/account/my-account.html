@@ -6,6 +6,26 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
 </head>
+<style>
+        /* 添加消息提示样式 */
+    .alert {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+    }
+    
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    
+    .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+</style>
 <body>
 <main class="container-fluid">
     <h2>Event Management System</h2>
@@ -23,6 +43,17 @@
             </li>
         </ul>
     </nav>
+
+    <!-- 显示成功/错误消息 -->
+    <div class="alert alert-success" th:if="${param.update_success}">
+        <p>Account updated successfully!</p>
+    </div>
+    <div class="alert alert-success" th:if="${param.password_changed}">
+        <p>Password changed successfully!</p>
+    </div>
+    <div class="alert alert-error" th:if="${errorMessage}">
+        <p th:text="${errorMessage}">Error message</p>
+    </div>
 
     <!-- 基本信息 - 所有角色都有 -->
     <article>
@@ -70,17 +101,6 @@
     <div class="grid">
         <a role="button" th:href="@{/account/edit}">Edit Account</a>
         <a class="secondary" role="button" th:href="@{/account/change-password}">Change Password</a>
-    </div>
-
-    <!-- 显示成功/错误消息 -->
-    <div class="alert alert-success" th:if="${param.update_success}">
-        <p>Account updated successfully!</p>
-    </div>
-    <div class="alert alert-success" th:if="${param.password_changed}">
-        <p>Password changed successfully!</p>
-    </div>
-    <div class="alert alert-error" th:if="${errorMessage}">
-        <p th:text="${errorMessage}">Error message</p>
     </div>
 </main>
 </body>

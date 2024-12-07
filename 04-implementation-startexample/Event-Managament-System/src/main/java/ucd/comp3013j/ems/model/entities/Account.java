@@ -8,7 +8,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ucd.comp3013j.ems.model.enums.Role;
 
-
+/**
+ * Abstract base class for all account entities in the system.
+ * Defines common properties shared by administrators, organisers, and customers.
+ * 
+ * Core attributes include:
+ * - Unique identifier
+ * - Basic user information (name, email)
+ * - Authentication credentials
+ * - Role-based access control
+ * 
+ * @see Administrator
+ * @see Organiser  
+ * @see Customer
+ */
 @MappedSuperclass
 @Data
 @NoArgsConstructor

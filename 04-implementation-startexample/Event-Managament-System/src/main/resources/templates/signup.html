@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Event Management System</title>
@@ -22,7 +21,7 @@
                 <div><label> Name : <input id="register_name" name="name" onChange="empty_verify(this, 'r');"
                                            th:field="*{name}" type="text"/> </label></div>
                 <div><label> Email : <input id="register_email" name="username" onChange="empty_verify(this, 'r');"
-                                            th:field="*{email}" type="text"/> </label></div>
+                                            th:field="*{email}" type="email"/> </label></div>
                 <div><label> Password: <input aria-describedby="pass-helper1" aria-invalid="false" id="register_pass1"
                                               onChange="passVerify();" th:field="*{password}"
                                               type="password"/> </label></div>

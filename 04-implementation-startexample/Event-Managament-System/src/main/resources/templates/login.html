@@ -1,75 +1,166 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
->
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title> Event Management System</title>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
-</head>
-<body>
-<main class="container">
-    <h1>Event Management System</h1>
-    <article id="article">
-        <h2>Login</h2>
-        <figure>
-            <div th:if="${param.error}">
-                <div class="alert alert-danger">Invalid Email or Password</div>
-            </div>
-            <div th:if="${param.register_success}">
-                <div class="alert alert-danger">Account Successfully registered, please log in</div>
-            </div>
-            <div th:if="${param.logout}">
-                <div class="alert alert-danger">You have successfully logged out</div>
-            </div>
-            <form method="post" th:action="@{/login}">
-                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                <div><label> Email: <input aria-invalid="false" id="login_email" name="username"
-                                           onChange="empty_verify(this, 'l');" type="text"/> </label></div>
-                <div><label> Password: <input aria-invalid="false" id="login_password" name="password"
-                                              onChange="empty_verify(this, 'l');" type="password"/> </label></div>
-                <div><input id="login_submit" type="submit" value="Sign In"/></div>
-            </form>
-        </figure>
-        <div class="signup-link">
-            <p>Don't have an account? <a href="/signup">Sign Up</a></p>
-        </div>
-    </article>
-
-</main>
-<script>
-    function empty_verify(element, which) {
-        console.log(element, which);
-        let login_submit = document.getElementById("login_submit");
-        let register_submit = document.getElementById("register_submit");
-        if (which == 'r') {
-            if (element.value == '') {
-                element.ariaInvalid = true;
-                register_submit.disabled = true;
-            } else {
-                var register_name = document.getElementById("register_name");
-                var register_email = document.getElementById("register_email");
-                var register_pass1 = document.getElementById("register_pass1");
-                var register_pass2 = document.getElementById("register_pass2");
-                if (register_name.value != '' && register_email.value != '' && register_pass1.value != '' && register_pass2.value != '') {
-                    register_submit.disabled = false;
-                }
-            }
-        } else {
-            if (element.value == '') {
-                element.ariaInvalid = true;
-                login_submit.disabled = true;
-            } else {
-                var login_email = document.getElementById("login_email");
-                var login_password = document.getElementById("login_password");
-                if (login_email.value != '' && login_password.value != '') {
-                    login_submit.disabled = false;
-                }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            padding: 1rem;
+        }
+        
+        .login-container {
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            letter-spacing: -0.5px;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        label {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        input[type="email"],
+        input[type="password"] {
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            width: 100%;
+        }
+        
+        input[type="submit"] {
+            margin-top: 1rem;
+            padding: 0.875rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        
+        input[type="submit"]:hover {
+            transform: translateY(-1px);
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .signup-link a {
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
             }
         }
-    }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Event Management System</h1>
+</header>
+<main class="login-container">
+    <h2>Login</h2>
+    <div th:if="${param.error}" class="alert alert-danger">
+        Invalid Email or Password
+    </div>
+    <div th:if="${param.register_success}" class="alert alert-success">
+        Account Successfully registered, please log in
+    </div>
+    <div th:if="${param.logout}" class="alert alert-success">
+        You have successfully logged out
+    </div>
+    <form method="post" th:action="@{/login}" id="loginForm">
+        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+        <div>
+            <label for="login_email">Email:</label>
+            <input type="email" id="login_email" name="username" required>
+        </div>
+        <div>
+            <label for="login_password">Password:</label>
+            <input type="password" id="login_password" name="password" required>
+        </div>
+        <div>
+            <input type="submit" id="login_submit" value="Sign In">
+        </div>
+    </form>
+    <div class="signup-link">
+        <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+    </div>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('login_email');
+        const passwordInput = document.getElementById('login_password');
+        const submitButton = document.getElementById('login_submit');
 
+        function validateForm() {
+            const isEmailValid = emailInput.value.trim() !== '';
+            const isPasswordValid = passwordInput.value.trim() !== '';
+            submitButton.disabled = !(isEmailValid && isPasswordValid);
+        }
+
+        emailInput.addEventListener('input', validateForm);
+        passwordInput.addEventListener('input', validateForm);
+
+        form.addEventListener('submit', function(event) {
+            if (!emailInput.value.trim() || !passwordInput.value.trim()) {
+                event.preventDefault();
+                alert('Please fill in both email and password fields.');
+            }
+        });
+
+        validateForm();
+    });
 </script>
 </body>
 </html>
+
+

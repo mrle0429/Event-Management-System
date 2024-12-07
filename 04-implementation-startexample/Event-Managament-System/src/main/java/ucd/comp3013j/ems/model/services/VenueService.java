@@ -33,6 +33,9 @@ public class VenueService {
      * @param venueDTO DTO containing venue information
      */
     public void createVenue(VenueDTO venueDTO) {
+        if(venueRepository.findByName(venueDTO.getName()) != null){
+            throw new RuntimeException("Venue Name already exists");
+        }
         Venue venue = new Venue();
         venue.setName(venueDTO.getName());
         venue.setAddress(venueDTO.getAddress());
@@ -61,7 +64,8 @@ public class VenueService {
      * @return The found Venue object, or null if not found
      */
     public Venue getVenueById(Long id) {
-        return venueRepository.findById(id).orElse(null);
+        return venueRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venue not found"));
     }
 
     /**
@@ -75,6 +79,13 @@ public class VenueService {
         Venue venue = venueRepository.findById(venueDTO.getId())
                 .orElseThrow(() -> new RuntimeException("Venue not found"));
 
+        if (!venue.getName().equals(venueDTO.getName())) {
+                    Venue venueWithSameName = venueRepository.findByName(venueDTO.getName());
+                    if (venueWithSameName != null && !venueWithSameName.getId().equals(venueDTO.getId())) {
+                        throw new RuntimeException("Venue name already exists");
+                    }
+                }
+
         updateVenueFromDTO(venue, venueDTO);
         venueRepository.save(venue);
     }
@@ -85,6 +96,9 @@ public class VenueService {
      * @param id Venue ID to delete
      */
     public void deleteVenue(Long id) {
+        venueRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venue not found"));
+
         venueRepository.deleteById(id);
     }
 
@@ -103,5 +117,9 @@ public class VenueService {
         venue.setContactPhone(dto.getContactPhone());
         venue.setContactEmail(dto.getContactEmail());
         venue.setSeatsByLevel(dto.getSeatsByLevel());
+    }
+
+    public boolean existsByName(String name) {
+        return venueRepository.findByName(name) != null;
     }
 }

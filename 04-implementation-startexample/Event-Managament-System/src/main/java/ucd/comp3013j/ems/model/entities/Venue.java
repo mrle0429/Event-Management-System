@@ -8,6 +8,21 @@ import ucd.comp3013j.ems.model.enums.TicketType;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Venue entity representing event locations in the system.
+ * 
+ * Key features:
+ * - Manages venue basic information (name, address, description)
+ * - Configures seating capacity for different ticket types
+ * - Stores contact information
+ * - Tracks events scheduled at the venue
+ * 
+ * Uses @ElementCollection for efficient storage of seating capacity
+ * information across different ticket types.
+ * 
+ * @see Event
+ * @see TicketType
+ */
 @Entity
 @Data
 @NoArgsConstructor

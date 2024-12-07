@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Venue</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+    <style>
+        .description-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .char-counter {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+<div id="notification" class="notification"></div>
+<main class="container">
+
+    <div class="alert alert-error" th:if="${errorMessage}">
+        <p th:text="${errorMessage}">Error message</p>
+    </div>
+
+    <div th:if="${venueDTO}">
+        <h2>Edit Venue</h2>
+        <form id="editVenueForm" method="post" th:action="@{/venue/{id}/edit(id=${venueDTO.id})}" th:object="${venueDTO}">
+            <label for="name">Venue Name:</label>
+            <input id="name" required th:field="*{name}" type="text"/>
+
+            <label for="address">Address:</label>
+            <input id="address" required th:field="*{address}" type="text"/>
+
+            <label for="description">Description:</label>
+            <div class="description-container">
+                <textarea id="description" required th:field="*{description}" maxlength="255"></textarea>
+                <small class="char-counter"><span id="descriptionCount">0</span>/255</small>
+            </div>
+
+            <label for="contactName">Contact Name:</label>
+            <input id="contactName" required th:field="*{contactName}" type="text"/>
+
+            <label for="contactPhone">Contact Phone:</label>
+            <input id="contactPhone" required th:field="*{contactPhone}" type="text"/>
+
+            <label for="contactEmail">Contact Email:</label>
+            <input id="contactEmail" required th:field="*{contactEmail}" type="email"/>
+
+            <div id="seatingCapacity">
+                <h4>Seating Capacity by Level</h4>
+                <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
+                    <label th:for="${'seats-' + type}" th:text="${type}">Level</label>
+                    <input min="0" th:field="*{seatsByLevel[__${type}__]}"
+                           th:id="${'seats-' + type}" type="number"/>
+                </div>
+            </div>
+
+            <div class="grid">
+                <a class="secondary" role="button" th:href="@{/venue}">Back</a>
+            </div>
+<p></p>
+            <div class="grid">
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script>
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    document.querySelector("#editVenueForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        showNotification("Venue updated successfully!", "success");
+        setTimeout(() => {
+            this.submit();
+        }, 1000);
+    });
+
+    // 初始化字数统计
+    document.addEventListener('DOMContentLoaded', function() {
+        const textarea = document.getElementById('description');
+        const count = textarea.value.length;
+        document.getElementById('descriptionCount').textContent = count;
+    });
+
+    // 监听输入更新字数
+    document.getElementById('description').addEventListener('input', function() {
+        const count = this.value.length;
+        document.getElementById('descriptionCount').textContent = count;
+    });
+</script>
+</body>
+</html> 
