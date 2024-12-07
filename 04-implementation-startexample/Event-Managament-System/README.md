@@ -109,7 +109,7 @@ docker-compose down
 - 密码: customer
 
 ## 许可证
-MIT
+MIT Licence
 
 ## 技术支持
 如需支持，请发送邮件至 le.liu1@ucdconnect.ie 或在仓库中创建 issue。
