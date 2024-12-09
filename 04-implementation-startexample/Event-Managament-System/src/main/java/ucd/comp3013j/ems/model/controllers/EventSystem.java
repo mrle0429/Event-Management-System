@@ -136,18 +136,25 @@ public class EventSystem {
                         throw new RuntimeException("Administrator must specify an organiser");
                     }
                     eventService.createEvent(eventDTO);
+                    redirectAttributes.addFlashAttribute("message", "create event success");
+                    redirectAttributes.addFlashAttribute("messageType", "success");
                     return "redirect:/events?success=create";
                 } else {
                     Organiser organiser = eventService.getOrganiserByEmail(userEmail);
                     eventDTO.setOrganiserId(organiser.getId());
                     eventService.createEvent(eventDTO);
+                    redirectAttributes.addFlashAttribute("message", "create event success");
+                    redirectAttributes.addFlashAttribute("messageType", "success");
                     return "redirect:/organiser?success=create";
                 }
             }
 
             throw new RuntimeException("Invalid authentication");
         } catch (ParseException e) {
+            redirectAttributes.addFlashAttribute("message", "Invalid date or time format");
+            redirectAttributes.addFlashAttribute("messageType", "error");
             throw new RuntimeException("Invalid date or time format", e);
+
         }
     }
 
@@ -251,15 +258,21 @@ public class EventSystem {
                         throw new RuntimeException("Administrator must specify an organiser");
                     }
                     eventService.updateEvent(id, eventDTO);
+                    redirectAttributes.addFlashAttribute("message", "update event success");
+                    redirectAttributes.addFlashAttribute("messageType", "success");
                     return "redirect:/events?success=update";
                 } else {
                     Organiser organiser = eventService.getOrganiserByEmail(userEmail);
                     eventDTO.setOrganiserId(organiser.getId());
                     eventService.updateEvent(id, eventDTO);
+                    redirectAttributes.addFlashAttribute("message", "update event success");
+                    redirectAttributes.addFlashAttribute("messageType", "success");
                     return "redirect:/organiser?success=update";
                 }
             }
         } catch (ParseException e) {
+            redirectAttributes.addFlashAttribute("message", "Invalid date or time format");
+            redirectAttributes.addFlashAttribute("messageType", "error");
             throw new RuntimeException("Invalid date or time format", e);
         }
 

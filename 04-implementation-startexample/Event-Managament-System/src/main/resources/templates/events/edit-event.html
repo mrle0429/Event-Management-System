@@ -27,6 +27,9 @@
     <div class="alert alert-error" th:if="${errorMessage}">
         <p th:text="${errorMessage}">Error message</p>
     </div>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
 
     <div th:if="${eventDTO}">
         <h2>Edit Event</h2>
@@ -75,13 +78,17 @@
                     <div class="grid">
                         <div>
                             <label th:for="${'price-' + type}" th:text="${type} + ' Price'">Level Price</label>
-                            <input min="0" step="0.01"
+                            <input min="0" 
+                                   max="2147483647"
+                                   step="0.01"
                                    th:field="*{pricesByLevel[__${type}__]}"
                                    th:id="${'price-' + type}" type="number"/>
                         </div>
                         <div>
                             <label th:for="${'seats-' + type}" th:text="${type} + ' Seats'">Level Seats</label>
-                            <input min="0" required
+                            <input min="0" 
+                                   max="2147483647"
+                                   required
                                    th:field="*{remainingSeats[__${type}__]}"
                                    th:id="${'seats-' + type}" type="number"/>
                         </div>

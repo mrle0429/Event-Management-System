@@ -217,7 +217,7 @@ public class AccountSystem {
     @GetMapping("/edit")
     public String editAccount(@RequestParam(required = false) String userEmail, Authentication authentication, Model model) {
 
-        Account account = null;
+        Account account;
         AccountDTO accountDTO = new AccountDTO();
 
         try {

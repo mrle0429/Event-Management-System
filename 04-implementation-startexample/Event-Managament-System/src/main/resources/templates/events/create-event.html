@@ -25,6 +25,9 @@
 
 <main class="container">
     <h2>Create Event</h2>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
     <form id="editEvent" method="post" th:action="@{/events/create}" th:object="${eventDTO}">
         <label for="name">Event Name:</label>
         <input id="name" required th:field="*{name}" type="text"/>
@@ -67,13 +70,17 @@
                 <div class="grid">
                     <div>
                         <label th:for="${'price-' + type}" th:text="${type} + ' Price'">Level Price</label>
-                        <input min="0" required
+                        <input min="0" 
+                               max="2147483647"
+                               required
                                step="0.01"
                                th:field="*{pricesByLevel[__${type}__]}" th:id="${'price-' + type}" type="number"/>
                     </div>
                     <div>
                         <label th:for="${'seats-' + type}" th:text="${type} + ' Seats'">Level Seats</label>
-                        <input min="0" required
+                        <input min="0" 
+                               max="2147483647"
+                               required
                                th:field="*{remainingSeats[__${type}__]}"
                                th:id="${'seats-' + type}" type="number"/>
                     </div>
@@ -135,7 +142,7 @@
         }, 3000);
     }
 
-    // 表单提交���理
+    // 表单提交
     document.querySelector("#editEvent").addEventListener("submit", function (e) {
         e.preventDefault();
         
@@ -241,6 +248,26 @@
         const count = this.value.length;
         document.getElementById('descriptionCount').textContent = count;
     });
+
+
+    // 添加数字输入验证函数
+    function validateNumberInput(input) {
+        const value = parseInt(input.value);
+        const max = 2147483647; // Integer.MAX_VALUE
+        
+        if (value > max) {
+            input.value = max;
+        } else if (value < 0) {
+            input.value = 0;
+        }
+    }
+
+    // 为所有数字输入框添加验证
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', function() {
+        validateNumberInput(this);
+    });
+});
 </script>
 </body>
 </html> 

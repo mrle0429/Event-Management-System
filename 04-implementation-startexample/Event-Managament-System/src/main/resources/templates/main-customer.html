@@ -10,6 +10,9 @@
 <body>
 <main class="container-fluid">
     <h2>Event Management System</h2>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
     <form id="logout-form" method="post" name="logout-form" th:action="@{/logout}"></form>
     <nav class="container-fluid">
         <ul>
@@ -21,6 +24,7 @@
     </nav>
     <article id="article">
         <h3>Welcome <span th:text="${customer.name}">Customer Name</span>!</h3>
+        <a class="secondary" th:href="@{/tickets/my-tickets}">Purchase History</a>
         <h3>Upcoming Tickets</h3>
 
         <figure>
@@ -49,7 +53,8 @@
                 </tbody>
 
             </table>
-            <a class="secondary" th:href="@{/tickets/my-tickets}">Purchase History</a></li>
+            
+        </li>
 
         </figure>
     </article>

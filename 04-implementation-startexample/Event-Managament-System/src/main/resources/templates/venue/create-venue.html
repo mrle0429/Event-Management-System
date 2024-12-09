@@ -43,7 +43,9 @@
             <h4>Seating Capacity by Level</h4>
             <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
                 <label th:for="${'seats-' + type}" th:text="${type}">Level</label>
-                <input min="0" required
+                <input min="0" 
+                       max="2147483647"
+                       required
                        th:field="*{seatsByLevel[__${type}__]}" th:id="${'seats-' + type}" type="number"/>
             </div>
         </div>
