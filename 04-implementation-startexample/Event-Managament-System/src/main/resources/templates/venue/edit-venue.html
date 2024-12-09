@@ -26,6 +26,9 @@
     <div class="alert alert-error" th:if="${errorMessage}">
         <p th:text="${errorMessage}">Error message</p>
     </div>
+    <div th:if="${message}" class="alert" th:classappend="${messageType == 'success'} ? 'alert-success' : 'alert-error'">
+        <p th:text="${message}"></p>
+    </div>
 
     <div th:if="${venueDTO}">
         <h2>Edit Venue</h2>
@@ -55,7 +58,10 @@
                 <h4>Seating Capacity by Level</h4>
                 <div th:each="type : ${T(ucd.comp3013j.ems.model.enums.TicketType).values()}">
                     <label th:for="${'seats-' + type}" th:text="${type}">Level</label>
-                    <input min="0" th:field="*{seatsByLevel[__${type}__]}"
+                    <input min="0" 
+                           max="2147483647"
+                           required
+                           th:field="*{seatsByLevel[__${type}__]}"
                            th:id="${'seats-' + type}" type="number"/>
                 </div>
             </div>
@@ -103,6 +109,51 @@
         const count = this.value.length;
         document.getElementById('descriptionCount').textContent = count;
     });
+
+    // 检查场馆名称是否存在
+    async function checkVenueName(name, currentId) {
+    try {
+        const response = await fetch(`/venue/check-name?name=${encodeURIComponent(name)}&currentId=${currentId}`);
+        const data = await response.json();
+        return data.exists;
+    } catch (error) {
+        console.error('Error checking venue name:', error);
+        return false;
+    }
+}
+
+    // 场馆名称输入验证
+    document.getElementById('name').addEventListener('input', async function() {
+    const nameInput = this;
+    const submitButton = document.querySelector('button[type="submit"]');
+    
+    // 修改获取ID的方式
+    const pathParts = window.location.pathname.split('/');
+    const currentId = pathParts[pathParts.indexOf('venue') + 1];  // 获取venue后面的ID
+    
+    // 移除现有的错误消息
+    const existingError = nameInput.nextElementSibling;
+    if (existingError && existingError.classList.contains('error-message')) {
+        existingError.remove();
+    }
+    
+    if (nameInput.value.trim()) {
+        const exists = await checkVenueName(nameInput.value, currentId);
+        if (exists) {
+            // 显示错误消息
+            const errorMsg = document.createElement('small');
+            errorMsg.style.color = 'red';
+            errorMsg.classList.add('error-message');
+            errorMsg.textContent = 'This venue name already exists!';
+            nameInput.parentNode.insertBefore(errorMsg, nameInput.nextSibling);
+            nameInput.style.borderColor = 'red';
+            submitButton.disabled = true;
+        } else {
+            nameInput.style.borderColor = '';
+            submitButton.disabled = false;
+        }
+    }
+});
 </script>
 </body>
 </html> 

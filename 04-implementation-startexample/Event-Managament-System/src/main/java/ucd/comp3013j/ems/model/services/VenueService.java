@@ -122,4 +122,9 @@ public class VenueService {
     public boolean existsByName(String name) {
         return venueRepository.findByName(name) != null;
     }
+
+    public boolean existsByNameExcludingId(String name, Long currentId) {
+        Venue venue = venueRepository.findByName(name);
+        return venue != null && !venue.getId().equals(currentId);
+    }
 }

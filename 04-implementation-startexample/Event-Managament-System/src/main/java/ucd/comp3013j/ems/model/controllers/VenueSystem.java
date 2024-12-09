@@ -143,8 +143,8 @@ public class VenueSystem {
 
     @GetMapping("/check-name")
     @ResponseBody
-    public Map<String, Boolean> checkVenueName(@RequestParam String name) {
-        boolean exists = venueService.existsByName(name);
+    public Map<String, Boolean> checkVenueName(@RequestParam String name, @RequestParam(required = false) Long currentId) {
+        boolean exists = venueService.existsByNameExcludingId(name, currentId);
         return Collections.singletonMap("exists", exists);
     }
 } 
