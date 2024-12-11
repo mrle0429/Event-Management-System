@@ -16,19 +16,19 @@ Since we have deployed the database on an Alibaba Cloud server, there may be net
 
 ## Screenshots
 Login Page
-![Log In](/img/login.png)
+![Log In](/04-implementation-startexample/Event-Managament-System/img/login.png)
 
 Sign Up Page
-![Sign Up](/img/register.png)
+![Sign Up](/04-implementation-startexample/Event-Managament-System/img/register.png)
 
 Admin Page
-![Admin Dashboard](/img/admin.png)
+![Admin Dashboard](/04-implementation-startexample/Event-Managament-System/img/admin.png)
 
 Organiser Page
-![Organiser Dashboard](/img/org.png)
+![Organiser Dashboard](/04-implementation-startexample/Event-Managament-System//img/org.png)
 
 Customer Page
-![Customer Dashboard](/img/customer.png)
+![Customer Dashboard](/04-implementation-startexample/Event-Managament-System//img/customer.png)
 
 ## Local Deployment (Docker)
 ### Environment Requirements
