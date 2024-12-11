@@ -7,7 +7,28 @@
 The event management system is a web application that uses the Spring Boot framework. This event management system includes account management, venue management, event management, and ticket management. There are three types of users on this platform: administrators, organizers, and customers.
 
 ## Project DEMO
-Url: [Event Management System](https://exampleUrl.com/)
+Url: [Event Management System](https://exampleUrl.com/) (Temporarily unavailable)
+
+## tips
+EMS seems to work differently on different browsers, so it's recommended to use Chrome or Edge.
+
+Since we have deployed the database on an Alibaba Cloud server, there may be network latency. If you encounter any issues related to the remote server, please contact us promptly, and we will assist in resolving them
+
+## Screenshots
+Login Page
+![Log In](/img/login.png)
+
+Sign Up Page
+![Sign Up](/img/register.png)
+
+Admin Page
+![Admin Dashboard](/img/admin.png)
+
+Organiser Page
+![Organiser Dashboard](/img/org.png)
+
+Customer Page
+![Customer Dashboard](/img/customer.png)
 
 ## Local Deployment (Docker)
 ### Environment Requirements
