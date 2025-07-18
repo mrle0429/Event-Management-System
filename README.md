@@ -1,91 +1,136 @@
-# Feedback Legend
+[English](#event-management-system)
+[中文](#演唱会管理系统)
 
-## Part 1
-The included pdf has been annotated with the notes I made while I was grading. The following is a legend for the annotations I made.
+# Event Management System
 
-### Use Case Diagram
-* UD1: Hierarchical connections in use case diagram
+## Overview
+The event management system is a web application that uses the Spring Boot framework. This event management system includes account management, venue management, event management, and ticket management. There are three types of users on this platform: administrators, organizers, and customers.
 
-### Use Case Naming
-* UN1: Some of the use case names could have been shortened or simplified
+## Project DEMO
+Url: [Event Management System](https://exampleUrl.com/) (Temporarily unavailable)
 
-### Use Cases
-* UC1: The use of includes relationships in the diagram was not necessary
-* UC1: The includes relationships were oriented in the wrong direction
+## tips
+EMS seems to work differently on different browsers, so it's recommended to use Chrome or Edge.
 
-### Courses of Events
-* CEN1: An action performed by the system was missing from the course of events
-* CEN2: The course of events had multiple consecutive steps performed by the either the user or the system
-* CEN3: A step in your course of events described what is happening internally within the system. All descriptions here should be only about the outcome, not how something happened.
-* CEN4: When describing an alternate or exceptional course of events, all of the steps should be included, not just the steps that are different
-* CEN5: It is not clear how the user got to the first point in this use case
-* CEN6: This is not an alternate course of events, it should be a separate use case.
-* CEN7: The course of events is discussing interactions that take place outside of the software
-* CEN8: The course of events ends without completion
+Since we have deployed the database on an Alibaba Cloud server, there may be network latency. If you encounter any issues related to the remote server, please contact us promptly, and we will assist in resolving them
 
-### Data Outcomes
-* DO1: Data outcomes should also have included the READ outcome
-* DO2: This use case should have resulted in an object being created and remembered by the system and as such should have had the CREATE outcome
-* DO3: Data outcomes were not included in the use case description
-* DO4: This should have resulted in an object being modified and as such should have included the UPDATE outcome
+## Screenshots
+Login Page
+![Log In](/04-implementation-startexample/Event-Managament-System/img/login.png)
 
-### Domain Model:
-* DM1: You have included associations between objects that are not related to the data that these concepts remember, but instead is related to the functionality of the system. This should not be in the domain model.
-* DM2: You have included attribute(s) that are objects within the system, these should only be shown through the use of associations. 
-* DM3: You have used composition incorrectly
-* DM4: Associations should have included role names
-* DM5: This object is representing multiple contradictory responsibilities
-* DM6: Including attributes like ids should not be done at this point in the design process. These are not an aspect of the concepts we are representing, instead they are a technical requirement we may require later if we intend to use a relational database to remember our data.
-* DM7: Associations should have included multiplicities
+Sign Up Page
+![Sign Up](/04-implementation-startexample/Event-Managament-System/img/register.png)
 
-## Part 2
-The included pdf has been annotated with the notes I made while I was grading. While I did not have the time to be as thorough as the last part of the assignment, there are a number of notes that I have made that require the detailed explanation that I have provided in the legend below.
+Admin Page
+![Admin Dashboard](/04-implementation-startexample/Event-Managament-System/img/admin.png)
 
-* SD1: When a new object is created, the lifeline of the object should have only started at this point
-* SD2: This activation should have ended when the method returned
-* SD3: This arrow should have been dashed to show that the method was returning
-* SD4: It seems unlikely that this could have been detected and handled in Javascript alone
-* SD5: All of the necessary data was not retreived to be shown on the page
-* SD6: This sequence diagram shows multiple interactions that appear to indicate that the UI is being updated, but there is no user action carried out between them
-* SD7: This method call does not make any sense, you are asking the object to get itself. If you already have the object, then you don't need to ask it, if you don't have the object then you can't ask it…
-* SD8: If you are going to modify/delete an object, first you have to find that object!
-* SD9:  The positioning of the object seems to show that a new object is being created, but the action supposed to be performed is to modify the object
-* SD10: The typical naming for methods like this would be setVariableName
-* SD11: The method related to the display should indicate what page is being shown, in your examples you use the same name
-* SD12: This use case stopped without the method returning
-* SD13: When an object is being constructed, the message name should match the name of the class
-* SD14: This message should have used a dashed arrow to indicate that it was returning, not had the name of another method
-* SD15: When updating the details of an object the individual attributes or associations being changed should each have been shown as a single message
-* SD16: The interactions in this use case would not have taken place until after the user has clicked the submit button. Before this point everything is only happening in the browser and does not need to be shown in the sequence diagram.
-* SD17: This is a very poorly named method
-* SD18: Why is this method returning the data that was passed as a parameter when it was called?
-* SD19: When an object is being constructed, it should appear at that point in the diagram with it's lifeline extending from there downwards.
-* SD20: This method call is never returned by the system
-* SD21: If an object is being created by the system, then you need to show that process in the sequence diagram
-* SD22: you have used the same initial method in different use cases and shown a different result
+Organiser Page
+![Organiser Dashboard](/04-implementation-startexample/Event-Managament-System//img/org.png)
 
-In addition, there is also an included class file that was generated based on the sequence diagrams that you created. This serves to allow you to compare the methods in the class diagram you submitted against the methods in the generated diagram for reference. 
+Customer Page
+![Customer Dashboard](/04-implementation-startexample/Event-Managament-System//img/customer.png)
+
+## Local Deployment (Docker)
+### Environment Requirements
+1. Java 17
+2. Maven
+3. Docker
+4. Docker Compose
+
+### Running the Application
+Assuming that you have correctly installed and set up the above, you can run the application by following these steps:
+1. Use maven to create a jar file of the application by running `mvn clean package` in the root directory of the project.
+```bash
+mvn clean package
+```
+
+2. Get the Java 17 by running `docker pull amazoncorretto:17-alpine`
+```bash 
+docker pull amazoncorretto:17-alpine
+```
+
+3. Run the docker compose command to build and run the application.
+```bash
+docker-compose up --build -d
+```
+
+This will build the application and run it on port 8080. You can then access the application by navigating to `localhost:8080` in your browser. This also starts the database, as such any changes you make shoudl persist between runs.
+
+### Stopping the Application
+When you are finished and want to stop the application, you can use the following command:
+```bash
+docker-compose down
+```
+
+## Default accounts
+
+### Admin:
+- Email: admin@ucd.ie
+- Password: admin
+
+### Organiser:
+- Email: organiser@ucd.ie
+- Password: organiser
+
+### Customer:
+- Email: customer@ucd.ie
+- Password: customer
+
+## Licence
+MIT
+
+## Technical Support
+For support, please email le.liu1@ucdconnect.ie or create an issue in the repository.
+
+# 演唱会管理系统
+
+## 概述
+活动管理系统是一个web应用程序使用spring boot框架。 这个活动管理系统包括账户管理，场馆管理，事件管理，票务管理。这个平台有三种类型的用户：管理员，组织者和客户。
+
+## 快速开始
+### 项目演示
+网址
+### 本地部署（Docker）
+#### 环境要求
+- JDK 17
+- Maven 
+- Docker
+- Docker Compose
+
+#### 运行程序
+``` bash
+cd 04-implementation-startexample/Event-Managament-System
+
+mvn clean package
+
+docker pull amazoncorretto: 17-alpine
+
+```
+
+这将构建应用程序并在 8080 端口运行。然后，您可以在浏览器中访问 localhost:8080 来访问应用程序。这也会启动数据库，因此您所做的任何更改都应在运行之间持久化
+
+#### 停止应用程序
+```bash
+docker-compose down
+```
 
 
-# Part 3 Feedback Legend
+### 默认账户
 
-While I did not use these notes in all of the feedback, here are the ones from some of your feedback that I did use.
+管理员:
+- 邮箱: admin@ucd.ie
+- 密码: admin
 
+组织者:
+- 邮箱: organiser@ucd.ie
+- 密码: organiser
 
-## Class Diagram
-1. Data type missing from parameter or return type
-2. Repository indicates that the objects have an id, but it is not included in the class
-3. Searching is not done by the id of the object, but instead by the object e.g. findTicketsByUser(user : User) will work but findTicketsByUserId(userId : long) will not work as the ticket object remembers the user account not it's id
-4. This method should not be in the repository, this is something that should be a part of the entity that is being remembered
+客户:
+- 邮箱: customer@ucd.ie
+- 密码: customer
 
+## 许可证
+MIT Licence
 
-## Sequence Diagram
-1. This method does not conform to the naming expected for repository methods
-2. There is a problem with control flow here, a method/constructor must always return to the object that initially called it
-3. You have user the same method name and parameters for two different use cases, if we expect the code to do something different then we need to call a different method
-4. Unnecessary parameters supplied to the method here
-5. The DTO is just another object in the system, if you want to call one of its methods you need to show it in the sequence diagram and have an arrow to show the method being called
-6. This return value does not match what would be expected of a method with the name given
-7. The addAttribute method should take two parameters, one a string that is an identifier to be used in the template and the second is the actual data to be used
-
-CF. Control Flow Error
+## 技术支持
+如需支持，请发送邮件至 le.liu1@ucdconnect.ie 或在仓库中创建 issue。
